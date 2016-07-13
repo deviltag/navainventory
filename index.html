@@ -619,16 +619,14 @@
   <!--////////////////////////////////////////////////////////////page PR list ////////////////////////////////////////////////////////////////-->
 
 
-  <!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="pluspr">
 <div data-role="header" id="header">
   <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
   </div>
-
   <div  data-role="main" class="ui-content" id="main"> 
       
   <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR เลขที่ : PR00001</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
-
   <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
       <div class="ui-block-a">
       รหัสสินค้า
@@ -647,7 +645,6 @@
       </div>
     </div>
   </label>
-
   <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
       <div class="ui-block-a">
       0001
@@ -693,14 +690,11 @@
    <label for="switch">ความเร่งด่วน : 
         <input type="checkbox" data-role="flipswitch" name="switch" id="switch" data-on-text="ด่วน" data-off-text="ไม่">
    </label>
-
   </div>
-
-
   <div data-role="footer" id="footer">
     <div data-role="navbar">
       <ul>
-        <li><a href="#additem" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่มสินค้า</a></li>
+        <li onclick="additem()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่มสินค้า</a></li>
         <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
       </ul>
     </div>
@@ -712,7 +706,6 @@
   </div>
   </div>
   <!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
-
     <!--////////////////////////////////////////////////////////////page PR item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="additem">
 <div data-role="header" id="header">
@@ -740,7 +733,6 @@
   <div data-role="footer" id="footer">
     <div data-role="navbar">
       <ul>
-        <li onclick="additem()"><a href="" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่มสินค้า</a></li>
         <li><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
       </ul>
     </div>

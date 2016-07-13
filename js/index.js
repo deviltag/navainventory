@@ -68,8 +68,12 @@ function pluspr(){
 	alert("บันทึกข้อมูลแล้ว!!");
   $.mobile.changePage('#pagepr');
 }
-function additem(){
-  alert("จัดเก็บข้อมูลแล้ว!!");
+
+  function additem(){
+  alert("เพิ่มสินค้า!!");  
+  document.getElementById("noitems").value = "";
+  $("#itemdetail").hide();
+  $("#bt-scan").show();
 $.mobile.changePage('#additem');
 }
 function scanadditem(){
