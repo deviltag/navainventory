@@ -128,3 +128,15 @@ function select_warehouse(e){
 alert(e.value);
 
   }
+function scan_receive(){
+  document.getElementById("receive1").value = "ชื่อสินค้า";
+  $("#receive2").show();
+  $("#scan_cancel").show();
+  $("#scan_btn").hide();
+}
+function scan_cancel(){
+  document.getElementById("receive1").value = "";
+  $("#receive2").hide();
+  $("#scan_cancel").hide();
+  $("#scan_btn").show();
+}
