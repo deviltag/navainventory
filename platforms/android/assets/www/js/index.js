@@ -45,13 +45,13 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-        window.addEventListener("native.onscanbarcode",function(e){
+        //window.addEventListener("native.onscanbarcode",function(e){
         //alert(e.scanResult);
 
-        document.getElementById("username").value=e.scanResult;
+        //document.getElementById("username").value=e.scanResult;
 
 
-        })
+        //})
     }
 
 };

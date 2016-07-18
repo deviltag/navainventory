@@ -114,62 +114,46 @@
 </div>
 <!--//////////////////////////////////////////////////////////// transfer ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transfer">
-    <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">โอนสินค้า</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#transfer1" data-transition="slidefade">
-                <div><img src="images/uptruck.png" class="main_menu"><br><b>ยกของขึ้นรถ</b></div>
-            </a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transfer2" data-transition="slidefade">
-                <div><img src="images/downtruck.png" class="main_menu"><br><b>ยกของลงรถ</b></div>
-            </a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ</b></div></a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#damage" data-transition="slidefade">
-                <div><img src="images/damage.png" class="main_menu"><br><b>โอนสินค้าเสียหาย</b>
-                </div>
-            </a></div>
-            <div class="col-xs-6 col-md-6"><a href="#isp" data-transition="slidefade">
-                <div><img src="images/t_isp.png" class="main_menu"><br><b>โอนเข้าคลัง ISP</b></div>
-            </a></div>
+            <div class="col-xs-6 col-md-6"><a href="#damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#isp" data-transition="slidefade"><div><img src="images/t_isp.png"  class="main_menu"><br><b>โอนเข้าคลัง ISP</b></div></a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#rtv" data-transition="slidefade">
-                <div><img src="images/vender.png" class="main_menu"><br><b>โอนสินค้าคืน Vender</b>
-                </div>
-            </a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transfer6" data-transition="slidefade">
-                <div><img src="images/transfer1.png" class="main_menu"><br><b>โอนแบบปกติ</b></div>
-            </a></div>
+            <div class="col-xs-6 col-md-6"><a href="#rtv" data-transition="slidefade"><div><img src="images/vender.png"  class="main_menu"><br><b>โอนสินค้าคืน Vender</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transfer_normal" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ</b></div></a></div>
         </div>
+    <br>
+    <br>
     </div>
+
 
 
     <div data-role="footer" id="footer" data-enhance="false">
-        <a href="#pagetwo" data-transition="slidefade" data-role="none"><img src="images/back1.png"
-                                                                             width="32"></a>
+        <a href="#pagetwo" data-transition="slidefade"  data-role="none"><img src="images/back1.png" width="32"></a>
     </div>
     <div data-role="panel" id="myPanel" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <h2>Overlay Panel</h2><hr>
+
+        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// transfer1 ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="transfer1">
-    <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+<!--//////////////////////////////////////////////////////////// transferup ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferup">
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของขึ้นรถ</h2>
         <form>
 
@@ -183,25 +167,63 @@
                 <option>car1</option>
                 <option>car1</option>
             </select></p>
+
+
+            <!--<div class="ui-grid-a">
+                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
+            </div>
+
+            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
+                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
+                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
+            </div>-->
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                    <li><a href="#transferup_item" class="next">ตกลง</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                </ul>
+            </div>
+        </form>
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transferup_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferup_item">
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ยกของขึ้นรถ</h2>
+        <form>
+
             <input type="text" name="product1" placeholder="สินค้า" id="product_scan_up">
             <input type="number" name="num1" placeholder="จำนวน">
             <input type="text" name="unit1" placeholder="หน่วยนับ">
 
             <!--<div class="ui-grid-a">
-                   <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-                   <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-               </div>
+                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
+            </div>
 
-               <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-                       <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-                       <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-               </div>-->
+            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
+                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
+                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
+            </div>-->
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#transfer" data-role="button" data-transition="slidefade"
-                           data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
-                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                    <li><a href="#transferup" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">จบ</a></li>
+                    <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
         </form>
@@ -209,65 +231,104 @@
     </div>
 
     <div data-role="footer" id="footer" data-enhance="false">
-        <a href="#transfer" data-transition="slidefade" data-role="none"
-           data-direction="reverse"><img src="images/back1.png" width="32"></a>
+        <a href="#transferup" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
     </div>
     <div data-role="panel" id="myPanel" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <h2>Overlay Panel</h2><hr>
+
+        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// transfer2 ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="transfer2">
-    <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+<!--//////////////////////////////////////////////////////////// transferdown ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferdown">
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของลงรถ</h2>
-        <hr class="hr">
         <form>
+
             <p>เลือกคลังต้นทาง<select>
                 <option>car1</option>
-                <option>car2</option>
-                <option>car3</option>
+                <option>car1</option>
+                <option>car1</option>
             </select></p>
             <p>เลือกคลังปลายทาง<select>
                 <option>wh1</option>
-                <option>wh1</option>
-                <option>wh1</option>
+                <option>wh2</option>
+                <option>wh3</option>
+
             </select></p>
-            <input type="text" name="product2" placeholder="สินค้า">
-            <input type="number" name="num2" placeholder="จำนวน">
-            <input type="text" name="unit2" placeholder="หน่วยนับ">
+
+            <!--<div class="ui-grid-a">
+                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
+            </div>
+
+            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
+                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
+                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
+            </div>-->
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#transfer" data-role="button" data-transition="slidefade"
-                           data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
-                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                    <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                    <li><a href="#transferdown_item" data-role="button" class="next">ตกลง</a><!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
         </form>
 
     </div>
+
     <div data-role="footer" id="footer" data-enhance="false">
-        <a href="#transfer" data-transition="slidefade" data-role="none"
-           data-direction="reverse"><img src="images/back1.png" width="32"></a>
+        <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
     </div>
     <div data-role="panel" id="myPanel" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <h2>Overlay Panel</h2><hr>
+
+        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transferdown_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferdown_item">
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ยกของลงรถ</h2>
+        <form>
+
+            <input type="text" name="product1" placeholder="สินค้า">
+            <input type="number" name="num1" placeholder="จำนวน">
+            <input type="text" name="unit1" placeholder="หน่วยนับ">
+
+            <!--<div class="ui-grid-a">
+                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
+                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
+            </div>
+
+            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
+                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
+                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
+            </div>-->
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#transferdown" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">จบ</a></li>
+                    <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                </ul>
+            </div>
+        </form>
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <a href="#transferdown" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// damage ////////////////////////////////////////////////////////////////-->
@@ -288,17 +349,15 @@
                 <option>car2</option>
                 <option>car3</option>
             </select></p>
-            <p>คลัง Damage<select disabled="disabled">
-                <option>Damage</option>
+            <p>คลัง Damage<select>
+                <option>Damage1</option>
+                <option>Damage2</option>
             </select></p>
-            <input type="text" name="product3" placeholder="สินค้า">
-            <input type="number" name="num3" placeholder="จำนวน">
-            <input type="text" name="unit3" placeholder="หน่วยนับ">
             <div data-role="navbar">
                 <ul>
                     <li><a href="#transfer" data-role="button" data-transition="slidefade"
-                           data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
+                           data-direction="reverse" class="exit">จบ</a></li>
+                    <li><a href="#damage_item" data-role="button" class="next">ตกลง</a>
                         <!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
@@ -319,7 +378,47 @@
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
+<!--//////////////////////////////////////////////////////////// damage_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="damage_item">
+    <div data-role="none" id="header">
+        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าเข้าคลัง DAMAGE</h2>
+        <hr class="hr">
+        <form>
+
+            <input type="text" name="product3" placeholder="สินค้า">
+            <input type="number" name="num3" placeholder="จำนวน">
+            <input type="text" name="unit3" placeholder="หน่วยนับ">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#damage" data-role="button" data-transition="slidefade"
+                           data-direction="reverse" class="exit">จบ</a></li>
+                    <li><a href="#" data-role="button" class="next">บันทึก</a>
+                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                </ul>
+            </div>
+        </form>
+
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <a href="#damage" data-transition="slidefade" data-role="none"
+           data-direction="reverse"><img src="images/back1.png" width="32"></a>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
 <!--//////////////////////////////////////////////////////////// isp ////////////////////////////////////////////////////////////////-->
+
 <div data-role="page" id="isp">
     <div data-role="none" id="header">
         <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
@@ -391,14 +490,12 @@
                 <option>vender3</option>
                 <option>vender4</option>
             </select></p>
-            <input type="text" name="product5" placeholder="สินค้า">
-            <input type="number" name="num5" placeholder="จำนวน">
-            <input type="text" name="unit5" placeholder="หน่วยนับ">
+
             <div data-role="navbar">
                 <ul>
                     <li><a href="#transfer" data-role="button" data-transition="slidefade"
                            data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
+                    <li><a href="#rtv_item" data-role="button" class="next">บันทึก</a>
                         <!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
@@ -418,8 +515,47 @@
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// transfer6 ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="transfer6">
+
+<!--//////////////////////////////////////////////////////////// rtv_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="rtv_item">
+    <div data-role="none" id="header">
+        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าคืน VENDER</h2>
+        <hr class="hr">
+        <form>
+
+            <input type="text" name="product5" placeholder="สินค้า">
+            <input type="number" name="num5" placeholder="จำนวน">
+            <input type="text" name="unit5" placeholder="หน่วยนับ">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#rtv" data-role="button" data-transition="slidefade"
+                           data-direction="reverse" class="exit">จบ</a></li>
+                    <li><a href="#" data-role="button" class="next">บันทึก</a>
+                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <a href="#rtv" data-transition="slidefade" data-role="none"
+           data-direction="reverse"><img src="images/back1.png" width="32"></a>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transfer_normal ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_normal">
     <div data-role="none" id="header">
         <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -451,7 +587,7 @@
                 <ul>
                     <li><a href="#transfer" data-role="button" data-transition="slidefade"
                            data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
+                    <li><a href="#" data-role="button" class="next">ตกลง</a>
                         <!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
@@ -471,26 +607,32 @@
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// Receive ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="receive">
+<!--//////////////////////////////////////////////////////////// transfer_normal_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_normal_item">
     <div data-role="none" id="header">
         <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
-        <h1 class="title">รับสินค้า</h1>
+        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
+        <hr class="hr">
+        <form>
 
-        <select onchange="select_warehouse(this)">
-            <option value="s01">s01</option>
-            <option value="s02">s02</option>
-        </select>
-        <a href="#receive_item" class="ui-btn">PO1</a>
-        <a href="#receive_item" class="ui-btn">PO2</a>
+            <input type="text" name="product1" placeholder="สินค้า">
+            <input type="number" name="num1" placeholder="จำนวน">
+            <input type="text" name="unit1" placeholder="หน่วยนับ">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#transfer_normal" data-role="button" data-transition="slidefade"
+                           data-direction="reverse" class="exit">จบ</a></li>
+                    <li><a href="#" data-role="button" class="next">บันทึก</a>
+                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                </ul>
+            </div>
+        </form>
     </div>
-
-
     <div data-role="footer" id="footer" data-enhance="false">
-        <a href="#pagetwo" data-transition="slidefade" data-role="none"
+        <a href="#transfer_normal" data-transition="slidefade" data-role="none"
            data-direction="reverse"><img src="images/back1.png" width="32"></a>
     </div>
     <div data-role="panel" id="myPanel" data-display="overlay">
@@ -503,95 +645,113 @@
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
+<!--//////////////////////////////////////////////////////////// Receive ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="receive">
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h1 class="title">รับสินค้า</h1>
+        <hr>
+        <div class="ui-field-contain">
+            <label for="search">Search Vender:</label>
+            <input type="search" name="search" id="search" placeholder="Search for Vender...">
+        </div>
+        <select onchange="select_warehouse(this)">
+            <option value="s01">s01</option>
+            <option value="s02">s02</option>
+        </select>
+        <a href="#receive_item" class="ui-btn">PO1 11หน่วย </a>
+        <a href="#receive_item" class="ui-btn">PO2 10หน่วย </a>
+    </div>
+
+
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <a href="#pagetwo" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
 <!--//////////////////////////////////////////////////////////// Receive item ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="receive_item">
-    <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
-         <form name="receive_items">
+        <div  data-role="main" class="ui-content" id="main">
+            <form>
             <h2 class="sub_title">PO ...</h2>
             <hr class="hr">
 
-            <a href="#receive_scan" class="ui-btn ui-corner-all">Item1<img src="images/tick.png"
-                                                                           class="item_status"></a>
-            <a href="#receive_scan" class="ui-btn ui-corner-all">Item2<img src="images/error.png"
-                                                                           class="item_status"></a>
-            <a href="#receive_scan" class="ui-btn ui-corner-all">Item3<img src="images/Warning.png"
-                                                                           class="item_status"></a>
+            <a href="#" class="ui-btn ui-corner-all">Item1 | 10หน่วย<img src="images/tick.png" class="item_status"></a>
+            <a href="#" class="ui-btn ui-corner-all">Item2 | 10หน่วย<img src="images/error.png" class="item_status"></a>
+            <a href="#" class="ui-btn ui-corner-all">Item3 | 10หน่วย<img src="images/Warning.png" class="item_status"></a>
+            <br>
             <div data-role="navbar">
+                <br>
                 <ul>
-                    <li><a href="#transfer" data-role="button" data-transition="slidefade"
-                           data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
-                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                    <li><a href="#receive" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                    <li><a href="#receive_scan" data-role="button" class="next">รับสินค้า</a><!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
-         </form>
+    </form>
 
-    </div>
-
-
-    <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#receive" data-transition="slidefade" data-role="none" data-direction="reverse"><img
-            src="images/back1.png" width="32"></a>
-    </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2>
-    <hr>
-
-    <a href="#pageone" data-transition="slidefade" data-direction="reverse"
-       class="ui-btn">logout</a>
-    </div>
 </div>
 
 
-<!--////////////////////////////////////////////////////////////page receive scan  ////////////////////////////////////////////////////////////////-->
 
+<div data-role="footer" id="footer" data-enhance="false">
+    <a href="#receive" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+</div>
+<div data-role="panel" id="myPanel" data-display="overlay">
+    <h2>Overlay Panel</h2><hr>
+
+    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+</div>
+</div>
+
+<!--//////////////////////////////////////////////////////////// scan Receive item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="receive_scan">
-    <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    <div data-role="none" id="header" >
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
-        <form>
+        <div  data-role="main" class="ui-content" id="main">
+            <form>
             <h2 class="sub_title">scan item</h2>
             <hr class="hr">
-            <label>scan สินค้า : <input type="text" name="receive1" id="test_scanner"></label>
+            <label>scan สินค้า : <input type="text" name="receive1" readonly="true" id="test_scanner"></label>
 
-            <label id="receive2" style="display:none;">จำนวน :
-                <input type="text" name="receive2" id="receive_unit">
-            </label>
+            <label id="receive2" style="display:none;">จำนวน : <input type="text" name="receive2"></label>
             <a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
-            <a href="#" onclick="cancel()" class="ui-btn" style="display:none;"
-               id="scan_cancel">cancel</a>
+            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>
 
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#receive_item" data-role="button" data-transition="slidefade"
-                           data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
-                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+                    <li><a href="#receive_item" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                    <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
-        </form>
+    </form>
 
-    </div>
+</div>
 
 
-    <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#receive" data-transition="slidefade" data-role="none" data-direction="reverse"><img
-            src="images/back1.png" width="32"></a>
-    </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2>
-    <hr>
 
-    <a href="#pageone" data-transition="slidefade" data-direction="reverse"
-       class="ui-btn">logout</a>
-    </div>
+<div data-role="footer" id="footer" data-enhance="false">
+    <a href="#receive" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+</div>
+<div data-role="panel" id="myPanel" data-display="overlay">
+    <h2>Overlay Panel</h2><hr>
+
+    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+</div>
 </div>
 
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->

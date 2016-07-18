@@ -133,7 +133,7 @@ function scan_receive(){
   $("#scan_cancel").show();
   $("#scan_btn").hide();
 }
-function cancel(){
+function scan_cancel(){
   document.getElementById("test_scanner").value = "";
   $("#receive2").hide();
   $("#scan_cancel").hide();
@@ -145,14 +145,13 @@ function cancel(){
         })
 return false;
 }​*/
-
-
+/*
 $(document).on("pageshow", function (e, data) {
-    var page = $(this)[0].activeElement.id;
+ var page = $(this)[0].activeElement.id;
 //alert(page);
 window.addEventListener("native.onscanbarcode",function(s){
 
-            if(page=="receive_scan"){
+           if(page=="receive_scan"){
            document.getElementById("test_scanner").value=s.scanResult;
            $("#receive2").show();
            $("#scan_cancel").show();
@@ -163,7 +162,7 @@ window.addEventListener("native.onscanbarcode",function(s){
            $("#scan_cancel").hide();
            $("#scan_btn").show();
            }
-           if(page=="transfer1"){
+           if(page=="transferup_item"){
            document.getElementById("product_scan_up").value=s.scanResult;
            }else{
            document.getElementById("product_scan_up").value="";
@@ -172,4 +171,32 @@ window.addEventListener("native.onscanbarcode",function(s){
 
             })
 
+});*/
+window.addEventListener('native.onscanbarcode', function (e) {
+       //alert(e.scanResult);
+       var page = "";
+       if(page == ""){
+         page = $.mobile.activePage.attr('id');
+       }
+       $(document).on("pageshow", function (e, data) {
+          page = $(this)[0].activeElement.id;
+       });
+       //alert(page);
+                			//document.getElementById("noitems").value = e.scanResult;
+       switch(page){
+             case "pageone" :
+
+                           $.mobile.changePage("#pagetwo");
+
+                			 break;
+             case "receive_scan" :
+                           document.getElementById("test_scanner").value=e.scanResult;
+                           $("#receive2").show();
+                           $("#scan_cancel").show();
+                           $("#scan_btn").hide();
+                             break;
+             case "transferup_item" :
+                           document.getElementById("product_scan_up").value=e.scanResult;
+                             break;
+                			}
 });
