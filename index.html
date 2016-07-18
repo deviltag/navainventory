@@ -1,590 +1,482 @@
- <!DOCTYPE html>
-  <html>
-  <head>
-    <title>NAVA INVENTORY</title>
-  <meta name="format-detection" content="telephone=no">
-  <meta name="viewport" content="width=device-width,maximum-scale=1.0" />
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
 
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/bootstrap.css">
-  
-  <link rel="icon" type="image/png" href="images/logo_title.png">
-  <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
- 
-  <meta charset="utf-8"> 
-  
-  </head>
-  <body>
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
 
-<!--////////////////////////////////////////////////////////////page one ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="pageone">
-  <div data-role="none" id="header">
-  </div>
+    http://www.apache.org/licenses/LICENSE-2.0
 
-  <div data-role="main" class="ui-content">
-     <div id="form-main">
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
 
-  <div id="form-div" >
-  <img src="images/inventory-logo.png" class="logo">
-    <form class="form" name="login" method="POST" id="theForm" onSubmit="return cnklogin()">
-      <br><br>
-      
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/bootstrap.css">
 
-      <p class="username">
-       <input name="username" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Username" id="username" data-role="none" />
-      </p>
-      <p class="password">
-        <input name="passwd" type="password" class="validate[required,custom[password]] feedback-input" id="password" placeholder="Password" data-role="none" />
-      </p>
-      
-      <div class="submit">
-        <input type="submit"  class="button-green" value="login" data-role="none"/>
-        <div class="ease"></div>
-      </div>
-    </form>
-  </div>
-  </div>
-  </div>
+    <link rel="icon" type="image/png" href="images/logo_title.png">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>NAVA INVEN APP</title>
+</head>
 
-  <div data-role="footer" id="footer">
-  </div>
-
-</div>
-
-
-
-
-  
-<!--////////////////////////////////////////////////////////////page two ////////////////////////////////////////////////////////////////-->
-
-
-
-<div data-role="page" id="pagetwo">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
-
-  <div  data-role="main" class="ui-content" id="main">
-<h1 class="title">Main</h1>
-  <div class="row">
-  <div class="col-xs-6 col-md-6"><a href="#pagepr"  data-transition="slidefade"><div><img src="images/pr2.png"  class="main_menu"><br><b>PR</b></div></a></div>
-  <div class="col-xs-6 col-md-6"><a href="#receive"  data-transition="slidefade"><div><img src="images/product-receive.png"  class="main_menu"><br><b>รับสินค้า</b></div></a></div>
-</div>
-<div class="row">
-  <div class="col-xs-6 col-md-6"><a href="#stock"  data-transition="slidefade"><div><img src="images/stock1.png"  class="main_menu"><br><b>นับสต๊อกสินค้า</b></div></a></div>
-  <div class="col-xs-6 col-md-6"><a href="#transfer"  data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนสินค้า</b></div></a></div>
-</div>
-  </div>
-
-
-
-  <div data-role="footer" id="footer" data-enhance="false">
-    
-    <p>footer</p>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-  <!--//////////////////////////////////////////////////////////// transfer ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="transfer">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
-
-  <div  data-role="main" class="ui-content" id="main">
-<h1 class="title">โอนสินค้า</h1>
-  <div class="row">
-  <div class="col-xs-6 col-md-6"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ</b></div></a></div>
-  <div class="col-xs-6 col-md-6"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ</b></div></a></div>
-</div>
-<div class="row">
-  <div class="col-xs-6 col-md-6"><a href="#damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย</b></div></a></div>
-  <div class="col-xs-6 col-md-6"><a href="#isp" data-transition="slidefade"><div><img src="images/t_isp.png"  class="main_menu"><br><b>โอนเข้าคลัง ISP</b></div></a></div>
-</div>
-<div class="row">
-  <div class="col-xs-6 col-md-6"><a href="#rtv" data-transition="slidefade"><div><img src="images/vender.png"  class="main_menu"><br><b>โอนสินค้าคืน Vender</b></div></a></div>
-  <div class="col-xs-6 col-md-6"><a href="#transfer6" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ</b></div></a></div>
-</div>
-  </div>
-
-
-
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#pagetwo" data-transition="slidefade"  data-role="none"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-  <!--//////////////////////////////////////////////////////////// transferup ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="transferup">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
-
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">ยกของขึ้นรถ</h2>
-<form>
-
-<p>เลือกคลังต้นทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
-</select></p>
-<p>เลือกคลังปลายทาง<select>
-  <option>car1</option>
-  <option>car1</option>
-  <option>car1</option>
-</select></p>
-
-
-<!--<div class="ui-grid-a">
-    <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-    <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-</div>
-
-<div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-        <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-        <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-</div>-->
- <div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#transferup_item" class="next">ตกลง</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+<body>
+        <div id="deviceready" class="blink" style="display:none">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
         </div>
-  </form>
 
-  </div>
+        <!--////////////////////////////////////////////////////////////page one ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="pageone">
+            <div data-role="none" id="header">
+            </div>
 
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-    <!--//////////////////////////////////////////////////////////// transferup_item ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="transferup_item">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+            <div data-role="main" class="ui-content">
+                <div id="form-main">
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">ยกของขึ้นรถ</h2>
-<form>
+                    <div id="form-div" >
+                        <img src="images/inventory-logo.png" class="logo">
 
-<input type="text" name="product1" placeholder="สินค้า">
-<input type="number" name="num1" placeholder="จำนวน">
-<input type="text" name="unit1" placeholder="หน่วยนับ">
+                                <div style="background:gray; color:#fff; border-radius:9px; padding:10%; margin:10%;">
+                                    <h4>กรุณา SCANBARCODE พนักงาน เพื่อเข้าสู่ระบบ</h4>
+                                </div>
 
-<!--<div class="ui-grid-a">
-    <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-    <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-</div>
+                    </div>
 
-<div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-        <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-        <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-</div>-->
- <div data-role="navbar">
-            <ul>
-                <li><a href="#transferup" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">จบ</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+                </div>
+            </div>
+
+
+            <div data-role="footer" id="footer">
+            </div>
+
         </div>
-  </form>
 
-  </div>
 
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transferup" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-    <!--//////////////////////////////////////////////////////////// transferdown ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="transferdown">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+        <!--////////////////////////////////////////////////////////////page two ////////////////////////////////////////////////////////////////-->
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">ยกของลงรถ</h2>
-<form>
+        <div data-role="page" id="pagetwo">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-<p>เลือกคลังต้นทาง<select>
-  <option>car1</option>
-  <option>car1</option>
-  <option>car1</option>
-</select></p>
-<p>เลือกคลังปลายทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
- 
-</select></p>
+            <div  data-role="main" class="ui-content" id="main">
+                <h1 class="title">Main</h1>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6"><a href="#pagepr"  data-transition="slidefade"><div><img src="images/pr2.png"  class="main_menu"><br><b>PR</b></div></a></div>
+                    <div class="col-xs-6 col-md-6"><a href="#receive"  data-transition="slidefade"><div><img src="images/product-receive.png"  class="main_menu"><br><b>รับสินค้า</b></div></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6"><a href="#stock"  data-transition="slidefade"><div><img src="images/stock1.png"  class="main_menu"><br><b>นับสต๊อกสินค้า</b></div></a></div>
+                    <div class="col-xs-6 col-md-6"><a href="#transfer"  data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนสินค้า</b></div></a></div>
+                </div>
+            </div>
 
-<!--<div class="ui-grid-a">
-    <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-    <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-</div>
 
-<div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-        <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-        <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-</div>-->
- <div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#transferdown_item" data-role="button" class="next">ตกลง</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#pageone" data-transition="slidefade"  data-direction="reverse">Go to Page one</a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
+        <!--//////////////////////////////////////////////////////////// transfer ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="transfer">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  </div>
+            <div  data-role="main" class="ui-content" id="main">
+                <h1 class="title">โอนสินค้า</h1>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6"><a href="#transfer1" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ</b></div></a></div>
+                    <div class="col-xs-6 col-md-6"><a href="#transfer2" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ</b></div></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6"><a href="#damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย</b></div></a></div>
+                    <div class="col-xs-6 col-md-6"><a href="#isp" data-transition="slidefade"><div><img src="images/t_isp.png"  class="main_menu"><br><b>โอนเข้าคลัง ISP</b></div></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6"><a href="#rtv" data-transition="slidefade"><div><img src="images/vender.png"  class="main_menu"><br><b>โอนสินค้าคืน Vender</b></div></a></div>
+                    <div class="col-xs-6 col-md-6"><a href="#transfer6" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ</b></div></a></div>
+                </div>
+            </div>
 
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-   <!--//////////////////////////////////////////////////////////// transferdown_item ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="transferdown_item">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">ยกของลงรถ</h2>
-<form>
 
-<input type="text" name="product1" placeholder="สินค้า">
-<input type="number" name="num1" placeholder="จำนวน">
-<input type="text" name="unit1" placeholder="หน่วยนับ">
-
-<!--<div class="ui-grid-a">
-    <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-    <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-</div>
-
-<div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-        <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-        <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-</div>-->
- <div data-role="navbar">
-            <ul>
-                <li><a href="#transferdown" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">จบ</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#pagetwo" data-transition="slidefade"  data-role="none"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
+        <!--//////////////////////////////////////////////////////////// transfer1 ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="transfer1">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  </div>
+            <div  data-role="main" class="ui-content" id="main">
+                <h2 class="sub_title">ยกของขึ้นรถ</h2>
+                <form>
 
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transferdown" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-    <!--//////////////////////////////////////////////////////////// damage ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="damage">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+                    <p>เลือกคลังต้นทาง<select>
+                        <option>wh1</option>
+                        <option>wh2</option>
+                        <option>wh3</option>
+                    </select></p>
+                    <p>เลือกคลังปลายทาง<select>
+                        <option>car1</option>
+                        <option>car1</option>
+                        <option>car1</option>
+                    </select></p>
+                    <input type="text" name="product1" placeholder="สินค้า">
+                    <input type="number" name="num1" placeholder="จำนวน">
+                    <input type="text" name="unit1" placeholder="หน่วยนับ">
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">โอนสินค้าเข้าคลัง DAMAGE</h2>
-<hr class="hr">
-<form>
-<p>เลือกคลังต้นทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
-  <option>car1</option>
-  <option>car2</option>
-  <option>car3</option>
-</select></p>
-<p>คลัง Damage<select disabled="disabled">
-  <option>Damage</option>
-</select></p>
-<input type="text" name="product3" placeholder="สินค้า">
-<input type="number" name="num3" placeholder="จำนวน">
-<input type="text" name="unit3" placeholder="หน่วยนับ">
-<div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+                    <!--<div class="ui-grid-a">
+                        <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
+                        <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
+                    </div>
+
+                    <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
+                            <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
+                            <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
+                    </div>-->
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+                </form>
+
+            </div>
+
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
+        <!--//////////////////////////////////////////////////////////// transfer2 ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="transfer2">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  </div>
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-    <!--//////////////////////////////////////////////////////////// isp ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="isp">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+            <div  data-role="main" class="ui-content" id="main">
+                <h2 class="sub_title">ยกของลงรถ</h2>
+                <hr class="hr">
+                <form>
+                    <p>เลือกคลังต้นทาง<select>
+                        <option>car1</option>
+                        <option>car2</option>
+                        <option>car3</option>
+                    </select></p>
+                    <p>เลือกคลังปลายทาง<select>
+                        <option>wh1</option>
+                        <option>wh1</option>
+                        <option>wh1</option>
+                    </select></p>
+                    <input type="text" name="product2" placeholder="สินค้า">
+                    <input type="number" name="num2" placeholder="จำนวน">
+                    <input type="text" name="unit2" placeholder="หน่วยนับ">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+                </form>
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">โอนสินค้าเข้าคลัง ISP</h2>
-<hr class="hr">
-<form>
-<p>เลือกคลังต้นทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
-  <option>car1</option>
-  <option>car2</option>
-  <option>car3</option>
-</select></p>
-<p>คลัง ISP<select disabled="disabled">
-  <option>ISP</option>
-</select></p>
-<input type="text" name="product4" placeholder="สินค้า">
-<input type="number" name="num4" placeholder="จำนวน">
-<input type="text" name="unit4" placeholder="หน่วยนับ">
-<div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+            </div>
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
-  </div>
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-    <!--//////////////////////////////////////////////////////////// rtv ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="rtv">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+        <!--//////////////////////////////////////////////////////////// damage ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="damage">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">โอนสินค้าคืน VENDER</h2>
-<hr class="hr">
-<form>
-<p>เลือกคลังต้นทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
-  <option>car1</option>
-  <option>car2</option>
-  <option>car3</option>
-</select></p>
-<p>เลือก Vender<select>
-  <option>vender1</option>
-  <option>vender2</option>
-  <option>vender3</option>
-  <option>vender4</option>
-</select></p>
-<input type="text" name="product5" placeholder="สินค้า">
-<input type="number" name="num5" placeholder="จำนวน">
-<input type="text" name="unit5" placeholder="หน่วยนับ">
-<div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+            <div  data-role="main" class="ui-content" id="main">
+                <h2 class="sub_title">โอนสินค้าเข้าคลัง DAMAGE</h2>
+                <hr class="hr">
+                <form>
+                    <p>เลือกคลังต้นทาง<select>
+                        <option>wh1</option>
+                        <option>wh2</option>
+                        <option>wh3</option>
+                        <option>car1</option>
+                        <option>car2</option>
+                        <option>car3</option>
+                    </select></p>
+                    <p>คลัง Damage<select disabled="disabled">
+                        <option>Damage</option>
+                    </select></p>
+                    <input type="text" name="product3" placeholder="สินค้า">
+                    <input type="number" name="num3" placeholder="จำนวน">
+                    <input type="text" name="unit3" placeholder="หน่วยนับ">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+                </form>
+
+            </div>
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
-  </div>
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-    <!--//////////////////////////////////////////////////////////// transfer6 ////////////////////////////////////////////////////////////////-->
-  <div data-role="page" id="transfer6">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+        <!--//////////////////////////////////////////////////////////// isp ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="isp">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  <div  data-role="main" class="ui-content" id="main">
-<h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
-<hr class="hr">
-<form>
-<p>เลือกคลังต้นทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
-  <option>car1</option>
-  <option>car2</option>
-  <option>car3</option>
-</select></p>
-<p>เลือกคลังปลายทาง<select>
-  <option>wh1</option>
-  <option>wh2</option>
-  <option>wh3</option>
-  <option>car1</option>
-  <option>car2</option>
-  <option>car3</option>
-</select></p>
-<input type="text" name="product1" placeholder="สินค้า">
-<input type="number" name="num1" placeholder="จำนวน">
-<input type="text" name="unit1" placeholder="หน่วยนับ">
-<div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+            <div  data-role="main" class="ui-content" id="main">
+                <h2 class="sub_title">โอนสินค้าเข้าคลัง ISP</h2>
+                <hr class="hr">
+                <form>
+                    <p>เลือกคลังต้นทาง<select>
+                        <option>wh1</option>
+                        <option>wh2</option>
+                        <option>wh3</option>
+                        <option>car1</option>
+                        <option>car2</option>
+                        <option>car3</option>
+                    </select></p>
+                    <p>คลัง ISP<select disabled="disabled">
+                        <option>ISP</option>
+                    </select></p>
+                    <input type="text" name="product4" placeholder="สินค้า">
+                    <input type="number" name="num4" placeholder="จำนวน">
+                    <input type="text" name="unit4" placeholder="หน่วยนับ">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
-  </div>
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-   <!--//////////////////////////////////////////////////////////// Receive ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="receive">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
+        <!--//////////////////////////////////////////////////////////// rtv ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="rtv">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  <div  data-role="main" class="ui-content" id="main">
-  <h1 class="title">รับสินค้า</h1>
-  <hr>
-<div class="ui-field-contain">
-        <label for="search">Search Vender:</label>
-        <input type="search" name="search" id="search" placeholder="Search for Vender...">
-      </div>
-  <select onchange="select_warehouse(this)">
-    <option value="s01">s01</option>
-    <option value="s02">s02</option>
-  </select>
-  <a href="#receive_item" class="ui-btn">PO1 11หน่วย </a>
-  <a href="#receive_item" class="ui-btn">PO2 10หน่วย </a>
-  </div>
-
-
-
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#pagetwo" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-   <!--//////////////////////////////////////////////////////////// Receive item ////////////////////////////////////////////////////////////////-->
-
-  <div data-role="page" id="receive_item">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
-<form>
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">PO ...</h2>
-  <hr class="hr">
-
-  <a href="#" class="ui-btn ui-corner-all">Item1 | 10หน่วย<img src="images/tick.png" class="item_status"></a>
-  <a href="#" class="ui-btn ui-corner-all">Item2 | 10หน่วย<img src="images/error.png" class="item_status"></a>
-  <a href="#" class="ui-btn ui-corner-all">Item3 | 10หน่วย<img src="images/Warning.png" class="item_status"></a>
-  <a href="#receive_scan" data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-  <div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+            <div  data-role="main" class="ui-content" id="main">
+                <h2 class="sub_title">โอนสินค้าคืน VENDER</h2>
+                <hr class="hr">
+                <form>
+                    <p>เลือกคลังต้นทาง<select>
+                        <option>wh1</option>
+                        <option>wh2</option>
+                        <option>wh3</option>
+                        <option>car1</option>
+                        <option>car2</option>
+                        <option>car3</option>
+                    </select></p>
+                    <p>เลือก Vender<select>
+                        <option>vender1</option>
+                        <option>vender2</option>
+                        <option>vender3</option>
+                        <option>vender4</option>
+                    </select></p>
+                    <input type="text" name="product5" placeholder="สินค้า">
+                    <input type="number" name="num5" placeholder="จำนวน">
+                    <input type="text" name="unit5" placeholder="หน่วยนับ">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
+        <!--//////////////////////////////////////////////////////////// transfer6 ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="transfer6">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
 
-  </div>
-
-
-
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#receive" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
-
-   <!--//////////////////////////////////////////////////////////// scan Receive item ////////////////////////////////////////////////////////////////-->
-
-  <div data-role="page" id="receive_scan">
-<div data-role="none" id="header" >
-  <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-  </div>
-<form>
-  <div  data-role="main" class="ui-content" id="main">
-  <h2 class="sub_title">scan item</h2>
-  <hr class="hr">
-  <label>scan สินค้า : <input type="text" name="receive1" readonly="true" id="receive1"></label>
-
-  <label id="receive2" style="display:none;">จำนวน : <input type="text" name="receive2"></label>
-  <a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
-  <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>
-  
-  <div data-role="navbar">
-            <ul>
-                <li><a href="#receive_item" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-            </ul>
+            <div  data-role="main" class="ui-content" id="main">
+                <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
+                <hr class="hr">
+                <form>
+                    <p>เลือกคลังต้นทาง<select>
+                        <option>wh1</option>
+                        <option>wh2</option>
+                        <option>wh3</option>
+                        <option>car1</option>
+                        <option>car2</option>
+                        <option>car3</option>
+                    </select></p>
+                    <p>เลือกคลังปลายทาง<select>
+                        <option>wh1</option>
+                        <option>wh2</option>
+                        <option>wh3</option>
+                        <option>car1</option>
+                        <option>car2</option>
+                        <option>car3</option>
+                    </select></p>
+                    <input type="text" name="product1" placeholder="สินค้า">
+                    <input type="number" name="num1" placeholder="จำนวน">
+                    <input type="text" name="unit1" placeholder="หน่วยนับ">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#transfer" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
         </div>
-  </form>
-
-  </div>
+        <!--//////////////////////////////////////////////////////////// Receive ////////////////////////////////////////////////////////////////-->
 
 
 
-  <div data-role="footer" id="footer" data-enhance="false">
-    <a href="#receive" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
-  </div>
-  <div data-role="panel" id="myPanel" data-display="overlay">
-    <h2>Overlay Panel</h2><hr>
-    
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
-  </div>
-  </div>
- <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
+        <div data-role="page" id="receive">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
+
+            <div  data-role="main" class="ui-content" id="main">
+                <h1 class="title">รับสินค้า</h1>
+
+                <select onchange="select_warehouse(this)">
+                    <option value="s01">s01</option>
+                    <option value="s02">s02</option>
+                </select>
+                <a href="#receive_item" class="ui-btn">PO1</a>
+                <a href="#receive_item" class="ui-btn">PO2</a>
+            </div>
+
+
+
+            <div data-role="footer" id="footer" data-enhance="false">
+                <a href="#pagetwo" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+            </div>
+            <div data-role="panel" id="myPanel" data-display="overlay">
+                <h2>Overlay Panel</h2>
+                <hr>
+                <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+            </div>
+        </div>
+        <div data-role="page" id="receive_item">
+            <div data-role="none" id="header" >
+                <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+            </div>
+
+                <div  data-role="main" class="ui-content" id="main">
+                    <form>
+                    <h2 class="sub_title">PO ...</h2>
+                    <hr class="hr">
+
+                    <a href="#" class="ui-btn ui-corner-all">Item1<img src="images/Warning.png" class="item_status"></a>
+                    <a href="#" class="ui-btn ui-corner-all">Item2<img src="images/Warning.png" class="item_status"></a>
+                    <a href="#" class="ui-btn ui-corner-all">Item3<img src="images/Warning.png" class="item_status"></a>
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
+                            <li><a href="#" data-role="button" class="next">บันทึก</a><!--<button type="submit" class="next">บันทึก</button>--></li>
+                        </ul>
+                    </div>
+            </form>
+
+        </div>
+
+
+
+        <div data-role="footer" id="footer" data-enhance="false">
+            <a href="#receive" data-transition="slidefade"  data-role="none"  data-direction="reverse"><img src="images/back1.png" width="32"></a>
+        </div>
+        <div data-role="panel" id="myPanel" data-display="overlay">
+            <h2>Overlay Panel</h2>
+            <hr>
+            <p>You can close the panel by clicking outside the panel, pressing the Esc key, by swiping, or by clicking the button below:</p>
+        </div>
+        </div>
+
+        <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
 
         <div data-role="page" id="pagepr">
             <div data-role="header" id="header">
@@ -858,9 +750,9 @@
 
                     <label id="scanbaritem">
                         <img src="images/barcoder-icon.png" style="margin-bottom:1;">
-                        <h3><b><p>กรุณา</p></h3>
+                        <b><h3><p>กรุณา</p></h3>
                             <h4><p>SCANBARCODE สินค้า</p>
-                           <p>เพื่อทำรายการต่อไป..</p></b></h4>
+                           <p>เพื่อทำรายการต่อไป..</p></h4></b>
                     </label>
                     <div id="itemdetail" style="display:none;">
 
@@ -875,7 +767,7 @@
 
                         <label><input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem"></label>
 
-                        <input type="hidden" name="unit" placeholder="หน่วยนับ" id="units" readonly="true">
+                        <input type="hidden" name="unit" placeholder="หน่วยนับ" id="units" readonly>
                         <label id="Tunit"></label>
                     </div>
 
@@ -908,13 +800,11 @@
 
                 <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
                 <label>
-                    <form>
                         <select name="warehouse" onchange="return select_wh(this)">
                             <option value="0">กรุณาเลือกคลังสินค้า</option>
                             <option value="S1">S1</option>
                             <option value="S2">S2</option>
                         </select>
-                    </form>
                 </label>
 
             </div>
@@ -1035,12 +925,12 @@
             <div  data-role="main" class="ui-content" id="main">
 
                 <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
-                <label id="shelves1">Scan ชั้นเก็บที่ต้องการ : <input type="text" name="shelves" readonly="true"><button onclick="scanshelves()">Scan</button></label>
-                <label id="shelves2" style="display:none;">ชั้นเก็บ : <input type="text" name="shelves" readonly="true" id="shel" size="50"></label>
-                <label id="item1" style="display:none;">Scan สินค้าที่ต้องการ : <input type="text" name="item" readonly="true"><button onclick="scanitem()">Scan</button></label>
-                <label id="item2" style="display:none;">ชื่อสินค้า : <input type="text" name="item" readonly="true" id="items"></label></label>
-                <label id="count" style="display:none;">จำนวน : <input type="number" name="count" id="counts"></label></label>
-                <label id="unit" style="display:none;">หน่วยนับ : <input type="text" name="unit" readonly="true" id="units"></label></label>
+                <label id="shelves1">Scan ชั้นเก็บที่ต้องการ : <input type="text" name="shelves" readonly><button onclick="scanshelves()">Scan</button></label>
+                <label id="shelves2" style="display:none;">ชั้นเก็บ : <input type="text" name="shelves" readonly id="shel" size="50"></label>
+                <label id="item1" style="display:none;">Scan สินค้าที่ต้องการ : <input type="text" name="item" readonly><button onclick="scanitem()">Scan</button></label>
+                <label id="item2" style="display:none;">ชื่อสินค้า : <input type="text" name="item" readonly id="items"></label>
+                <label id="count" style="display:none;">จำนวน : <input type="number" name="count" id="counts"></label>
+                <label id="unit" style="display:none;">หน่วยนับ : <input type="text" name="unit" readonly id="units"></label>
 
 
 
@@ -1062,8 +952,15 @@
             </div>
         </div>
         <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
-  <script src="js/jquery-1.11.3.js"></script>
-  <script src="js/jquery.mobile-1.4.5.min.js"></script>
-  <script src="js/index.js"></script>
-  </body>
-  </html>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="js/fun_pr.js"></script>
+    <script src="js/fun_cs.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+            app.initialize();
+    </script>
+
+</body>
+
+</html>
