@@ -63,14 +63,14 @@ if(document.forms["login"]["username"].value == "admin" && document.forms["login
 }
 
 }
-
+/*
 function pluspr(){
 	alert("บันทึกข้อมูลแล้ว!!");
   $.mobile.changePage('#pagepr');
 }
 
   function additem(){
-  alert("เพิ่มสินค้า!!");  
+  alert("เพิ่มสินค้า!!");
   document.getElementById("noitems").value = "";
   $("#itemdetail").hide();
   $("#bt-scan").show();
@@ -85,13 +85,6 @@ function scanadditem(){
   $("#itemdetail").show();
   $("#bt-scan").hide();
  $.mobile.changePage("#additem");
-}
-
-function select_wh(warehouse){
-  alert("เลือกคลังสินค้าเสร็จแล้ว");
-  var title = "รายการสินค้าที่นับแล้วในคลัง "+warehouse.value+" ในวันนี้";
-  document.getElementById("titlecs").innerHTML = title;
-  $.mobile.changePage("#countstock");
 }
 
 function scanshelves(){
@@ -124,6 +117,7 @@ function saveitem(){
   $("#unit").hide();
   $.mobile.changePage("#countstock");
 }
+*/
 function select_warehouse(e){
 alert(e.value);
 

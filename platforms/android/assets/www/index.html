@@ -674,7 +674,12 @@
     <div data-role="panel" id="myPanel" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
-        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// Receive item ////////////////////////////////////////////////////////////////-->
@@ -712,7 +717,12 @@
 <div data-role="panel" id="myPanel" data-display="overlay">
     <h2>Overlay Panel</h2><hr>
 
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+    <hr>
+    <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+    <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+    <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+    <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+    <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
 </div>
 </div>
 
@@ -750,101 +760,97 @@
 <div data-role="panel" id="myPanel" data-display="overlay">
     <h2>Overlay Panel</h2><hr>
 
-    <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+    <hr>
+    <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+    <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+    <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+    <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+    <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
 </div>
 </div>
+
 
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="pagepr">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
-        <h1 class="title"><img src="images/PRicon.png"> รายการใบ PR</h1>
-        <hr>
-        <label>
-            <div class="ui-grid-c" style="text-align:center;">
-                <div class="ui-block-a">
-                    <b>เลขที่ PR</b>
-                </div>
-                <div class="ui-block-b">
-                    <b>วันที่ต้องการ</b>
-                </div>
-                <div class="ui-block-c">
-                    <b>อายุใบ PR</b>
-                </div>
-                <div class="ui-block-d">
-                    <b>สถานะ PR</b>
-                </div>
+    <div  data-role="main" class="ui-content" id="main">
+        <label style="font-size:20px;"><img src="images/PRicon.png"><b> รายการใบ PR</b></label><hr>
+        <label><div class="ui-grid-c" style="text-align:center;">
+            <div class="ui-block-a">
+                <b>เลขที่ PR</b>
             </div>
-        </label>
-        <hr>
-        <a href="#listpr"><label>
-            <div class="ui-grid-c" style="text-align:center;">
-                <div class="ui-block-a">
-                    PR00001
-                </div>
-                <div class="ui-block-b">
-                    16/05/2559
-                </div>
-                <div class="ui-block-c">
-                    7 วัน
-                </div>
-                <div class="ui-block-d">
-                    <img src="images/Warning.png" width="24">
-                </div>
+            <div class="ui-block-b">
+                <b>วันที่ต้องการ</b>
             </div>
-        </label></a>
-        <hr>
+            <div class="ui-block-c">
+                <b>อายุใบ PR</b>
+            </div>
+            <div class="ui-block-d">
+                <b>สถานะ PR</b>
+            </div>
+        </div>
+        </label><hr>
+        <a href="#listpr"><label><div class="ui-grid-c" style="text-align:center;">
+            <div class="ui-block-a">
+                PR00001
+            </div>
+            <div class="ui-block-b">
+                16/05/2559
+            </div>
+            <div class="ui-block-c">
+                7 วัน
+            </div>
+            <div class="ui-block-d">
+                <img src="images/Warning.png" width="24">
+            </div>
+        </div>
+        </label></a><hr>
 
-        <a href="#listpr"><label>
-            <div class="ui-grid-c" style="text-align:center;">
-                <div class="ui-block-a">
-                    PR00002
-                </div>
-                <div class="ui-block-b">
-                    19/05/2559
-                </div>
-                <div class="ui-block-c">
-                    5 วัน
-                </div>
-                <div class="ui-block-d">
-                    <img src="images/quick.png" width="24">
-                </div>
+        <a href="#listpr"><label><div class="ui-grid-c" style="text-align:center;">
+            <div class="ui-block-a">
+                PR00002
             </div>
-        </label></a>
-        <hr>
+            <div class="ui-block-b">
+                19/05/2559
+            </div>
+            <div class="ui-block-c">
+                5 วัน
+            </div>
+            <div class="ui-block-d">
+                <img src="images/quick.png" width="24">
+            </div>
+        </div>
+        </label></a><hr>
 
-        <a href="#listpr"><label>
-            <div class="ui-grid-c" style="text-align:center;">
-                <div class="ui-block-a">
-                    PR00003
-                </div>
-                <div class="ui-block-b">
-                    22/05/2559
-                </div>
-                <div class="ui-block-c">
-                    7 วัน
-                </div>
-                <div class="ui-block-d">
-                    <img src="images/New.png" width="24">
-                </div>
+        <a href="#listpr"><label><div class="ui-grid-c" style="text-align:center;">
+            <div class="ui-block-a">
+                PR00003
             </div>
-        </label></a>
-        <hr>
+            <div class="ui-block-b">
+                22/05/2559
+            </div>
+            <div class="ui-block-c">
+                7 วัน
+            </div>
+            <div class="ui-block-d">
+                <img src="images/New.png" width="24">
+            </div>
+        </div>
+        </label></a><hr>
 
     </div>
+
 
 
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home"
-                       id="footer-nav">หน้าหลัก</a></li>
-                <li><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="plus"
-                       id="footer-nav">เพิ่มรายการ PR</a></li>
+                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home" id="footer-nav">หน้าหลัก</a></li>
+                <li><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่มรายการ PR</a></li>
             </ul>
         </div>
     </div>
@@ -856,7 +862,6 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
@@ -865,10 +870,10 @@
 
 <div data-role="page" id="listpr">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
         <table data-role="table" class="ui-responsive" style="margin-left:20%;">
             <thead>
             <tr>
@@ -918,11 +923,11 @@
     </div>
 
 
-    <div data-role="footer" id="footer" data-position="fixed">
+
+    <div data-role="footer" id="footer"  data-position="fixed">
         <div data-role="navbar">
             <ul>
-                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="arrow-l"
-                       id="footer-nav">ย้อนกลับ</a></li>
+                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="arrow-l" id="footer-nav">ย้อนกลับ</a></li>
             </ul>
         </div>
     </div>
@@ -934,7 +939,6 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page PR list ////////////////////////////////////////////////////////////////-->
@@ -943,66 +947,71 @@
 <!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="pluspr">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
-    <div data-role="main" class="ui-content" id="main">
-        <h2 class="sub_title"><img src="images/PRicon.png"> PR เลขที่ : PR00001</h2>
-        <label style="border-bottom:1px solid black; padding:2%;">
-            <div class="ui-grid-d" style="text-align:center;">
-                <div class="ui-block-a">
-                    รหัสสินค้า
-                </div>
-                <div class="ui-block-b">
-                    ชื่อสินค้า
-                </div>
-                <div class="ui-block-c">
-                    จำนวน
-                </div>
-                <div class="ui-block-d">
-                    เกรด
-                </div>
-                <div class="ui-block-e">
-                    คลัง
-                </div>
+    <div  data-role="main" class="ui-content" id="main" style="margin-bottom:20%;">
+
+        <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR เลขที่ : PR00001</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
+            <div class="ui-block-a">
+                รหัสสินค้า
             </div>
+            <div class="ui-block-b">
+                ชื่อสินค้า
+            </div>
+            <div class="ui-block-c">
+                จำนวน
+            </div>
+            <div class="ui-block-d">
+                เกรด
+            </div>
+            <div class="ui-block-e">
+                คลัง
+            </div>
+        </div>
         </label>
-        <label style="border-bottom:1px solid black; padding:2%;">
-            <div class="ui-grid-d" style="text-align:center;">
-                <div class="ui-block-a">
-                    0001
-                </div>
-                <div class="ui-block-b">
-                    M150
-                </div>
-                <div class="ui-block-c">
-                    32 ขวด
-                </div>
-                <div class="ui-block-d">
-                    A
-                </div>
-                <div class="ui-block-e">
-                    S1
-                </div>
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
+            <div class="ui-block-a">
+                0001
             </div>
+            <div class="ui-block-b">
+                M150
+            </div>
+            <div class="ui-block-c">
+                32 ขวด
+            </div>
+            <div class="ui-block-d">
+                A
+            </div>
+            <div class="ui-block-e">
+                S1
+            </div>
+        </div>
         </label>
-        <label style="border-bottom:1px solid black; padding:2%;">
-            <div class="ui-grid-d" style="text-align:center;">
-                <div class="ui-block-a">
-                    0002
-                </div>
-                <div class="ui-block-b">
-                    Green Tea
-                </div>
-                <div class="ui-block-c">
-                    24 ขวด
-                </div>
-                <div class="ui-block-d">
-                    A
-                </div>
-                <div class="ui-block-e">
-                    S1
-                </div>
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
+            <div class="ui-block-a">
+                0002
             </div>
+            <div class="ui-block-b">
+                Green Tea
+            </div>
+            <div class="ui-block-c">
+                24 ขวด
+            </div>
+            <div class="ui-block-d">
+                A
+            </div>
+            <div class="ui-block-e">
+                S1
+            </div>
+        </div>
+        </label>
+        <label>คลังสินค้า :
+            <select name="exchequer" id="exche">
+                <option value="0">คลัง</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+            </select>
         </label>
         <label>
             วันที่ต้องการ : <input type="date" name="dateline" id="bday">
@@ -1011,20 +1020,21 @@
             หมายเหตุ : <textarea rows="5" cols="20"></textarea>
         </label>
         <label for="switch">ความเร่งด่วน :
-            <input type="checkbox" data-role="flipswitch" name="switch" id="switch"
-                   data-on-text="ด่วน" data-off-text="ไม่">
+            <input type="checkbox" data-role="flipswitch" name="switch" id="switch" data-on-text="ด่วน" data-off-text="ไม่">
         </label>
+
     </div>
+
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li onclick="additem()"><a href="#" class="ui-btn-active ui-state-persist"
-                                           data-icon="plus" id="footer-nav">เพิ่มสินค้า</a></li>
-                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist"
-                                          data-icon="edit" id="footer-nav">บันทึก</a></li>
+                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav">ยกเลิก</a></li>
+                <li onclick="additem()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่มสินค้า</a></li>
+                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
+
     <div data-role="panel" id="myPanel" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
@@ -1033,50 +1043,46 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
 <!--////////////////////////////////////////////////////////////page PR item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="additem">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
 
-        <h2 class="sub_title">กรอกรหัสหรือสแกนบาร์โค้ดรหัสสินค้า</h2>
-        <form>
-            <label id="noitem">
-                <input type="text" name="Noitem" placeholder="รหัสสินค้า" style="color:#000;" id="noitems" readonly="true">
-                <a href="#" class="ui-btn" onclick="scanadditem()"   id="bt-scan">Scan</a>
-            </label>
-            <div id="itemdetail" style="display:none;">
-                <label>
-                    <input type="text" name="nameitem" placeholder="ชื่อสินค้า" style="color:#000;" id="nameitems" readonly="true">
-                </label>
-                <label>
-                    <input type="text" name="grade" placeholder="เกรด" style="color:#000;" id="gradeitem" readonly="true">
-                </label>
-                <label>
-                    <input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem">
-                </label>
-                <label>
-                    <input type="text" name="unit" placeholder="จำนวน" id="units" readonly="true">
-                </label>
-                <label>
-                    <select name="exchequer">
-                        <option value="0">คลัง</option>
-                        <option value="S1">S1</option>
-                        <option value="S2">S2</option>
-                    </select>
-                </label>
-            </div>
-        </form>
+
+        <label id="scanbaritem">
+            <img src="images/barcoder-icon.png" style="margin-bottom:1;">
+            <b><h3><p>กรุณา</p></h3>
+                <h4><p>SCANBARCODE สินค้า</p>
+                    <p>เพื่อทำรายการต่อไป..</p></h4></b>
+        </label>
+        <div id="itemdetail" style="display:none;">
+
+            <input type="hidden" name="Noitem" placeholder="รหัสสินค้า" style="color:#000;" id="noitems">
+            <label id="Tnoitem"></label>
+
+            <input type="hidden" name="Nameitem" placeholder="ชื่อสินค้า" readonly style="color:#000;" id="nameitems">
+            <label id="TNameitem"></label>
+
+            <input type="hidden" name="grade" placeholder="เกรด" readonly style="color:#000;" id="gradeitem">
+            <label id="Tgrade"></label>
+
+            <label><input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem" autofocus></label>
+
+            <input type="hidden" name="unit" placeholder="หน่วยนับ" id="units" readonly>
+            <label id="Tunit"></label>
+        </div>
+
     </div>
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+                <li ><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav">ยกเลิก</a></li>
+                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -1088,8 +1094,8 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-
     </div>
+
 </div>
 <!--////////////////////////////////////////////////////////////page PR item ////////////////////////////////////////////////////////////////-->
 
@@ -1097,20 +1103,18 @@
 <!--////////////////////////////////////////////////////////////page Count stock ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="stock">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
-        <h2 class="sub_title"><img src="images/stock1.png" width="32">ระบบนับสต๊อกสินค้า</h2>
-        <hr>
+    <div  data-role="main" class="ui-content" id="main">
+
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
         <label>
-            <form>
-                <select name="warehouse" onchange="return select_wh(this)">
-                    <option value="0">กรุณาเลือกคลังสินค้า</option>
-                    <option value="S1">S1</option>
-                    <option value="S2">S2</option>
-                </select>
-            </form>
+            <select id="CTwh" name="warehouse" onchange="return select_wh(this)" >
+                <option value="0" id="defult">กรุณาเลือกคลังสินค้า</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+            </select>
         </label>
 
     </div>
@@ -1119,8 +1123,7 @@
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home"
-                       id="footer-nav">หน้าหลัก</a></li>
+                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home" id="footer-nav">หน้าหลัก</a></li>
             </ul>
         </div>
     </div>
@@ -1132,7 +1135,6 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page Count stock ////////////////////////////////////////////////////////////////-->
@@ -1140,15 +1142,13 @@
 <!--////////////////////////////////////////////////////////////page stock detail ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="countstock">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
 
-        <h2 class="sub_title"><img src="images/stock1.png" width="32">ระบบนับสต๊อกสินค้า</h2>
-        <hr>
-        <label id="titlecs"></label>
-        <hr>
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
+        <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh"></span></label><hr>
 
         <label style="text-align:center; vertical-align: middle; border-bottom:1px solid gray;">
             <div class="ui-grid-d">
@@ -1217,10 +1217,9 @@
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li><a href="#stock" class="ui-btn-active ui-state-persist" data-icon="arrow-l"
-                       id="footer-nav">ย้อนกลับ</a></li>
-                <li><a href="#countitem" class="ui-btn-active ui-state-persist" data-icon="search"
-                       id="footer-nav">ตรวจนับสินค้า</a></li>
+                <li onclick="backstock()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="arrow-l" id="footer-nav">ย้อนกลับ</a></li>
+                <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+                <li><a href="#shelves" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav">ตรวจนับสินค้า</a></li>
             </ul>
         </div>
     </div>
@@ -1232,50 +1231,34 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock detail ////////////////////////////////////////////////////////////////-->
 
-<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="countitem">
+<!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="shelves">
     <div data-role="header" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div data-role="main" class="ui-content" id="main">
+    <div  data-role="main" class="ui-content" id="main">
 
-        <h2 class="sub_title"><img src="images/stock1.png" width="32">ระบบนับสต๊อกสินค้า</h2>
-        <hr>
-        <label id="shelves1">Scan ชั้นเก็บที่ต้องการ :
-            <input type="text" name="shelves" readonly="true">
-            <button onclick="scanshelves()">Scan</button>
-        </label>
-        <label id="shelves2" style="display:none;">ชั้นเก็บ :
-            <input type="text" name="shelves" readonly="true" id="shel" size="50">
-        </label>
-        <label id="item1" style="display:none;">Scan สินค้าที่ต้องการ :
-            <input type="text" name="item" readonly="true">
-            <button onclick="scanitem()">Scan</button>
-        </label>
-        <label id="item2" style="display:none;">ชื่อสินค้า :
-            <input type="text" name="item" readonly="true" id="items"></label>
-        <label id="count" style="display:none;">จำนวน :
-            <input type="number" name="count" id="counts"></label>
-        <label id="unit" style="display:none;">หน่วยนับ :
-            <input type="text" name="unit" readonly="true" id="units"></label>
-
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
+        <label id="shelves1"><img src="images/barcoder-icon.png">
+            <b><h3><p>SCANBARCODE</p></h3>
+                <h4>
+                    <p>ชั้นเก็บสินค้า</p>
+                </h4>
+            </b></label>
 
     </div>
 
 
     <div data-role="footer" id="footer">
         <div data-role="navbar">
-            <ul id="count1">
-                <li><a href="#stock" class="ui-btn-active ui-state-persist" data-icon="delete"
-                       id="footer-nav">ยกเลิก</a></li>
-                <li onclick="saveitem()"><a href="#" class="ui-btn-active ui-state-persist"
-                                            data-icon="search" id="footer-nav">บันทึก</a></li>
+            <ul>
+                <li onclick="backstock()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav">ยกเลิก</a></li>
+                <li onclick="skipshelves()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="arrow-r" id="footer-nav">ข้าม</a></li>
             </ul>
         </div>
     </div>
@@ -1287,13 +1270,73 @@
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
 
+<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="countitem">
+    <div data-role="header" id="header">
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label><hr>
+        <label id="scanitemcode"><img src="images/barcoder-icon.png"><b>
+            <h3><p>SCANBARCODE</p></h3>
+            <h4>
+                <p>สินค้าที่ต้องการนับ</p>
+            </h4>
+        </b></label>
+        <div id="itemcnt" style="margin-bottom: 20%;">
+            <label>ชั้นเก็บ : <span id="CTshelves"></span>
+                <input type="hidden" name="shelves" readonly id="shel" size="50">
+            </label>
+            <label>รหัสสินค้า : <span id="CTitemno"></span>
+                <input type="hidden" name="itemno" readonly id="itemNo">
+            </label>
+            <label>ชื่อสินค้า : <span id="CTitemname"></span>
+                <input type="hidden" name="itemname" readonly id="itemsName">
+            </label>
+            <label>จำนวน :
+                <input type="number" name="count" id="counts" autofocus="true">
+            </label>
+            <label>หน่วยนับ : <span id="CTunit"></span>
+                <input type="hidden" name="unit" id="Cunit">
+            </label>
+
+        </div>
+    </div>
+
+
+    <div data-role="footer" id="footer">
+        <div data-role="navbar">
+            <ul id="count1">
+                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav">ยกเลิก</a></li>
+            </ul>
+            <ul id="count2">
+                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav">ยกเลิก</a></li>
+                <li onclick="savestock()" ><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/fun_pr.js"></script>
+<script src="js/fun_cs.js"></script>
 <script src="js/inven.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
