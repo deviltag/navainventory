@@ -356,7 +356,7 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#transfer" data-role="button" data-transition="slidefade"
-                           data-direction="reverse" class="exit">จบ</a></li>
+                           data-direction="reverse" class="exit">exit</a></li>
                     <li><a href="#damage_item" data-role="button" class="next">ตกลง</a>
                         <!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
@@ -427,29 +427,63 @@
     <div data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">โอนสินค้าเข้าคลัง ISP</h2>
         <hr class="hr">
-        <form>
-            <p>เลือกคลังต้นทาง<select>
-                <option>wh1</option>
-                <option>wh2</option>
-                <option>wh3</option>
-                <option>car1</option>
-                <option>car2</option>
-                <option>car3</option>
-            </select></p>
-            <p>คลัง ISP<select disabled="disabled">
-                <option>ISP</option>
-            </select></p>
-            <input type="text" name="product4" placeholder="สินค้า">
-            <input type="number" name="num4" placeholder="จำนวน">
-            <input type="text" name="unit4" placeholder="หน่วยนับ">
+
+            <a href="#isp_item" class="ui-btn">stockcount 1 | 10item </a>
+            <a href="#isp_item" class="ui-btn">stockcount 2 | 13item </a>
+            <a href="#isp_item" class="ui-btn">stockcount 3 | 15item </a>
+<br>
             <div data-role="navbar">
                 <ul>
                     <li><a href="#transfer" data-role="button" data-transition="slidefade"
                            data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a>
-                        <!--<button type="submit" class="next">บันทึก</button>--></li>
+
                 </ul>
             </div>
+        </form>
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <a href="#transfer" data-transition="slidefade" data-role="none"
+           data-direction="reverse"><img src="images/back1.png" width="32"></a>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// isp item ////////////////////////////////////////////////////////////////-->
+
+<div data-role="page" id="isp_item">
+    <div data-role="none" id="header">
+        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าเข้าคลัง ISP</h2>
+        <hr class="hr">
+
+        <fieldset data-role="controlgroup">
+            <legend>เลือกสินค้าที่ต้องการโอนไปยังคลัง isp</legend>
+            <label for="item1">item1</label>
+            <input type="checkbox" name="isp_item_select" id="item1"  value="item1">
+            <label for="item2">item2</label>
+            <input type="checkbox" name="isp_item_select" id="item2" value="item2">
+            <label for="item3">item3</label>
+            <input type="checkbox" name="isp_item_select" id="item3" value="item3">
+        </fieldset>
+
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#isp" data-role="button" data-transition="slidefade"
+                       data-direction="reverse" class="exit">Exit</a></li>
+                <li><a href="#" data-role="button" class="next">บันทึก</a>
+                    <!--<button type="submit" class="next">บันทึก</button>--></li>
+            </ul>
+        </div>
         </form>
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
@@ -580,14 +614,12 @@
                 <option>car2</option>
                 <option>car3</option>
             </select></p>
-            <input type="text" name="product1" placeholder="สินค้า">
-            <input type="number" name="num1" placeholder="จำนวน">
-            <input type="text" name="unit1" placeholder="หน่วยนับ">
+
             <div data-role="navbar">
                 <ul>
                     <li><a href="#transfer" data-role="button" data-transition="slidefade"
                            data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#" data-role="button" class="next">ตกลง</a>
+                    <li><a href="#transfer_normal_item" data-role="button" class="next">ตกลง</a>
                         <!--<button type="submit" class="next">บันทึก</button>--></li>
                 </ul>
             </div>
@@ -1346,26 +1378,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
