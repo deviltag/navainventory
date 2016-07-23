@@ -17,15 +17,20 @@ switch(page){
                             alert("ชั้นเก็บที่ : "+ ci.scanResult);
                             document.getElementById("shel").value = ci.scanResult;
                             document.getElementById("CTshelves").innerHTML = ci.scanResult;
+                            document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
+                            document.getElementById("CTitemname").innerHTML = "";
+                            document.getElementById("CTunit").innerHTML = "";
 
-                            $("#itemcnt").hide();
+                            document.getElementById("itemNo").value = "";
+                            document.getElementById("itemsName").value = "";
+                            document.getElementById("Cunit").value = "";
+
+                            $("#count1").show();
                             $("#count2").hide();
-                            $("#scanitemcode").show();
                             $.mobile.changePage("#countitem");
                     	 break;
              case "countitem" :
-                            $("#itemcnt").show();
-                            $("#scanitemcode").hide();
+
                             $("#count1").hide();
                             $("#count2").show();
 
@@ -36,9 +41,7 @@ switch(page){
                             document.getElementById("itemNo").value = ci.scanResult;
                             document.getElementById("itemsName").value = "M150";
                             document.getElementById("Cunit").value = "ขวด";
-                                window.onload = function() {
-                                  document.getElementById("myinputbox").focus();
-                                }
+
                             $.mobile.changePage("#countitem");
                          break;
            	}
@@ -47,6 +50,8 @@ switch(page){
 function select_wh(warehouse){
     alert(warehouse.value);
     document.getElementById("wh").innerHTML = "คลัง : "+warehouse.value;
+    document.getElementById("wh2").innerHTML = "คลัง : "+warehouse.value;
+   // document.getElementById("wh").value = "คลัง : "+warehouse.value;
     $.mobile.changePage("#countstock");
 }
 
@@ -54,11 +59,16 @@ function skipshelves(){
     if (confirm('คุณไม่ต้องการเลือกชั้นเก็บใช่หรือไม่ ?')) {
         document.getElementById("shel").value = "0";
         document.getElementById("CTshelves").innerHTML = "ไม่มีชั้นเก็บ";
+        document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
+        document.getElementById("CTitemname").innerHTML = "";
+        document.getElementById("CTunit").innerHTML = "";
+        document.getElementById("itemNo").value = "";
+        document.getElementById("itemsName").value = "";
+        document.getElementById("Cunit").value = "";
+        document.getElementById("counts").value = "";
         $.mobile.changePage("#countitem");
         $("#count1").show();
         $("#count2").hide();
-        $("#itemcnt").hide();
-        $("#scanitemcode").show();
     } else {
         $.mobile.changePage("#shelves");
     }
@@ -79,16 +89,49 @@ function savestock(){
     var nitem = document.getElementById("itemsName").value;
     var citem = document.getElementById("counts").value;
     var uitem = document.getElementById("Cunit").value;
-    if(citem == ""){
+    if(citem == ""||noitem == ""){
     alert("กรุณากรอกข้อมูลให้ครบด้วย !!");
     }else{
     alert('result:[{"shelves":"'+sv+'","itemNo":"'+noitem+'","itemName":"'+nitem+'","Citem":"'+citem+'","Cunit":"'+uitem+'"}]');
+    document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
+    document.getElementById("CTitemname").innerHTML = "";
+    document.getElementById("CTunit").innerHTML = "";
+    document.getElementById("itemNo").value = "";
+    document.getElementById("itemsName").value = "";
+    document.getElementById("Cunit").value = "";
     document.getElementById("counts").value = "";
+
     $("#count1").show();
     $("#count2").hide();
-    $("#itemcnt").hide();
     $("#scanitemcode").show();
     $.mobile.changePage("#countitem");
     }
 
+}
+
+function savedata(){
+
+}
+
+function editstock(){
+       document.getElementById("Eshel").value = "WH1";
+       document.getElementById("EitemNo").value = "5122456333";
+       document.getElementById("EitemsName").value = "M150";
+       document.getElementById("Ecounts").value = "56";
+       document.getElementById("ECunit").value = "ขวด";
+
+       document.getElementById("ECTshelves").innerHTML = "WH1";
+       document.getElementById("ECTitemno").innerHTML = "5122456333";
+       document.getElementById("ECTitemname").innerHTML = "M150";
+       document.getElementById("ECTunit").innerHTML = "ขวด";
+   $.mobile.changePage("#stockedit");
+}
+
+function deleteitem(){
+    if(confirm("คุณต้องการลบรายการนับสินค้ารายการนี้ใช่หรือไม่!!")){
+        alert("ลบเรียบร้อย!!");
+        $.mobile.changePage("#countstock");
+    }else{
+        $.mobile.changePage("#stockedit");
+    }
 }
