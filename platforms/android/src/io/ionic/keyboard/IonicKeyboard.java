@@ -24,9 +24,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.Display;
 import android.graphics.Point;
 import android.os.Build;
+import android.widget.Toast;
 
 public class IonicKeyboard extends CordovaPlugin {
     private BroadcastReceiver receiver;
+    private BroadcastReceiver receiver2;
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         final CordovaWebView appView = webView;
 
@@ -42,7 +44,27 @@ public class IonicKeyboard extends CordovaPlugin {
         };
         cordova.getActivity().registerReceiver(receiver, filter);
         super.initialize(cordova, webView);
+
+        IntentFilter filter2 = new IntentFilter("scan.rcv.message");
+        receiver2 = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                final String scanResult;
+                byte[] barocode = intent.getByteArrayExtra("barocode");
+                int barocodelen = intent.getIntExtra("length", 0);
+                byte temp = intent.getByteExtra("barcodeType", (byte) 0);
+                android.util.Log.i("debug", "----codetype--" + temp);
+                scanResult = new String(barocode, 0, barocodelen);
+//              final String scanResult = intent.getStringExtra("value");
+                LOG.e("DEBUG", "scan.rcv.message: " + scanResult);
+                appView.sendJavascript("cordova.fireWindowEvent('native.onscanbarcode', { 'scanResult':'" + scanResult + "'});");
+            }
+        };
+        cordova.getActivity().registerReceiver(receiver2, filter2);
+
+        Toast.makeText(cordova.getActivity().getApplicationContext(), "Ready to Scan", Toast.LENGTH_LONG).show();
     }
+
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if ("close".equals(action)) {
