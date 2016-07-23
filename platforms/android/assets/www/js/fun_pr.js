@@ -14,11 +14,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
        //alert(page);
                 			//document.getElementById("noitems").value = pr.scanResult;
        switch(page){
-            /* case "pageone" :
+             /*case "pageone" :
                                 $.ajax({
                                     url: "http://nava.work:8080/api/v1/login",
                                     data: '{"name":"tom","password":"1234"}',
-                                    contentType: "Content-Type: application/json",
+                                    contentType: "application/json; charset=utf-8",
                                     dataType: "json",
                                     type: "POST",
                                     cache: false,
@@ -39,34 +39,165 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                  // $.mobile.changePage("#pagetwo");
 
                 			 break;*/
-             case "additem" : //alert("M150");
+             case "pluspr" : //alert("M150");
                                  document.getElementById("noitems").value = pr.scanResult;
                                  document.getElementById("nameitems").value = "M150";
                                  document.getElementById("gradeitem").value = "A";
                                  document.getElementById("units").value = "ขวด";
                                  document.getElementById("citem").value = "";
 
-                                 document.getElementById("Tnoitem").innerHTML = "<b>รหัสสินค้า : </b>"+pr.scanResult;
-                                 document.getElementById("TNameitem").innerHTML = "<b>ชื่อสินค้า : </b>M150";
-                                 document.getElementById("Tgrade").innerHTML = "<b>เกรด : </b>A";
-                                 document.getElementById("Tunit").innerHTML = "<b>หน่วยนับ : </b>ขวด";
+                                 document.getElementById("Tnoitem").innerHTML = pr.scanResult;
+                                 document.getElementById("TNameitem").innerHTML = "M150";
+                                 document.getElementById("Tgrade").innerHTML = "A";
+                                 document.getElementById("Tunit").innerHTML = "ขวด";
 
                                  $("#itemdetail").show();
                                  $("#scanbaritem").hide();
-                                 document.getElementById("citem").focus();
+                                 //document.getElementById("citem").focus();
                                  $.mobile.changePage("#additem");
 
                              break;
                 			}
 });
 
-function additem(){
+/*function additem(){
   alert("เพิ่มสินค้า!!");
 
   document.getElementById("noitems").value = "";
-  $("#scanbaritem").show();
-  $("#itemdetail").hide();
+  $("#itemdetail").show();
   $.mobile.changePage('#additem');
+}*/
+function PR_list(){
+            $.ajax({
+                   url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/search",
+                   data: '{"type":"0","search":"58089"}',
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   type: "POST",
+                   cache: false,
+                   success: function(result){
+                        //console.log(JSON.stringify(result));
+                        var prl = JSON.stringify(result);
+                        var prlp = prl.split(":[");
+                        var str = prlp[1].split("]}");
+                        prl = "["+str[0]+"]";
+                        var js = jQuery.parseJSON(prl);
+                        var prlist = "";
+                        $.each(js, function(key, val) {
+                           console.log(val['docNo']);
+
+                           prlist += '<a href="#" onclick="prdetail(';
+                           prlist += "'"+val['docNo']+"'";
+                           prlist += ')"><label><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                           prlist += '<div class="ui-block-a">'+val['docNo']+'</div>';
+
+                           var wdate = val['wantDate'].split("-");
+                           day = wdate[2];
+                           month = wdate[1];
+                           year = (parseInt(wdate[0])+543);
+
+                           wantDate = day+"/"+month+"/"+year;
+
+                           prlist += '<div class="ui-block-b">'+wantDate+'</div>';
+                           prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
+
+                           switch (val['status']){
+                                case 1 : var status = "<img src='images/Warning.png' width='24'>";
+                                        break;
+                                case 2 : var status = "<img src='images/quick.png width='24'>";
+                                        break;
+                                case 3 : var status = "<img src='images/New.png width='24'>";
+                                        break;
+                           }
+
+                           prlist += '<div class="ui-block-d">'+status+'</div>';
+                           prlist += '</div></label></a><hr>';
+
+                        });
+                        document.getElementById("prlist").innerHTML = prlist;
+
+                        //console.log(JSON.stringify(js));
+
+                        $.mobile.changePage("#pagepr");
+                           },
+                   error: function (error){
+                        console.log(JSON.stringify(error));
+                        $.mobile.changePage("#pagepr");
+                   }
+
+                   });
+
+            return false;
+}
+
+function prdetail(DocNo){
+    alert(DocNo);
+
+    $.ajax({
+                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchDocPR",
+                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       type: "POST",
+                       cache: false,
+                       success: function(result){
+                            //console.log(JSON.stringify(result));
+                            var prl = JSON.stringify(result);
+                            var prlp = prl.split(":[");
+                            var str = prlp[1].split("]}");
+                            prl = "["+str[0]+"]";
+                            var js = jQuery.parseJSON(prl);
+                            var no = "";
+                            var wdate = "";
+                            var state = "null";
+                            var dif = "null";
+
+                            var detail = "";
+
+                           console.log(JSON.stringify(js));
+
+                           $.each(js, function(key, val) {
+                                no = val['docNo'];
+                                wdate = val['wantDate'];
+
+                                detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>รหัสสินค้า</b></div><div class='ui-block-b'>"+val['itemcode']+"</div>";
+                                detail += "</div>";
+
+                                detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>ชื่อสินค้า</b></div><div class='ui-block-b'>"+val['itemname']+"</div>";
+                                detail += "</div>";
+
+                                detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>เกรด</b></div><div class='ui-block-b'>null</div>";
+                                detail += "</div>";
+
+                                detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>จำนวน</b></div><div class='ui-block-b'>"+val['qty']+"&nbsp;"+val['unitcode']+"</div>";
+                                detail += "</div>";
+
+                                detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>คลัง</b></div><div class='ui-block-b'>null</div>";
+                                detail += "</div><hr style='border:1px dashed;'>";
+                            });
+
+                            document.getElementById("DocNo").innerHTML = no;
+                            document.getElementById("wantdate").innerHTML = wdate;
+                            document.getElementById("status").innerHTML = state;
+                            document.getElementById("diffdate").innerHTML = dif;
+
+                            document.getElementById("prldetail").innerHTML = detail;
+
+                            $.mobile.changePage("#listpr");
+                               },
+                       error: function (error){
+                            console.log(error);
+                            $.mobile.changePage("#pagepr");
+                       }
+
+           });
+
+   // $.mobile.changePage("#listpr");
 }
 
 function clicksubmit(){
@@ -87,9 +218,17 @@ function clicksubmit(){
             alert("บันทึกข้อมูลแล้ว!!");
             alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units);
                 document.getElementById("noitems").value = "";
-                $("#itemdetail").hide();
-                $("#scanbaritem").show();
-                $ .mobile.changePage("#additem");
+                document.getElementById("nameitems").value = "";
+                document.getElementById("gradeitem").value = "";
+                document.getElementById("units").value = "";
+                document.getElementById("citem").value = "";
+
+                document.getElementById("Tnoitem").innerHTML = "";
+                document.getElementById("TNameitem").innerHTML = "";
+                document.getElementById("Tgrade").innerHTML = "";
+                document.getElementById("Tunit").innerHTML = "";
+                $("#itemdetail").show();
+                $ .mobile.changePage("#pluspr");
         }
 
     }
@@ -97,7 +236,6 @@ function clicksubmit(){
 
 function pluspr(){
     alert("บันทึกข้อมูลแล้ว!!");
-    $("#itemdetail").hide();
-    $("#scanbaritem").show();
+    $("#itemdetail").show();
     $.mobile.changePage('#pagepr');
 }

@@ -53,13 +53,6 @@ html{
 	text-align:center;
 }
 
-
-
-
-
-
-
-@media (min-width: 768px) and (max-width: 1900px) {
 #form-main{
 	margin:5% 0 5% 0;
 	width:100%;
@@ -149,6 +142,13 @@ input:focus, textarea:focus {
 .form_set{width:60%;
 margin:0 auto;
 }
+
+
+
+
+
+@media (min-width: 768px) and (max-width: 1900px) {
+
 .button-green{
 	display: block;
 	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
@@ -198,6 +198,7 @@ width:40%;
 }
 #main{
 	margin-top: 5%;
+	margin-bottom: 15%;
 }
 .main_menu{
 	width:80%;
@@ -228,7 +229,7 @@ img.main_menu:hover
 .main_menu{width:30%;}
 .open_panel{
 	width:32px;
-	margin:20px 0 0 10px;
+	margin:30px 0 0 10px;
 }
 h1.title{
 	text-align: center;
@@ -295,9 +296,17 @@ hr.hr {
     box-shadow: 0 0 5px 1px white;
 	width:80%;
 }
+#form-main{
+	margin:1% 0 5% 0;
+	width:100%;
+	text-align:center;
+	padding-top:0px;
+	background: #f9f9f9;
+
+}
 .open_panel{
 	width:32px;
-	margin:15px 0 0 10px;
+	margin:10px 0 0 10px;
 }
 
 #header{
@@ -314,7 +323,8 @@ hr.hr {
 	border-bottom: 5px solid #7ccb1c; 
 }
 #main{
-	margin:20% 0 10% 0;
+	margin-top: 20%;
+	margin-bottom: 15%;
 
 }
 .col-md-6{
@@ -361,14 +371,14 @@ h4{font-size: 10px;}
 	padding:10px 25px 30px 25px;
 	width: 90%;
 	margin: auto;
-	-moz-border-radius: 7px;
-	 -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
 }
 
 .feedback-input {
 	color:#7ccb1c;
 	font-family: Helvetica, Arial, sans-serif;
-	font-weight:500;
+  font-weight:500;
 	font-size: 18px;
 	border-radius: 0;
 	line-height: 22px;
@@ -380,7 +390,7 @@ h4{font-size: 10px;}
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 3px solid rgba(0,0,0,0);
+  border: 3px solid rgba(0,0,0,0);
 }
 
 .feedback-input:focus{
@@ -477,5 +487,41 @@ input:focus, textarea:focus {
 	color: #fff !important;
     border-radius: 10px  !important; 
 }
+#scanbaritem{
+    background: #f5f1f1;
+    color:#7ccb1c;
+    padding: 10%;
+    margin: 5%;
+    text-align:center;
+    vertical-align: middle;
+    border-radius: 5%;
+    text-shadow: -1px 0 #fff, 0 1px #fff,
+          1px 0 #fff, 0 -1px #fff;
+}
+#itemdetail{
+    padding: 5%;
+}
 
+#shelves1,#scanitemcode{
+        background: #f5f1f1;
+        color:#7ccb1c;
+        padding: 10%;
+        margin: 5%;
+        text-align:center;
+        vertical-align: middle;
+        border-radius: 5%;
+        text-shadow: -1px 0 #fff, 0 1px #fff,
+              1px 0 #fff, 0 -1px #fff;
+}
+
+    #title{
+        width: 100px;
+        text-align: right;
+        float: left;
+        margin-right: 10%;
+    }
+    #prldetail{
+        font-size:14px;
+        margin-bottom:0;
+    }
 }

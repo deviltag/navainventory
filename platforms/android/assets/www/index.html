@@ -79,7 +79,7 @@
     <div data-role="main" class="ui-content" id="main">
         <h1 class="title">Main</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#pagepr" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6" onclick="PR_list()"><a href="#" data-transition="slidefade">
                 <div><img src="images/pr2.png" class="main_menu"><br><b>PR</b></div>
             </a></div>
             <div class="col-xs-6 col-md-6"><a href="#receive" data-transition="slidefade">
@@ -100,7 +100,8 @@
 
     <div data-role="footer" id="footer" data-enhance="false">
 
-        <p>footer</p>
+        <label style="padding:2% 0 0 5%;"><i>NAVA Inventory V.1  BY IT nopadol</i></label>
+
     </div>
     <div data-role="panel" id="myPanel" data-display="overlay">
         <h2>Overlay Panel</h2>
@@ -717,17 +718,18 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">รับสินค้า</h1>
-        <hr>
         <div class="ui-field-contain">
             <label for="search">Search Vender:</label>
-            <input type="search" name="search" id="search" placeholder="Search for Vender...">
+            <form name="search_po">
+                <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
+                <a href="#" class="ui-btn" onclick="return searchpo();">ค้นหา</a>
+            </form>
         </div>
-        <select onchange="select_warehouse(this)">
+        <!--<select onchange="select_warehouse(this)">
             <option value="s01">s01</option>
             <option value="s02">s02</option>
-        </select>
-        <a href="#receive_item" data-transition="slidefade" class="ui-btn">PO1 11หน่วย </a>
-        <a href="#receive_item" data-transition="slidefade" class="ui-btn">PO2 10หน่วย </a>
+        </select>-->
+        <div id="polist" class="polist"></div>
     </div>
 
 
@@ -760,12 +762,11 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <form>
-            <h2 class="sub_title">PO ...</h2>
-            <hr class="hr">
 
-            <a href="#" class="ui-btn ui-corner-all">Item1 | 10หน่วย<img src="images/tick.png" class="item_status"></a>
-            <a href="#" class="ui-btn ui-corner-all">Item2 | 10หน่วย<img src="images/error.png" class="item_status"></a>
-            <a href="#" class="ui-btn ui-corner-all">Item3 | 10หน่วย<img src="images/Warning.png" class="item_status"></a>
+
+            <div id="po_head"></div>
+            <hr class="hr">
+            <div id="po_detail"></div>
             <br>
             <div data-role="navbar">
                 <br>
@@ -841,7 +842,6 @@
     </div>
 </div>
 
-
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="pagepr">
@@ -866,54 +866,7 @@
             </div>
         </div>
         </label><hr>
-        <a href="#listpr"><label><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a">
-                PR00001
-            </div>
-            <div class="ui-block-b">
-                16/05/2559
-            </div>
-            <div class="ui-block-c">
-                7 วัน
-            </div>
-            <div class="ui-block-d">
-                <img src="images/Warning.png" width="24">
-            </div>
-        </div>
-        </label></a><hr>
-
-        <a href="#listpr"><label><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a">
-                PR00002
-            </div>
-            <div class="ui-block-b">
-                19/05/2559
-            </div>
-            <div class="ui-block-c">
-                5 วัน
-            </div>
-            <div class="ui-block-d">
-                <img src="images/quick.png" width="24">
-            </div>
-        </div>
-        </label></a><hr>
-
-        <a href="#listpr"><label><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a">
-                PR00003
-            </div>
-            <div class="ui-block-b">
-                22/05/2559
-            </div>
-            <div class="ui-block-c">
-                7 วัน
-            </div>
-            <div class="ui-block-d">
-                <img src="images/New.png" width="24">
-            </div>
-        </div>
-        </label></a><hr>
-
+        <span id="prlist"></span>
     </div>
 
 
@@ -945,53 +898,16 @@
         <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
-    <div  data-role="main" class="ui-content" id="main">
-        <table data-role="table" class="ui-responsive" style="margin-left:20%;">
-            <thead>
-            <tr>
-                <th>เลขที่ PR</th>
-                <th>วันที่ต้องการ</th>
-                <th>สถานะ</th>
-                <th>อายุใบ PR</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>PR00001</td>
-                <td>19/7/2559</td>
-                <td><img src="images/quick.png" width="24"> ด่วน</td>
-                <td>7 วัน</td>
-            </tr>
-            </tbody>
-        </table>
+    <div  data-role="main" class="ui-content" id="main" style="margin-bottom:0;">
+        <label style="clear:both;"><div id="title"><b>เลขที่ PR</b></div><div id="DocNo"></div></label>
+        <label style="clear:both;"><div id="title"><b>วันที่ต้องการ</b></div><div id="wantdate"></div></label>
+        <label style="clear:both;"><div id="title"><b>สถานะ</b></div><div id="status"></div></label>
+        <label style="clear:both;"><div id="title"><b>อายุใบ PR</b></div><div id="diffdate"></div></label>
+
+
         <hr>
-        <table data-role="table" class="ui-responsive" id="tblistpr">
-            <thead>
-            <tr>
-                <th>รหัสสินค้า</th>
-                <th>ชื่อสินค้า</th>
-                <th>เกรด</th>
-                <th>จำนวน</th>
-                <th>คลัง</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>0001</td>
-                <td>M150</td>
-                <td>A</td>
-                <td>36 ขวด</td>
-                <td>S1</td>
-            </tr>
-            <tr>
-                <td>0002</td>
-                <td>Green tea</td>
-                <td>A</td>
-                <td>12 ขวด</td>
-                <td>S1</td>
-            </tr>
-            </tbody>
-        </table>
+        <div id="prldetail">** ไม่มีข้อมูล **</div>
+
     </div>
 
 
@@ -1023,7 +939,7 @@
     </div>
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:20%;">
 
-        <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR เลขที่ : PR00001</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
+        <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
         <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
             <div class="ui-block-a">
                 รหัสสินค้า
@@ -1078,6 +994,9 @@
             </div>
         </div>
         </label>
+        <label style="border-bottom:1px dashed black; padding:2%; color:red; text-align:center">
+            <h5>** SCANBARCODE เพื่อเพิ่มรายการสินค้า **</h5>
+        </label>
         <label>คลังสินค้า :
             <select name="exchequer" id="exche">
                 <option value="0">คลัง</option>
@@ -1086,7 +1005,13 @@
             </select>
         </label>
         <label>
-            วันที่ต้องการ : <input type="date" name="dateline" id="bday">
+            วันที่ต้องการ :
+            <select id="defdate" name="date">
+                <option value="1">1 วัน</option>
+                <option value="3">3 วัน</option>
+                <option value="5">5 วัน</option>
+                <option value="7">7 วัน</option>
+            </select>
         </label>
         <label>
             หมายเหตุ : <textarea rows="5" cols="20"></textarea>
@@ -1101,8 +1026,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="additem()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่มสินค้า</a></li>
-                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -1125,28 +1049,21 @@
     </div>
     <div  data-role="main" class="ui-content" id="main">
 
-
-        <label id="scanbaritem">
-            <img src="images/barcoder-icon.png" style="margin-bottom:1;">
-            <b><h3><p>กรุณา</p></h3>
-                <h4><p>SCANBARCODE สินค้า</p>
-                    <p>เพื่อทำรายการต่อไป..</p></h4></b>
-        </label>
         <div id="itemdetail" style="display:none;">
 
             <input type="hidden" name="Noitem" placeholder="รหัสสินค้า" style="color:#000;" id="noitems">
-            <label id="Tnoitem"></label>
+            <label><b>รหัสสินค้า : </b><span id="Tnoitem">scanbacode สินค้าด้วย</span></label>
 
             <input type="hidden" name="Nameitem" placeholder="ชื่อสินค้า" readonly style="color:#000;" id="nameitems">
-            <label id="TNameitem"></label>
+            <label><b>ชื่อสินค้า : </b><span id="TNameitem"></span></label>
 
             <input type="hidden" name="grade" placeholder="เกรด" readonly style="color:#000;" id="gradeitem">
-            <label id="Tgrade"></label>
+            <label><b>เกรด : </b><span id="Tgrade"></span></label>
 
-            <label><input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem" autofocus></label>
+            <label><input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem"></label>
 
             <input type="hidden" name="unit" placeholder="หน่วยนับ" id="units" readonly>
-            <label id="Tunit"></label>
+            <label><b>หน่วยนับ : </b><span id="Tunit"></span></label>
         </div>
 
     </div>
@@ -1154,7 +1071,7 @@
         <div data-role="navbar">
             <ul>
                 <li ><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -1220,8 +1137,7 @@
     <div  data-role="main" class="ui-content" id="main">
 
         <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
-        <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh"></span></label><hr>
-
+        <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh"></span><input type="hidden" id="wh"></label><hr>
         <label style="text-align:center; vertical-align: middle; border-bottom:1px solid gray;">
             <div class="ui-grid-d">
                 <div class="ui-block-a">
@@ -1242,7 +1158,7 @@
             </div>
         </label>
 
-        <label style="text-align:center; border-bottom:1px gray dashed;">
+        <label style="text-align:center; border-bottom:1px gray dashed;" onclick="editstock()">
             <div class="ui-grid-d">
                 <div class="ui-block-a">
                     0001
@@ -1262,7 +1178,7 @@
             </div>
         </label>
 
-        <label style="text-align:center; border-bottom:1px gray dashed;">
+        <label style="text-align:center; border-bottom:1px gray dashed;" onclick="editstock()">
             <div class="ui-grid-d">
                 <div class="ui-block-a">
                     0002
@@ -1290,7 +1206,7 @@
         <div data-role="navbar">
             <ul>
                 <li onclick="backstock()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav">ย้อนกลับ</a></li>
-                <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+                <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
                 <li><a href="#shelves" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ตรวจนับสินค้า</a></li>
             </ul>
         </div>
@@ -1306,6 +1222,60 @@
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock detail ////////////////////////////////////////////////////////////////-->
+
+
+<!--////////////////////////////////////////////////////////////page stock edit ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="stockedit">
+    <div data-role="none" id="header">
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
+        <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh2"></span></label><hr>
+        <div id="itemcnt" style="margin-bottom: 20%;">
+            <label>ชั้นเก็บ : <span id="ECTshelves"></span>
+                <input type="hidden" name="shelves" readonly id="Eshel" size="50">
+            </label>
+            <label>รหัสสินค้า : <span id="ECTitemno"></span>
+                <input type="hidden" name="itemno" readonly id="EitemNo">
+            </label>
+            <label>ชื่อสินค้า : <span id="ECTitemname"></span>
+                <input type="hidden" name="itemname" readonly id="EitemsName">
+            </label>
+            <label>จำนวน :
+                <input type="number" name="count" id="Ecounts" value="56">
+            </label>
+            <label>หน่วยนับ : <span id="ECTunit"></span>
+                <input type="hidden" name="unit" id="ECunit">
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <div data-role="footer" id="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav">ย้อนกลับ</a></li>
+                <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <li onclick="deleteitem()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade">Delete</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--////////////////////////////////////////////////////////////page stock edit ////////////////////////////////////////////////////////////////-->
 
 <!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="shelves">
@@ -1355,12 +1325,6 @@
     <div  data-role="main" class="ui-content" id="main">
 
         <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label><hr>
-        <label id="scanitemcode"><img src="images/barcoder-icon.png"><b>
-            <h3><p>SCANBARCODE</p></h3>
-            <h4>
-                <p>สินค้าที่ต้องการนับ</p>
-            </h4>
-        </b></label>
         <div id="itemcnt" style="margin-bottom: 20%;">
             <label>ชั้นเก็บ : <span id="CTshelves"></span>
                 <input type="hidden" name="shelves" readonly id="shel" size="50">
@@ -1372,7 +1336,7 @@
                 <input type="hidden" name="itemname" readonly id="itemsName">
             </label>
             <label>จำนวน :
-                <input type="number" name="count" id="counts" autofocus="true">
+                <input type="number" name="count" id="counts">
             </label>
             <label>หน่วยนับ : <span id="CTunit"></span>
                 <input type="hidden" name="unit" id="Cunit">
@@ -1414,10 +1378,10 @@
         <form name="setting" >
             <label for="server">server</label>
             <input type="text" name="server" id="server" placeholder="apiserver">
-            <input type="hidden" id="apiserver_s" value="apiserver">
-            <label for="api1">api1</label>
+            <input type="hidden" id="apiserver_s" value="http://qserver.nopadol.com:8080/NPInventoryWs/">
+            <label for="api1">api search</label>
             <input type="text" name="api1" id="api1">
-            <input type="hidden" id="api1_s" value="api1show">
+            <input type="hidden" id="api1_s" value="po/vendor">
             <label for="api2">api2</label>
             <input type="text" name="api2" id="api2">
             <input type="hidden" id="api2_s" value="api2show">
@@ -1449,6 +1413,7 @@
 <script src="js/fun_pr.js"></script>
 <script src="js/fun_cs.js"></script>
 <script src="js/inven.js"></script>
+<script src="js/search_vender.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script src="js/setting.js"></script>

@@ -47,6 +47,7 @@ $( "#set" ).click(function() {
     localStorage.api_url_api1 = document.getElementById("api1").value;
     localStorage.api_url_api2 = document.getElementById("api2").value;
     localStorage.api_url_api3 = document.getElementById("api3").value;
+    alert("บันทึกข้อมูลเรียบร้อยแล้ว")
 
 
 });
