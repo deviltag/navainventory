@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
                 $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPInventoryWs/po/vendor",
+                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/vendor",
                    data: '{"accessToken":"","search":""}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -39,7 +39,7 @@ $(document).ready(function(){
 function searchpo(){
         //alert(search_po.search.value)
         $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPInventoryWs/po/vendor",
+                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/vendor",
                    data: '{"accessToken":"","search":"'+search_po.search.value+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -75,10 +75,10 @@ function select_vender(po_number){
     //alert(po_number);
     //console.log(po_no);
     //document.getElementById("po_no").value=po_no;
-
-     /*$.ajax({
-                   url: "http://192.168.0.166:8082/NPInventoryWs/po/vendorpo",
-                   data: '{"accessToken":"","search":"'+po_no+'"}',
+        alert("click : "+ po_number)
+     $.ajax({
+                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/vendorpo",
+                   data: '{"accessToken":"","search":"'+po_number+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
                    type: "POST",
@@ -113,26 +113,29 @@ function select_vender(po_number){
                     error: function (error){
                         console.log(error);
                     }
-                });*/
-                alert("click : "+ po_number)
-                $.mobile.changePage("#receive_item");
+                });
+
+                //$.mobile.changePage("#receive_item");
 }
-function select_op_vender(xx){
-	/*$.ajax({
-                                                     url: "http://192.168.0.166:8082/NPInventoryWs/po/podetails",
-                                                     data: '{"accessToken":"","search":"'+xx+'"}',
+function select_op_vender(get_detail){
+	$.ajax({
+                                                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/podetails",
+                                                     data: '{"accessToken":"","search":"'+get_detail+'"}',
                                                      contentType: "application/json; charset=utf-8",
                                                      dataType: "json",
                                                      type: "POST",
                                                      cache: false,
                                                      success: function(po_detail){
                                                      //console.log(JSON.stringify(po_detail));
+                                                     console.log(po_detail.resp.isSuccess);
+                                                     if(po_detail.resp.isSuccess==1){
                                                      var po_d = JSON.stringify(po_detail);
                                                      var po_ds = po_d.split(":[");
                                                      var str = po_ds[1].split("]}");
                                                      po_d = "["+str[0]+"]";
                                                      var js = jQuery.parseJSON(po_d);
-                                                     console.log(JSON.stringify(js));
+                                                    // alert(JSON.stringify(po_detail.isSuccess));
+                                                     //console.log(JSON.stringify(js));
                                                                             //document.getElementById("PO").innerHTML = JSON.stringify(js);
                                                      var count = js.length;
                                                                                  var po_de_head = "";                         //console.log(count);
@@ -165,11 +168,12 @@ function select_op_vender(xx){
                                                                                  document.getElementById("po_head").innerHTML = po_de_head;
                                                                                  document.getElementById("po_detail").innerHTML = po_de;
                                                                                  $.mobile.changePage("#receive_item");
+                                                                                 }else if(po_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
                                                                                  alert(error);
                                                                                 }
 
 
-                                                 });*/
+                                                 });
 }

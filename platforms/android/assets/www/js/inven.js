@@ -185,8 +185,8 @@ window.addEventListener('native.onscanbarcode', function (e) {
                 		   break;
               case "receive" :
 
-                          /*	$.ajax({
-                           url: "http://192.168.0.166:8082/NPInventoryWs/po/podetails",
+                         /* $.ajax({
+                          url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/podetails",
                           data: '{"accessToken":"","search":"'+e.scanResult+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -228,15 +228,16 @@ window.addEventListener('native.onscanbarcode', function (e) {
                             document.getElementById("po_head").innerHTML = po_de_head;
                             document.getElementById("po_detail").innerHTML = po_de;
                             $.mobile.changePage("#receive_item");
-                            },
-                            error: function (error){
-                            alert(error);
-                            }
-                            });
-                            */
+                          },
+                          error: function (error){
+                          alert(error);
+                          }
+                          });*/
+                          select_op_vender(e.scanResult);
 
-                           alert("scan : "+e.scanResult)
-                           $.mobile.changePage("#receive_item");
+
+                          // alert("scan : "+e.scanResult)
+                          //$.mobile.changePage("#receive_item");
                            break;
              case "receive_scan" :
                            document.getElementById("test_scanner").value=e.scanResult;
