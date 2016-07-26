@@ -150,6 +150,7 @@ function select_op_vender(get_detail){
 
 
 
+
                                                                                  po_de += '<label><div class="ui-grid-c" style="text-align:center;  font-size:14px;">';
                                                                                  po_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
                                                                                  po_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
