@@ -97,7 +97,6 @@ function select_vender(po_number){
                           //console.log(count);
                           var po_ven = "";
                           var po_header = "";
-
                           for(var i = 0;i<js.length;i++){
                             //console.log(js[i].code);
                             po_ven += '<a href="#" data-transition="slidefade" class="ui-btn" onclick="select_op_vender(';
@@ -138,6 +137,7 @@ function select_op_vender(get_detail){
                                                      //console.log(JSON.stringify(js));
                                                                             //document.getElementById("PO").innerHTML = JSON.stringify(js);
                                                      var count = js.length;
+                                                     //alert(count)
                                                                                  var po_de_head = "";                         //console.log(count);
                                                                                  var po_de = "";
 
@@ -151,21 +151,25 @@ function select_op_vender(get_detail){
 
 
 
-                                                                                 po_de += '<label><div class="ui-grid-c" style="text-align:center;  font-size:14px;">';
+                                                                                 po_de += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  po_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
                                                                                  po_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
                                                                                  po_de += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
-                                                                                 po_de += '<div class="ui-block-d"><b>รวม</b></div></div></label><hr>';
+                                                                                 po_de += '<div class="ui-block-d"><b>ราคา</b></div>';
+                                                                                 po_de += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
                                                                                  for(var i = 0;i<js.length;i++){
                                                                                  //console.log(js[i].code);
-                                                                                 po_de += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">'
+                                                                                 po_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">'
                                                                                  po_de += '<div class="ui-block-a">'+js[i].itemName+'</div>';
                                                                                  po_de += '<div class="ui-block-b">'+js[i].qty+' '+js[i].unitCode+'</div>';
                                                                                  po_de += '<div class="ui-block-c">'+js[i].price.toLocaleString()+' บาท</div>';
-                                                                                 po_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div></div><hr>';
+                                                                                 po_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div>';
+                                                                                 po_de += '<div class="ui-block-d"><img src="images/Warning.png" class="receive_status"></div></div><hr>';
+
+                                                                                 //po_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div></div><hr>';
 
                                                                                                  }
-                                                                                 po_de += '</table>';
+                                                                                 //po_de += '</table>';
                                                                                  document.getElementById("po_head").innerHTML = po_de_head;
                                                                                  document.getElementById("po_detail").innerHTML = po_de;
                                                                                  $.mobile.changePage("#receive_item");

@@ -11,12 +11,12 @@ window.addEventListener('native.onscanbarcode', function (pr) {
           page = $(this)[0].activeElement.id;
        });
 
-       //alert(page);
+       alert(page);
                 			//document.getElementById("noitems").value = pr.scanResult;
        switch(page){
-             /*case "pageone" :
+             case "pageone" :
                                 $.ajax({
-                                    url: "http://nava.work:8080/api/v1/login",
+                                    url: "http://nava.work:8000/api/v1/user/login",
                                     data: '{"name":"tom","password":"1234"}',
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
@@ -38,18 +38,57 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                   return false;
                                  // $.mobile.changePage("#pagetwo");
 
-                			 break;*/
+                			 break;
              case "pluspr" : //alert("M150");
-                                 document.getElementById("noitems").value = pr.scanResult;
-                                 document.getElementById("nameitems").value = "M150";
-                                 document.getElementById("gradeitem").value = "A";
-                                 document.getElementById("units").value = "ขวด";
-                                 document.getElementById("citem").value = "";
 
-                                 document.getElementById("Tnoitem").innerHTML = pr.scanResult;
-                                 document.getElementById("TNameitem").innerHTML = "M150";
-                                 document.getElementById("Tgrade").innerHTML = "A";
-                                 document.getElementById("Tunit").innerHTML = "ขวด";
+                                $.ajax({
+                                           url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchItem",
+                                           data: '{"docno":"test","barcode":"'+pr.scanResult+'"}',
+                                           contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                           type: "POST",
+                                           cache: false,
+                                           success: function(result){
+                                                //console.log(JSON.stringify(result));
+                                                //console.log(JSON.stringify(result.listBarcode));
+                                                var itemcode = "";
+                                                var itemName = "";
+                                                var range = "";
+                                                var cntitem = "";
+                                                var units = "";
+
+                                                $.each(result.listBarcode, function(key, val) {
+                                                    itemcode = val['itemCode'];
+                                                    itemName = val['itemName'];
+                                                    range = val['range'];
+                                                    cntitem = val['qty'];
+                                                    units = val['unitcode'];
+                                                });
+
+                                                document.getElementById("noitems").value = pr.scanResult;
+                                                document.getElementById("nameitems").value = itemName;
+                                                document.getElementById("gradeitem").value = range;
+                                                document.getElementById("units").value = units;
+                                                if(cntitem==0){
+                                                    document.getElementById("citem").value = "";
+                                                }else{
+                                                    document.getElementById("citem").value = cntitem;
+                                                }
+
+                                                document.getElementById("Tnoitem").innerHTML = pr.scanResult;
+                                                document.getElementById("TNameitem").innerHTML = itemName;
+                                                document.getElementById("Tgrade").innerHTML = range;
+                                                document.getElementById("Tunit").innerHTML = units;
+                                           },
+                                           error: function (error) {
+                                           alert("can't call api");
+                                           $.mobile.changePage("#pagetwo");
+                                           }
+
+                                        });
+
+
+
 
                                  $("#itemdetail").show();
                                  $("#scanbaritem").hide();
@@ -69,7 +108,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 }*/
 function PR_list(){
             $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/search",
+                   url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prList",
                    data: '{"type":"0","search":"58089"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -134,7 +173,7 @@ function prdetail(DocNo){
     alert(DocNo);
 
     $.ajax({
-                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchDocPR",
+                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prDetail",
                        data: '{"type":"0","searchDocno":"'+DocNo+'"}',
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
@@ -149,8 +188,8 @@ function prdetail(DocNo){
                             var js = jQuery.parseJSON(prl);
                             var no = "";
                             var wdate = "";
-                            var state = "null";
-                            var dif = "null";
+                            var state = "";
+                            var dif = "";
 
                             var detail = "";
 
@@ -159,6 +198,8 @@ function prdetail(DocNo){
                            $.each(js, function(key, val) {
                                 no = val['docNo'];
                                 wdate = val['wantDate'];
+                                state = val['status'];
+                                dif = val['diffdate'];
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
                                 detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>รหัสสินค้า</b></div><div class='ui-block-b'>"+val['itemcode']+"</div>";
@@ -169,16 +210,13 @@ function prdetail(DocNo){
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
-                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>เกรด</b></div><div class='ui-block-b'>null</div>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>Range</b></div><div class='ui-block-b'>"+val['range']+"</div>";
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
                                 detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>จำนวน</b></div><div class='ui-block-b'>"+val['qty']+"&nbsp;"+val['unitcode']+"</div>";
-                                detail += "</div>";
-
-                                detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
-                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>คลัง</b></div><div class='ui-block-b'>null</div>";
                                 detail += "</div><hr style='border:1px dashed;'>";
+
                             });
 
                             document.getElementById("DocNo").innerHTML = no;

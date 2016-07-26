@@ -264,11 +264,19 @@ hr.hr {
 	width:25px;
 	float: right;
 }
+.receive_status{
+	width:25px;
+	float: center;
+}
 }
 
 /*===============================================================================================mobile==========================================================*/
 
 @media (max-width: 767px) {
+.receive_status{
+	width:25px;
+	float: center;
+}
 .item_status{
 	width:25px;
 	float: right;

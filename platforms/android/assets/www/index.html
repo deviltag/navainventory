@@ -110,6 +110,7 @@
         <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#setting"  data-transition="slidefade" class="ui-btn">SETTING</a>
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
@@ -520,7 +521,7 @@
             <input type="checkbox" name="isp_item_select" id="item3" value="item3">
         </fieldset>
 
-        </form>
+
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
@@ -805,11 +806,10 @@
         <form>
             <h2 class="sub_title">scan item</h2>
             <hr class="hr">
-            <label>scan สินค้า : <input type="text" name="receive1" id="test_scanner"></label>
-
-            <label id="receive2" style="display:none;">จำนวน : <input type="text" name="receive2"></label>
-            <a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
-            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>
+            <div id="product_show"></div>
+            <label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>
+            <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
+            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
 
         </form>
 
@@ -820,8 +820,8 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="scan_cancel()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
+                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li onclick="cancel_scan()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -935,7 +935,7 @@
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:20%;">
 
         <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
-        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
             <div class="ui-block-a">
                 รหัสสินค้า
             </div>
@@ -948,12 +948,9 @@
             <div class="ui-block-d">
                 เกรด
             </div>
-            <div class="ui-block-e">
-                คลัง
-            </div>
         </div>
         </label>
-        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
             <div class="ui-block-a">
                 0001
             </div>
@@ -966,12 +963,9 @@
             <div class="ui-block-d">
                 A
             </div>
-            <div class="ui-block-e">
-                S1
-            </div>
         </div>
         </label>
-        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-d" style="text-align:center;">
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
             <div class="ui-block-a">
                 0002
             </div>
@@ -984,20 +978,10 @@
             <div class="ui-block-d">
                 A
             </div>
-            <div class="ui-block-e">
-                S1
-            </div>
         </div>
         </label>
         <label style="border-bottom:1px dashed black; padding:2%; color:red; text-align:center">
             <h5>** SCANBARCODE เพื่อเพิ่มรายการสินค้า **</h5>
-        </label>
-        <label>คลังสินค้า :
-            <select name="exchequer" id="exche">
-                <option value="0">คลัง</option>
-                <option value="S1">S1</option>
-                <option value="S2">S2</option>
-            </select>
         </label>
         <label>
             วันที่ต้องการ :
@@ -1021,7 +1005,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่ม</a></li>
             </ul>
         </div>
     </div>
@@ -1373,10 +1357,10 @@
         <form name="setting" >
             <label for="server">server</label>
             <input type="text" name="server" id="server" placeholder="apiserver">
-            <input type="hidden" id="apiserver_s" value="http://qserver.nopadol.com:8080/NPInventoryWs/">
+            <input type="hidden" id="apiserver_s" value="http://qserver.nopadol.com:8080/">
             <label for="api1">api search</label>
             <input type="text" name="api1" id="api1">
-            <input type="hidden" id="api1_s" value="po/vendor">
+            <input type="hidden" id="api1_s" value="NPReceiveWs/po/vendor">
             <label for="api2">api2</label>
             <input type="text" name="api2" id="api2">
             <input type="hidden" id="api2_s" value="api2show">
