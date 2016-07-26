@@ -40,16 +40,55 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
                 			 break;
              case "pluspr" : //alert("M150");
-                                 document.getElementById("noitems").value = pr.scanResult;
-                                 document.getElementById("nameitems").value = "M150";
-                                 document.getElementById("gradeitem").value = "A";
-                                 document.getElementById("units").value = "ขวด";
-                                 document.getElementById("citem").value = "";
 
-                                 document.getElementById("Tnoitem").innerHTML = pr.scanResult;
-                                 document.getElementById("TNameitem").innerHTML = "M150";
-                                 document.getElementById("Tgrade").innerHTML = "A";
-                                 document.getElementById("Tunit").innerHTML = "ขวด";
+                                $.ajax({
+                                           url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchItem",
+                                           data: '{"docno":"test","barcode":"'+pr.scanResult+'"}',
+                                           contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                           type: "POST",
+                                           cache: false,
+                                           success: function(result){
+                                                //console.log(JSON.stringify(result));
+                                                //console.log(JSON.stringify(result.listBarcode));
+                                                var itemcode = "";
+                                                var itemName = "";
+                                                var range = "";
+                                                var cntitem = "";
+                                                var units = "";
+
+                                                $.each(result.listBarcode, function(key, val) {
+                                                    itemcode = val['itemCode'];
+                                                    itemName = val['itemName'];
+                                                    range = val['range'];
+                                                    cntitem = val['qty'];
+                                                    units = val['unitcode'];
+                                                });
+
+                                                document.getElementById("noitems").value = pr.scanResult;
+                                                document.getElementById("nameitems").value = itemName;
+                                                document.getElementById("gradeitem").value = range;
+                                                document.getElementById("units").value = units;
+                                                if(cntitem==0){
+                                                    document.getElementById("citem").value = "";
+                                                }else{
+                                                    document.getElementById("citem").value = cntitem;
+                                                }
+
+                                                document.getElementById("Tnoitem").innerHTML = pr.scanResult;
+                                                document.getElementById("TNameitem").innerHTML = itemName;
+                                                document.getElementById("Tgrade").innerHTML = range;
+                                                document.getElementById("Tunit").innerHTML = units;
+                                           },
+                                           error: function (error) {
+                                           alert("can't call api");
+                                           $.mobile.changePage("#pagetwo");
+                                           }
+
+                                        });
+
+
+
 
                                  $("#itemdetail").show();
                                  $("#scanbaritem").hide();
