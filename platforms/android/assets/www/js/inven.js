@@ -133,6 +133,61 @@ function cancel_scan(){
   $("#scan_cancel").hide();
   $("#scan_btn").show();
 }
+function submit_scan(){
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+if(localStorage.receivestatus=="0"){
+$.ajax({
+         url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/insert",
+         data: '{"accessToken":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","userID":"admin"}',
+         contentType: "application/json; charset=utf-8",
+         dataType: "json",
+         type: "POST",
+         cache: false,
+         success: function(insert_res){
+         console.log(insert_res);
+         $.ajax({
+                  url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/additem",
+                  data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}',
+                         //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","apCode":"AP-0007","poRefNo":"PO5806-0033","barCode":"1000040","itemCode":"z4","itemName":"เครื่องรับธนบัตร","qty":"10","unitCode":"เครื่อง","lineNumber":"0","userID":"admin"}
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  type: "POST",
+                  cache: false,
+                  success: function(additem_res){
+                  console.log(additem_res);
+                  },
+                  error: function (error){
+                  alert(error);
+                  }
+                  });
+
+         },
+         error: function (error){
+         alert(error);
+         }
+         });
+
+
+//alert('"accessToken":"","Docdate":"'+date+'","apCode":"'+localStorage.apcode+'","PoRefNo":"'+localStorage.porefno+'","userID":"admin"')
+//localStorage.receivestatus = "1";
+//alert(localStorage.receivestatus)
+}else{
+
+}
+
+//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}')
+}
+
+function submit_receive(){
+localStorage.receivestatus = "0";
+alert(localStorage.receivestatus)
+
+}
 /*function test(){
  window.addEventListener("native.onscanbarcode",function(t){
         document.getElementById("test_scanner").value=t.scanResult;
@@ -185,6 +240,7 @@ window.addEventListener('native.onscanbarcode', function (e) {
                 		   break;
               case "receive" :
                           select_op_vender(e.scanResult);
+                          //alert(e.scanResult)
                          /* $.ajax({
                           url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/podetails",
                           data: '{"accessToken":"","search":"'+e.scanResult+'"}',
@@ -233,7 +289,16 @@ window.addEventListener('native.onscanbarcode', function (e) {
                           }
                           });
                           alert("scan : "+e.scanResult)
-                          $.mobile.changePage("#receive_item");*/
+                          $.mobile.changePage("#receive_item");
+
+                          paramiter insert receive
+                          DocNo varchar(25),
+                          DocDate varchar(25),
+                          ApCode as varchar(25),
+                          PORefNo as varchar(25),
+                          UserID varchar(25)
+
+                          */
                            break;
              case "receive_scan" :
                            document.getElementById("test_scanner").value=e.scanResult;
@@ -242,7 +307,39 @@ window.addEventListener('native.onscanbarcode', function (e) {
                            $("#scan_btn").hide();
                            break;
              case "receive_item" :
-                           var result_scanner = "";
+             var result_scanner = "";
+             $.ajax({
+                                       url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/item",
+                                       data: '{"accessToken":"","docNo":"","barCode":"'+e.scanResult+'"}',
+                                       contentType: "application/json; charset=utf-8",
+                                       dataType: "json",
+                                       type: "POST",
+                                       cache: false,
+                                       success: function(item){
+
+                                       console.log(item);
+                                       //console.log(item.itemName);
+                                       //console.log(JSON.stringify(item));
+                                       result_scanner +="<p>รหัสสินค้า : "+e.scanResult+"</p>";
+                                       result_scanner +="<p>ชื่อสินค้า : "+item.itemName+"</p>";
+                                       result_scanner +="<p>หน่วยสินค้า : "+item.unitCode+"</p>";
+
+                                       localStorage.itemCode_rv = item.itemCode
+                                       localStorage.barCode_rv = item.barCode
+                                       localStorage.itemName_rv = item.itemName
+                                       localStorage.unitCode_rv = item.unitCode
+
+                                       if(item.qtyRC==0){
+                                       document.getElementById("amount_scanner").value = "";
+                                       }else{document.getElementById("amount_scanner").value = item.qtyRC;}
+                                       document.getElementById("product_show").innerHTML = result_scanner;
+                                       $.mobile.changePage("#receive_scan")
+                                       },
+                                       error: function (error){
+                                       alert(error);
+                                       }
+                                       });
+                           /*
                            result_scanner +="<p>"+e.scanResult+"</p>";
                            result_scanner +="<p>test</p>";
                            result_scanner +="<p>หน่วย</p>";
@@ -251,7 +348,7 @@ window.addEventListener('native.onscanbarcode', function (e) {
                            $("#receive2").show();
                            $("#scan_cancel").show();
                            $("#scan_btn").hide();
-                           $.mobile.changePage("#receive_scan")
+                           $.mobile.changePage("#receive_scan")*/
                            break;
              case "transferup_item" :
                            document.getElementById("product_scan_up").value=e.scanResult;

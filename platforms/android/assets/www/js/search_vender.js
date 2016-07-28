@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
                 $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/vendor",
+                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/vendor",
                    data: '{"accessToken":"","search":""}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -39,7 +39,7 @@ $(document).ready(function(){
 function searchpo(){
         //alert(search_po.search.value)
         $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/vendor",
+                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/vendor",
                    data: '{"accessToken":"","search":"'+search_po.search.value+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -77,7 +77,7 @@ function select_vender(po_number){
     //document.getElementById("po_no").value=po_no;
         alert("click : "+ po_number)
      $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/vendorpo",
+                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/vendorpo",
                    data: '{"accessToken":"","search":"'+po_number+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -118,7 +118,7 @@ function select_vender(po_number){
 }
 function select_op_vender(get_detail){
 	$.ajax({
-                                                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/po/podetails",
+                                                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/podetails",
                                                      data: '{"accessToken":"","search":"'+get_detail+'"}',
                                                      contentType: "application/json; charset=utf-8",
                                                      dataType: "json",
@@ -147,6 +147,8 @@ function select_op_vender(get_detail){
                                                                                  po_de_head += "<p>ชื่อเจ้าหนี้ :"+po_detail.apName+"</p>";
                                                                                  po_de_head += "<p>ราคารวม :"+po_detail.sumOfItemAmount.toLocaleString()+" บาท</p>";
                                                                                  po_de_head += "<p>ราคารวมภาษี :"+po_detail.totalAmount.toLocaleString()+" บาท</p>";
+                                                                                 localStorage.apcode = po_detail.apCode;
+                                                                                 localStorage.porefno = po_detail.docNo;
 
 
 
