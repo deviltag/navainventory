@@ -15,7 +15,8 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                 			//document.getElementById("noitems").value = pr.scanResult;
        switch(page){
              case "pageone" :
-                                $.ajax({
+                        $.mobile.changePage("#pagetwo");
+                                /*$.ajax({
                                     url: "http://nava.work:8000/api/v1/user/login",
                                     data: '{"name":"tom","password":"1234"}',
                                     contentType: "application/json; charset=utf-8",
@@ -35,8 +36,8 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
                                   });
 
-                                  return false;
-                                 // $.mobile.changePage("#pagetwo");
+                                  return false;*/
+
 
                 			 break;
              case "pluspr" : //alert("M150");

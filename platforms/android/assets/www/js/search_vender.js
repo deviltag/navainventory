@@ -117,7 +117,7 @@ function select_vender(po_number){
                 //$.mobile.changePage("#receive_item");
 }
 function select_op_vender(get_detail){
-	$.ajax({
+	                $.ajax({
                                                      url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/podetails",
                                                      data: '{"accessToken":"","search":"'+get_detail+'"}',
                                                      contentType: "application/json; charset=utf-8",
@@ -162,16 +162,18 @@ function select_op_vender(get_detail){
                                                                                  for(var i = 0;i<js.length;i++){
                                                                                  //console.log(js[i].code);
                                                                                  po_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">'
-                                                                                 po_de += '<div class="ui-block-a">'+js[i].itemName+'</div>';
-                                                                                 po_de += '<div class="ui-block-b">'+js[i].qty+' '+js[i].unitCode+'</div>';
-                                                                                 po_de += '<div class="ui-block-c">'+js[i].price.toLocaleString()+' บาท</div>';
-                                                                                 po_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div>';
+                                                                                 po_de += '<div class="ui-block-a"> '+js[i].itemName+' </div>';
+                                                                                 po_de += '<div class="ui-block-b"> '+js[i].remainQty+' '+js[i].unitCode+' </div>';
+                                                                                 po_de += '<div class="ui-block-c"> '+js[i].price.toLocaleString()+' </div>';
+                                                                                 po_de += '<div class="ui-block-d"> '+js[i].amount.toLocaleString()+' </div>';
+
                                                                                  po_de += '<div class="ui-block-d"><img src="images/Warning.png" class="receive_status"></div></div><hr>';
 
                                                                                  //po_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div></div><hr>';
 
                                                                                                  }
                                                                                  //po_de += '</table>';
+                                                                                  po_de +='<a href="#" onclick="search_rc_no()" class="ui-btn">แสดงใบรับสินค้า</a>';
                                                                                  document.getElementById("po_head").innerHTML = po_de_head;
                                                                                  document.getElementById("po_detail").innerHTML = po_de;
                                                                                  $.mobile.changePage("#receive_item");
@@ -184,3 +186,86 @@ function select_op_vender(get_detail){
 
                                                  });
 }
+
+function search_rc_no(rc_no){
+alert(localStorage.porefno+" "+localStorage.receiveNumber)
+	                $.ajax({
+                                                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/search",
+                                                     data: '{"accessToken":"","docNo":"'+localStorage.porefno+'","recNo":"'+localStorage.receiveNumber+'"}',
+                                                     //{"accessToken":"","docNo":"'+localStorage.porefno+'","recNo":"'+localStorage.receiveNumber+'"}
+                                                     contentType: "application/json; charset=utf-8",
+                                                     dataType: "json",
+                                                     type: "POST",
+                                                     cache: false,
+                                                     success: function(rc_detail){
+                                                     console.log(JSON.stringify(rc_detail));
+                                                     //console.log(rc_detail.resp.isSuccess);
+                                                     if(rc_detail.resp.isSuccess==1){
+                                                     var rc_d = JSON.stringify(rc_detail);
+                                                     var rc_ds = rc_d.split(":[");
+                                                     var str = rc_ds[1].split("]}");
+                                                     rc_d = "["+str[0]+"]";
+                                                     var js = jQuery.parseJSON(rc_d);
+                                                    // alert(JSON.stringify(rc_detail.isSuccess));
+                                                     //console.log(JSON.stringify(js));
+                                                                            //document.getElementById("PO").innerHTML = JSON.stringify(js);
+                                                     var count = js.length;
+                                                     //alert(count)
+                                                                                 var rc_de_head = "";                         //console.log(count);
+                                                                                 var rc_de = "";
+                                                                                 rc_de_head += "<h2 class='sub_title'>เลขที่ ใบรับเข้า :"+localStorage.receiveNumber+"</h2>";
+                                                                                 rc_de_head += "<h2 class='sub_title'>เลขที่ PO :"+rc_detail.docNo+"</h2>";
+                                                                                 rc_de_head += "<p> วันที่ออกเอกสาร :"+rc_detail.docDate+"</p>";
+                                                                                 rc_de_head += "<p>รหัสเจ้าหนี้ :"+rc_detail.apCode+"</p>";
+                                                                                 rc_de_head += "<p>ชื่อเจ้าหนี้ :"+rc_detail.apName+"</p>";
+                                                                                 rc_de_head += "<p>ราคารวม :"+rc_detail.sumOfItemAmount.toLocaleString()+" บาท</p>";
+                                                                                 rc_de_head += "<p>ราคารวมภาษี :"+rc_detail.totalAmount.toLocaleString()+" บาท</p>";
+                                                                                 localStorage.apcode = rc_detail.apCode;
+                                                                                 localStorage.porefno = rc_detail.docNo;
+
+
+
+
+                                                                                 rc_de += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
+                                                                                 rc_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
+                                                                                 rc_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                                                                                 rc_de += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
+                                                                                 rc_de += '<div class="ui-block-d"><b>จำนวนรับเข้า</b></div>';
+                                                                                 rc_de += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
+                                                                                 for(var i = 0;i<js.length;i++){
+                                                                                 //console.log(js[i].code);
+                                                                                 rc_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">'
+                                                                                 rc_de += '<div class="ui-block-a">'+js[i].itemName+'</div>';
+                                                                                 rc_de += '<div class="ui-block-b"> '+js[i].remainQty+' '+js[i].unitCode+' </div>';
+                                                                                 rc_de += '<div class="ui-block-c"> '+js[i].price.toLocaleString()+' </div>';
+                                                                                 rc_de += '<div class="ui-block-d"> '+js[i].rcQty+' </div>';
+                                                                                 //rc_de += '<div class="ui-block-d"> '+js[i].amount.toLocaleString()+' </div>';
+
+                                                                                  if(js[i].status==0){
+                                                                                    rc_de += '<div class="ui-block-d"><img src="images/Warning.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js[i].status==1){
+                                                                                    rc_de += '<div class="ui-block-d"><img src="images/tick.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js[i].status==2){
+                                                                                    rc_de += '<div class="ui-block-d"><img src="images/minus.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js[i].status==3){
+                                                                                    rc_de += '<div class="ui-block-d"><img src="images/plus.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js[i].status==4){
+                                                                                    rc_de += '<div class="ui-block-d"><img src="images/private.png" class="receive_status"></div></div><hr>';
+                                                                                  }
+                                                                                 //rc_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div></div><hr>';
+
+                                                                                                 }
+                                                                                 //rc_de += '</table>';
+                                                                                 document.getElementById("po_head").innerHTML = rc_de_head;
+                                                                                 document.getElementById("po_detail").innerHTML = rc_de;
+                                                                                 $.mobile.changePage("#receive_item");
+                                                                                 }else if(rc_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
+                                                                                 },
+                                                                                 error: function (error){
+                                                                                 alert(error);
+                                                                                }
+
+
+                                                 });
+}
+
