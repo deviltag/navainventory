@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
-                $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/vendor",
+
+               /* $.ajax({
+                   url: localStorage.api_url_server+localStorage.api_url_vender,
                    data: '{"accessToken":"","search":""}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -32,14 +33,16 @@ $(document).ready(function(){
                         console.log(error);
                     }
 
-                });
+                });*/
 
+searchpo();
 });
 
 function searchpo(){
+//alert(localStorage.api_url_server+""+localStorage.api_url_vender);
         //alert(search_po.search.value)
         $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/vendor",
+                   url: localStorage.api_url_server+""+localStorage.api_url_vender,
                    data: '{"accessToken":"","search":"'+search_po.search.value+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -77,7 +80,7 @@ function select_vender(po_number){
     //document.getElementById("po_no").value=po_no;
         alert("click : "+ po_number)
      $.ajax({
-                   url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/vendorpo",
+                   url: localStorage.api_url_server+""+localStorage.api_url_poList,
                    data: '{"accessToken":"","search":"'+po_number+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -118,7 +121,7 @@ function select_vender(po_number){
 }
 function select_op_vender(get_detail){
 	                $.ajax({
-                                                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/podetails",
+                                                     url: localStorage.api_url_server+""+localStorage.api_url_poDetail,
                                                      data: '{"accessToken":"","search":"'+get_detail+'"}',
                                                      contentType: "application/json; charset=utf-8",
                                                      dataType: "json",
@@ -188,9 +191,11 @@ function select_op_vender(get_detail){
 }
 
 function search_rc_no(rc_no){
-alert(localStorage.porefno+" "+localStorage.receiveNumber)
+if(localStorage.receiveNumber){
+                alert(localStorage.porefno+" "+localStorage.receiveNumber);
+
 	                $.ajax({
-                                                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/search",
+                                                     url: localStorage.api_url_server+""+localStorage.api_url_search,
                                                      data: '{"accessToken":"","docNo":"'+localStorage.porefno+'","recNo":"'+localStorage.receiveNumber+'"}',
                                                      //{"accessToken":"","docNo":"'+localStorage.porefno+'","recNo":"'+localStorage.receiveNumber+'"}
                                                      contentType: "application/json; charset=utf-8",
@@ -267,5 +272,8 @@ alert(localStorage.porefno+" "+localStorage.receiveNumber)
 
 
                                                  });
+                                                 }else{
+                                                 alert("ไม่มีใบรับเข้า !!");
+                                                 }
 }
 

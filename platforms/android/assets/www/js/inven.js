@@ -148,7 +148,7 @@ var date = curr_date + "/" + curr_month
 if(localStorage.receivestatus=="0"){
 alert(localStorage.receivestatus+" ยังไม่มีใบ")
 $.ajax({
-         url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/insert",
+         url: localStorage.api_url_server+""+localStorage.api_url_insert,
          data: '{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
          //{"accessToken":"","docDate":"28/07/2016","poRefNo":"PO5806-0033","isCompleteSave":"0","userID":"admin"}
          contentType: "application/json; charset=utf-8",
@@ -159,7 +159,7 @@ $.ajax({
          console.log(insert_res);
          localStorage.receiveNumber = insert_res.docNo;
          $.ajax({
-                  url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/additem",
+                  url: localStorage.api_url_server+""+localStorage.api_url_additem,
                   data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","userID":"admin"}',
                          //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
                   contentType: "application/json; charset=utf-8",
@@ -194,7 +194,7 @@ $.ajax({
         alert(localStorage.receivestatus+" มีใบแล้ว")
 
         $.ajax({
-                          url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/additem",
+                          url: localStorage.api_url_server+""+localStorage.api_url_additem,
                           data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","userID":"admin"}',
                                  //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
                           contentType: "application/json; charset=utf-8",
@@ -229,7 +229,7 @@ var curr_year = d.getFullYear();
 var date = curr_date + "/" + curr_month
 + "/" + curr_year;
             $.ajax({
-                     url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/insert",
+                     url: localStorage.api_url_server+""+localStorage.api_url_insert,
                      data: '{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"1","userID":"admin"}',
                      //{"accessToken":"","docDate":"28/07/2016","poRefNo":"PO5806-0033","isCompleteSave":"0","userID":"admin"}
                      contentType: "application/json; charset=utf-8",
@@ -306,7 +306,7 @@ window.addEventListener('native.onscanbarcode', function (e) {
              case "receive_scan" :
                            var result_scanner = "";
                            $.ajax({
-                                                                  url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/item",
+                                                                  url: localStorage.api_url_server+""+localStorage.api_url_serchitem,
                                                                   data: '{"accessToken":"","docNo":"","barCode":"'+e.scanResult+'"}',
                                                                   contentType: "application/json; charset=utf-8",
                                                                   dataType: "json",
@@ -343,7 +343,7 @@ window.addEventListener('native.onscanbarcode', function (e) {
              case "receive_item" :
                            var result_scanner = "";
                            $.ajax({
-                                       url: "http://qserver.nopadol.com:8080/NPReceiveWs/rc/item",
+                                       url: localStorage.api_url_server+""+localStorage.api_url_serchitem,
                                        data: '{"accessToken":"","docNo":"","barCode":"'+e.scanResult+'"}',
                                        contentType: "application/json; charset=utf-8",
                                        dataType: "json",
