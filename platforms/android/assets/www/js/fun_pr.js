@@ -40,10 +40,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
                 			 break;
              case "pluspr" : //alert("M150");
-
+                             console.log(document.getElementById("DocNo").value);
+                             var DocNo = document.getElementById("DocNo").value;
                                 $.ajax({
                                            url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchItem",
-                                           data: '{"docno":"test","barcode":"'+pr.scanResult+'"}',
+                                           data: '{"docno":"'+DocNo+'","barcode":"'+pr.scanResult+'"}',
                                            contentType: "application/json; charset=utf-8",
                                            dataType: "json",
                                            type: "POST",
@@ -76,7 +77,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                         units = val['unitcode'];
                                                     });
                                                 }
-                                                document.getElementById("DocNo").value = "test";
+                                                document.getElementById("DocNo").value = DocNo;
                                                 document.getElementById("noitems").value = pr.scanResult;
                                                 document.getElementById("nameitems").value = itemName;
                                                 document.getElementById("gradeitem").value = range;
@@ -94,7 +95,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                            },
                                            error: function (error) {
                                            alert("can't call api");
-                                           $.mobile.changePage("#pagetwo");
+                                           $.mobile.changePage("#pluspr");
                                            }
 
                                         });
@@ -107,77 +108,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                  //document.getElementById("citem").focus();
                                  $.mobile.changePage("#additem");
 
+
+
                              break;
 
-              case "additem" : //alert("M150");
 
-                                             $.ajax({
-                                                        url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchItem",
-                                                        data: '{"docno":"test","barcode":"'+pr.scanResult+'"}',
-                                                        contentType: "application/json; charset=utf-8",
-                                                        dataType: "json",
-                                                        type: "POST",
-                                                        cache: false,
-                                                        success: function(result){
-                                                             //console.log(JSON.stringify(result));
-                                                             //console.log(JSON.stringify(result.listBarcode));
-                                                             var itemcode = "";
-                                                             var itemName = "";
-                                                             var range = "";
-                                                             var cntitem = "";
-                                                             var units = "";
-                                                             if(result.listBarcode==null){
-                                                                 console.log("data listbarcode : null");
-
-                                                                 $.each(result.listPRBarcode, function(key, val) {
-                                                                        itemcode = val['itemcode'];
-                                                                        itemName = val['itemname'];
-                                                                        range = val['range'];
-                                                                        cntitem = val['qty'];
-                                                                        units = val['unitcode'];
-                                                                 });
-
-                                                             }else{
-                                                                 $.each(result.listBarcode, function(key, val) {
-                                                                     itemcode = val['itemcode'];
-                                                                     itemName = val['itemname'];
-                                                                     range = val['range'];
-                                                                     cntitem = val['qty'];
-                                                                     units = val['unitcode'];
-                                                                 });
-                                                             }
-                                                             document.getElementById("DocNo").value = "test";
-                                                             document.getElementById("noitems").value = pr.scanResult;
-                                                             document.getElementById("nameitems").value = itemName;
-                                                             document.getElementById("gradeitem").value = range;
-                                                             document.getElementById("units").value = units;
-                                                             if(cntitem==0){
-                                                                 document.getElementById("citem").value = "";
-                                                             }else{
-                                                                 document.getElementById("citem").value = cntitem;
-                                                             }
-
-                                                             document.getElementById("Tnoitem").innerHTML = pr.scanResult;
-                                                             document.getElementById("TNameitem").innerHTML = itemName;
-                                                             document.getElementById("Tgrade").innerHTML = range;
-                                                             document.getElementById("Tunit").innerHTML = units;
-                                                        },
-                                                        error: function (error) {
-                                                        alert("can't call api");
-                                                        $.mobile.changePage("#pagetwo");
-                                                        }
-
-                                                     });
-
-
-
-
-                                              $("#itemdetail").show();
-                                              $("#scanbaritem").hide();
-                                              //document.getElementById("citem").focus();
-                                              $.mobile.changePage("#additem");
-
-                                          break;
                              			}
 });
 
@@ -197,27 +132,29 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                    type: "POST",
                    cache: false,
                    success: function(result){
-                        console.log(JSON.stringify(result));
+                        //console.log(JSON.stringify(result));
                         var prl = JSON.stringify(result);
                         var prlp = prl.split(":[");
                         var str = prlp[1].split("]}");
                         prl = "["+str[0]+"]";
                         var js = jQuery.parseJSON(prl);
                         var prlist = "";
+                        var wdate = "";
                         $.each(js, function(key, val) {
-                           console.log(val['docNo']);
+                           //console.log(val['docNo']);
 
                            prlist += '<a href="#" onclick="prdetail(';
                            prlist += "'"+val['docNo']+"'";
                            prlist += ')"><label><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
                            prlist += '<div class="ui-block-a">'+val['docNo']+'</div>';
 
-                           var wdate = val['wantDate'].split("-");
+                           var wantDate = val['wantDate'];
+                           /*wdate = val['wantDate'].split("-");
                            day = wdate[2];
                            month = wdate[1];
                            year = (parseInt(wdate[0])+543);
 
-                           wantDate = day+"/"+month+"/"+year;
+                           wantDate = day+"/"+month+"/"+year;*/
 
                            prlist += '<div class="ui-block-b">'+wantDate+'</div>';
                            prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
@@ -250,10 +187,72 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
            // return false;
 //}
+function backdetail(){
+    console.log("backlink");
+    $.ajax({
+                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prList",
+                       data: '{"type":"0","search":"58089"}',
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       type: "POST",
+                       cache: false,
+                       success: function(result){
+                            //console.log(JSON.stringify(result));
+                            var prl = JSON.stringify(result);
+                            var prlp = prl.split(":[");
+                            var str = prlp[1].split("]}");
+                            prl = "["+str[0]+"]";
+                            var js = jQuery.parseJSON(prl);
+                            var prlist = "";
+                            var wdate = "";
+                            $.each(js, function(key, val) {
+                               //console.log(val['docNo']);
 
+                               prlist += '<a href="#" onclick="prdetail(';
+                               prlist += "'"+val['docNo']+"'";
+                               prlist += ')"><label><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                               prlist += '<div class="ui-block-a">'+val['docNo']+'</div>';
+
+                               var wantDate = val['wantDate'];
+                               /*wdate = val['wantDate'].split("-");
+                               day = wdate[2];
+                               month = wdate[1];
+                               year = (parseInt(wdate[0])+543);
+
+                               wantDate = day+"/"+month+"/"+year;*/
+
+                               prlist += '<div class="ui-block-b">'+wantDate+'</div>';
+                               prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
+
+                               switch (val['status']){
+                                    case 1 : var status = "<img src='images/Warning.png' width='24'>";
+                                            break;
+                                    case 2 : var status = "<img src='images/quick.png width='24'>";
+                                            break;
+                                    case 3 : var status = "<img src='images/New.png width='24'>";
+                                            break;
+                               }
+
+                               prlist += '<div class="ui-block-d">'+status+'</div>';
+                               prlist += '</div></label></a><hr>';
+
+                            });
+                            document.getElementById("prlist").innerHTML = prlist;
+
+                            //console.log(JSON.stringify(js));
+
+                            $.mobile.changePage("#pagepr");
+                               },
+                       error: function (error){
+                            console.log(JSON.stringify(error));
+                           // $.mobile.changePage("#pagepr");
+                       }
+
+                       });
+}
 function prdetail(DocNo){
     alert(DocNo);
-
+    //document.getElementById("LDocNo").value = DocNo;
     $.ajax({
                        url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prDetail",
                        data: '{"type":"0","searchDocno":"'+DocNo+'"}',
@@ -301,7 +300,7 @@ function prdetail(DocNo){
 
                             });
 
-                            document.getElementById("DocNo").innerHTML = no;
+                            document.getElementById("LDocNo").innerHTML = no;
                             document.getElementById("wantdate").innerHTML = wdate;
                             document.getElementById("status").innerHTML = state;
                             document.getElementById("diffdate").innerHTML = dif;
@@ -337,8 +336,7 @@ function clicksubmit(){
             alert("ท่านยังไม่ได้กรอกจำนวนสินค้า กรุณากรอกจำนวนให้ถูกต้อง!!");
             $.mobile.changePage("#additem");
         }else{
-            alert("บันทึกข้อมูลแล้ว!!");
-            alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units);
+
 
                                $.ajax({
                                            url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/insertPR",
@@ -349,23 +347,62 @@ function clicksubmit(){
                                            cache: false,
                                            success: function(result){
                                                 console.log(JSON.stringify(result));
-                                                /*var prl = JSON.stringify(result);
-                                                var prlp = prl.split(":[");
-                                                var str = prlp[1].split("]}");
-                                                prl = "["+str[0]+"]";
-                                                var js = jQuery.parseJSON(prl);
-                                                var no = "";
-                                                var wdate = "";
-                                                var state = "";
-                                                var dif = "";
+                                                 $.ajax({
+                                                                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prDetail",
+                                                                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                                                                       contentType: "application/json; charset=utf-8",
+                                                                       dataType: "json",
+                                                                       type: "POST",
+                                                                       cache: false,
+                                                                       success: function(result){
+                                                                              var prl = JSON.stringify(result);
+                                                                              var prlp = prl.split(":[");
+                                                                              var str = prlp[1].split("]}");
+                                                                              prl = "["+str[0]+"]";
+                                                                              var js = jQuery.parseJSON(prl);
+                                                                              var itemno = "";
+                                                                              var itemname = "";
+                                                                              var cnt = "";
+                                                                              var range = "";
+                                                                              var sitemno = "";
+                                                                              var detail = "";
+                                                                                    $.each(js, function(key, val) {
+                                                                                    itemno = val['itemcode'];
+                                                                                    itemname = val['itemname'];
+                                                                                    cnt = val['qty']+" "+val['unitcode'];
+                                                                                    range = val['range'];
+                                                                                    sitemno = Math.ceil(itemno.length/10);
+                                                                                        var s = 0;
+                                                                                        var l = 10;
+                                                                                        var str1 = "";
+                                                                                        for(var i = 0;i<sitemno;i++){
+                                                                                             str1 += itemno.substr(s,l)+"<br>";
+                                                                                             s += 10;
+                                                                                             l += 10;
+                                                                                        }
+                                                                                        console.log(str1);
 
-                                                var detail = "";
+                                                                                            detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center'>";
+                                                                                            detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
+                                                                                            detail += "<div class='ui-block-b' style='width:30%;'>"+itemname+"</div>";
+                                                                                            detail += "<div class='ui-block-c' style='width:25%;'>"+cnt+'</div>';
+                                                                                            detail += "<div class='ui-block-d' style='width:15%;'>"+range+"</div>";
+                                                                                            detail += "</div>";
 
-                                               console.log(JSON.stringify(js));*/
+                                                                                        });
 
-                                               /*$.each(js, function(key, val) {
+                                                                                        document.getElementById("sumitem").innerHTML = detail;
+                                                                                        alert("บันทึกข้อมูลแล้ว!!");
+                                                                                        alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units+",DocPR :"+DocNo);
 
-                                                });*/
+                                                                                        $.mobile.changePage("#pluspr");
+                                                                                            },
+                                                                                        error: function (error){
+                                                                                            console.log(error);
+                                                                                            $.mobile.changePage("#pluspr");
+                                                                                        }
+
+                                                                       });
                                            },
                                            error: function (error){
                                                 console.log(error);
@@ -384,7 +421,8 @@ function clicksubmit(){
                 document.getElementById("Tgrade").innerHTML = "";
                 document.getElementById("Tunit").innerHTML = "";
                 $("#itemdetail").show();
-                $ .mobile.changePage("#additem");
+
+
         }
 
     }
@@ -392,12 +430,23 @@ function clicksubmit(){
 
 function sumdetail(){
 
-var DocNo = document.getElementById("DocNo").value;
-console.log(DocNo);
-//alert("ย้อนกลับ");
+
+$.ajax({
+           url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/PRGenDocno",
+           data: '{"type":"0","search":"58089"}',
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           type: "POST",
+           cache: false,
+           success: function(result){
+                console.log(result.docno);
+                var DocNo = result.docno;
+                document.getElementById("titelpr").innerHTML = '<img src="images/PRicon.png"><b> PR '+result.docno+'</b>';
+                document.getElementById("DocNo").value = DocNo;
+
                 $.ajax({
                            url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prDetail",
-                           data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                           data: '{"type":"0","searchDocno":"'+result.docno+'"}',
                            contentType: "application/json; charset=utf-8",
                            dataType: "json",
                            type: "POST",
@@ -458,6 +507,13 @@ console.log(DocNo);
                            }
 
                });
+           },
+           error: function (error){
+                console.log(error);
+                $.mobile.changePage("#pagepr");
+           }
+
+    });
 }
 
 function pluspr(){
