@@ -461,8 +461,8 @@ input:focus, textarea:focus {
 	background-color: #7ccb1c;
 	color:#FFF;
 	font-size:24px;
-	padding-top:22px;
-	padding-bottom:22px;
+	padding-top:10px;
+	padding-bottom:10px;
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
