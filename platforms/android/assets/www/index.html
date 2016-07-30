@@ -849,6 +849,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <label style="font-size:20px;"><img src="images/PRicon.png"><b> รายการใบ PR</b></label><hr>
+        <input type="hidden" id="DocNo" name="docno" value="test">
         <label><div class="ui-grid-c" style="text-align:center;">
             <div class="ui-block-a">
                 <b>เลขที่ PR</b>
@@ -873,7 +874,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home" id="footer-nav" data-transition="slidefade" data-direction="reverse">หน้าหลัก</a></li>
-                <li><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav" data-transition="slidefade">เพิ่มรายการ PR</a></li>
+                <li onclick="sumdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav" data-transition="slidefade">เพิ่มรายการ PR</a></li>
             </ul>
         </div>
     </div>
@@ -939,50 +940,21 @@
 
         <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
         <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a">
+            <div class="ui-block-a" style='width:30%;'>
                 รหัสสินค้า
             </div>
-            <div class="ui-block-b">
+            <div class="ui-block-b" style='width:30%;'>
                 ชื่อสินค้า
             </div>
-            <div class="ui-block-c">
+            <div class="ui-block-c" style='width:25%;'>
                 จำนวน
             </div>
-            <div class="ui-block-d">
-                เกรด
+            <div class="ui-block-d" style='width:15%;'>
+                Range
             </div>
         </div>
         </label>
-        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a">
-                0001
-            </div>
-            <div class="ui-block-b">
-                M150
-            </div>
-            <div class="ui-block-c">
-                32 ขวด
-            </div>
-            <div class="ui-block-d">
-                A
-            </div>
-        </div>
-        </label>
-        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a">
-                0002
-            </div>
-            <div class="ui-block-b">
-                Green Tea
-            </div>
-            <div class="ui-block-c">
-                24 ขวด
-            </div>
-            <div class="ui-block-d">
-                A
-            </div>
-        </div>
-        </label>
+        <div id="sumitem"></div>
         <label style="border-bottom:1px dashed black; padding:2%; color:red; text-align:center">
             <h5>** SCANBARCODE เพื่อเพิ่มรายการสินค้า **</h5>
         </label>
@@ -1008,7 +980,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่ม</a></li>
+                <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -1032,7 +1004,7 @@
     <div  data-role="main" class="ui-content" id="main">
 
         <div id="itemdetail" style="display:none;">
-
+            <input type="hidden" id="DocNo" name="docno">
             <input type="hidden" name="Noitem" placeholder="รหัสสินค้า" style="color:#000;" id="noitems">
             <label><b>รหัสสินค้า : </b><span id="Tnoitem">scanbacode สินค้าด้วย</span></label>
 
@@ -1052,8 +1024,8 @@
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li ><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <li onclick="sumdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่ม</a></li>
             </ul>
         </div>
     </div>
@@ -1297,59 +1269,6 @@
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
-
-<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="countitem">
-    <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-    </div>
-
-    <div  data-role="main" class="ui-content" id="main">
-
-        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label><hr>
-        <div id="itemcnt" style="margin-bottom: 20%;">
-            <label>ชั้นเก็บ : <span id="CTshelves"></span>
-                <input type="hidden" name="shelves" readonly id="shel" size="50">
-            </label>
-            <label>รหัสสินค้า : <span id="CTitemno"></span>
-                <input type="hidden" name="itemno" readonly id="itemNo">
-            </label>
-            <label>ชื่อสินค้า : <span id="CTitemname"></span>
-                <input type="hidden" name="itemname" readonly id="itemsName">
-            </label>
-            <label>จำนวน :
-                <input type="number" name="count" id="counts">
-            </label>
-            <label>หน่วยนับ : <span id="CTunit"></span>
-                <input type="hidden" name="unit" id="Cunit">
-            </label>
-
-        </div>
-    </div>
-
-
-    <div data-role="footer" id="footer">
-        <div data-role="navbar">
-            <ul id="count1">
-                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-            </ul>
-            <ul id="count2">
-                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="savestock()" ><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
-            </ul>
-        </div>
-    </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
-    </div>
-</div>
-<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="setting">
     <div data-role="none" id="header">
