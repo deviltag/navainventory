@@ -7,11 +7,12 @@
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
     <title>NAVA Inventory</title>
-    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="images/logo_title.png">
-
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
 
 
     <meta charset="utf-8">
@@ -71,15 +72,17 @@
 <!--////////////////////////////////////////////////////////////page two ////////////////////////////////////////////////////////////////-->
 
 
+
+
 <div data-role="page" id="pagetwo">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
         <h1 class="title">Main</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6" onclick="PR_list()"><a href="#" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="#pagepr" data-transition="slidefade">
                 <div><img src="images/pr2.png" class="main_menu"><br><b>PR</b></div>
             </a></div>
             <div class="col-xs-6 col-md-6"><a href="#receive" data-transition="slidefade">
@@ -103,15 +106,15 @@
         <label style="padding:2% 0 0 5%;"><i>NAVA Inventory V.1  BY IT nopadol</i></label>
 
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#setting"  data-transition="slidefade" class="ui-btn">SETTING</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    <div data-role="panel" id="myPanel1" data-display="overlay">
+        <!-- <h2>Overlay Panel</h2>
+         <hr>
+         <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+         <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a> -->
+        <div id="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transfer ////////////////////////////////////////////////////////////////-->
@@ -731,6 +734,7 @@
             <option value="s02">s02</option>
         </select>-->
         <div id="polist" class="polist"></div>
+        <a href="#setting" class="ui-btn">setting</a>
     </div>
 
 
@@ -849,7 +853,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <label style="font-size:20px;"><img src="images/PRicon.png"><b> รายการใบ PR</b></label><hr>
-        <input type="hidden" id="DocNo" name="docno" value="test">
+        <input type="hidden" id="DocNo" name="docno">
         <label><div class="ui-grid-c" style="text-align:center;">
             <div class="ui-block-a">
                 <b>เลขที่ PR</b>
@@ -898,7 +902,7 @@
     </div>
 
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:0;">
-        <label style="clear:both;"><div id="title"><b>เลขที่ PR</b></div><div id="DocNo"></div></label>
+        <label style="clear:both;"><div id="title"><b>เลขที่ PR</b></div><div id="LDocNo"></div></label>
         <label style="clear:both;"><div id="title"><b>วันที่ต้องการ</b></div><div id="wantdate"></div></label>
         <label style="clear:both;"><div id="title"><b>สถานะ</b></div><div id="status"></div></label>
         <label style="clear:both;"><div id="title"><b>อายุใบ PR</b></div><div id="diffdate"></div></label>
@@ -914,7 +918,7 @@
     <div data-role="footer" id="footer"  data-position="fixed">
         <div data-role="navbar">
             <ul>
-                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="backdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
             </ul>
         </div>
     </div>
@@ -938,7 +942,7 @@
     </div>
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:20%;">
 
-        <label style="font-size:20px;"><img src="images/PRicon.png"><b> PR</b><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
+        <label style="font-size:20px;"><span id="titelpr"></span><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
         <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
             <div class="ui-block-a" style='width:30%;'>
                 รหัสสินค้า
@@ -979,7 +983,7 @@
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="backdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
                 <li onclick="pluspr()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
@@ -1024,7 +1028,7 @@
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li onclick="sumdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li ><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
                 <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่ม</a></li>
             </ul>
         </div>
@@ -1269,6 +1273,59 @@
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
+
+<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="countitem">
+    <div data-role="none" id="header">
+        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label><hr>
+        <div id="itemcnt" style="margin-bottom: 20%;">
+            <label>ชั้นเก็บ : <span id="CTshelves"></span>
+                <input type="hidden" name="shelves" readonly id="shel" size="50">
+            </label>
+            <label>รหัสสินค้า : <span id="CTitemno"></span>
+                <input type="hidden" name="itemno" readonly id="itemNo">
+            </label>
+            <label>ชื่อสินค้า : <span id="CTitemname"></span>
+                <input type="hidden" name="itemname" readonly id="itemsName">
+            </label>
+            <label>จำนวน :
+                <input type="number" name="count" id="counts">
+            </label>
+            <label>หน่วยนับ : <span id="CTunit"></span>
+                <input type="hidden" name="unit" id="Cunit">
+            </label>
+
+        </div>
+    </div>
+
+
+    <div data-role="footer" id="footer">
+        <div data-role="navbar">
+            <ul id="count1">
+                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+            </ul>
+            <ul id="count2">
+                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="savestock()" ><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
+        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
+        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
+        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
+        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+    </div>
+</div>
+<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="setting">
     <div data-role="none" id="header">
@@ -1280,6 +1337,14 @@
             <label for="server">server</label>
             <input type="text" name="server" id="server" placeholder="apiserver">
             <input type="hidden" id="apiserver_s" value="http://qserver.nopadol.com:8080/">
+
+            <label for="server_nava">server nava work</label>
+            <input type="text" name="server_nava" id="server_nava" placeholder="apiserver_nava">
+            <input type="hidden" id="apiserver_nava_s" value="http://nava.work:8000/">
+
+            <label for="apilogin">api login</label>
+            <input type="text" name="apilogin" id="apilogin">
+            <input type="hidden" id="apilogin_s" value="api/v1/user/login">
 
             <label for="api1">api search vender</label>
             <input type="text" name="api1" id="api1">
@@ -1309,17 +1374,33 @@
             <input type="text" name="api7" id="api7">
             <input type="hidden" id="api7_s" value="NPReceiveWs/rc/search">
 
-            <!--<label for="api8">api8</label>
+            <label for="api8">api PR List</label>
             <input type="text" name="api8" id="api8">
-            <input type="hidden" id="api8_s" value="NPReceiveWs/rc/xxx">
+            <input type="hidden" id="api8_s" value="NPInventoryWs/pr/prList">
 
-            <label for="api9">api</label>
+            <label for="api9">api PR Detail</label>
             <input type="text" name="api9" id="api9">
-            <input type="hidden" id="api9_s" value="NPReceiveWs/rc/xxx">
+            <input type="hidden" id="api9_s" value="NPInventoryWs/pr/prDetail">
 
-            <label for="api10">api10</label>
+            <label for="api10">api insertPR</label>
             <input type="text" name="api10" id="api10">
-            <input type="hidden" id="api10_s" value="NPReceiveWs/rc/xxx">-->
+            <input type="hidden" id="api10_s" value="NPInventoryWs/pr/insertPR">
+
+            <label for="api11">api PRGenDocno</label>
+            <input type="text" name="api11" id="api11">
+            <input type="hidden" id="api11_s" value="NPInventoryWs/pr/PRGenDocno">
+
+            <label for="api12">api search item pr</label>
+            <input type="text" name="api12" id="api12">
+            <input type="hidden" id="api12_s" value="NPInventoryWs/pr/searchItem">
+
+           <!--  <label for="api13">api insertPR</label>
+            <input type="text" name="api13" id="api13">
+            <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
+
+            <label for="api14">api insertPR</label>
+            <input type="text" name="api14" id="api14">
+            <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
 
 
             <a href="#" class="ui-btn" id="set">ตกลง</a>
@@ -1354,5 +1435,35 @@
         app.initialize();
 
 </script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/bootstrap-treeview.min.js"></script>
+
+
+<script>
+     $.ajax({
+              url: localStorage.api_url_server_nava+"api/v1/menu/tree",
+              //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
+              //contentType: "application/json; charset=utf-8",
+              //dataType: "json",
+              type: "GET",
+              cache: false,
+              success: function(result){
+                     var mytree = [
+                          result
+                     ];
+                     $('#tree').treeview({
+                     color: "#428bca",
+                     levels: 1,
+                     expandIcon: 'glyphicon glyphicon-cloud-download',
+                     collapseIcon: 'glyphicon glyphicon-cloud-download',
+                     nodeIcon: 'glyphicon glyphicon-bookmark',
+                     enableLinks: true,
+                     data: mytree}
+                     );
+              }
+     });
+
+        </script>
 </body>
 </html>
