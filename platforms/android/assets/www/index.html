@@ -1,72 +1,31 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-
 <head>
-<<<<<<< HEAD
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="msapplication-tap-highlight" content="no"/>
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
     <title>NAVA Inventory</title>
-=======
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
->>>>>>> origin/master
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="images/logo_title.png">
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
-<<<<<<< HEAD
 
-=======
-    <script src="js/jquery-1.11.3.js"></script>
-    <script src="js/jquery.mobile-1.4.5.min.js"></script>
->>>>>>> origin/master
 
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>NAVA INVEN APP</title>
 </head>
 
 <body>
-<div id="deviceready" class="blink" style="display:none">
-    <p class="event listening">Connecting to Device</p>
-    <p class="event received">Device is Ready</p>
+
+<div class="app" style="display:none">
+    <div id="deviceready" class="blink">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received" style="display:none">Device is Ready</p>
+
+    </div>
 </div>
 
 <!--////////////////////////////////////////////////////////////page one ////////////////////////////////////////////////////////////////-->
@@ -114,11 +73,6 @@
 
 
 
-<<<<<<< HEAD
-=======
-<!--////////////////////////////////////////////////////////////page two ////////////////////////////////////////////////////////////////-->
-
->>>>>>> origin/master
 
 <div data-role="page" id="pagetwo">
     <div data-role="none" id="header">
@@ -570,6 +524,7 @@
             <input type="checkbox" name="isp_item_select" id="item3" value="item3">
         </fieldset>
 
+
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
@@ -767,23 +722,19 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">รับสินค้า</h1>
-        <hr>
         <div class="ui-field-contain">
             <label for="search">Search Vender:</label>
-            <input type="search" name="search" id="search" placeholder="Search for Vender...">
+            <form name="search_po">
+                <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
+                <a href="#" class="ui-btn" onclick="return searchpo();">ค้นหา</a>
+            </form>
         </div>
-        <select onchange="select_warehouse(this)">
+        <!--<select onchange="select_warehouse(this)">
             <option value="s01">s01</option>
             <option value="s02">s02</option>
-<<<<<<< HEAD
         </select>-->
         <div id="polist" class="polist"></div>
         <a href="#setting" class="ui-btn">setting</a>
-=======
-        </select>
-        <a href="#receive_item" data-transition="slidefade" class="ui-btn">PO1 11หน่วย </a>
-        <a href="#receive_item" data-transition="slidefade" class="ui-btn">PO2 10หน่วย </a>
->>>>>>> origin/master
     </div>
 
 
@@ -816,19 +767,16 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <form>
-            <h2 class="sub_title">PO ...</h2>
-            <hr class="hr">
 
-            <a href="#" class="ui-btn ui-corner-all">Item1 | 10หน่วย<img src="images/tick.png" class="item_status"></a>
-            <a href="#" class="ui-btn ui-corner-all">Item2 | 10หน่วย<img src="images/error.png" class="item_status"></a>
-            <a href="#" class="ui-btn ui-corner-all">Item3 | 10หน่วย<img src="images/Warning.png" class="item_status"></a>
+
+            <div id="po_head"></div>
+            <hr class="hr">
+            <div id="po_detail"></div>
             <br>
-            <div data-role="navbar">
-                <br>
-                <ul>
-                    <li><a href="#receive_scan" data-role="button" class="ui-btn" data-transition="slidefade" >รับสินค้า</a><!--<button type="submit" class="next">บันทึก</button>--></li>
-                </ul>
-            </div>
+            <a href="#" onclick="testtttt()" class="ui-btn">clear</a>
+
+
+
         </form>
 
     </div>
@@ -839,7 +787,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#receive" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -865,11 +813,10 @@
         <form>
             <h2 class="sub_title">scan item</h2>
             <hr class="hr">
-            <label>scan สินค้า : <input type="text" name="receive1" id="test_scanner"></label>
-
-            <label id="receive2" style="display:none;">จำนวน : <input type="text" name="receive2"></label>
-            <a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
-            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>
+            <div id="product_show"></div>
+            <label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>
+            <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
+            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
 
         </form>
 
@@ -880,8 +827,8 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="scan_cancel()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
+                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li onclick="submit_scan()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -896,7 +843,6 @@
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
-
 
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
 
@@ -1330,7 +1276,6 @@
 
 <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="countitem">
-<<<<<<< HEAD
     <div data-role="none" id="header">
         <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -1383,14 +1328,11 @@
 <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="setting">
-=======
->>>>>>> origin/master
     <div data-role="none" id="header">
         <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
-<<<<<<< HEAD
         <form name="setting" >
             <label for="server">server</label>
             <input type="text" name="server" id="server" placeholder="apiserver">
@@ -1463,41 +1405,10 @@
 
             <a href="#" class="ui-btn" id="set">ตกลง</a>
         </form>
-=======
->>>>>>> origin/master
 
-        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label><hr>
-        <div id="itemcnt" style="margin-bottom: 20%;">
-            <label>ชั้นเก็บ : <span id="CTshelves"></span>
-                <input type="hidden" name="shelves" readonly id="shel" size="50">
-            </label>
-            <label>รหัสสินค้า : <span id="CTitemno"></span>
-                <input type="hidden" name="itemno" readonly id="itemNo">
-            </label>
-            <label>ชื่อสินค้า : <span id="CTitemname"></span>
-                <input type="hidden" name="itemname" readonly id="itemsName">
-            </label>
-            <label>จำนวน :
-                <input type="number" name="count" id="counts">
-            </label>
-            <label>หน่วยนับ : <span id="CTunit"></span>
-                <input type="hidden" name="unit" id="Cunit">
-            </label>
-
-        </div>
     </div>
-
-
     <div data-role="footer" id="footer">
-        <div data-role="navbar">
-            <ul id="count1">
-                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-            </ul>
-            <ul id="count2">
-                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="savestock()" ><a href="#" class="ui-btn-active ui-state-persist" data-icon="edit" id="footer-nav">บันทึก</a></li>
-            </ul>
-        </div>
+
     </div>
     <div data-role="panel" id="myPanel" data-display="overlay">
         <h2>Overlay Panel</h2>
@@ -1509,32 +1420,29 @@
         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
     </div>
 </div>
-<!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script src="js/fun_pr.js"></script>
 <script src="js/fun_cs.js"></script>
 <script src="js/inven.js"></script>
+<script src="js/search_vender.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script src="js/setting.js"></script>
 <script type="text/javascript">
         app.initialize();
 
 </script>
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-treeview.min.js"></script>
 
 
 <script>
      $.ajax({
-<<<<<<< HEAD
               url: localStorage.api_url_server_nava+"api/v1/menu/tree",
-=======
-              url: "http://nava.work:8000/api/v1/menu/tree",
->>>>>>> origin/master
               //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
               //contentType: "application/json; charset=utf-8",
               //dataType: "json",
