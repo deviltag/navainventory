@@ -43,7 +43,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                              console.log(document.getElementById("DocNo").value);
                              var DocNo = document.getElementById("DocNo").value;
                                 $.ajax({
+<<<<<<< HEAD
                                            url: localStorage.api_url_server+""+localStorage.api_url_search_item_pr,
+=======
+                                           url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/searchItem",
+>>>>>>> origin/master
                                            data: '{"docno":"'+DocNo+'","barcode":"'+pr.scanResult+'"}',
                                            contentType: "application/json; charset=utf-8",
                                            dataType: "json",
@@ -190,7 +194,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 function backdetail(){
     console.log("backlink");
     $.ajax({
+<<<<<<< HEAD
                        url: localStorage.api_url_server+""+localStorage.api_url_prlist,
+=======
+                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prList",
+>>>>>>> origin/master
                        data: '{"type":"0","search":"58089"}',
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
@@ -348,7 +356,11 @@ function clicksubmit(){
                                            success: function(result){
                                                 console.log(JSON.stringify(result));
                                                  $.ajax({
+<<<<<<< HEAD
                                                                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
+=======
+                                                                       url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prDetail",
+>>>>>>> origin/master
                                                                        data: '{"type":"0","searchDocno":"'+DocNo+'"}',
                                                                        contentType: "application/json; charset=utf-8",
                                                                        dataType: "json",
@@ -432,7 +444,11 @@ function sumdetail(){
 
 
 $.ajax({
+<<<<<<< HEAD
            url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
+=======
+           url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/PRGenDocno",
+>>>>>>> origin/master
            data: '{"type":"0","search":"58089"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
