@@ -22,7 +22,7 @@ $(document).ready(function(){
                           var po = "";
                           for(var i = 0;i<js.length;i++){
                             //console.log(js[i].code);
-                            po += '<a href="#" data-transition="slidefade" class="ui-btn" onclick="select_vender(';
+                            po += '<a href="#" data-transition="slidefade" class="ui-btn ui-corner-all" onclick="select_vender(';
                             po += "'"+js[i].code+"')";
                             po += '">'+js[i].name+'</a>';
 
@@ -62,7 +62,7 @@ function searchpo(){
                           var po = "";
                           for(var i = 0;i<js.length;i++){
                             //console.log(js[i].code);
-                            po += '<a href="#" data-transition="slidefade" class="ui-btn" onclick="select_vender(';
+                            po += '<a href="#" data-transition="slidefade" class="ui-btn ui-corner-all" onclick="select_vender(';
                             po += "'"+js[i].code+"')";
                             po += '">'+js[i].name+'</a>';
                           }
@@ -102,7 +102,7 @@ function select_vender(po_number){
                           var po_header = "";
                           for(var i = 0;i<js.length;i++){
                             //console.log(js[i].code);
-                            po_ven += '<a href="#" data-transition="slidefade" class="ui-btn" onclick="select_op_vender(';
+                            po_ven += '<a href="#" data-transition="slidefade" class="ui-btn ui-corner-all" onclick="select_op_vender(';
                             po_ven += "'"+js[i].docNo+"')";
                             po_ven += '">'+js[i].docNo+'</a>';
                             po_header = "ชื่อ vender : "+js[i].apName;
@@ -176,7 +176,7 @@ function select_op_vender(get_detail){
 
                                                                                                  }
                                                                                  //po_de += '</table>';
-                                                                                  po_de +='<a href="#" onclick="search_rc_no()" class="ui-btn">แสดงใบรับสินค้า</a>';
+                                                                                  po_de +='<a href="#" onclick="search_rc_no()" class="ui-btn ui-corner-all">แสดงใบรับสินค้า</a>';
                                                                                  document.getElementById("po_head").innerHTML = po_de_head;
                                                                                  document.getElementById("po_detail").innerHTML = po_de;
                                                                                  $.mobile.changePage("#receive_item");
@@ -277,3 +277,10 @@ if(localStorage.receiveNumber){
                                                  }
 }
 
+function search_receive(){
+se_item ="";
+se_item +="<a href='#' class='ui-btn ui-corner-all'>item 1</a>";
+se_item +="<a href='#' class='ui-btn ui-corner-all'>item 2</a>";
+se_item +="<a href='#' class='ui-btn ui-corner-all'>item 3</a>";
+document.getElementById("show_search_item").innerHTML = se_item;
+}

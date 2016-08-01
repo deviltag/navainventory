@@ -76,7 +76,7 @@
 
 <div data-role="page" id="pagetwo">
     <div data-role="none" id="header">
-        <a href="#myPanel1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_main" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -106,21 +106,16 @@
         <label style="padding:2% 0 0 5%;"><i>NAVA Inventory V.1  BY IT nopadol</i></label>
 
     </div>
-    <div data-role="panel" id="myPanel1" data-display="overlay">
-        <!-- <h2>Overlay Panel</h2>
-         <hr>
-         <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-         <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-         <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-         <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-         <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a> -->
-        <div id="tree"></div>
+    <div data-role="panel" id="myPanel_main" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transfer ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transfer">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tran"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -152,16 +147,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tran" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
-        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transferup ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transferup">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tranup"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -214,16 +209,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tranup" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
-        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transferup_item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transferup_item">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tranup1"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -261,16 +256,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tranup1" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
-        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transferdown ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transferdown">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_trandown"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -322,16 +317,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_trandown" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
-        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transferdown_item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transferdown_item">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_trandown1"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -369,16 +364,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_trandown1" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
-        <a href="#pageone" data-transition="slidefade"  data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// damage ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="damage">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_trandamage" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -417,20 +412,16 @@
         </div>
 
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_trandamage" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// damage_item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="damage_item">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_trandamage1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -452,21 +443,17 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_trandamage1" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// isp ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="isp">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tranisp" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -493,21 +480,17 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tranisp" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// isp item ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="isp_item">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tranisp1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -534,20 +517,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tranisp1" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// rtv ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="rtv">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tranrtv" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -585,21 +564,17 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tranrtv" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 
 <!--//////////////////////////////////////////////////////////// rtv_item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="rtv_item">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_tranrtv1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -620,20 +595,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_tranrtv1" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transfer_normal ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transfer_normal">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_trannormal" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -673,20 +644,16 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_trannormal" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transfer_normal_item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transfer_normal_item">
     <div data-role="none" id="header">
-        <a href="#myPanel" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_trannormal1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div data-role="main" class="ui-content" id="main">
@@ -704,20 +671,16 @@
         <a href="#transfer_normal" data-transition="slidefade" data-role="none"
            data-direction="reverse"><img src="images/back1.png" width="32"></a>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_trannormal1" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// Receive ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="receive">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_receive"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -726,7 +689,7 @@
             <label for="search">Search Vender:</label>
             <form name="search_po">
                 <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
-                <a href="#" class="ui-btn" onclick="return searchpo();">ค้นหา</a>
+                <a href="#" class="ui-btn ui-corner-all" onclick="return searchpo();">ค้นหา</a>
             </form>
         </div>
         <!--<select onchange="select_warehouse(this)">
@@ -734,7 +697,7 @@
             <option value="s02">s02</option>
         </select>-->
         <div id="polist" class="polist"></div>
-        <a href="#setting" class="ui-btn">setting</a>
+        <a href="#setting" class="ui-btn ui-corner-all">setting</a>
     </div>
 
 
@@ -747,22 +710,18 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_receive" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////// Receive item ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="receive_item">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_receive_item"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -773,7 +732,8 @@
             <hr class="hr">
             <div id="po_detail"></div>
             <br>
-            <a href="#" onclick="testtttt()" class="ui-btn">clear</a>
+            <a href="#" onclick="testtttt()" class="ui-btn ui-corner-all">clear</a>
+
 
 
 
@@ -787,26 +747,60 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#receive" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
                 <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_receive_item" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+
+<!--////////////////////////////////////////////////////////////  Receive item No barcode////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="receive_search">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_receive_search"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <form>
+            <h2 class="sub_title">item search</h2>
+            <label>ค้นหา item : <input type="text" name="receive1" id="receive_search_item"></label>
+            <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left ui-corner-all" onclick="search_receive()">ค้นหา</a>
+            <div id="show_search_item"></div>
+            <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
+            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
+
+        </form>
+
+    </div>
+
+
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li onclick="submit_scan()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_receive_search" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <hr>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 
 <!--//////////////////////////////////////////////////////////// scan Receive item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="receive_scan">
     <div data-role="none" id="header" >
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_receive_scan"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -832,15 +826,11 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_receive_scan" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 
@@ -848,7 +838,7 @@
 
 <div data-role="page" id="pagepr">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_pr"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -882,14 +872,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_pr" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
@@ -898,7 +884,7 @@
 
 <div data-role="page" id="listpr">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_prlist"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:0;">
@@ -922,14 +908,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_prlist" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page PR list ////////////////////////////////////////////////////////////////-->
@@ -938,7 +920,7 @@
 <!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="pluspr">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_pluspr"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:20%;">
 
@@ -989,21 +971,17 @@
         </div>
     </div>
 
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_pluspr" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page PR plus ////////////////////////////////////////////////////////////////-->
 <!--////////////////////////////////////////////////////////////page PR item ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="additem">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_additem"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
     <div  data-role="main" class="ui-content" id="main">
 
@@ -1033,14 +1011,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_additem" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 
 </div>
@@ -1050,7 +1024,7 @@
 <!--////////////////////////////////////////////////////////////page Count stock ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="stock">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_stock"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -1074,14 +1048,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_stock" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page Count stock ////////////////////////////////////////////////////////////////-->
@@ -1089,7 +1059,7 @@
 <!--////////////////////////////////////////////////////////////page stock detail ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="countstock">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_countstock"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -1169,14 +1139,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_countstock" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock detail ////////////////////////////////////////////////////////////////-->
@@ -1185,7 +1151,7 @@
 <!--////////////////////////////////////////////////////////////page stock edit ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="stockedit">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_stockedit"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -1223,14 +1189,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_stockedit" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock edit ////////////////////////////////////////////////////////////////-->
@@ -1238,7 +1200,7 @@
 <!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="shelves">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_shelves"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -1262,14 +1224,10 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_shelves" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
@@ -1277,7 +1235,7 @@
 <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="countitem">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_countitem"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -1315,21 +1273,17 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_countitem" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="setting">
     <div data-role="none" id="header">
-        <a href="#myPanel"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_setting"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -1340,11 +1294,11 @@
 
             <label for="server_nava">server nava work</label>
             <input type="text" name="server_nava" id="server_nava" placeholder="apiserver_nava">
-            <input type="hidden" id="apiserver_nava_s" value="http://nava.work:8000/">
+            <input type="hidden" id="apiserver_nava_s" value="http://api.nava.work:8000/">
 
             <label for="apilogin">api login</label>
             <input type="text" name="apilogin" id="apilogin">
-            <input type="hidden" id="apilogin_s" value="api/v1/user/login">
+            <input type="hidden" id="apilogin_s" value="v1/user/login">
 
             <label for="api1">api search vender</label>
             <input type="text" name="api1" id="api1">
@@ -1410,14 +1364,10 @@
     <div data-role="footer" id="footer">
 
     </div>
-    <div data-role="panel" id="myPanel" data-display="overlay">
+    <div data-role="panel" id="myPanel_setting" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
-        <a href="#pagepr"  data-transition="slidefade" class="ui-btn">PR</a>
-        <a href="#receive"  data-transition="slidefade" class="ui-btn">รับสินค้า</a>
-        <a href="#stock"  data-transition="slidefade" class="ui-btn">นับสต๊อกสินค้า</a>
-        <a href="#transfer"  data-transition="slidefade" class="ui-btn">โอนสินค้า</a>
-        <a href="#pageone" data-transition="slidefade" data-direction="reverse" class="ui-btn">logout</a>
+        <div id="tree" class="tree"></div>
     </div>
 </div>
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
@@ -1442,7 +1392,7 @@
 
 <script>
      $.ajax({
-              url: localStorage.api_url_server_nava+"api/v1/menu/tree",
+              url: localStorage.api_url_server_nava+"v1/menu/tree",
               //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
               //contentType: "application/json; charset=utf-8",
               //dataType: "json",
@@ -1452,7 +1402,7 @@
                      var mytree = [
                           result
                      ];
-                     $('#tree').treeview({
+                     $('.tree').treeview({
                      color: "#428bca",
                      levels: 1,
                      expandIcon: 'glyphicon glyphicon-cloud-download',

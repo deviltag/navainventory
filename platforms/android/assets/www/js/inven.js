@@ -319,7 +319,7 @@ window.addEventListener('native.onscanbarcode', function (e) {
                                                                   alert("Barcode ไม่ถูกต้อง !!")
                                                                   }else{
                                                                   //console.log(item.itemName);
-                                                                  //console.log(JSON.stringify(item));
+                                                                  console.log(JSON.stringify(item));
                                                                   result_scanner +="<p>รหัสสินค้า : "+e.scanResult+"</p>";
                                                                   result_scanner +="<p>ชื่อสินค้า : "+item.itemName+"</p>";
                                                                   result_scanner +="<p>หน่วยสินค้า : "+item.unitCode+"</p>";
