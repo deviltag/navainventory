@@ -15,7 +15,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                 			//document.getElementById("noitems").value = pr.scanResult;
        switch(page){
              case "pageone" :
-             alert(localStorage.api_url_server_nava+""+localStorage.api_url_login)
+             //alert(localStorage.api_url_server_nava+""+localStorage.api_url_login)
                                 $.ajax({
                                     url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
                                     data: '{"name":"tom","password":"1234"}',

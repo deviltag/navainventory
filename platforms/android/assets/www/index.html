@@ -760,6 +760,48 @@
     </div>
 </div>
 
+<!--//////////////////////////////////////////////////////////// receive_listpo ////////////////////////////////////////////////////////////////-->
+
+<div data-role="page" id="receive_listpo">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_receivepo_list"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <form>
+
+
+            <div id="polist_head"></div>
+            <hr class="hr">
+            <div id="polist_detail"></div>
+            <br>
+            <a href="#" onclick="testtttt()" class="ui-btn ui-corner-all">clear</a>
+
+
+
+
+        </form>
+
+    </div>
+
+
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#receive" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_receivepo_list" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+
 <!--////////////////////////////////////////////////////////////  Receive item No barcode////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="receive_search">
     <div data-role="none" id="header" >
@@ -769,7 +811,7 @@
     <div  data-role="main" class="ui-content" id="main">
         <form>
             <h2 class="sub_title">item search</h2>
-            <label>ค้นหา item : <input type="text" name="receive1" id="receive_search_item"></label>
+            <label>ค้นหา item : <input type="text" name="receive_search_item" id="receive_search_item"></label>
             <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left ui-corner-all" onclick="search_receive()">ค้นหา</a>
             <div id="show_search_item"></div>
             <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
@@ -785,7 +827,6 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
-                <li onclick="submit_scan()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -1318,7 +1359,7 @@
 
             <label for="api5">api add item receive</label>
             <input type="text" name="api5" id="api5">
-            <input type="hidden" id="api5_s" value="NPReceiveWs/rc/additem">
+            <input type="hidden" id="api5_s" value="NPReceiveWs/rc/manageitem">
 
             <label for="api6">api search item receive</label>
             <input type="text" name="api6" id="api6">
@@ -1357,11 +1398,18 @@
             <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
 
 
-            <a href="#" class="ui-btn" id="set">ตกลง</a>
+
         </form>
 
     </div>
     <div data-role="footer" id="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home" id="footer-nav" data-transition="slidefade" data-direction="reverse">หน้าหลัก</a></li>
+                <li><a href="#" id="set" class="ui-btn-active ui-state-persist" data-icon="check" >บันทึก</a></li>
+            </ul>
+        </div>
+
 
     </div>
     <div data-role="panel" id="myPanel_setting" data-display="overlay">
@@ -1399,9 +1447,9 @@
               type: "GET",
               cache: false,
               success: function(result){
-                     var mytree = [
+                     var mytree =
                           result
-                     ];
+                     ;
                      $('.tree').treeview({
                      color: "#428bca",
                      levels: 1,

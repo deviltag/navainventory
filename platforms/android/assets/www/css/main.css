@@ -268,11 +268,27 @@ hr.hr {
 	width:25px;
 	float: center;
 }
+.blur{
+      -webkit-filter: grayscale(1);
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      filter: url(#greyscale);
+      filter: gray;
+      color:#ccc;
+}
 }
 
 /*===============================================================================================mobile==========================================================*/
 
 @media (max-width: 767px) {
+.blur{
+      -webkit-filter: grayscale(1);
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      filter: url(#greyscale);
+      filter: gray;
+      color:#ccc;
+}
 .receive_status{
 	width:25px;
 	float: center;

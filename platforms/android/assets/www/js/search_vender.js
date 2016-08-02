@@ -108,9 +108,9 @@ function select_vender(po_number){
                             po_header = "ชื่อ vender : "+js[i].apName;
 
                           }
-                        document.getElementById("po_head").innerHTML = po_header;
-                        document.getElementById("po_detail").innerHTML = po_ven;
-                        $.mobile.changePage("#receive_item");
+                        document.getElementById("polist_head").innerHTML = po_header;
+                        document.getElementById("polist_detail").innerHTML = po_ven;
+                        $.mobile.changePage("#receive_listpo");
                     },
                     error: function (error){
                         console.log(error);
@@ -137,7 +137,7 @@ function select_op_vender(get_detail){
                                                      po_d = "["+str[0]+"]";
                                                      var js = jQuery.parseJSON(po_d);
                                                     // alert(JSON.stringify(po_detail.isSuccess));
-                                                     //console.log(JSON.stringify(js));
+                                                    console.log(JSON.stringify(js));
                                                                             //document.getElementById("PO").innerHTML = JSON.stringify(js);
                                                      var count = js.length;
                                                      //alert(count)
@@ -164,6 +164,9 @@ function select_op_vender(get_detail){
                                                                                  po_de += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
                                                                                  for(var i = 0;i<js.length;i++){
                                                                                  //console.log(js[i].code);
+                                                                                 // po_ven += '<a href="#" data-transition="slidefade" class="ui-btn ui-corner-all" onclick="select_op_vender(';
+                                                                                 //po_ven += "'"+js[i].docNo+"')";
+                                                                                 //po_ven += '">'+js[i].docNo+'</a>';
                                                                                  po_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">'
                                                                                  po_de += '<div class="ui-block-a"> '+js[i].itemName+' </div>';
                                                                                  po_de += '<div class="ui-block-b"> '+js[i].remainQty+' '+js[i].unitCode+' </div>';
@@ -192,7 +195,7 @@ function select_op_vender(get_detail){
 
 function search_rc_no(rc_no){
 if(localStorage.receiveNumber){
-                alert(localStorage.porefno+" "+localStorage.receiveNumber);
+      //alert(localStorage.porefno+" "+localStorage.receiveNumber);
 
 	                $.ajax({
                                                      url: localStorage.api_url_server+""+localStorage.api_url_search,
@@ -212,7 +215,7 @@ if(localStorage.receiveNumber){
                                                      rc_d = "["+str[0]+"]";
                                                      var js = jQuery.parseJSON(rc_d);
                                                     // alert(JSON.stringify(rc_detail.isSuccess));
-                                                     //console.log(JSON.stringify(js));
+                                                     console.log(JSON.stringify(js));
                                                                             //document.getElementById("PO").innerHTML = JSON.stringify(js);
                                                      var count = js.length;
                                                      //alert(count)
@@ -238,8 +241,22 @@ if(localStorage.receiveNumber){
                                                                                  rc_de += '<div class="ui-block-d"><b>จำนวนรับเข้า</b></div>';
                                                                                  rc_de += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
                                                                                  for(var i = 0;i<js.length;i++){
+                                                                                 if(js[i].isCancel == "1"){
                                                                                  //console.log(js[i].code);
-                                                                                 rc_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">'
+                                                                                 //data-row-id="4" id="4"
+                                                                                 if(js[i].barCode==""){
+                                                                                 rc_de += '<div class="ui-grid-d blur" style="text-align:center; font-size:12px; color:#ccc;">';
+                                                                                 }else{rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
+                                                                                 rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
+                                                                                 rc_de += '"  style="text-align:center; font-size:12px;">';}
+                                                                                 }else{
+                                                                                 if(js[i].barCode==""){
+                                                                                 rc_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">';
+                                                                                 }else{rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
+                                                                                 rc_de += "'"+js[i].barCode+"')";
+                                                                                 rc_de += '"  style="text-align:center; font-size:12px;">';}
+
+                                                                                 }
                                                                                  rc_de += '<div class="ui-block-a">'+js[i].itemName+'</div>';
                                                                                  rc_de += '<div class="ui-block-b"> '+js[i].remainQty+' '+js[i].unitCode+' </div>';
                                                                                  rc_de += '<div class="ui-block-c"> '+js[i].price.toLocaleString()+' </div>';
@@ -278,9 +295,126 @@ if(localStorage.receiveNumber){
 }
 
 function search_receive(){
-se_item ="";
-se_item +="<a href='#' class='ui-btn ui-corner-all'>item 1</a>";
-se_item +="<a href='#' class='ui-btn ui-corner-all'>item 2</a>";
-se_item +="<a href='#' class='ui-btn ui-corner-all'>item 3</a>";
+var sear = document.getElementById("receive_search_item").value;
+
+var se_search ="";
+
+          $.ajax({
+                url: localStorage.api_url_server+""+localStorage.api_url_serchitem,
+                data: '{"accessToken":"","docNo":"","type":"0","barCode":"'+sear+'"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                type: "POST",
+                cache: false,
+                success: function(search){
+                console.log(JSON.stringify(search));
+                if(search.resp.isSuccess== "0"){
+                alert("ไม่ถูกต้อง !!")
+                }else{
+
+                var search_d = JSON.stringify(search);
+                var search_ds = search_d.split(":[");
+                var search_str = search_ds[1].split("]}");
+                search_d = "["+search_str[0]+"]";
+                var search_js = jQuery.parseJSON(search_d);
+                // alert(JSON.stringify(po_detail.isSuccess));
+                console.log(JSON.stringify(search_js));
+               //document.getElementById("PO").innerHTML = JSON.stringify(js);
+               var count = search_js.length;
+                   for(var i = 0;i<search_js.length;i++){
+
+                   //se_search +="<a href='#' class='ui-btn ui-corner-all' onclick=''>"+search_js[i].itemName+""+search_js[i].itemName+"</a>";
+                   se_search += '<a href="#" class="ui-btn ui-corner-all"   onclick="scan_search_item(';
+                   se_search += "'"+search_js[i].barCode+"')";
+                   se_search += '">'+search_js[i].itemName+''+search_js[i].itemName+'</a>';
+                   //result_scanner +="<p>รหัสสินค้า : "+search_js[i].itemCode+"</p>";
+                   //result_scanner +="<p>รหัสสินค้า : "+search_js[i].barCode+"</p>";
+                   //result_scanner +="<p>รหัสสินค้า : "+search_js[i].itemName+"</p>";
+                   //result_scanner +="<p>รหัสสินค้า : "+search_js[i].unitCode+"</p>";
+                   //localStorage.searchCode_rv = search_js[i].searchCode;
+                   //localStorage.barCode_rv = search_js[i].barCode;
+                   //localStorage.searchName_rv = search_js[i].searchName;
+                   //localStorage.unitCode_rv = search_js[i].unitCode;
+                   //[{"itemCode":"8850025518361","barCode":"8850025518361","itemName":"ยูเอฟชี น้ำมะพร้าว","unitCode":"กระป๋อง","price":15,"qtyRC":0}]
+                   }
+               }
+               document.getElementById("show_search_item").innerHTML = se_search;
+               //$.mobile.changePage("#receive_search");
+               },
+               error: function (error){
+               alert(error);
+               }
+          });
+
+
 document.getElementById("show_search_item").innerHTML = se_item;
+}
+
+function cancel_item(delete_item){
+//alert(delete_item)
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+if (confirm('ต้องการยกเลิกสินค้านี้หรือไม ?')) {
+      $.ajax({
+                        url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                        data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+delete_item+'","qty":"","isCancel":"1","userID":"admin"}',
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST",
+                        cache: false,
+                        success: function(additem_res){
+                        console.log(additem_res);
+                        alert("ยกเลิกเรียบร้อยแล้ว !!");
+                        document.getElementById("amount_scanner").value = "";
+                        document.getElementById("product_show").innerHTML = "";
+                        search_rc_no();
+                        $.mobile.changePage("#receive_item");
+
+                        },
+                        error: function (error){
+                        alert(error);
+                        }
+                        });
+    }
+
+}
+
+function uncancel_item(undelete_item,rcq){
+//alert(undelete_item)
+//alert(rcq)
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+if (confirm('ต้องการคืนค่าสินค้านี้หรือไม ?')) {
+      $.ajax({
+                        url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                        data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+undelete_item+'","qty":"'+rcq+'","isCancel":"0","userID":"admin"}',
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST",
+                        cache: false,
+                        success: function(additem_res){
+                        console.log(additem_res);
+                        alert("คืนค่าเรียบร้อยแล้ว !!");
+                        document.getElementById("amount_scanner").value = "";
+                        document.getElementById("product_show").innerHTML = "";
+                        search_rc_no();
+                        $.mobile.changePage("#receive_item");
+
+                        },
+                        error: function (error){
+                        alert(error);
+                        }
+                        });
+    }
+
 }
