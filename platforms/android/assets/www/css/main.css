@@ -264,35 +264,11 @@ hr.hr {
 	width:25px;
 	float: right;
 }
-.receive_status{
-	width:25px;
-	float: center;
-}
-.blur{
-      -webkit-filter: grayscale(1);
-      -webkit-filter: grayscale(100%);
-      filter: grayscale(100%);
-      filter: url(#greyscale);
-      filter: gray;
-      color:#ccc;
-}
 }
 
 /*===============================================================================================mobile==========================================================*/
 
 @media (max-width: 767px) {
-.blur{
-      -webkit-filter: grayscale(1);
-      -webkit-filter: grayscale(100%);
-      filter: grayscale(100%);
-      filter: url(#greyscale);
-      filter: gray;
-      color:#ccc;
-}
-.receive_status{
-	width:25px;
-	float: center;
-}
 .item_status{
 	width:25px;
 	float: right;
@@ -465,6 +441,7 @@ h4{font-size: 10px;}
 input:hover, textarea:hover,
 input:focus, textarea:focus {
 	background-color:white;
+	color:#000;
 }
 /* ------------------------------------------------ button ---------------------------------- */
 .button-green{
@@ -477,8 +454,8 @@ input:focus, textarea:focus {
 	background-color: #7ccb1c;
 	color:#FFF;
 	font-size:24px;
-	padding-top:10px;
-	padding-bottom:10px;
+	padding-top:22px;
+	padding-bottom:22px;
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
@@ -487,7 +464,7 @@ input:focus, textarea:focus {
 }
 .button-green:hover{
 	background-color: rgba(0,0,0,0);
-	color: #7ccb1c;
+	color: #000;
 }	
 .ease {
 	width: 0px;
@@ -547,5 +524,41 @@ input:focus, textarea:focus {
     #prldetail{
         font-size:14px;
         margin-bottom:0;
+    }
+    .ui-block-a{
+        padding-left:2%;
+        padding-right:2%;
+    }
+    #myPanel1{
+        padding:0;
+        width:80%;
+    }
+    #tree{
+        margin:0;
+    }
+    a:link{
+        text-decoration: none;
+        color: #fff;
+        font-weight: normal;
+    }
+    .todo-itemview a:link {
+        text-decoration: none;
+        color: #000;
+        font-weight: normal;
+    }
+    .todo-itemview a:hover {
+        text-decoration: underline;
+        color: #000;
+        font-weight: normal;
+    }
+    .todo-listview a:link{
+        text-decoration: underline;
+        color: #000;
+        font-weight: normal;
+    }
+    .todo-listview a:hover{
+        text-decoration: underline;
+        color: #000;
+        font-weight: normal;
     }
 }
