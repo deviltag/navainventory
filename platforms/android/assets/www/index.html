@@ -967,18 +967,18 @@
 
         <label style="font-size:20px;"><span id="titelpr"></span><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
         <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a" style='width:30%;'>
+            <b><div class="ui-block-a" style="width:30%">
                 รหัสสินค้า
             </div>
-            <div class="ui-block-b" style='width:30%;'>
+            <div class="ui-block-b" style="width:25%">
                 ชื่อสินค้า
             </div>
-            <div class="ui-block-c" style='width:25%;'>
+            <div class="ui-block-c" style="width:25%">
                 จำนวน
             </div>
-            <div class="ui-block-d" style='width:15%;'>
+            <div class="ui-block-d" style="width:15%">
                 Range
-            </div>
+            </div></b>
         </div>
         </label>
         <div id="sumitem"></div>
@@ -1389,13 +1389,13 @@
             <input type="text" name="api12" id="api12">
             <input type="hidden" id="api12_s" value="NPInventoryWs/pr/searchItem">
 
-           <!--  <label for="api13">api insertPR</label>
-            <input type="text" name="api13" id="api13">
-            <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
+            <!--  <label for="api13">api insertPR</label>
+             <input type="text" name="api13" id="api13">
+             <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
 
-            <label for="api14">api insertPR</label>
-            <input type="text" name="api14" id="api14">
-            <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
+             <label for="api14">api insertPR</label>
+             <input type="text" name="api14" id="api14">
+             <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
 
 
 
@@ -1439,6 +1439,7 @@
 
 
 <script>
+
      $.ajax({
               url: localStorage.api_url_server_nava+"v1/menu/tree",
               //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
@@ -1461,6 +1462,7 @@
                      );
               }
      });
+
 
         </script>
 </body>
