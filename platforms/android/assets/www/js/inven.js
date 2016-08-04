@@ -153,7 +153,7 @@ alert(localStorage.receivestatus+" ยังไม่มีใบ")
 $.ajax({
          url: localStorage.api_url_server+""+localStorage.api_url_insert,
          data: '{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
-         //{"accessToken":"","docDate":"28/07/2016","poRefNo":"PO5806-0033","isCompleteSave":"0","userID":"admin"}
+         //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
          contentType: "application/json; charset=utf-8",
          dataType: "json",
          type: "POST",
@@ -217,7 +217,7 @@ $.ajax({
                           alert(error);
                           }
                           });
-
+localStorage.receivestatus = "1";
 
 }
 }
@@ -371,6 +371,9 @@ window.addEventListener('native.onscanbarcode', function (e) {
                             scan_search_item(e.scanResult);
                            break;
              case "receive_item" :
+                           scan_search_item(e.scanResult);
+                           break;
+             case "receive_show" :
                            scan_search_item(e.scanResult);
                            break;
              case "transferup_item" :

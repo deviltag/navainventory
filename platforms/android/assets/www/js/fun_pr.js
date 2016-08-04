@@ -117,14 +117,6 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                              			}
 });
 
-/*function additem(){
-  alert("เพิ่มสินค้า!!");
-
-  document.getElementById("noitems").value = "";
-  $("#itemdetail").show();
-  $.mobile.changePage('#additem');
-}*/
-//function PR_list(){
             $.ajax({
                    url: localStorage.api_url_server+""+localStorage.api_url_prlist,
                    data: '{"type":"0","search":"58089"}',
@@ -141,37 +133,47 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                         var js = jQuery.parseJSON(prl);
                         var prlist = "";
                         var wdate = "";
+                        var x = 1;
                         $.each(js, function(key, val) {
                            //console.log(val['docNo']);
 
-                           prlist += '<a href="#" onclick="prdetail(';
+                           prlist += '<label class="todo-listview" data-view-id="';
                            prlist += "'"+val['docNo']+"'";
-                           prlist += ')"><label><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
-                           prlist += '<div class="ui-block-a">'+val['docNo']+'</div>';
+                           prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
+                           prlist += "'"+val['docNo']+"'";
+                           prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                           prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
                            var wantDate = val['wantDate'];
-                           /*wdate = val['wantDate'].split("-");
+                           if(wantDate!=null){
+                           wdate = val['wantDate'].split("-");
                            day = wdate[2];
                            month = wdate[1];
                            year = (parseInt(wdate[0])+543);
 
-                           wantDate = day+"/"+month+"/"+year;*/
+                           wantDate = day+"/"+month+"/"+year;
+                           }
 
                            prlist += '<div class="ui-block-b">'+wantDate+'</div>';
                            prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
-
-                           switch (val['status']){
-                                case 1 : var status = "<img src='images/Warning.png' width='24'>";
-                                        break;
-                                case 2 : var status = "<img src='images/quick.png width='24'>";
-                                        break;
-                                case 3 : var status = "<img src='images/New.png width='24'>";
-                                        break;
-                           }
+                               switch (val['status']){
+                                    case 1 : var status = "<img src='images/Warning.png' width='24'>";
+                                            break;
+                                    case 2 : var status = "<img src='images/quick.png' width='24'>";
+                                            break;
+                               }
+                                   var d = new Date();
+                                   var n = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                                   console.log(n);
+                                   switch (val['docDate']){
+                                        case n :
+                                               status += ",<img src='images/New.png' width='24'>";
+                                               break;
+                                   }
 
                            prlist += '<div class="ui-block-d">'+status+'</div>';
                            prlist += '</div></label></a><hr>';
-
+                            x++;
                         });
                         document.getElementById("prlist").innerHTML = prlist;
 
@@ -186,8 +188,41 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
                    });
 
-           // return false;
-//}
+$(document).on('taphold', '.todo-listview', function() {
+       // console.log("DEBUG - Go popup");
+      var link_name = $(this).attr('data-view-id');
+      var link_id = $(this).attr('data-row-id');
+      var $popUp = $("<div/>").popup({
+        dismissible: true,
+
+        //theme: "a",
+        transition: "pop",
+        arrow: "b",
+        positionTo: '#'+link_id
+        }).on("popupafterclose", function () {
+    //remove the popup when closing
+    $(this).remove();
+    }).css({
+   'padding': '10%',
+   'color': '#fff',
+   'background': 'red'
+   });
+    console.log('#'+link_id);
+    $("<a>", {
+    text: "Cancel",
+    href: "#",
+    onclick: "MyFunction("+link_name+");"
+    }).appendTo($popUp);
+
+    $popUp.popup('open').enhanceWithin();
+
+    });
+function MyFunction(Docno){
+  alert(Docno);
+  }
+
+
+
 function backdetail(){
     console.log("backlink");
     $.ajax({
@@ -206,37 +241,48 @@ function backdetail(){
                             var js = jQuery.parseJSON(prl);
                             var prlist = "";
                             var wdate = "";
+                            var x = 1;
                             $.each(js, function(key, val) {
                                //console.log(val['docNo']);
 
-                               prlist += '<a href="#" onclick="prdetail(';
+                               prlist += '<label class="todo-listview" data-view-id="';
                                prlist += "'"+val['docNo']+"'";
-                               prlist += ')"><label><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
-                               prlist += '<div class="ui-block-a">'+val['docNo']+'</div>';
+                               prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
+                               prlist += "'"+val['docNo']+"'";
+                               prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                               prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
                                var wantDate = val['wantDate'];
-                               /*wdate = val['wantDate'].split("-");
+                               if(wantDate!=null){
+                               wdate = val['wantDate'].split("-");
                                day = wdate[2];
                                month = wdate[1];
                                year = (parseInt(wdate[0])+543);
 
-                               wantDate = day+"/"+month+"/"+year;*/
+                               wantDate = day+"/"+month+"/"+year;
+                               }
 
                                prlist += '<div class="ui-block-b">'+wantDate+'</div>';
                                prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
 
-                               switch (val['status']){
+                                    switch (val['status']){
                                     case 1 : var status = "<img src='images/Warning.png' width='24'>";
                                             break;
-                                    case 2 : var status = "<img src='images/quick.png width='24'>";
+                                    case 2 : var status = "<img src='images/quick.png' width='24'>";
                                             break;
-                                    case 3 : var status = "<img src='images/New.png width='24'>";
-                                            break;
-                               }
+                                    }
+                                   var d = new Date();
+                                   var n = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                                   console.log(n);
+                                   switch (val['docDate']){
+                                        case n :
+                                               status += ",<img src='images/New.png' width='24'>";
+                                               break;
+                                   }
 
                                prlist += '<div class="ui-block-d">'+status+'</div>';
                                prlist += '</div></label></a><hr>';
-
+                                x++;
                             });
                             document.getElementById("prlist").innerHTML = prlist;
 
@@ -275,12 +321,37 @@ function prdetail(DocNo){
 
                             var detail = "";
 
-                           console.log(JSON.stringify(js));
+                      //     console.log(JSON.stringify(js));
 
                            $.each(js, function(key, val) {
+                               switch (val['status']){
+                                    case 1 : state = "<img src='images/Warning.png' width='24'> ค้าง";
+                                            break;
+                                    case 2 : state = "<img src='images/quick.png' width='24'> ด่วน";
+                                            break;
+                               }
+                                   var d = new Date();
+                                   var n = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                                   console.log(n);
+                                   switch (val['docDate']){
+                                        case n :
+                                               state += ",<img src='images/New.png' width='24'>ใหม่";
+                                               break;
+                                   }
                                 no = val['docNo'];
-                                wdate = val['wantDate'];
-                                state = val['status'];
+
+                               wdate = val['wantDate'];
+                               if(wdate!=null){
+                               wdate = val['wantDate'].split("-");
+                               day = wdate[2];
+                               month = wdate[1];
+                               year = (parseInt(wdate[0])+543);
+
+                               wdate = day+"/"+month+"/"+year;
+                               }
+
+                               // wdate = val['wantDate'];
+                                //state = val['status'];
                                 dif = val['diffdate'];
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
@@ -367,6 +438,7 @@ function clicksubmit(){
                                                                               var range = "";
                                                                               var sitemno = "";
                                                                               var detail = "";
+                                                                              var ite = 1;
                                                                                     $.each(js, function(key, val) {
                                                                                     itemno = val['itemcode'];
                                                                                     itemname = val['itemname'];
@@ -374,21 +446,23 @@ function clicksubmit(){
                                                                                     range = val['range'];
                                                                                     sitemno = Math.ceil(itemno.length/10);
                                                                                         var s = 0;
-                                                                                        var l = 10;
+                                                                                        var l = 8;
                                                                                         var str1 = "";
                                                                                         for(var i = 0;i<sitemno;i++){
                                                                                              str1 += itemno.substr(s,l)+"<br>";
-                                                                                             s += 10;
-                                                                                             l += 10;
+                                                                                             s += 8;
+                                                                                             l += 8;
                                                                                         }
                                                                                         console.log(str1);
-
-                                                                                            detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center'>";
+                                                                                            detail += '<label class="todo-itemview" data-item-id="'+itemno+'" data-itemrow-id="i'+ite+'" id="i'+ite+'"><a href="#">';
+                                                                                            detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
                                                                                             detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
-                                                                                            detail += "<div class='ui-block-b' style='width:30%;'>"+itemname+"</div>";
-                                                                                            detail += "<div class='ui-block-c' style='width:25%;'>"+cnt+'</div>';
-                                                                                            detail += "<div class='ui-block-d' style='width:15%;'>"+range+"</div>";
-                                                                                            detail += "</div>";
+                                                                                            detail += "<div class='ui-block-b' style='width:28%;'>"+itemname+"</div>";
+                                                                                            detail += "<div class='ui-block-c' style='width:18%;'>"+cnt+'</div>';
+                                                                                            detail += "<div class='ui-block-d' style='width:24%;'>"+range+"</div>";
+                                                                                            detail += "</div></a></label>";
+
+                                                                                            ite++;
 
                                                                                         });
 
@@ -446,57 +520,51 @@ $.ajax({
                 document.getElementById("DocNo").value = DocNo;
 
                 $.ajax({
-                           url: "http://qserver.nopadol.com:8080/NPInventoryWs/pr/prDetail",
-                           data: '{"type":"0","searchDocno":"'+result.docno+'"}',
-                           contentType: "application/json; charset=utf-8",
-                           dataType: "json",
-                           type: "POST",
-                           cache: false,
-                           success: function(result){
-                                //console.log(JSON.stringify(result));
-                                var prl = JSON.stringify(result);
-                                var prlp = prl.split(":[");
-                                var str = prlp[1].split("]}");
-                                prl = "["+str[0]+"]";
-                                var js = jQuery.parseJSON(prl);
-                                var itemno = "";
-                                var itemname = "";
-                                var cnt = "";
-                                var range = "";
-                                var sitemno = "";
-                                var detail = "";
+url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
+                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       type: "POST",
+                       cache: false,
+                       success: function(result){
+                       var prl = JSON.stringify(result);
+                       var prlp = prl.split(":[");
+                       var str = prlp[1].split("]}");
+                       prl = "["+str[0]+"]";
+                       var js = jQuery.parseJSON(prl);
+                       var itemno = "";
+                       var itemname = "";
+                       var cnt = "";
+                       var range = "";
+                       var sitemno = "";
+                       var detail = "";
+                       var ite = 1;
+                             $.each(js, function(key, val) {
+                             itemno = val['itemcode'];
+                             itemname = val['itemname'];
+                             cnt = val['qty']+" "+val['unitcode'];
+                             range = val['range'];
+                             sitemno = Math.ceil(itemno.length/10);
+                             var s = 0;
+                             var l = 8;
+                             var str1 = "";
+                             for(var i = 0;i<sitemno;i++){
+                                  str1 += itemno.substr(s,l)+"<br>";
+                                  s += 8;
+                                  l += 8;
+                             }
+                             console.log(str1);
+                                  detail += '<label class="todo-itemview" data-item-id="'+itemno+'" data-itemrow-id="i'+ite+'" id="i'+ite+'"><a href="#">';
+                                  detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
+                                  detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
+                                  detail += "<div class='ui-block-b' style='width:28%;'>"+itemname+"</div>";
+                                  detail += "<div class='ui-block-c' style='width:18%;'>"+cnt+'</div>';
+                                  detail += "<div class='ui-block-d' style='width:24%;'>"+range+"</div>";
+                                  detail += "</div></a></label>";
 
-                               console.log(JSON.stringify(js));
+                                  ite++;
 
-                              $.each(js, function(key, val) {
-                                    itemno = val['itemcode'];
-                                    itemname = val['itemname'];
-                                    cnt = val['qty']+" "+val['unitcode'];
-                                    range = val['range'];
-
-                                    sitemno = Math.ceil(itemno.length/10);
-
-                                    var s = 0;
-                                    var l = 10;
-                                    var str1 = "";
-                                    for(var i = 0;i<sitemno;i++){
-                                        //console.log(itemno.substr(s,l));
-                                        //console.log("str.substr("+s+", "+l+")");
-                                        str1 += itemno.substr(s,l)+"<br>";
-
-                                        s += 10;
-                                        l += 10;
-                                    }
-                                    console.log(str1);
-
-                                    detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center'>";
-                                    detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
-                                    detail += "<div class='ui-block-b' style='width:30%;'>"+itemname+"</div>";
-                                    detail += "<div class='ui-block-c' style='width:25%;'>"+cnt+'</div>';
-                                    detail += "<div class='ui-block-d' style='width:15%;'>"+range+"</div>";
-                                    detail += "</div>";
-
-                                });
+                             });
 
                                 document.getElementById("sumitem").innerHTML = detail;
 
@@ -523,3 +591,37 @@ function pluspr(){
 
     $("#itemdetail").show();
 }
+
+$(document).on('taphold', '.todo-itemview', function() {
+       // console.log("DEBUG - Go popup");
+      var link_name = $(this).attr('data-item-id');
+      var link_id = $(this).attr('data-itemrow-id');
+      var $popUp = $("<div/>").popup({
+        dismissible: true,
+
+        //theme: "a",
+        transition: "pop",
+        arrow: "b",
+        positionTo: '#'+link_id
+        }).on("popupafterclose", function () {
+    //remove the popup when closing
+    $(this).remove();
+    }).css({
+   'padding': '10%',
+   'color': '#fff',
+   'background': 'red'
+   });
+    console.log(link_name);
+    console.log('#'+link_id);
+    $("<a>", {
+    text: "Cancel",
+    href: "#",
+    onclick: "MyItem("+link_name+");"
+    }).appendTo($popUp);
+
+    $popUp.popup('open').enhanceWithin();
+
+    });
+function MyItem(itemno){
+  alert(itemno);
+  }

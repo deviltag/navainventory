@@ -732,8 +732,6 @@
             <hr class="hr">
             <div id="po_detail"></div>
             <br>
-            <a href="#" onclick="testtttt()" class="ui-btn ui-corner-all">clear</a>
-
 
 
 
@@ -746,13 +744,55 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#receive" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
                 <li><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
-                <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <!--<li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>-->
             </ul>
         </div>
     </div>
     <div data-role="panel" id="myPanel_receive_item" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+
+<!--//////////////////////////////////////////////////////////// Receive item ////////////////////////////////////////////////////////////////-->
+
+<div data-role="page" id="receive_show">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_receive_show"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <form>
+
+
+            <div id="rv_head"></div>
+            <hr class="hr">
+            <div id="rv_detail"></div>
+            <br>
+
+
+
+        </form>
+
+    </div>
+
+
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li onclick="check_submit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
+                <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_receive_show" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <hr>
@@ -775,8 +815,6 @@
             <hr class="hr">
             <div id="polist_detail"></div>
             <br>
-            <a href="#" onclick="testtttt()" class="ui-btn ui-corner-all">clear</a>
-
 
 
 
@@ -790,7 +828,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#receive" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <!--<li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>-->
             </ul>
         </div>
     </div>
@@ -967,18 +1005,18 @@
 
         <label style="font-size:20px;"><span id="titelpr"></span><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
         <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
-            <div class="ui-block-a" style='width:30%;'>
+            <b><div class="ui-block-a" style="width:30%">
                 รหัสสินค้า
             </div>
-            <div class="ui-block-b" style='width:30%;'>
+            <div class="ui-block-b" style="width:25%">
                 ชื่อสินค้า
             </div>
-            <div class="ui-block-c" style='width:25%;'>
+            <div class="ui-block-c" style="width:25%">
                 จำนวน
             </div>
-            <div class="ui-block-d" style='width:15%;'>
+            <div class="ui-block-d" style="width:15%">
                 Range
-            </div>
+            </div></b>
         </div>
         </label>
         <div id="sumitem"></div>
@@ -1389,13 +1427,13 @@
             <input type="text" name="api12" id="api12">
             <input type="hidden" id="api12_s" value="NPInventoryWs/pr/searchItem">
 
-           <!--  <label for="api13">api insertPR</label>
-            <input type="text" name="api13" id="api13">
-            <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
+            <!--  <label for="api13">api insertPR</label>
+             <input type="text" name="api13" id="api13">
+             <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
 
-            <label for="api14">api insertPR</label>
-            <input type="text" name="api14" id="api14">
-            <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
+             <label for="api14">api insertPR</label>
+             <input type="text" name="api14" id="api14">
+             <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
 
 
 
@@ -1433,35 +1471,9 @@
         app.initialize();
 
 </script>
-
+<script src="js/hotkey.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-treeview.min.js"></script>
-
-
-<script>
-     $.ajax({
-              url: localStorage.api_url_server_nava+"v1/menu/tree",
-              //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
-              //contentType: "application/json; charset=utf-8",
-              //dataType: "json",
-              type: "GET",
-              cache: false,
-              success: function(result){
-                     var mytree =
-                          result
-                     ;
-                     $('.tree').treeview({
-                     color: "#428bca",
-                     levels: 1,
-                     expandIcon: 'glyphicon glyphicon-cloud-download',
-                     collapseIcon: 'glyphicon glyphicon-cloud-download',
-                     nodeIcon: 'glyphicon glyphicon-bookmark',
-                     enableLinks: true,
-                     data: mytree}
-                     );
-              }
-     });
-
-        </script>
+<script src="js/menutree.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-
+//alert(localStorage.api_url_server+""+localStorage.api_url_vender)
                /* $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_vender,
                    data: '{"accessToken":"","search":""}',
@@ -194,6 +194,8 @@ function select_op_vender(get_detail){
 }
 
 function search_rc_no(rc_no){
+//localStorage.receiveNumber[localStorage.porefno] = "RV5908-0001";
+//alert(localStorage.receiveNumber["PO5610-0003"])
 if(localStorage.receiveNumber){
       //alert(localStorage.porefno+" "+localStorage.receiveNumber);
 
@@ -245,16 +247,26 @@ if(localStorage.receiveNumber){
                                                                                  //console.log(js[i].code);
                                                                                  //data-row-id="4" id="4"
                                                                                  if(js[i].barCode==""){
+
                                                                                  rc_de += '<div class="ui-grid-d blur" style="text-align:center; font-size:12px; color:#ccc;">';
-                                                                                 }else{rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
-                                                                                 rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
-                                                                                 rc_de += '"  style="text-align:center; font-size:12px;">';}
+                                                                                 }else{
+                                                                                 rc_de += '<div class="todo-uncancelview ui-grid-d blur" data-uncancel-id="'+js[i].barCode+'" data-uncancelrow-id="i'+js[i].barCode+'" data-unreceive="'+js[i].rcQty+'" id="i'+js[i].barCode+'" style="text-align:center; font-size:12px;">';
+
+                                                                                 //rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
+                                                                                 //rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
+                                                                                 //rc_de += '"  style="text-align:center; font-size:12px;">';
+                                                                                 }
                                                                                  }else{
                                                                                  if(js[i].barCode==""){
                                                                                  rc_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">';
-                                                                                 }else{rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
-                                                                                 rc_de += "'"+js[i].barCode+"')";
-                                                                                 rc_de += '"  style="text-align:center; font-size:12px;">';}
+                                                                                 }else{
+
+                                                                                 rc_de += '<div class="todo-cancelview ui-grid-d" data-cancel-id="'+js[i].barCode+'" data-cancelrow-id="i'+js[i].barCode+'" data-receive="'+js[i].rcQty+'" id="i'+js[i].barCode+'" style="text-align:center; font-size:12px;">';
+
+                                                                                 //rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
+                                                                                 //rc_de += "'"+js[i].barCode+"')";
+                                                                                 //rc_de += '"  style="text-align:center; font-size:12px;">';
+                                                                                 }
 
                                                                                  }
                                                                                  rc_de += '<div class="ui-block-a">'+js[i].itemName+'</div>';
@@ -275,12 +287,12 @@ if(localStorage.receiveNumber){
                                                                                     rc_de += '<div class="ui-block-d"><img src="images/private.png" class="receive_status"></div></div><hr>';
                                                                                   }
                                                                                  //rc_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div></div><hr>';
-
+                                                                                            //rc_de +="</label>";
                                                                                                  }
                                                                                  //rc_de += '</table>';
-                                                                                 document.getElementById("po_head").innerHTML = rc_de_head;
-                                                                                 document.getElementById("po_detail").innerHTML = rc_de;
-                                                                                 $.mobile.changePage("#receive_item");
+                                                                                 document.getElementById("rv_head").innerHTML = rc_de_head;
+                                                                                 document.getElementById("rv_detail").innerHTML = rc_de;
+                                                                                 $.mobile.changePage("#receive_show");
                                                                                  }else if(rc_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
@@ -347,7 +359,7 @@ var se_search ="";
           });
 
 
-document.getElementById("show_search_item").innerHTML = se_item;
+//document.getElementById("show_search_item").innerHTML = se_item;
 }
 
 function cancel_item(delete_item){
@@ -373,7 +385,7 @@ if (confirm('ต้องการยกเลิกสินค้านี้�
                         document.getElementById("amount_scanner").value = "";
                         document.getElementById("product_show").innerHTML = "";
                         search_rc_no();
-                        $.mobile.changePage("#receive_item");
+                        $.mobile.changePage("#receive_show");
 
                         },
                         error: function (error){
@@ -408,7 +420,7 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
                         document.getElementById("amount_scanner").value = "";
                         document.getElementById("product_show").innerHTML = "";
                         search_rc_no();
-                        $.mobile.changePage("#receive_item");
+                        $.mobile.changePage("#receive_show");
 
                         },
                         error: function (error){
@@ -418,3 +430,75 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
     }
 
 }
+
+$(document).on('taphold', '.todo-uncancelview', function() {
+       // console.log("DEBUG - Go popup");
+      var link_name = $(this).attr('data-uncancel-id');
+      var link_id = $(this).attr('data-uncancelrow-id');
+      var rcqtys = $(this).attr('data-unreceive');
+      var $popUp = $("<div/>").popup({
+        dismissible: true,
+
+        //theme: "a",
+        transition: "pop",
+        arrow: "b",
+        positionTo: '#'+link_id
+        }).on("popupafterclose", function () {
+    //remove the popup when closing
+    $(this).remove();
+    }).css({
+   'padding': '15%',
+   'color': '#fff',
+   'background': 'green'
+   });
+    console.log(link_name);
+    console.log('#'+link_id);
+    $("<a>", {
+    text: "UnHold",
+    href: "#",
+    onclick: "uncancel_item("+link_name+","+rcqtys+");"
+    }).appendTo($popUp);
+
+    $popUp.popup('open').enhanceWithin();
+
+    });
+
+$(document).on('taphold', '.todo-cancelview', function() {
+       // console.log("DEBUG - Go popup");
+      var link_name = $(this).attr('data-cancel-id');
+      var link_id = $(this).attr('data-cancelrow-id');
+      var rcqtys = $(this).attr('data-receive');
+      var $popUp = $("<div/>").popup({
+        dismissible: true,
+
+        //theme: "a",
+        transition: "pop",
+        arrow: "b",
+        positionTo: '#'+link_id
+        }).on("popupafterclose", function () {
+    //remove the popup when closing
+    $(this).remove();
+    }).css({
+   'padding': '15%',
+   'color': '#fff',
+   'background': 'red'
+   });
+    console.log(link_name);
+    console.log('#'+link_id);
+    $("<a>", {
+    text: "Hold",
+    href: "#",
+    onclick: "cancel_item("+link_name+","+rcqtys+");"
+    }).appendTo($popUp);
+
+    $popUp.popup('open').enhanceWithin();
+
+    });
+
+
+    function check_submit(){
+    if(localStorage.receivestatus == "1"){
+    alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
+    return false;
+    }else{$.mobile.changePage("#receive");}
+    }
