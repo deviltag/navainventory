@@ -152,7 +152,7 @@ if(localStorage.receivestatus=="0"){
 alert(localStorage.receivestatus+" ยังไม่มีใบ")
 $.ajax({
          url: localStorage.api_url_server+""+localStorage.api_url_insert,
-         data: '{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
+         data: '{"accessToken":"","docNo":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
          //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
          contentType: "application/json; charset=utf-8",
          dataType: "json",
@@ -161,6 +161,7 @@ $.ajax({
          success: function(insert_res){
          console.log(insert_res);
          localStorage.receiveNumber = insert_res.docNo;
+         //alert(insert_res.docNo)
          $.ajax({
                   url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
                   data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"admin"}',
@@ -233,8 +234,8 @@ var date = curr_date + "/" + curr_month
 + "/" + curr_year;
             $.ajax({
                      url: localStorage.api_url_server+""+localStorage.api_url_insert,
-                     data: '{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"1","userID":"admin"}',
-                     //{"accessToken":"","docDate":"28/07/2016","poRefNo":"PO5806-0033","isCompleteSave":"0","userID":"admin"}
+                     data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"1","userID":"admin"}',
+                     //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
                      contentType: "application/json; charset=utf-8",
                      dataType: "json",
                      type: "POST",
@@ -251,7 +252,7 @@ var date = curr_date + "/" + curr_month
             localStorage.receivestatus = "0";
             //alert(localStorage.receivestatus+" save complete!!")
             search_rc_no();
-
+            //select_op_vender(localStorage.porefno);
 }
 /*function test(){
  window.addEventListener("native.onscanbarcode",function(t){
@@ -361,7 +362,7 @@ window.addEventListener('native.onscanbarcode', function (e) {
        switch(page){
               case "pageone" :
 
-                           $.mobile.changePage("#pagetwo");
+                           //$.mobile.changePage("#pagetwo");
 
                 		   break;
               case "receive" :

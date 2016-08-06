@@ -1,5 +1,7 @@
 $(document).ready(function(){
-
+if(localStorage.receivestatus == null ||localStorage.receivestatus == "" ){
+localStorage.receivestatus == "0";
+}
 //alert(localStorage.api_url_server+""+localStorage.api_url_vender)
                /* $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_vender,
@@ -194,10 +196,10 @@ function select_op_vender(get_detail){
 }
 
 function search_rc_no(rc_no){
-//localStorage.receiveNumber[localStorage.porefno] = "RV5908-0001";
-//alert(localStorage.receiveNumber["PO5610-0003"])
-if(localStorage.receiveNumber){
+//localStorage.receiveNumber = "";
       //alert(localStorage.porefno+" "+localStorage.receiveNumber);
+alert(localStorage.receiveNumber)
+if(localStorage.receiveNumber){
 
 	                $.ajax({
                                                      url: localStorage.api_url_server+""+localStorage.api_url_search,
@@ -302,8 +304,9 @@ if(localStorage.receiveNumber){
 
                                                  });
                                                  }else{
-                                                 alert("ไม่มีใบรับเข้า !!");
+                                                 alert("ไม่มีใบรับสินค้า !!");
                                                  }
+
 }
 
 function search_receive(){

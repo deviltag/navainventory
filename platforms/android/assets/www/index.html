@@ -744,7 +744,7 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#receive_listpo" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
                 <li><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
                 <!--<li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>-->
             </ul>
@@ -758,7 +758,7 @@
     </div>
 </div>
 
-<!--//////////////////////////////////////////////////////////// Receive item ////////////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////// Receive show ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="receive_show">
     <div data-role="none" id="header" >
@@ -912,7 +912,6 @@
         <div id="tree" class="tree"></div>
     </div>
 </div>
-
 <!--////////////////////////////////////////////////////////////page PR ////////////////////////////////////////////////////////////////-->
 
 <div data-role="page" id="pagepr">
@@ -1008,15 +1007,15 @@
             <b><div class="ui-block-a" style="width:30%">
                 รหัสสินค้า
             </div>
-            <div class="ui-block-b" style="width:25%">
-                ชื่อสินค้า
-            </div>
-            <div class="ui-block-c" style="width:25%">
-                จำนวน
-            </div>
-            <div class="ui-block-d" style="width:15%">
-                Range
-            </div></b>
+                <div class="ui-block-b" style="width:25%">
+                    ชื่อสินค้า
+                </div>
+                <div class="ui-block-c" style="width:25%">
+                    จำนวน
+                </div>
+                <div class="ui-block-d" style="width:15%">
+                    Range
+                </div></b>
         </div>
         </label>
         <div id="sumitem"></div>
@@ -1033,10 +1032,10 @@
             </select>
         </label>
         <label>
-            หมายเหตุ : <textarea rows="5" cols="20"></textarea>
+            หมายเหตุ : <textarea rows="5" id="discript" cols="20"></textarea>
         </label>
         <label for="switch">ความเร่งด่วน :
-            <input type="checkbox" data-role="flipswitch" name="switch" id="switch" data-on-text="ด่วน" data-off-text="ไม่">
+            <input type="checkbox" data-role="flipswitch" name="switch" id="switch" data-on-text="ด่วน" data-off-text="ไม่" value="1">
         </label>
 
     </div>
@@ -1460,13 +1459,15 @@
 
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<script src="js/setting.js"></script>
 <script src="js/fun_pr.js"></script>
 <script src="js/fun_cs.js"></script>
 <script src="js/inven.js"></script>
 <script src="js/search_vender.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script src="js/setting.js"></script>
+
 <script type="text/javascript">
         app.initialize();
 

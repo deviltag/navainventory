@@ -142,6 +142,7 @@ input:hover, textarea:hover,
 input:focus, textarea:focus {
 	background-color:#C1FFC1;
 	color:#fff;
+	weight: normal;
 }
 .form_set{width:60%;
 margin:0 auto;
