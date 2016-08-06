@@ -1,6 +1,7 @@
 $(document).ready(function(){
+
 if(localStorage.receivestatus == null ||localStorage.receivestatus == "" ){
-localStorage.receivestatus == "0";
+localStorage.receivestatus = "0";
 }
 //alert(localStorage.api_url_server+""+localStorage.api_url_vender)
                /* $.ajax({
@@ -354,6 +355,8 @@ var se_search ="";
                    }
                }
                document.getElementById("show_search_item").innerHTML = se_search;
+
+
                //$.mobile.changePage("#receive_search");
                },
                error: function (error){

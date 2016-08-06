@@ -251,8 +251,8 @@ var date = curr_date + "/" + curr_month
 
             localStorage.receivestatus = "0";
             //alert(localStorage.receivestatus+" save complete!!")
-            search_rc_no();
-            //select_op_vender(localStorage.porefno);
+            //search_rc_no();
+            select_op_vender(localStorage.porefno);
 }
 /*function test(){
  window.addEventListener("native.onscanbarcode",function(t){
@@ -333,8 +333,12 @@ function scan_search_item(scan_value){
                                                                                localStorage.unitCode_rv = item_js[i].unitCode;
                                                                                //[{"itemCode":"8850025518361","barCode":"8850025518361","itemName":"ยูเอฟชี น้ำมะพร้าว","unitCode":"กระป๋อง","price":15,"qtyRC":0}]
                                                                              }
+
+                                                                              //result_scanner +='<label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>';
                                                                              document.getElementById("product_show").innerHTML = result_scanner;
+
                                                                              $.mobile.changePage("#receive_scan");
+                                                                             //document.getElementById("amount_scanner").focus();
                                                                        }
 
                                                                   },
