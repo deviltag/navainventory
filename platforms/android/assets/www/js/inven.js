@@ -127,11 +127,133 @@ function scan_receive(){
   $("#scan_cancel").show();
   $("#scan_btn").hide();
 }
-function scan_cancel(){
+function cancel_scan(){
   document.getElementById("test_scanner").value = "";
   $("#receive2").hide();
   $("#scan_cancel").hide();
   $("#scan_btn").show();
+}
+function testtttt(){
+localStorage.receivestatus = "0";
+alert(localStorage.receivestatus)
+
+}
+function submit_scan(){
+if(document.getElementById("amount_scanner").value==""){
+alert("กรุณากรอกจำนวนที่ต้องการ")
+}else{
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+if(localStorage.receivestatus=="0"){
+//alert(localStorage.receivestatus+" ยังไม่มีใบ")
+$.ajax({
+         url: localStorage.api_url_server+""+localStorage.api_url_insert,
+         data: '{"accessToken":"","docNo":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
+         //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
+         contentType: "application/json; charset=utf-8",
+         dataType: "json",
+         type: "POST",
+         cache: false,
+         success: function(insert_res){
+         console.log(insert_res);
+         localStorage.receiveNumber = insert_res.docNo;
+         //alert(insert_res.docNo)
+         $.ajax({
+                  url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                  data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"admin"}',
+                         //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  type: "POST",
+                  cache: false,
+                  success: function(additem_res){
+                  console.log(additem_res);
+                  alert("บันทึกข้อมูลเรียบร้อยแล้ว !!");
+                  document.getElementById("amount_scanner").value = "";
+                  document.getElementById("product_show").innerHTML = "";
+                  search_rc_no();
+                  //$.mobile.changePage("#receive_item");
+
+                  },
+                  error: function (error){
+                  alert(error);
+                  }
+                  });
+
+         },
+         error: function (error){
+         alert(error);
+         }
+         });
+
+
+        //alert('"accessToken":"","Docdate":"'+date+'","apCode":"'+localStorage.apcode+'","PoRefNo":"'+localStorage.porefno+'","userID":"admin"')
+        localStorage.receivestatus = "1";
+
+        }else{
+        //alert(localStorage.receivestatus+" มีใบแล้ว")
+
+        $.ajax({
+                          url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                          data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"admin"}',
+                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"admin"}
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(additem_res){
+                          console.log(additem_res);
+                          alert("บันทึกข้อมูลเรียบร้อยแล้ว !!");
+                          document.getElementById("amount_scanner").value = "";
+                          document.getElementById("product_show").innerHTML = "";
+                          search_rc_no();
+                          //$.mobile.changePage("#receive_item");
+
+                          },
+                          error: function (error){
+                          alert(error);
+                          }
+                          });
+localStorage.receivestatus = "1";
+
+}
+}
+//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}')
+}
+
+function submit_receive(){
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth();
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+            $.ajax({
+                     url: localStorage.api_url_server+""+localStorage.api_url_insert,
+                     data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"1","userID":"admin"}',
+                     //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
+                     contentType: "application/json; charset=utf-8",
+                     dataType: "json",
+                     type: "POST",
+                     cache: false,
+                     success: function(receive_success){
+                     console.log(receive_success);
+                     alert("บันทึกใบรับเข้าเรียบร้อยแล้ว");
+                     localStorage.receivestatus = "0";
+                     //alert(localStorage.receivestatus+" save complete!!")
+                     //search_rc_no();
+                     select_op_vender(localStorage.porefno);
+                     },
+                     error: function (error){
+                     alert(error);
+                     }
+                     });
+
+
 }
 /*function test(){
  window.addEventListener("native.onscanbarcode",function(t){
@@ -166,6 +288,75 @@ window.addEventListener("native.onscanbarcode",function(s){
             })
 
 });*/
+function scan_search_item(scan_value){
+ var result_scanner = "";
+                           $.ajax({
+                                                                  url: localStorage.api_url_server+""+localStorage.api_url_serchitem,
+                                                                  data: '{"accessToken":"","docNo":"","type":"1","barCode":"'+scan_value+'"}',
+                                                                  contentType: "application/json; charset=utf-8",
+                                                                  dataType: "json",
+                                                                  type: "POST",
+                                                                  cache: false,
+                                                                  success: function(item){
+                                                                  console.log(JSON.stringify(item));
+                                                                  if(item.resp.isSuccess== "0"){
+                                                                  alert("Barcode ไม่ถูกต้อง !!")
+                                                                  }else{
+
+                                                                  //console.log(item.itemName);
+
+                                                                  //result_scanner +="<p>รหัสสินค้า : "+e.scanResult+"</p>";
+                                                                  //result_scanner +="<p>ชื่อสินค้า : "+item.itemCode.itemName+"</p>";
+                                                                  //result_scanner +="<p>หน่วยสินค้า : "+item.unitCode+"</p>";
+
+                                                                  //localStorage.itemCode_rv = item.itemCode
+                                                                  //localStorage.barCode_rv = item.barCode
+                                                                  //localStorage.itemName_rv = item.itemName
+                                                                  //localStorage.unitCode_rv = item.unitCode
+
+                                                                  var item_d = JSON.stringify(item);
+                                                                  var item_ds = item_d.split(":[");
+                                                                  var item_str = item_ds[1].split("]}");
+                                                                  item_d = "["+item_str[0]+"]";
+                                                                  var item_js = jQuery.parseJSON(item_d);
+                                                                  // alert(JSON.stringify(po_detail.isSuccess));
+                                                                  console.log(JSON.stringify(item_js));
+                                                                  //document.getElementById("PO").innerHTML = JSON.stringify(js);
+                                                                  var count = item_js.length;
+                                                                            for(var i = 0;i<count;i++){
+                                                                               result_scanner +="<p>รหัสสินค้า : "+item_js[i].itemCode+"</p>";
+                                                                               result_scanner +="<p>Barcode สินค้า : "+item_js[i].barCode+"</p>";
+                                                                               result_scanner +="<p>ชื่อสินค้า : "+item_js[i].itemName+"</p>";
+                                                                               result_scanner +="<p>หน่วยนับ : "+item_js[i].unitCode+"</p>";
+                                                                               localStorage.itemCode_rv = item_js[i].itemCode;
+                                                                               localStorage.barCode_rv = item_js[i].barCode;
+                                                                               localStorage.itemName_rv = item_js[i].itemName;
+                                                                               localStorage.unitCode_rv = item_js[i].unitCode;
+                                                                               //[{"itemCode":"8850025518361","barCode":"8850025518361","itemName":"ยูเอฟชี น้ำมะพร้าว","unitCode":"กระป๋อง","price":15,"qtyRC":0}]
+                                                                             }
+
+                                                                              //result_scanner +='<label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>';
+                                                                             document.getElementById("product_show").innerHTML = result_scanner;
+
+                                                                             $.mobile.changePage("#receive_scan");
+                                                                             //document.getElementById("amount_scanner").focus();
+                                                                             $("#receive_scan").bind('pageshow', function() {
+                                                                             			$('#amount_scanner').focus();
+                                                                             });
+
+                                                                       }
+
+                                                                  },
+                                                                  error: function (error){
+                                                                  alert(error);
+                                                                  }
+                                                                  });
+
+}
+
+
+
+
 window.addEventListener('native.onscanbarcode', function (e) {
        //alert(e.scanResult);
        var page = "";
@@ -178,19 +369,31 @@ window.addEventListener('native.onscanbarcode', function (e) {
        //alert(page);
                 			//document.getElementById("noitems").value = e.scanResult;
        switch(page){
-             case "pageone" :
+              case "pageone" :
 
-                           $.mobile.changePage("#pagetwo");
+                           //$.mobile.changePage("#pagetwo");
 
-                			 break;
+                		   break;
+              case "receive" :
+                          select_op_vender(e.scanResult);
+                           break;
              case "receive_scan" :
-                           document.getElementById("test_scanner").value=e.scanResult;
-                           $("#receive2").show();
-                           $("#scan_cancel").show();
-                           $("#scan_btn").hide();
-                             break;
+                            scan_search_item(e.scanResult);
+                           break;
+             case "receive_item" :
+                           scan_search_item(e.scanResult);
+                           break;
+             case "receive_show" :
+                           scan_search_item(e.scanResult);
+                           break;
              case "transferup_item" :
                            document.getElementById("product_scan_up").value=e.scanResult;
-                             break;
+                           break;
                 			}
+
+
+
+
+
+
 });
