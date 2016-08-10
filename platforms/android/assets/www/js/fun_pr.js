@@ -304,6 +304,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                     default: var status = "";
                                             break;
                                }
+<<<<<<< HEAD
                                     var today = new Date();
                                     var dd = today.getDate();
                                     var mm = today.getMonth()+1; //January is 0!
@@ -316,6 +317,14 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                         mm='0'+mm
                                     }
                                     var n = yyyy+'-'+mm+'-'+dd;
+=======
+                                   var d = new Date();
+                                   var today = d.getDate().length;
+                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
+                                   var tomonth = d.getMonth().length;
+                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
+                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
+>>>>>>> origin/master
                                    //console.log(n);
                                    switch (val['docDate']){
                                         case n :
@@ -335,7 +344,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                            },
                         error: function (error){
                         console.log(JSON.stringify(error));
+<<<<<<< HEAD
                         alertify.error("api qserver can't connect!!");
+=======
+                        alert("api qserver this not connected!!");
+>>>>>>> origin/master
                        // $.mobile.changePage("#pagepr");
                    }
 
@@ -431,6 +444,7 @@ $.ajax({
                       default: var status = "";
                                break;
                   }
+<<<<<<< HEAD
                     var today = new Date();
                     var dd = today.getDate();
                     var mm = today.getMonth()+1; //January is 0!
@@ -443,6 +457,14 @@ $.ajax({
                         mm='0'+mm
                     }
                     var n = yyyy+'-'+mm+'-'+dd;
+=======
+                   var d = new Date();
+                   var today = d.getDate().length;
+                   if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
+                   var tomonth = d.getMonth().length;
+                   if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
+                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
+>>>>>>> origin/master
                   //console.log(n);
                   switch (val['docDate']){
                       case n :
@@ -541,6 +563,7 @@ function prdetail(DocNo){
                             var detail = "";
 
                            console.log(JSON.stringify(js));
+<<<<<<< HEAD
                             var today = new Date();
                             var dd = today.getDate();
                             var mm = today.getMonth()+1; //January is 0!
@@ -553,6 +576,14 @@ function prdetail(DocNo){
                                 mm='0'+mm
                             }
                             var n = yyyy+'-'+mm+'-'+dd;
+=======
+                            var d = new Date();
+                            var today = d.getDate().length;
+                            if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
+                            var tomonth = d.getMonth().length;
+                            if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
+                            var n = d.getFullYear()+"-"+tomonth+"-"+today;
+>>>>>>> origin/master
                             console.log(n);
                             var state = "";
                            $.each(js, function(key, val) {
@@ -709,6 +740,7 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                                     default : state = "";
                                             break;
                                }
+<<<<<<< HEAD
                                     var today = new Date();
                                     var dd = today.getDate();
                                     var mm = today.getMonth()+1; //January is 0!
@@ -722,6 +754,14 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                                     }
                                     var n = yyyy+'-'+mm+'-'+dd;
                                    console.log(n);
+=======
+                                   var d = new Date();
+                                   var today = d.getDate().length;
+                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
+                                   var tomonth = d.getMonth().length;
+                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
+                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
+>>>>>>> origin/master
                                    switch (val['docDate']){
                                         case n :
                                                state += ",<img src='images/New.png' width='24'> ใหม่";
@@ -871,6 +911,7 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                                     default : state = "";
                                             break;
                                }
+<<<<<<< HEAD
                                     var today = new Date();
                                     var dd = today.getDate();
                                     var mm = today.getMonth()+1; //January is 0!
@@ -884,6 +925,14 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                                     }
                                     var n = yyyy+'-'+mm+'-'+dd;
                                    console.log(n);
+=======
+                                    var d = new Date();
+                                   var today = d.getDate().length;
+                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
+                                   var tomonth = d.getMonth().length;
+                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
+                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
+>>>>>>> origin/master
                                    switch (val['docDate']){
                                         case n :
                                                state += ",<img src='images/New.png' width='24'> ใหม่";
@@ -1191,7 +1240,11 @@ function pluspr(){
                 var js = jQuery.parseJSON(prl);
                 console.log(js);
                 if(JSON.stringify(js)=="[]"){
+<<<<<<< HEAD
                     alertify.alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
+=======
+                    alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
+>>>>>>> origin/master
                 }else{
                         var wday = document.getElementById("defdate").value;
                         var discript = document.getElementById("discript").value;
@@ -1202,7 +1255,11 @@ function pluspr(){
                             priority = 0;
                         }
                         if(discript==""||apCode == "null"){
+<<<<<<< HEAD
                             alertify.alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+=======
+                            alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+>>>>>>> origin/master
                         }else{
                                 $.ajax({
                                            url: localStorage.api_url_server+"NPInventoryWs/pr/updatePR",
@@ -1263,6 +1320,7 @@ function pluspr(){
                                                                     default : var status = "";
                                                                             break;
                                                                }
+<<<<<<< HEAD
                                                                     var today = new Date();
                                                                     var dd = today.getDate();
                                                                     var mm = today.getMonth()+1; //January is 0!
@@ -1275,6 +1333,14 @@ function pluspr(){
                                                                         mm='0'+mm
                                                                     }
                                                                     var n = yyyy+'-'+mm+'-'+dd;
+=======
+                                                                   var d = new Date();
+                                                                   var today = d.getDate().length;
+                                                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
+                                                                   var tomonth = d.getMonth().length;
+                                                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
+                                                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
+>>>>>>> origin/master
                                                                    console.log(val['docDate']+"/"+n);
                                                                    switch (val['docDate']){
                                                                         case n :
@@ -1298,7 +1364,11 @@ function pluspr(){
                                                    }
 
                                                    });
+<<<<<<< HEAD
                                            alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว");
+=======
+                                           alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+>>>>>>> origin/master
                                            $.mobile.changePage("#pagepr");
                                            },
                                            error: function (error){
