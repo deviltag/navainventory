@@ -1,3 +1,5 @@
+localStorage.apcode = "";
+localStorage.apname = "";
 window.addEventListener('native.onscanbarcode', function (pr) {
        var page = "";
        //alert(pr.scanResult);
@@ -11,7 +13,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
           page = $(this)[0].activeElement.id;
        });
 
-       alert(page);
+       console.log(page);
                 			//document.getElementById("noitems").value = pr.scanResult;
        switch(page){
              case "pageone" :
@@ -25,12 +27,13 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                     cache: false,
                                        success: function(result){
                                         //var obj = JSON.stringify(result);
-                                        alert("login : "+result.Message+" สถานะ : "+result.Status);
+                                        alertify.success("login : "+result.Message+" สถานะ : "+result.Status);
                                         console.log(result);
                                         $.mobile.changePage("#pagetwo");
                                         },
                                        error: function (error) {
-                                        alert("can't call api");
+                                       alertify.error("can't call api");
+                                        //alert("can't call api");
                                         $.mobile.changePage("#pagetwo");
                                         }
 
@@ -58,6 +61,8 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                 var range = "";
                                                 var cntitem = "";
                                                 var units = "";
+                                                var apcode = "";
+                                                var apname = "";
                                                 if(result.listBarcode==null){
                                                     console.log("data listbarcode : null");
 
@@ -67,6 +72,9 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                            range = val['range'];
                                                            cntitem = val['qty'];
                                                            units = val['unitcode'];
+                                                           apcode = val['apCode'];
+                                                           apname = val['apName'];
+
                                                     });
 
                                                 }else{
@@ -76,8 +84,36 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                         range = val['range'];
                                                         cntitem = val['qty'];
                                                         units = val['unitcode'];
+                                                        apcode = val['apCode'];
+                                                        apname = val['apName'];
                                                     });
                                                 }
+                                                if(localStorage.apcode == ""){
+                                                    if(apcode==0){
+                                                        var ven = "กรุณากรอกข้อมูลเจ้าหนี้";
+                                                        var venname = "-- ชื่อเจ้าหนี้ --";
+                                                        document.getElementById("vender").value = localStorage.apcode;
+                                                        document.getElementById("vender").placeholder = ven;
+                                                        document.getElementById("nameven").innerHTML = venname;
+                                                        document.getElementById("apCodeven").value = "null";
+                                                    }else{
+                                                        var ven = apcode;
+                                                        var venname = apname;
+                                                        localStorage.apcode = ven;
+                                                        localStorage.apname = venname;
+                                                        document.getElementById("vender").value = localStorage.apcode;
+                                                        document.getElementById("apCodeven").value = localStorage.apcode;
+                                                        document.getElementById("nameven").innerHTML = venname;
+                                                    }
+
+                                                }else{
+                                                    document.getElementById("vender").value = localStorage.apcode;
+
+                                                }
+                                                console.log(localStorage.apcode);
+                                                $("#additem").bind('pageshow', function() {
+                                                    $('#citem').focus();
+                                                });
                                                 document.getElementById("DocNo").value = DocNo;
                                                 document.getElementById("noitems").value = pr.scanResult;
                                                 document.getElementById("nameitems").value = itemName;
@@ -95,7 +131,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                 document.getElementById("Tunit").innerHTML = units;
                                            },
                                            error: function (error) {
-                                           alert("can't call api");
+                                           alertify.error("can't call api");
                                            $.mobile.changePage("#pluspr");
                                            }
 
@@ -131,26 +167,55 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                              var range = "";
                                                              var cntitem = "";
                                                              var units = "";
-                                                             if(result.listBarcode==null){
-                                                                 console.log("data listbarcode : null");
+                                                                if(result.listBarcode==null){
+                                                                console.log("data listbarcode : null");
 
-                                                                 $.each(result.listPRBarcode, function(key, val) {
-                                                                        itemcode = val['itemcode'];
-                                                                        itemName = val['itemname'];
-                                                                        range = val['range'];
-                                                                        cntitem = val['qty'];
-                                                                        units = val['unitcode'];
-                                                                 });
+                                                                $.each(result.listPRBarcode, function(key, val) {
+                                                                       itemcode = val['itemcode'];
+                                                                       itemName = val['itemname'];
+                                                                       range = val['range'];
+                                                                       cntitem = val['qty'];
+                                                                       units = val['unitcode'];
+                                                                       apcode = val['apCode'];
+                                                                       apname = val['apName'];
 
-                                                             }else{
-                                                                 $.each(result.listBarcode, function(key, val) {
-                                                                     itemcode = val['itemcode'];
-                                                                     itemName = val['itemname'];
-                                                                     range = val['range'];
-                                                                     cntitem = val['qty'];
-                                                                     units = val['unitcode'];
-                                                                 });
-                                                             }
+                                                                });
+
+                                                            }else{
+                                                                $.each(result.listBarcode, function(key, val) {
+                                                                    itemcode = val['itemcode'];
+                                                                    itemName = val['itemname'];
+                                                                    range = val['range'];
+                                                                    cntitem = val['qty'];
+                                                                    units = val['unitcode'];
+                                                                    apcode = val['apCode'];
+                                                                    apname = val['apName'];
+                                                                });
+                                                            }
+                                                            if(localStorage.apcode == ""){
+                                                                if(apcode==0){
+                                                                    var ven = "กรุณากรอกข้อมูลเจ้าหนี้";
+                                                                    var venname = "-- ชื่อเจ้าหนี้ --";
+                                                                    document.getElementById("vender").value = localStorage.apcode;
+                                                                    document.getElementById("vender").placeholder = ven;
+                                                                    document.getElementById("nameven").innerHTML = venname;
+                                                                }else{
+                                                                    var ven = apcode;
+                                                                    var venname = apname;
+                                                                    localStorage.apcode = ven;
+                                                                    localStorage.apname = venname;
+                                                                    document.getElementById("vender").value = localStorage.apcode;
+                                                                    document.getElementById("apCodeven").value = localStorage.apcode;
+                                                                    document.getElementById("nameven").innerHTML = venname;
+                                                                }
+
+                                                            }else{
+                                                                document.getElementById("vender").value = localStorage.apcode;
+
+                                                            }
+                                                            $("#additem").bind('pageshow', function() {
+                                                                $('#citem').focus();
+                                                            });
                                                              document.getElementById("DocNo").value = DocNo;
                                                              document.getElementById("noitems").value = pr.scanResult;
                                                              document.getElementById("nameitems").value = itemName;
@@ -168,7 +233,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                              document.getElementById("Tunit").innerHTML = units;
                                                         },
                                                         error: function (error) {
-                                                        alert("can't call api");
+                                                        alertify.error("can't call api");
                                                         $.mobile.changePage("#pluspr");
                                                         }
 
@@ -258,9 +323,9 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
                       //  $.mobile.changePage("#pagepr");
                            },
-                   error: function (error){
+                        error: function (error){
                         console.log(JSON.stringify(error));
-                        alert("api this not connected!!");
+                        alertify.error("api qserver can't connect!!");
                        // $.mobile.changePage("#pagepr");
                    }
 
@@ -291,13 +356,13 @@ $(document).on('taphold', '.todo-listview', function() {
     $("<a>", {
     text: "Cancel",
     href: "#",
-    onclick: "cacelPR("+link_name+");"
+    onclick: "cancelPR("+link_name+");"
     }).appendTo($popUp);
 
     $popUp.popup('open').enhanceWithin();
 
     });
-function cacelPR(Docno){
+function cancelPR(Docno){
   //alert(Docno);
 $.ajax({
     url: localStorage.api_url_server+"NPInventoryWs/pr/cancelPR",
@@ -393,83 +458,46 @@ $.ajax({
 
 function backdetail(){
     console.log("backlink");
-            $.ajax({
-                       url: localStorage.api_url_server+localStorage.api_url_prlist,
-                       data: '{"type":"0","search":"58089"}',
-                       contentType: "application/json; charset=utf-8",
-                       dataType: "json",
-                       type: "POST",
-                       cache: false,
-                       success: function(result){
-                            //console.log(JSON.stringify(result));
-                            var prl = JSON.stringify(result);
-                            //console.log(prl);
-                            var prlp = prl.split(":[");
-                            var str = prlp[1].split("]}");
-                            prl = "["+str[0]+"]";
-                            var js = jQuery.parseJSON(prl);
-                            var prlist = "";
-                            var wdate = "";
-                            var x = 1;
-                            $.each(js, function(key, val) {
-                               //console.log(val['docNo']);
+    var Docno = document.getElementById("DocNo").value;
+     $.ajax({
+            url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
+            data: '{"type":"0","searchDocno":"'+Docno+'"}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            type: "POST",
+            cache: false,
+            success: function(result){
+                     var prl = JSON.stringify(result);
+                     var prlp = prl.split(":[");
+                     var str = prlp[1].split("]}");
+                     prl = "["+str[0]+"]";
+                     var js = jQuery.parseJSON(prl);
+                     console.log(js);
+                     if(JSON.stringify(js)=="[]"){
+                        if (confirm('รายการนี้ไม่สมบูรณ์ ท่านต้องการยกเลิกการทำรายการนี้หรือไม่ ?')) {
+                        var Docno = document.getElementById("DocNo").value;
+                        cancelPR(Docno);
+                        console.log("cancel pr");
+                        }else{
+                           $.mobile.changePage("#pluspr",{transition: 'slidefade',reverse: true});
+                        }
+                     }else{
+                        if (confirm('ใบ PR นี้มีสินค้าอยู่ ท่านต้องกายกเลิกหรือไม่ ?')) {
+                        var Docno = document.getElementById("DocNo").value;
+                        cancelPR(Docno);
+                        console.log("cancel pr");
+                        }else{
+                            $.mobile.changePage("pluspr",{transition: 'slidefade',reverse: true});
+                        }
+                     }
+            }
+     });
 
-                               prlist += '<label class="todo-listview" data-view-id="';
-                               prlist += "'"+val['docNo']+"'";
-                               prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
-                               prlist += "'"+val['docNo']+"'";
-                               prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
-                               prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
-
-                               var wantDate = val['wantDate'];
-                               if(wantDate!=null){
-                               wdate = val['wantDate'].split("-");
-                               day = wdate[2];
-                               month = wdate[1];
-                               year = (parseInt(wdate[0])+543);
-
-                               wantDate = day+"/"+month+"/"+year;
-                               }
-
-                               prlist += '<div class="ui-block-b">'+wantDate+'</div>';
-                               prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
-                                   switch (val['status']){
-                                        case 1 : var status = "<img src='images/Warning.png' width='24'>";
-                                                break;
-                                        case 2 : var status = "<img src='images/quick.png' width='24'>";
-                                                break;
-                                        default: var status = "";
-                                                break;
-                                   }
-                                       var d = new Date();
-                                       var n = d.getFullYear()+"-0"+(d.getMonth()+1)+"-0"+d.getDate();
-                                       //console.log(n);
-                                       switch (val['docDate']){
-                                            case n :
-                                                   status += "<img src='images/New.png' width='24'>";
-                                                   break;
-                                       }
-
-                               prlist += '<div class="ui-block-d">'+status+'</div>';
-                               prlist += '</div></label></a><hr>';
-                                x++;
-                            });
-                            document.getElementById("prlist").innerHTML = prlist;
-
-                            //console.log(JSON.stringify(js));
-
-                            $.mobile.changePage("#pagepr");
-                               },
-                       error: function (error){
-                            console.log(JSON.stringify(error));
-                            alert("api this not connected!!");
-                           // $.mobile.changePage("#pagepr");
-                       }
-
-                       });
 }
+
+
 function prdetail(DocNo){
-    alert(DocNo);
+    //alert(DocNo);
     //document.getElementById("LDocNo").value = DocNo;
     $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
@@ -492,7 +520,7 @@ function prdetail(DocNo){
                             var ite = 1;
                             var detail = "";
 
-                      //     console.log(JSON.stringify(js));
+                           console.log(JSON.stringify(js));
                             var d = new Date();
                             var n = d.getFullYear()+"-0"+(d.getMonth()+1)+"-0"+d.getDate();
                             console.log(n);
@@ -503,6 +531,8 @@ function prdetail(DocNo){
                                     case 1 : state = "<img src='images/Warning.png' width='24'> ค้าง";
                                             break;
                                     case 2 : state = "<img src='images/quick.png' width='24'> ด่วน";
+                                            break;
+                                    default : state = "";
                                             break;
                                }
 
@@ -599,7 +629,7 @@ $(document).on('taphold', '.todo-detailitem', function() {
     $("<a>", {
     text: "Cancel",
     href: "#",
-    onclick: "MyItemdetail('"+data[0]+"',"+data[1]+", '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
+    onclick: "MyItemdetail('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
     }).appendTo($popUp);
 
     $popUp.popup('open').enhanceWithin();
@@ -646,13 +676,15 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                                             break;
                                     case 2 : state = "<img src='images/quick.png' width='24'> ด่วน";
                                             break;
+                                    default : state = "";
+                                            break;
                                }
                                    var d = new Date();
-                                   var n = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                                   var n = d.getFullYear()+"-0"+(d.getMonth()+1)+"-0"+d.getDate();
                                    console.log(n);
                                    switch (val['docDate']){
                                         case n :
-                                               state += ",<img src='images/New.png' width='24'>ใหม่";
+                                               state += ",<img src='images/New.png' width='24'> ใหม่";
                                                break;
                                    }
                                 no = val['docNo'];
@@ -748,9 +780,9 @@ $(document).on('taphold', '.todo-detailitem-hold', function() {
     console.log(link_name);
     console.log('#'+link_id);
     $("<a>", {
-    text: "not Cancel",
+    text: "Return",
     href: "#",
-    onclick: "MyItemhold('"+data[0]+"',"+data[1]+", '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
+    onclick: "MyItemhold('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
     }).appendTo($popUp);
 
     $popUp.popup('open').enhanceWithin();
@@ -796,13 +828,15 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                                             break;
                                     case 2 : state = "<img src='images/quick.png' width='24'> ด่วน";
                                             break;
+                                    default : state = "";
+                                            break;
                                }
                                    var d = new Date();
-                                   var n = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+                                   var n = d.getFullYear()+"-0"+(d.getMonth()+1)+"-0"+d.getDate();
                                    console.log(n);
                                    switch (val['docDate']){
                                         case n :
-                                               state += ",<img src='images/New.png' width='24'>ใหม่";
+                                               state += ",<img src='images/New.png' width='24'> ใหม่";
                                                break;
                                    }
                                 no = val['docNo'];
@@ -884,11 +918,11 @@ function clicksubmit(){
     var units = document.getElementById("units").value;
 
    if(no==""){
-       alert("ท่านยังไม่ได้ scan สินค้า กรุณา scan สินค้าด้วย");
+       alertify.alert("ท่านยังไม่ได้ scan สินค้า กรุณา scan สินค้าด้วย");
        $ .mobile.changePage("#additem");
    }else{
         if(cnt == ""){
-            alert("ท่านยังไม่ได้กรอกจำนวนสินค้า กรุณากรอกจำนวนให้ถูกต้อง!!");
+            alertify.alert("ท่านยังไม่ได้กรอกจำนวนสินค้า กรุณากรอกจำนวนให้ถูกต้อง!!");
             $.mobile.changePage("#additem");
         }else{
 
@@ -955,8 +989,8 @@ function clicksubmit(){
                                                                                         });
 
                                                                                         document.getElementById("sumitem").innerHTML = detail;
-                                                                                        alert("บันทึกข้อมูลแล้ว!!");
-                                                                                        alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units+",DocPR :"+DocNo);
+                                                                                        alertify.success("บันทึกข้อมูลแล้ว!!");
+                                                                                        //alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units+",DocPR :"+DocNo);
 
                                                                                         $.mobile.changePage("#pluspr");
                                                                                             },
@@ -1005,6 +1039,13 @@ $.ajax({
                 var DocNo = result.docno;
                 document.getElementById("titelpr").innerHTML = '<img src="images/PRicon.png"><b>'+result.docno+'</b>';
                 document.getElementById("DocNo").value = DocNo;
+                var sel = 'วันที่ต้องการ :<select id="defdate" name="date">';
+                    sel += '<option value="1">1 วัน</option>';
+                    sel += '<option value="3">3 วัน</option>';
+                    sel += '<option value="5">5 วัน</option>';
+                    sel += '<option value="7">7 วัน</option></select>';
+                document.getElementById("discript").value = "";
+                document.getElementById("switch").checked = false;
 
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
@@ -1075,118 +1116,144 @@ $.ajax({
 }
 
 function pluspr(){
-    //alert("บันทึกข้อมูลแล้ว!!");
+
     var Docno = document.getElementById("DocNo").value;
-    var wday = document.getElementById("defdate").value;
-    var discript = document.getElementById("discript").value;
-    var priority = document.getElementById("switch").checked;
-    if(priority==true){
-        priority = 1;
+    var apCode = document.getElementById("apCodeven").value;
+    console.log(Docno);
+    console.log(document.getElementById("apCodeven").value);
+    if(apCode){
+        apCode = apCode;
     }else{
-        priority = 0;
+        apCode = "null";
     }
-    if(discript==""){
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-    }else{
-            $.ajax({
-                       url: localStorage.api_url_server+"NPInventoryWs/pr/updatePR",
-                       data: '{"docNo": "'+Docno+'","workman":"58089","wantday":"'+wday+'","description":"'+discript+'","priority":"'+priority+'","isCancel":"0"}',
-                       contentType: "application/json; charset=utf-8",
-                       dataType: "json",
-                       type: "POST",
-                       cache: false,
-                       success: function(result){
-                       var status = JSON.stringify(result);
-                       console.log(Docno+","+wday+","+discript+","+priority);
+    $.ajax({
+            url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
+            data: '{"type":"0","searchDocno":"'+Docno+'"}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            type: "POST",
+            cache: false,
+            success: function(result){
+                var prl = JSON.stringify(result);
+                var prlp = prl.split(":[");
+                var str = prlp[1].split("]}");
+                prl = "["+str[0]+"]";
+                var js = jQuery.parseJSON(prl);
+                console.log(js);
+                if(JSON.stringify(js)=="[]"){
+                    alertify.alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
+                }else{
+                        var wday = document.getElementById("defdate").value;
+                        var discript = document.getElementById("discript").value;
+                        var priority = document.getElementById("switch").checked;
+                        if(priority==true){
+                            priority = 1;
+                        }else{
+                            priority = 0;
+                        }
+                        if(discript==""||apCode == "null"){
+                            alertify.alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+                        }else{
+                                $.ajax({
+                                           url: localStorage.api_url_server+"NPInventoryWs/pr/updatePR",
+                                           data: '{"docNo": "'+Docno+'","workman":"58089","wantday":"'+wday+'","description":"'+discript+'","priority":"'+priority+'","isCancel":"0","apCode":"'+apCode+'"}',
+                                           contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                           type: "POST",
+                                           cache: false,
+                                           success: function(result){
+                                           var status = JSON.stringify(result);
+                                           console.log(Docno+","+wday+","+discript+","+priority+",apcode :"+apCode);
 
-                       $.ajax({
-                               url: localStorage.api_url_server+localStorage.api_url_prlist,
-                               data: '{"type":"0","search":"58089"}',
-                               contentType: "application/json; charset=utf-8",
-                               dataType: "json",
-                               type: "POST",
-                               cache: false,
-                               success: function(result){
-                                    //console.log(JSON.stringify(result));
-                                    var prl = JSON.stringify(result);
-                                    //console.log(prl);
-                                    var prlp = prl.split(":[");
-                                    var str = prlp[1].split("]}");
-                                    prl = "["+str[0]+"]";
-                                    var js = jQuery.parseJSON(prl);
-                                    var prlist = "";
-                                    var wdate = "";
-                                    var x = 1;
-                                    $.each(js, function(key, val) {
-                                       //console.log(val['docNo']);
+                                           $.ajax({
+                                                   url: localStorage.api_url_server+localStorage.api_url_prlist,
+                                                   data: '{"type":"0","search":"58089"}',
+                                                   contentType: "application/json; charset=utf-8",
+                                                   dataType: "json",
+                                                   type: "POST",
+                                                   cache: false,
+                                                   success: function(result){
+                                                        //console.log(JSON.stringify(result));
+                                                        var prl = JSON.stringify(result);
+                                                        //console.log(prl);
+                                                        var prlp = prl.split(":[");
+                                                        var str = prlp[1].split("]}");
+                                                        prl = "["+str[0]+"]";
+                                                        var js = jQuery.parseJSON(prl);
+                                                        var prlist = "";
+                                                        var wdate = "";
+                                                        var x = 1;
+                                                        $.each(js, function(key, val) {
+                                                           //console.log(val['docNo']);
 
-                                       prlist += '<label class="todo-listview" data-view-id="';
-                                       prlist += "'"+val['docNo']+"'";
-                                       prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
-                                       prlist += "'"+val['docNo']+"'";
-                                       prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
-                                       prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
+                                                           prlist += '<label class="todo-listview" data-view-id="';
+                                                           prlist += "'"+val['docNo']+"'";
+                                                           prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
+                                                           prlist += "'"+val['docNo']+"'";
+                                                           prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                                                           prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
-                                       var wantDate = val['wantDate'];
-                                       if(wantDate!=null){
-                                       wdate = val['wantDate'].split("-");
-                                       day = wdate[2];
-                                       month = wdate[1];
-                                       year = (parseInt(wdate[0])+543);
+                                                           var wantDate = val['wantDate'];
+                                                           if(wantDate!=null){
+                                                           wdate = val['wantDate'].split("-");
+                                                           day = wdate[2];
+                                                           month = wdate[1];
+                                                           year = (parseInt(wdate[0])+543);
 
-                                       wantDate = day+"/"+month+"/"+year;
-                                       }
+                                                           wantDate = day+"/"+month+"/"+year;
+                                                           }
 
-                                       prlist += '<div class="ui-block-b">'+wantDate+'</div>';
-                                       prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
-                                           switch (val['status']){
-                                                case 1 : var status = "<img src='images/Warning.png' width='24'>";
-                                                        break;
-                                                case 2 : var status = "<img src='images/quick.png' width='24'>";
-                                                        break;
-                                                default : var status = "";
-                                                        break;
+                                                           prlist += '<div class="ui-block-b">'+wantDate+'</div>';
+                                                           prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
+                                                               switch (val['status']){
+                                                                    case 1 : var status = "<img src='images/Warning.png' width='24'>";
+                                                                            break;
+                                                                    case 2 : var status = "<img src='images/quick.png' width='24'>";
+                                                                            break;
+                                                                    default : var status = "";
+                                                                            break;
+                                                               }
+                                                                   var d = new Date();
+                                                                   var n = d.getFullYear()+"-0"+(d.getMonth()+1)+"-0"+d.getDate();
+                                                                   console.log(val['docDate']+"/"+n);
+                                                                   switch (val['docDate']){
+                                                                        case n :
+                                                                               status += "<img src='images/New.png' width='24'>";
+                                                                               break;
+                                                                   }
+
+                                                           prlist += '<div class="ui-block-d">'+status+'</div>';
+                                                           prlist += '</div></label></a><hr>';
+                                                            x++;
+                                                        });
+                                                        document.getElementById("prlist").innerHTML = prlist;
+                                                        localStorage.apcode="";
+                                                        //console.log(JSON.stringify(js));
+
+                                                      //  $.mobile.changePage("#pagepr");
+                                                           },
+                                                   error: function (error){
+                                                        console.log(JSON.stringify(error));
+                                                       // $.mobile.changePage("#pagepr");
+                                                   }
+
+                                                   });
+                                           alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว");
+                                           $.mobile.changePage("#pagepr");
+                                           },
+                                           error: function (error){
+                                             console.log(JSON.stringify(error));
+                                             $.mobile.changePage("#pluspr");
                                            }
-                                               var d = new Date();
-                                               var n = d.getFullYear()+"-0"+(d.getMonth()+1)+"-0"+d.getDate();
-                                               console.log(val['docDate']+"/"+n);
-                                               switch (val['docDate']){
-                                                    case n :
-                                                           status += "<img src='images/New.png' width='24'>";
-                                                           break;
-                                               }
 
-                                       prlist += '<div class="ui-block-d">'+status+'</div>';
-                                       prlist += '</div></label></a><hr>';
-                                        x++;
-                                    });
-                                    document.getElementById("prlist").innerHTML = prlist;
+                                   });
 
-                                    //console.log(JSON.stringify(js));
-
-                                  //  $.mobile.changePage("#pagepr");
-                                       },
-                               error: function (error){
-                                    console.log(JSON.stringify(error));
-                                   // $.mobile.changePage("#pagepr");
-                               }
-
-                               });
-
-                       $.mobile.changePage("#pagepr");
-                       },
-                       error: function (error){
-                         console.log(error);
-                         $.mobile.changePage("#pluspr");
-                       }
-
-               });
-
-    }
-
-
-   // $("#itemdetail").show();
+                        }
+                }
+            }
+    });
 }
+
 
 $(document).on('taphold', '.todo-itemview-hold', function() {
        // console.log("DEBUG - Go popup");
@@ -1214,14 +1281,14 @@ $(document).on('taphold', '.todo-itemview-hold', function() {
     $("<a>", {
     text: "Cancel",
     href: "#",
-    onclick: "MyItem('"+data[0]+"',"+data[1]+", '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
+    onclick: "MyItem('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
     }).appendTo($popUp);
 
     $popUp.popup('open').enhanceWithin();
 
     });
 function MyItem(DocNo, itemcode, itemname, qty, unitcode){
-    alert("cancel "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:'1'");
+    //alert("cancel "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:'1'");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
            data: '{"docNo":"'+DocNo+'","itemCode":"'+itemcode+'","itemName":"'+itemname+'","unitcode":"'+unitcode+'","qty":"'+qty+'","isCancel":"1"}',
@@ -1325,7 +1392,7 @@ $(document).on('taphold', '.todo-itemview', function() {
     $("<a>", {
     text: "Return",
     href: "#",
-    onclick: "MyItemReturn('"+data[0]+"',"+data[1]+", '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
+    onclick: "MyItemReturn('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
     }).appendTo($popUp);
 
     $popUp.popup('open').enhanceWithin();
@@ -1405,4 +1472,34 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
            }
 
     });
+}
+
+function searchapcode(){
+    var valapCode = document.getElementById("vender").value;
+    $.ajax({
+           url: localStorage.api_url_server+"NPInventoryWs/pr/searchVendor",
+           data: '{"search":"'+valapCode+'"}',
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           type: "POST",
+           cache: false,
+           success: function(apcode){
+                var ap = JSON.stringify(apcode);
+                var apC = ap.split(":[");
+                var str = apC[1].split("]}");
+                ap = "["+str[0]+"]";
+                var js = jQuery.parseJSON(ap);
+                //console.log(JSON.stringify(apcode));
+                var textven = "";
+                var name = "";
+                $.each(js, function(key, val) {
+                     textven = val['apCode'];
+                     name = val['apName'];
+                });
+                    document.getElementById("apCodeven").value = textven;
+                    document.getElementById("nameven").innerHTML = name;
+           }
+    });
+
+
 }

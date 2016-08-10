@@ -1,5 +1,5 @@
   $.ajax({
-              url: localStorage.api_url_server_nava+"v1/menu/tree",
+              url: localStorage.api_url_server_nava+"v1/menus",
               //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
               //contentType: "application/json; charset=utf-8",
               //dataType: "json",

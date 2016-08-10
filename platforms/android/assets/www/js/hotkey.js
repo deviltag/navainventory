@@ -15,6 +15,8 @@ document.addEventListener("keydown", function(event) {
                             break;
                     case 52: $.mobile.changePage("#transfer",{transition: 'slidefade'});
                             break;
+                    case 53: $.mobile.changePage("#setting",{transition: 'slidefade'});
+                            break;
                     default: $.mobile.changePage("#pagetwo",{transition: 'slidefade'});
                             break;
                 }
@@ -38,16 +40,16 @@ document.addEventListener("keydown", function(event) {
             }else if(page=="receive"){
                 switch (event.keyCode){
                     case 13: searchpo();
-                    return false;
-                           break;
+                             return false;
+                             break;
                     default:
-                           break;
+                             break;
                     }
             }else if(page=="receive_item"){
                 switch (event.keyCode){
-                    case 13: $.mobile.changePage('#receive_search',{transition: 'slidefade'});
-                    focus_search_item();
-                    return false;
+                    case 0: $.mobile.changePage('#receive_search',{transition: 'slidefade'});
+                            focus_search_item();
+                            return false;
                             break;
                     default:
                             break;
@@ -55,28 +57,31 @@ document.addEventListener("keydown", function(event) {
             }else if(page=="receive_scan"){
                 switch (event.keyCode){
                     case 13: submit_scan();
-                    return false;
-                            break;
+                             return false;
+                             break;
                     default:
-                            break;
+                             break;
                     }
 
             }else if(page=="receive_search"){
             switch (event.keyCode){
                    case 13: search_receive();
-                   return false;
-                          break;
+                            return false;
+                            break;
                    default:
-                          break;
+                            break;
                    }
 
             }else if(page=="receive_show"){
             switch (event.keyCode){
+                   case 0: $.mobile.changePage('#receive_search',{transition: 'slidefade'});
+                           focus_search_item();
+                           return false;
                    case 13: submit_receive();
-                   return false;
-                          break;
+                            return false;
+                            break;
                    default:
-                          break;
+                            break;
                    }
             }
 
@@ -96,6 +101,8 @@ function onDeviceReady(){
             $.mobile.changePage('#pageone',{transition: 'slidefade',reverse: true});
            //alert("กรุณาออกจากระบบ !!");
            //return false;
+       }else if($.mobile.activePage.is('#pagepr')){
+            $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_listpo')){
@@ -143,23 +150,12 @@ function onDeviceReady(){
             $.mobile.changePage('#shelves',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#setting')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
-       }else{
+       }else if($.mobile.activePage.is('#receive_search')){
 
-           navigator.app.backHistory()
-       }/*else if($.mobile.activePage.is('#pagepr')){
-                    $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
-               }else if($.mobile.activePage.is('#listpr')){
-                    $.mobile.changePage('#pagepr',{transition: 'slidefade',reverse: true});
-               }else if($.mobile.activePage.is('#pluspr')){
-                    $.mobile.changePage('#pagepr',{transition: 'slidefade',reverse: true});
-               }else if($.mobile.activePage.is('#additem')){
-                    $.mobile.changePage('#pluspr',{transition: 'slidefade',reverse: true});
-               }*/
+           navigator.app.backHistory();
+       }
 
 
 
     }, false);
-     document.addEventListener("menubutton", function(e){
-     if($.mobile.activePage.is('#pageone')){alert("asd")}
-     },false);
 }

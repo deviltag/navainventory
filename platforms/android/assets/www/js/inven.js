@@ -1,16 +1,16 @@
 function cnklogin(){
 if(document.forms["login"]["username"].value== "" || document.forms["login"]["username"].value == null){
-  alert("กรุณากรอกข้อมูล Username !!");
+  alertify.error("กรุณากรอกข้อมูล Username !!");
   document.forms["login"]["username"].focus();
   return false;
   }
   else if(document.forms["login"]["passwd"].value == "" || document.forms["login"]["passwd"].value == null){
-  alert("กรุณากรอกข้อมูล Password !!");
+  alertify.error("กรุณากรอกข้อมูล Password !!");
   document.forms["login"]["passwd"].focus();
   return false;
   }else{
   if(document.forms["login"]["username"].value == "admin" && document.forms["login"]["passwd"].value == "1234"){
-  alert("test");
+  alertify.success("Login Success !!");
    $.mobile.changePage( "#pagetwo", {
   type: "post",
   //data: $( "form#search" ).serialize(),
@@ -45,7 +45,7 @@ if(document.forms["login"]["username"].value== "" || document.forms["login"]["us
                 document.getElementById('user').innerHTML = "ยินดีต้อนรับ "+localStorage.userID+" เขาสู่ระบบ";
                 document.getElementById('eptype').innerHTML = localStorage.expertTeam;*/
   }else{
-  alert("Error Password or Username");
+  alertify.error("Error Password or Username");
   return false;
   }
   }
@@ -55,10 +55,10 @@ if(document.forms["login"]["username"].value== "" || document.forms["login"]["us
 
 function login(){
 if(document.forms["login"]["username"].value == "admin" && document.forms["login"]["passwd"].value == "1234"){
-    alert("test");
+    alertify.success("test");
     return false;
   }else{
-  alert("Error Password or Username");
+  alertify.error("Error Password or Username");
   return false;
 }
 
@@ -135,12 +135,12 @@ function cancel_scan(){
 }
 function testtttt(){
 localStorage.receivestatus = "0";
-alert(localStorage.receivestatus)
+alertify.error(localStorage.receivestatus)
 
 }
 function submit_scan(){
 if(document.getElementById("amount_scanner").value==""){
-alert("กรุณากรอกจำนวนที่ต้องการ")
+alertify.alert("กรุณากรอกจำนวนที่ต้องการ")
 }else{
 var d = new Date();
 var curr_date = d.getDate();
@@ -149,7 +149,7 @@ var curr_year = d.getFullYear();
 var date = curr_date + "/" + curr_month
 + "/" + curr_year;
 if(localStorage.receivestatus=="0"){
-//alert(localStorage.receivestatus+" ยังไม่มีใบ")
+//alertify.error(localStorage.receivestatus+" ยังไม่มีใบ")
 $.ajax({
          url: localStorage.api_url_server+""+localStorage.api_url_insert,
          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
@@ -161,7 +161,7 @@ $.ajax({
          success: function(insert_res){
          console.log(insert_res);
          localStorage.receiveNumber = insert_res.docNo;
-         //alert(insert_res.docNo)
+         //alertify.error(insert_res.docNo)
          $.ajax({
                   url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
                   data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"admin"}',
@@ -172,7 +172,7 @@ $.ajax({
                   cache: false,
                   success: function(additem_res){
                   console.log(additem_res);
-                  alert("บันทึกข้อมูลเรียบร้อยแล้ว !!");
+                  alertify.success("เพิ่มสินค้าในใบรับเข้าเรียบร้อยแล้ว !!");
                   document.getElementById("amount_scanner").value = "";
                   document.getElementById("product_show").innerHTML = "";
                   search_rc_no();
@@ -180,13 +180,13 @@ $.ajax({
 
                   },
                   error: function (error){
-                  alert(error);
+                  alertify.error(error);
                   }
                   });
 
          },
          error: function (error){
-         alert(error);
+         alertify.error(error);
          }
          });
 
@@ -207,7 +207,7 @@ $.ajax({
                           cache: false,
                           success: function(additem_res){
                           console.log(additem_res);
-                          alert("บันทึกข้อมูลเรียบร้อยแล้ว !!");
+                          alertify.success("เพิ่มสินค้าในใบรับเข้าเรียบร้อยแล้ว !!");
                           document.getElementById("amount_scanner").value = "";
                           document.getElementById("product_show").innerHTML = "";
                           search_rc_no();
@@ -215,7 +215,7 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alert(error);
+                          alertify.error(error);
                           }
                           });
 localStorage.receivestatus = "1";
@@ -242,14 +242,14 @@ var date = curr_date + "/" + curr_month
                      cache: false,
                      success: function(receive_success){
                      console.log(receive_success);
-                     alert("บันทึกใบรับเข้าเรียบร้อยแล้ว");
+                     alertify.succsee("บันทึกใบรับเข้าเรียบร้อยแล้ว");
                      localStorage.receivestatus = "0";
                      //alert(localStorage.receivestatus+" save complete!!")
                      //search_rc_no();
                      select_op_vender(localStorage.porefno);
                      },
                      error: function (error){
-                     alert(error);
+                     alertify.error(error);
                      }
                      });
 
@@ -300,7 +300,7 @@ function scan_search_item(scan_value){
                                                                   success: function(item){
                                                                   console.log(JSON.stringify(item));
                                                                   if(item.resp.isSuccess== "0"){
-                                                                  alert("Barcode ไม่ถูกต้อง !!")
+                                                                  alertify.error("Barcode ไม่ถูกต้อง !!")
                                                                   }else{
 
                                                                   //console.log(item.itemName);
@@ -319,7 +319,7 @@ function scan_search_item(scan_value){
                                                                   var item_str = item_ds[1].split("]}");
                                                                   item_d = "["+item_str[0]+"]";
                                                                   var item_js = jQuery.parseJSON(item_d);
-                                                                  // alert(JSON.stringify(po_detail.isSuccess));
+                                                                  // alertify.error(JSON.stringify(po_detail.isSuccess));
                                                                   console.log(JSON.stringify(item_js));
                                                                   //document.getElementById("PO").innerHTML = JSON.stringify(js);
                                                                   var count = item_js.length;
@@ -348,7 +348,7 @@ function scan_search_item(scan_value){
 
                                                                   },
                                                                   error: function (error){
-                                                                  alert(error);
+                                                                  alertify.error(error);
                                                                   }
                                                                   });
 

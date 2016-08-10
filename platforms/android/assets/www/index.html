@@ -14,6 +14,9 @@
     <link rel="icon" type="image/png" href="images/logo_title.png">
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
 
+    <link rel="stylesheet" href="css/alertify.core.css" />
+    <link rel="stylesheet" href="css/alertify.default.css" id="toggleCSS" />
+
 
     <meta charset="utf-8">
 </head>
@@ -96,6 +99,14 @@
             </a></div>
             <div class="col-xs-6 col-md-6"><a href="#transfer" data-transition="slidefade">
                 <div><img src="images/transfer1.png" class="main_menu"><br><b>โอนสินค้า(4)</b></div>
+            </a></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6"><a href="#setting" data-transition="slidefade">
+                <div><img src="images/setting.png" class="main_menu"><br><b>setting(5)</b></div>
+            </a></div>
+            <div class="col-xs-6 col-md-6"><a href="#" data-transition="slidefade">
+                <div></div>
             </a></div>
         </div>
     </div>
@@ -980,7 +991,7 @@
     <div data-role="footer" id="footer"  data-position="fixed">
         <div data-role="navbar">
             <ul>
-                <li onclick="backdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
             </ul>
         </div>
     </div>
@@ -1035,6 +1046,12 @@
         <label for="switch">ความเร่งด่วน :
             <input type="checkbox" data-role="flipswitch" name="switch" id="switch" data-on-text="ด่วน" data-off-text="ไม่" value="1">
         </label>
+        <labeb>
+            เจ้าหนี้ :
+            <input type="text" id="vender" onkeyup="return searchapcode()">
+            <input type="hidden" id="apCodeven">
+            <span id="nameven">-- ชื่อเจ้าหนี้ --</span>
+        </labeb>
 
     </div>
 
@@ -1072,7 +1089,7 @@
             <input type="hidden" name="grade" placeholder="เกรด" readonly style="color:#000;" id="gradeitem">
             <label><b>เกรด : </b><span id="Tgrade"></span></label>
 
-            <label><input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem"></label>
+            <label><input type="number" name="countitem" placeholder="จำนวน" min="1" max="1000" id="citem" autofocus></label>
 
             <input type="hidden" name="unit" placeholder="หน่วยนับ" id="units" readonly>
             <label><b>หน่วยนับ : </b><span id="Tunit"></span></label>
@@ -1083,7 +1100,7 @@
         <div data-role="navbar">
             <ul>
                 <li ><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่ม</a></li>
+                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">ตกลง</a></li>
             </ul>
         </div>
     </div>
@@ -1374,7 +1391,7 @@
 
             <label for="apilogin">api login</label>
             <input type="text" name="apilogin" id="apilogin">
-            <input type="hidden" id="apilogin_s" value="v1/user/login">
+            <input type="hidden" id="apilogin_s" value="v1/users">
 
             <label for="api1">api search vender</label>
             <input type="text" name="api1" id="api1">
@@ -1474,5 +1491,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-treeview.min.js"></script>
 <script src="js/menutree.js"></script>
+<script src="js/hotkey_pr.js"></script>
+<script src="js/alertify.js"></script>
 </body>
 </html>

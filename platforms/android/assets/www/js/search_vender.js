@@ -127,7 +127,7 @@ function select_vender(po_number){
                           }
                         document.getElementById("polist_head").innerHTML = po_header;
                         document.getElementById("polist_detail").innerHTML = po_ven;
-                        $.mobile.changePage("#receive_listpo");
+                        $.mobile.changePage("#receive_listpo",{transition: 'slidefade'});
                     },
                     error: function (error){
                         console.log(error);
@@ -172,7 +172,7 @@ function select_op_vender(get_detail){
 
 
 
-
+                                                                                 po_de += '<p style="color:red; font-size:12px;text-align:center;">** สแกนสินค้าเพื่อรับสินค้า **</p>';
                                                                                  po_de += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  po_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
                                                                                  po_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
@@ -200,10 +200,10 @@ function select_op_vender(get_detail){
                                                                                  document.getElementById("po_head").innerHTML = po_de_head;
                                                                                  document.getElementById("po_detail").innerHTML = po_de;
                                                                                  $.mobile.changePage("#receive_item");
-                                                                                 }else if(po_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
+                                                                                 }else if(po_detail.resp.isSuccess==0){alertify.error("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
-                                                                                 alert(error);
+                                                                                 alertify.error(error);
                                                                                 }
 
 
@@ -247,6 +247,8 @@ if(localStorage.receiveNumber){
                                                                                  rc_de_head += "<p>ชื่อเจ้าหนี้ :"+rc_detail.apName+"</p>";
                                                                                  rc_de_head += "<p>ราคารวม :"+rc_detail.sumOfItemAmount.toLocaleString()+" บาท</p>";
                                                                                  rc_de_head += "<p>ราคารวมภาษี :"+rc_detail.totalAmount.toLocaleString()+" บาท</p>";
+                                                                                 rc_de += '<p style="color:red; font-size:12px;text-align:center;">** สแกนสินค้าเพื่อรับสินค้า **</p>';
+
                                                                                  localStorage.apcode = rc_detail.apCode;
                                                                                  localStorage.porefno = rc_detail.docNo;
 
@@ -310,16 +312,16 @@ if(localStorage.receiveNumber){
                                                                                  document.getElementById("rv_head").innerHTML = rc_de_head;
                                                                                  document.getElementById("rv_detail").innerHTML = rc_de;
                                                                                  $.mobile.changePage("#receive_show",{transition: 'slidefade'});
-                                                                                 }else if(rc_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
+                                                                                 }else if(rc_detail.resp.isSuccess==0){alertify.error("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
-                                                                                 alert(error);
+                                                                                 alertify.error(error);
                                                                                 }
 
 
                                                  });
                                                  }else{
-                                                 alert("ไม่มีใบรับสินค้า !!");
+                                                 alertify.error("ไม่มีใบรับสินค้า !!");
                                                  }
 
 }
@@ -339,7 +341,7 @@ var se_search ="";
                 success: function(search){
                 console.log(JSON.stringify(search));
                 if(search.resp.isSuccess== "0"){
-                alert("ไม่ถูกต้อง !!")
+                alertify.error("ไม่ถูกต้อง !!")
                 }else{
 
                 var search_d = JSON.stringify(search);
@@ -374,7 +376,7 @@ var se_search ="";
                //$.mobile.changePage("#receive_search");
                },
                error: function (error){
-               alert(error);
+               alertify.error(error);
                }
           });
 
@@ -401,7 +403,7 @@ if (confirm('ต้องการยกเลิกสินค้านี้�
                         cache: false,
                         success: function(additem_res){
                         console.log(additem_res);
-                        alert("ยกเลิกเรียบร้อยแล้ว !!");
+                        alertify.error("ยกเลิกเรียบร้อยแล้ว !!");
                         document.getElementById("amount_scanner").value = "";
                         document.getElementById("product_show").innerHTML = "";
                         search_rc_no();
@@ -436,7 +438,7 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
                         cache: false,
                         success: function(additem_res){
                         console.log(additem_res);
-                        alert("คืนค่าเรียบร้อยแล้ว !!");
+                        alertify.success("คืนค่าเรียบร้อยแล้ว !!");
                         document.getElementById("amount_scanner").value = "";
                         document.getElementById("product_show").innerHTML = "";
                         search_rc_no();
@@ -444,7 +446,7 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
 
                         },
                         error: function (error){
-                        alert(error);
+                        alertify.error(error);
                         }
                         });
     }
@@ -518,7 +520,7 @@ $(document).on('taphold', '.todo-cancelview', function() {
 
     function check_submit(){
     if(localStorage.receivestatus == "1"){
-    alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
+    alertify.alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
     return false;
     }else{$.mobile.changePage("#receive");}
     }
