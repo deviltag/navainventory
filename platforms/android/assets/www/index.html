@@ -13,6 +13,12 @@
     <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="images/logo_title.png">
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
+<<<<<<< HEAD
+=======
+
+    <link rel="stylesheet" href="css/alertify.core.css" />
+    <link rel="stylesheet" href="css/alertify.default.css" id="toggleCSS" />
+>>>>>>> refs/remotes/origin/tagky
 
 
     <meta charset="utf-8">
@@ -83,19 +89,27 @@
         <h1 class="title">Main</h1>
         <div class="row">
             <div class="col-xs-6 col-md-6"><a href="#pagepr" data-transition="slidefade">
-                <div><img src="images/pr2.png" class="main_menu"><br><b>PR</b></div>
+                <div><img src="images/pr2.png" class="main_menu"><br><b>PR(1)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6"><a href="#receive" data-transition="slidefade">
-                <div><img src="images/product-receive.png" class="main_menu"><br><b>รับสินค้า</b>
+            <div class="col-xs-6 col-md-6" onclick="focus_search()"><a href="#receive" data-transition="slidefade">
+                <div><img src="images/product-receive.png" class="main_menu"><br><b>รับสินค้า(2)</b>
                 </div>
             </a></div>
         </div>
         <div class="row">
             <div class="col-xs-6 col-md-6"><a href="#stock" data-transition="slidefade">
-                <div><img src="images/stock1.png" class="main_menu"><br><b>นับสต๊อกสินค้า</b></div>
+                <div><img src="images/stock1.png" class="main_menu"><br><b>นับสต๊อกสินค้า(3)</b></div>
             </a></div>
             <div class="col-xs-6 col-md-6"><a href="#transfer" data-transition="slidefade">
-                <div><img src="images/transfer1.png" class="main_menu"><br><b>โอนสินค้า</b></div>
+                <div><img src="images/transfer1.png" class="main_menu"><br><b>โอนสินค้า(4)</b></div>
+            </a></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6"><a href="#setting" data-transition="slidefade">
+                <div><img src="images/setting.png" class="main_menu"><br><b>setting(5)</b></div>
+            </a></div>
+            <div class="col-xs-6 col-md-6"><a href="#" data-transition="slidefade">
+                <div></div>
             </a></div>
         </div>
     </div>
@@ -121,21 +135,24 @@
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">โอนสินค้า</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ</b></div></a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย</b></div></a></div>
-            <div class="col-xs-6 col-md-6"><a href="#isp" data-transition="slidefade"><div><img src="images/t_isp.png"  class="main_menu"><br><b>โอนเข้าคลัง ISP</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transfer_damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย(3)</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transfer_isp" data-transition="slidefade"><div><img src="images/t_isp.png"  class="main_menu"><br><b>โอนเข้าคลัง ISP(4)</b></div></a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#rtv" data-transition="slidefade"><div><img src="images/vender.png"  class="main_menu"><br><b>โอนสินค้าคืน Vender</b></div></a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transfer_normal" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transfer_rtv" data-transition="slidefade"><div><img src="images/vender.png"  class="main_menu"><br><b>โอนสินค้าคืน Vender(5)</b></div></a></div>
+            <div class="col-xs-6 col-md-6"><a href="#transfer_normal" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ(6)</b></div></a></div>
         </div>
         <br>
         <br>
+<<<<<<< HEAD
         <br>
         <br>
+=======
+>>>>>>> refs/remotes/origin/tagky
     </div>
 
 
@@ -174,11 +191,19 @@
                 <option>car1</option>
             </select></p>
             <br>
+<<<<<<< HEAD
 
             <fieldset data-role="controlgroup">
                 <legend>summery</legend>
                 <p>...........................................</p>
 
+=======
+
+            <fieldset data-role="controlgroup">
+                <legend>summery</legend>
+                <p>...........................................</p>
+
+>>>>>>> refs/remotes/origin/tagky
             </fieldset>
 
             <!--<div class="ui-grid-a">
@@ -370,8 +395,8 @@
         <div id="tree" class="tree"></div>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// damage ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="damage">
+<!--//////////////////////////////////////////////////////////// transfer_damage ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_damage">
     <div data-role="none" id="header">
         <a href="#myPanel_trandamage" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -406,7 +431,11 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+<<<<<<< HEAD
                 <li><a href="#damage_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+=======
+                <li><a href="#transfer_damage_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
@@ -418,8 +447,8 @@
         <div id="tree" class="tree"></div>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// damage_item ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="damage_item">
+<!--//////////////////////////////////////////////////////////// transfer_damage_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_damage_item">
     <div data-role="none" id="header">
         <a href="#myPanel_trandamage1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -438,7 +467,11 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
+<<<<<<< HEAD
                 <li><a href="#damage" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+=======
+                <li><a href="#transfer_damage" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">ตกลง</a></li>
             </ul>
         </div>
@@ -451,7 +484,7 @@
 </div>
 <!--//////////////////////////////////////////////////////////// isp ////////////////////////////////////////////////////////////////-->
 
-<div data-role="page" id="isp">
+<div data-role="page" id="transfer_isp">
     <div data-role="none" id="header">
         <a href="#myPanel_tranisp" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -460,9 +493,15 @@
         <h2 class="sub_title">โอนสินค้าเข้าคลัง ISP</h2>
         <hr class="hr">
 
+<<<<<<< HEAD
         <a href="#isp_item" class="ui-btn">stockcount 1 | 10item </a>
         <a href="#isp_item" class="ui-btn">stockcount 2 | 13item </a>
         <a href="#isp_item" class="ui-btn">stockcount 3 | 15item </a>
+=======
+        <a href="#transfer_isp_item" class="ui-btn">stockcount 1 | 10item </a>
+        <a href="#transfer_isp_item" class="ui-btn">stockcount 2 | 13item </a>
+        <a href="#transfer_isp_item" class="ui-btn">stockcount 3 | 15item </a>
+>>>>>>> refs/remotes/origin/tagky
         <br>
 
 
@@ -488,7 +527,11 @@
 </div>
 <!--//////////////////////////////////////////////////////////// isp item ////////////////////////////////////////////////////////////////-->
 
+<<<<<<< HEAD
 <div data-role="page" id="isp_item">
+=======
+<div data-role="page" id="transfer_isp_item">
+>>>>>>> refs/remotes/origin/tagky
     <div data-role="none" id="header">
         <a href="#myPanel_tranisp1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -512,7 +555,11 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
+<<<<<<< HEAD
                 <li><a href="#isp" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+=======
+                <li><a href="#transfer_isp" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">โอน</a></li>
             </ul>
         </div>
@@ -523,8 +570,8 @@
         <div id="tree" class="tree"></div>
     </div>
 </div>
-<!--//////////////////////////////////////////////////////////// rtv ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="rtv">
+<!--//////////////////////////////////////////////////////////// transfer_rtv ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_rtv">
     <div data-role="none" id="header">
         <a href="#myPanel_tranrtv" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -559,7 +606,11 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+<<<<<<< HEAD
                 <li><a href="#rtv_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+=======
+                <li><a href="#transfer_rtv_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
@@ -571,8 +622,8 @@
     </div>
 </div>
 
-<!--//////////////////////////////////////////////////////////// rtv_item ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="rtv_item">
+<!--//////////////////////////////////////////////////////////// transfer_rtv_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_rtv_item">
     <div data-role="none" id="header">
         <a href="#myPanel_tranrtv1" data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
@@ -590,7 +641,11 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
+<<<<<<< HEAD
                 <li><a href="#rtv" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+=======
+                <li><a href="#transfer_rtv" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">โอน</a></li>
             </ul>
         </div>
@@ -639,7 +694,11 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+<<<<<<< HEAD
                 <li><a href="#rtv_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+=======
+                <li><a href="#transfer_rtv_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
@@ -687,17 +746,28 @@
         <h1 class="title">รับสินค้า</h1>
         <div class="ui-field-contain">
             <label for="search">Search Vender:</label>
+<<<<<<< HEAD
             <form name="search_po">
                 <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
                 <a href="#" class="ui-btn ui-corner-all" onclick="return searchpo();">ค้นหา</a>
             </form>
+=======
+
+                <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
+                <!--<a href="#" class="ui-btn ui-corner-all" onclick="return searchpo();">ค้นหา</a>-->
+
+>>>>>>> refs/remotes/origin/tagky
         </div>
         <!--<select onchange="select_warehouse(this)">
             <option value="s01">s01</option>
             <option value="s02">s02</option>
         </select>-->
         <div id="polist" class="polist"></div>
+<<<<<<< HEAD
         <a href="#setting" class="ui-btn ui-corner-all">setting</a>
+=======
+        <!--<a href="#setting" class="ui-btn ui-corner-all">setting</a>-->
+>>>>>>> refs/remotes/origin/tagky
     </div>
 
 
@@ -726,8 +796,13 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <form>
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> refs/remotes/origin/tagky
             <div id="po_head"></div>
             <hr class="hr">
             <div id="po_detail"></div>
@@ -745,7 +820,11 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#receive_listpo" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+<<<<<<< HEAD
                 <li><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
+=======
+                <li onclick="focus_search_item()"><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
+>>>>>>> refs/remotes/origin/tagky
                 <!--<li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>-->
             </ul>
         </div>
@@ -764,6 +843,7 @@
     <div data-role="none" id="header" >
         <a href="#myPanel_receive_show"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
+<<<<<<< HEAD
 
     <div  data-role="main" class="ui-content" id="main">
         <form>
@@ -795,6 +875,39 @@
     <div data-role="panel" id="myPanel_receive_show" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
+=======
+
+    <div  data-role="main" class="ui-content" id="main">
+        <form>
+
+
+            <div id="rv_head"></div>
+            <hr class="hr">
+            <div id="rv_detail"></div>
+            <br>
+
+
+
+        </form>
+
+    </div>
+
+
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li onclick="check_submit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="focus_search_item()"><a href="#receive_search" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ค้นหาสินค้า</a></li>
+                <li onclick="submit_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_receive_show" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+>>>>>>> refs/remotes/origin/tagky
         <hr>
         <div id="tree" class="tree"></div>
     </div>
@@ -847,7 +960,11 @@
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
+<<<<<<< HEAD
         <form>
+=======
+
+>>>>>>> refs/remotes/origin/tagky
             <h2 class="sub_title">item search</h2>
             <label>ค้นหา item : <input type="text" name="receive_search_item" id="receive_search_item"></label>
             <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left ui-corner-all" onclick="search_receive()">ค้นหา</a>
@@ -855,7 +972,11 @@
             <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
             <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
 
+<<<<<<< HEAD
         </form>
+=======
+
+>>>>>>> refs/remotes/origin/tagky
 
     </div>
 
@@ -883,7 +1004,11 @@
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
+<<<<<<< HEAD
         <form>
+=======
+
+>>>>>>> refs/remotes/origin/tagky
             <h2 class="sub_title">scan item</h2>
             <hr class="hr">
             <div id="product_show"></div>
@@ -891,11 +1016,15 @@
             <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
             <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
 
+<<<<<<< HEAD
         </form>
 
     </div>
+=======
+>>>>>>> refs/remotes/origin/tagky
 
 
+    </div>
 
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
@@ -908,6 +1037,21 @@
     <div data-role="panel" id="myPanel_receive_scan" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
+<<<<<<< HEAD
+=======
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li onclick="submit_scan()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_receive_scan" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+>>>>>>> refs/remotes/origin/tagky
         <hr>
         <div id="tree" class="tree"></div>
     </div>
@@ -982,7 +1126,11 @@
     <div data-role="footer" id="footer"  data-position="fixed">
         <div data-role="navbar">
             <ul>
+<<<<<<< HEAD
                 <li onclick="backdetail()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+=======
+                <li><a href="#pagepr" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+>>>>>>> refs/remotes/origin/tagky
             </ul>
         </div>
     </div>
@@ -1037,6 +1185,12 @@
         <label for="switch">ความเร่งด่วน :
             <input type="checkbox" data-role="flipswitch" name="switch" id="switch" data-on-text="ด่วน" data-off-text="ไม่" value="1">
         </label>
+        <labeb>
+            เจ้าหนี้ :
+            <input type="text" id="vender" onkeyup="return searchapcode()">
+            <input type="hidden" id="apCodeven">
+            <span id="nameven">-- ชื่อเจ้าหนี้ --</span>
+        </labeb>
 
     </div>
 
@@ -1085,7 +1239,11 @@
         <div data-role="navbar">
             <ul>
                 <li ><a href="#pluspr" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+<<<<<<< HEAD
                 <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">เพิ่ม</a></li>
+=======
+                <li onclick="clicksubmit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">ตกลง</a></li>
+>>>>>>> refs/remotes/origin/tagky
             </ul>
         </div>
     </div>
@@ -1373,6 +1531,7 @@
             <label for="server_nava">server nava work</label>
             <input type="text" name="server_nava" id="server_nava" placeholder="apiserver_nava">
             <input type="hidden" id="apiserver_nava_s" value="http://api.nava.work:8000/">
+<<<<<<< HEAD
 
             <label for="apilogin">api login</label>
             <input type="text" name="apilogin" id="apilogin">
@@ -1429,11 +1588,72 @@
             <!--  <label for="api13">api insertPR</label>
              <input type="text" name="api13" id="api13">
              <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
+=======
+
+            <label for="apilogin">api login</label>
+            <input type="text" name="apilogin" id="apilogin">
+            <input type="hidden" id="apilogin_s" value="v1/users">
+
+            <label for="api1">api search vender</label>
+            <input type="text" name="api1" id="api1">
+            <input type="hidden" id="api1_s" value="NPReceiveWs/rc/vendor">
+
+            <label for="api2">api list PO</label>
+            <input type="text" name="api2" id="api2">
+            <input type="hidden" id="api2_s" value="NPReceiveWs/rc/vendorpo">
+
+            <label for="api3">api PO detail</label>
+            <input type="text" name="api3" id="api3">
+            <input type="hidden" id="api3_s" value="NPReceiveWs/rc/podetails">
+
+            <label for="api4">api insert header receive</label>
+            <input type="text" name="api4" id="api4">
+            <input type="hidden" id="api4_s" value="NPReceiveWs/rc/insert">
+
+            <label for="api5">api add item receive</label>
+            <input type="text" name="api5" id="api5">
+            <input type="hidden" id="api5_s" value="NPReceiveWs/rc/manageitem">
+
+            <label for="api6">api search item receive</label>
+            <input type="text" name="api6" id="api6">
+            <input type="hidden" id="api6_s" value="NPReceiveWs/rc/item">
+
+            <label for="api7">api search receive</label>
+            <input type="text" name="api7" id="api7">
+            <input type="hidden" id="api7_s" value="NPReceiveWs/rc/search">
+
+            <label for="api8">api PR List</label>
+            <input type="text" name="api8" id="api8">
+            <input type="hidden" id="api8_s" value="NPInventoryWs/pr/prList">
+
+            <label for="api9">api PR Detail</label>
+            <input type="text" name="api9" id="api9">
+            <input type="hidden" id="api9_s" value="NPInventoryWs/pr/prDetail">
+
+            <label for="api10">api insertPR</label>
+            <input type="text" name="api10" id="api10">
+            <input type="hidden" id="api10_s" value="NPInventoryWs/pr/insertPR">
+
+            <label for="api11">api PRGenDocno</label>
+            <input type="text" name="api11" id="api11">
+            <input type="hidden" id="api11_s" value="NPInventoryWs/pr/PRGenDocno">
+
+            <label for="api12">api search item pr</label>
+            <input type="text" name="api12" id="api12">
+            <input type="hidden" id="api12_s" value="NPInventoryWs/pr/searchItem">
+
+            <!--  <label for="api13">api insertPR</label>
+             <input type="text" name="api13" id="api13">
+             <input type="hidden" id="api13_s" value="NPInventoryWs/pr/insertPR">
 
              <label for="api14">api insertPR</label>
              <input type="text" name="api14" id="api14">
              <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
+>>>>>>> refs/remotes/origin/tagky
 
+             <label for="api14">api insertPR</label>
+             <input type="text" name="api14" id="api14">
+             <input type="hidden" id="api14_s" value="NPInventoryWs/pr/insertPR">-->
 
 
         </form>
@@ -1447,7 +1667,31 @@
             </ul>
         </div>
 
+        </form>
 
+    </div>
+<<<<<<< HEAD
+    <div data-role="footer" id="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home" id="footer-nav" data-transition="slidefade" data-direction="reverse">หน้าหลัก</a></li>
+                <li><a href="#" id="set" class="ui-btn-active ui-state-persist" data-icon="check" >บันทึก</a></li>
+            </ul>
+        </div>
+=======
+    <div data-role="panel" id="myPanel_setting" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
+>>>>>>> refs/remotes/origin/tagky
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<<<<<<< HEAD
     </div>
     <div data-role="panel" id="myPanel_setting" data-display="overlay">
         <h2>Overlay Panel</h2>
@@ -1471,10 +1715,28 @@
 <script type="text/javascript">
         app.initialize();
 
+=======
+<script src="js/setting.js"></script>
+<script src="js/fun_pr.js"></script>
+<script src="js/fun_cs.js"></script>
+<script src="js/inven.js"></script>
+<script src="js/search_vender.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script type="text/javascript">
+        app.initialize();
+
+>>>>>>> refs/remotes/origin/tagky
 </script>
 <script src="js/hotkey.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-treeview.min.js"></script>
 <script src="js/menutree.js"></script>
+<<<<<<< HEAD
+=======
+<script src="js/hotkey_pr.js"></script>
+<script src="js/alertify.js"></script>
+>>>>>>> refs/remotes/origin/tagky
 </body>
 </html>

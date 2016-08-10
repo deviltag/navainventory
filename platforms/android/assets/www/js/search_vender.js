@@ -3,6 +3,10 @@ $(document).ready(function(){
 if(localStorage.receivestatus == null ||localStorage.receivestatus == "" ){
 localStorage.receivestatus = "0";
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/tagky
 //alert(localStorage.api_url_server+""+localStorage.api_url_vender)
                /* $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_vender,
@@ -40,13 +44,33 @@ localStorage.receivestatus = "0";
 
 searchpo();
 });
+<<<<<<< HEAD
+=======
+function focus_search(){
+
+ $("#receive").bind('pageshow', function() {
+ $('#search').focus();
+ });
+}
+
+function focus_search_item(){
+ $("#receive_search").bind('pageshow', function() {
+ $('#receive_search_item').focus();
+ });
+}
+
+>>>>>>> refs/remotes/origin/tagky
 
 function searchpo(){
 //alert(localStorage.api_url_server+""+localStorage.api_url_vender);
         //alert(search_po.search.value)
         $.ajax({
                    url: localStorage.api_url_server+""+localStorage.api_url_vender,
+<<<<<<< HEAD
                    data: '{"accessToken":"","search":"'+search_po.search.value+'"}',
+=======
+                   data: '{"accessToken":"","search":"'+document.getElementById("search").value+'"}',
+>>>>>>> refs/remotes/origin/tagky
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
                    type: "POST",
@@ -81,7 +105,11 @@ function select_vender(po_number){
     //alert(po_number);
     //console.log(po_no);
     //document.getElementById("po_no").value=po_no;
+<<<<<<< HEAD
         alert("click : "+ po_number)
+=======
+        //alert("click : "+ po_number)
+>>>>>>> refs/remotes/origin/tagky
      $.ajax({
                    url: localStorage.api_url_server+""+localStorage.api_url_poList,
                    data: '{"accessToken":"","search":"'+po_number+'"}',
@@ -113,7 +141,11 @@ function select_vender(po_number){
                           }
                         document.getElementById("polist_head").innerHTML = po_header;
                         document.getElementById("polist_detail").innerHTML = po_ven;
+<<<<<<< HEAD
                         $.mobile.changePage("#receive_listpo");
+=======
+                        $.mobile.changePage("#receive_listpo",{transition: 'slidefade'});
+>>>>>>> refs/remotes/origin/tagky
                     },
                     error: function (error){
                         console.log(error);
@@ -158,7 +190,11 @@ function select_op_vender(get_detail){
 
 
 
+<<<<<<< HEAD
 
+=======
+                                                                                 po_de += '<p style="color:red; font-size:12px;text-align:center;">** สแกนสินค้าเพื่อรับสินค้า **</p>';
+>>>>>>> refs/remotes/origin/tagky
                                                                                  po_de += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  po_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
                                                                                  po_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
@@ -186,10 +222,17 @@ function select_op_vender(get_detail){
                                                                                  document.getElementById("po_head").innerHTML = po_de_head;
                                                                                  document.getElementById("po_detail").innerHTML = po_de;
                                                                                  $.mobile.changePage("#receive_item");
+<<<<<<< HEAD
                                                                                  }else if(po_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
                                                                                  alert(error);
+=======
+                                                                                 }else if(po_detail.resp.isSuccess==0){alertify.error("Barcode ไม่ถูกต้อง !!");}
+                                                                                 },
+                                                                                 error: function (error){
+                                                                                 alertify.error(error);
+>>>>>>> refs/remotes/origin/tagky
                                                                                 }
 
 
@@ -199,7 +242,11 @@ function select_op_vender(get_detail){
 function search_rc_no(rc_no){
 //localStorage.receiveNumber = "";
       //alert(localStorage.porefno+" "+localStorage.receiveNumber);
+<<<<<<< HEAD
 alert(localStorage.receiveNumber)
+=======
+//alert(localStorage.receiveNumber)
+>>>>>>> refs/remotes/origin/tagky
 if(localStorage.receiveNumber){
 
 	                $.ajax({
@@ -233,6 +280,11 @@ if(localStorage.receiveNumber){
                                                                                  rc_de_head += "<p>ชื่อเจ้าหนี้ :"+rc_detail.apName+"</p>";
                                                                                  rc_de_head += "<p>ราคารวม :"+rc_detail.sumOfItemAmount.toLocaleString()+" บาท</p>";
                                                                                  rc_de_head += "<p>ราคารวมภาษี :"+rc_detail.totalAmount.toLocaleString()+" บาท</p>";
+<<<<<<< HEAD
+=======
+                                                                                 rc_de += '<p style="color:red; font-size:12px;text-align:center;">** สแกนสินค้าเพื่อรับสินค้า **</p>';
+
+>>>>>>> refs/remotes/origin/tagky
                                                                                  localStorage.apcode = rc_detail.apCode;
                                                                                  localStorage.porefno = rc_detail.docNo;
 
@@ -295,17 +347,29 @@ if(localStorage.receiveNumber){
                                                                                  //rc_de += '</table>';
                                                                                  document.getElementById("rv_head").innerHTML = rc_de_head;
                                                                                  document.getElementById("rv_detail").innerHTML = rc_de;
+<<<<<<< HEAD
                                                                                  $.mobile.changePage("#receive_show");
                                                                                  }else if(rc_detail.resp.isSuccess==0){alert("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
                                                                                  alert(error);
+=======
+                                                                                 $.mobile.changePage("#receive_show",{transition: 'slidefade'});
+                                                                                 }else if(rc_detail.resp.isSuccess==0){alertify.error("Barcode ไม่ถูกต้อง !!");}
+                                                                                 },
+                                                                                 error: function (error){
+                                                                                 alertify.error(error);
+>>>>>>> refs/remotes/origin/tagky
                                                                                 }
 
 
                                                  });
                                                  }else{
+<<<<<<< HEAD
                                                  alert("ไม่มีใบรับสินค้า !!");
+=======
+                                                 alertify.error("ไม่มีใบรับสินค้า !!");
+>>>>>>> refs/remotes/origin/tagky
                                                  }
 
 }
@@ -325,7 +389,11 @@ var se_search ="";
                 success: function(search){
                 console.log(JSON.stringify(search));
                 if(search.resp.isSuccess== "0"){
+<<<<<<< HEAD
                 alert("ไม่ถูกต้อง !!")
+=======
+                alertify.error("ไม่ถูกต้อง !!")
+>>>>>>> refs/remotes/origin/tagky
                 }else{
 
                 var search_d = JSON.stringify(search);
@@ -360,7 +428,11 @@ var se_search ="";
                //$.mobile.changePage("#receive_search");
                },
                error: function (error){
+<<<<<<< HEAD
                alert(error);
+=======
+               alertify.error(error);
+>>>>>>> refs/remotes/origin/tagky
                }
           });
 
@@ -387,7 +459,11 @@ if (confirm('ต้องการยกเลิกสินค้านี้�
                         cache: false,
                         success: function(additem_res){
                         console.log(additem_res);
+<<<<<<< HEAD
                         alert("ยกเลิกเรียบร้อยแล้ว !!");
+=======
+                        alertify.error("ยกเลิกเรียบร้อยแล้ว !!");
+>>>>>>> refs/remotes/origin/tagky
                         document.getElementById("amount_scanner").value = "";
                         document.getElementById("product_show").innerHTML = "";
                         search_rc_no();
@@ -422,7 +498,11 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
                         cache: false,
                         success: function(additem_res){
                         console.log(additem_res);
+<<<<<<< HEAD
                         alert("คืนค่าเรียบร้อยแล้ว !!");
+=======
+                        alertify.success("คืนค่าเรียบร้อยแล้ว !!");
+>>>>>>> refs/remotes/origin/tagky
                         document.getElementById("amount_scanner").value = "";
                         document.getElementById("product_show").innerHTML = "";
                         search_rc_no();
@@ -430,7 +510,11 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
 
                         },
                         error: function (error){
+<<<<<<< HEAD
                         alert(error);
+=======
+                        alertify.error(error);
+>>>>>>> refs/remotes/origin/tagky
                         }
                         });
     }
@@ -504,7 +588,11 @@ $(document).on('taphold', '.todo-cancelview', function() {
 
     function check_submit(){
     if(localStorage.receivestatus == "1"){
+<<<<<<< HEAD
     alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
+=======
+    alertify.alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
+>>>>>>> refs/remotes/origin/tagky
     return false;
     }else{$.mobile.changePage("#receive");}
     }
