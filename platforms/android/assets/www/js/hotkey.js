@@ -83,7 +83,16 @@ document.addEventListener("keydown", function(event) {
                    default:
                             break;
                    }
+            }else if(page=="receive_list"){
+            switch (event.keyCode){
+                   case 13: show_receive();
+                           return false;
+                           break;
+                   default:
+                           break;
+                   }
             }
+
 
 
 });
@@ -116,6 +125,10 @@ function onDeviceReady(){
                 alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
                 return false;
             }else{$.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});}
+       }else if($.mobile.activePage.is('#receive_list')){
+            $.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#receive_list_detail')){
+            $.mobile.changePage('#receive_list',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transferup')){

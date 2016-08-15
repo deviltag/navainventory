@@ -90,20 +90,19 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                 }
                                                 if(localStorage.apcode == ""){
                                                     if(apcode==0){
-                                                        var ven = "กรุณากรอกข้อมูลเจ้าหนี้";
-                                                        var venname = "-- ชื่อเจ้าหนี้ --";
+                                                        var ven = "กรุณาเลือกข้อมูลเจ้าหนี้";
                                                         document.getElementById("vender").value = localStorage.apcode;
                                                         document.getElementById("vender").placeholder = ven;
-                                                        document.getElementById("nameven").innerHTML = venname;
-                                                        document.getElementById("apCodeven").value = "null";
+                                                        document.getElementById("apCodevendor").innerHTML = '<a href="#vendor" data-rel="popup" class="ui-btn ui-icon-search ui-btn-icon-right">'+ven+'</a>';
+                                                        document.getElementById("apCodeven").value = localStorage.apcode;
                                                     }else{
                                                         var ven = apcode;
                                                         var venname = apname;
                                                         localStorage.apcode = ven;
                                                         localStorage.apname = venname;
-                                                        document.getElementById("vender").value = localStorage.apcode;
+                                                        document.getElementById("apCodevendor").innerHTML = '<a href="#vendor" data-rel="popup" class="ui-btn ui-icon-search ui-btn-icon-right">'+localStorage.apcode+'<br>'+localStorage.apname+'</a>';
                                                         document.getElementById("apCodeven").value = localStorage.apcode;
-                                                        document.getElementById("nameven").innerHTML = venname;
+
                                                     }
 
                                                 }else{
@@ -143,6 +142,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                  $("#itemdetail").show();
                                  $("#scanbaritem").hide();
                                  //document.getElementById("citem").focus();
+                                 return false;
                                  $.mobile.changePage("#additem");
 
 
@@ -160,7 +160,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                         type: "POST",
                                                         cache: false,
                                                         success: function(result){
-                                                             //console.log(JSON.stringify(result));
+                                                             console.log(JSON.stringify(result));
                                                              //console.log(JSON.stringify(result.listBarcode));
                                                              var itemcode = "";
                                                              var itemName = "";
@@ -194,21 +194,19 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                                             }
                                                             if(localStorage.apcode == ""){
                                                                 if(apcode==0){
-                                                                    var ven = "กรุณากรอกข้อมูลเจ้าหนี้";
-                                                                    var venname = "-- ชื่อเจ้าหนี้ --";
+                                                                    var ven = "กรุณาเลือกข้อมูลเจ้าหนี้";
                                                                     document.getElementById("vender").value = localStorage.apcode;
                                                                     document.getElementById("vender").placeholder = ven;
-                                                                    document.getElementById("nameven").innerHTML = venname;
+                                                                    document.getElementById("apCodevendor").innerHTML = '<a href="#vendor" data-rel="popup" class="ui-btn ui-icon-search ui-btn-icon-right">'+ven+'</a>';
+                                                                    document.getElementById("apCodeven").value = localStorage.apcode;
                                                                 }else{
                                                                     var ven = apcode;
                                                                     var venname = apname;
                                                                     localStorage.apcode = ven;
                                                                     localStorage.apname = venname;
-                                                                    document.getElementById("vender").value = localStorage.apcode;
+                                                                    document.getElementById("apCodevendor").innerHTML = '<a href="#vendor" data-rel="popup" class="ui-btn ui-icon-search ui-btn-icon-right">'+localStorage.apcode+'<br>'+localStorage.apname+'</a>';
                                                                     document.getElementById("apCodeven").value = localStorage.apcode;
-                                                                    document.getElementById("nameven").innerHTML = venname;
                                                                 }
-
                                                             }else{
                                                                 document.getElementById("vender").value = localStorage.apcode;
 
@@ -245,6 +243,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                               $("#itemdetail").show();
                                               $("#scanbaritem").hide();
                                               //document.getElementById("citem").focus();
+                                              return false;
                                               $.mobile.changePage("#additem");
 
 
@@ -304,7 +303,6 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                     default: var status = "";
                                             break;
                                }
-<<<<<<< HEAD
                                     var today = new Date();
                                     var dd = today.getDate();
                                     var mm = today.getMonth()+1; //January is 0!
@@ -317,14 +315,6 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                         mm='0'+mm
                                     }
                                     var n = yyyy+'-'+mm+'-'+dd;
-=======
-                                   var d = new Date();
-                                   var today = d.getDate().length;
-                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
-                                   var tomonth = d.getMonth().length;
-                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
-                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
->>>>>>> origin/master
                                    //console.log(n);
                                    switch (val['docDate']){
                                         case n :
@@ -344,16 +334,99 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                            },
                         error: function (error){
                         console.log(JSON.stringify(error));
-<<<<<<< HEAD
                         alertify.error("api qserver can't connect!!");
-=======
-                        alert("api qserver this not connected!!");
->>>>>>> origin/master
                        // $.mobile.changePage("#pagepr");
                    }
 
                    });
 //}
+
+function prlist(){
+            $.ajax({
+                   url: localStorage.api_url_server+localStorage.api_url_prlist,
+                   data: '{"type":"0","search":"58089"}',
+                   contentType: "application/json; charset=utf-8",
+                   dataType: "json",
+                   type: "POST",
+                   cache: false,
+                   success: function(result){
+                        //console.log(JSON.stringify(result));
+                        var prl = JSON.stringify(result);
+                        //console.log(prl);
+                        var prlp = prl.split(":[");
+                        var str = prlp[1].split("]}");
+                        prl = "["+str[0]+"]";
+                        var js = jQuery.parseJSON(prl);
+                        var prlist = "";
+                        var wdate = "";
+                        var x = 1;
+                        $.each(js, function(key, val) {
+                           //console.log(val['docNo']);
+
+                           prlist += '<label class="todo-listview" data-view-id="';
+                           prlist += "'"+val['docNo']+"'";
+                           prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
+                           prlist += "'"+val['docNo']+"'";
+                           prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                           prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
+
+                           var wantDate = val['wantDate'];
+                           if(wantDate!=null){
+                           wdate = val['wantDate'].split("-");
+                           day = wdate[2];
+                           month = wdate[1];
+                           year = (parseInt(wdate[0])+543);
+
+                           wantDate = day+"/"+month+"/"+year;
+                           }
+
+                           prlist += '<div class="ui-block-b">'+wantDate+'</div>';
+                           prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
+                               switch (val['status']){
+                                    case 1 : var status = "<img src='images/Warning.png' width='24'>";
+                                            break;
+                                    case 2 : var status = "<img src='images/quick.png' width='24'>";
+                                            break;
+                                    default: var status = "";
+                                            break;
+                               }
+                                    var today = new Date();
+                                    var dd = today.getDate();
+                                    var mm = today.getMonth()+1; //January is 0!
+
+                                    var yyyy = today.getFullYear();
+                                    if(dd<10){
+                                        dd='0'+dd
+                                    }
+                                    if(mm<10){
+                                        mm='0'+mm
+                                    }
+                                    var n = yyyy+'-'+mm+'-'+dd;
+                                   //console.log(n);
+                                   switch (val['docDate']){
+                                        case n :
+                                               status += "<img src='images/New.png' width='24'>";
+                                               break;
+                                   }
+
+                           prlist += '<div class="ui-block-d">'+status+'</div>';
+                           prlist += '</div></label></a><hr>';
+                            x++;
+                        });
+                        document.getElementById("prlist").innerHTML = prlist;
+                        //alert("refrech!!");
+                        //console.log(JSON.stringify(js));
+
+                      //  $.mobile.changePage("#pagepr");
+                           },
+                        error: function (error){
+                        console.log(JSON.stringify(error));
+                        alertify.error("api qserver can't connect!!");
+                       // $.mobile.changePage("#pagepr");
+                   }
+
+                   });
+}
 //window.setInterval(prlist, 1000);
 
 $(document).on('taphold', '.todo-listview', function() {
@@ -444,7 +517,6 @@ $.ajax({
                       default: var status = "";
                                break;
                   }
-<<<<<<< HEAD
                     var today = new Date();
                     var dd = today.getDate();
                     var mm = today.getMonth()+1; //January is 0!
@@ -457,14 +529,6 @@ $.ajax({
                         mm='0'+mm
                     }
                     var n = yyyy+'-'+mm+'-'+dd;
-=======
-                   var d = new Date();
-                   var today = d.getDate().length;
-                   if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
-                   var tomonth = d.getMonth().length;
-                   if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
-                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
->>>>>>> origin/master
                   //console.log(n);
                   switch (val['docDate']){
                       case n :
@@ -563,7 +627,6 @@ function prdetail(DocNo){
                             var detail = "";
 
                            console.log(JSON.stringify(js));
-<<<<<<< HEAD
                             var today = new Date();
                             var dd = today.getDate();
                             var mm = today.getMonth()+1; //January is 0!
@@ -576,14 +639,6 @@ function prdetail(DocNo){
                                 mm='0'+mm
                             }
                             var n = yyyy+'-'+mm+'-'+dd;
-=======
-                            var d = new Date();
-                            var today = d.getDate().length;
-                            if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
-                            var tomonth = d.getMonth().length;
-                            if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
-                            var n = d.getFullYear()+"-"+tomonth+"-"+today;
->>>>>>> origin/master
                             console.log(n);
                             var state = "";
                            $.each(js, function(key, val) {
@@ -740,7 +795,6 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                                     default : state = "";
                                             break;
                                }
-<<<<<<< HEAD
                                     var today = new Date();
                                     var dd = today.getDate();
                                     var mm = today.getMonth()+1; //January is 0!
@@ -754,14 +808,6 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                                     }
                                     var n = yyyy+'-'+mm+'-'+dd;
                                    console.log(n);
-=======
-                                   var d = new Date();
-                                   var today = d.getDate().length;
-                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
-                                   var tomonth = d.getMonth().length;
-                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
-                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
->>>>>>> origin/master
                                    switch (val['docDate']){
                                         case n :
                                                state += ",<img src='images/New.png' width='24'> ใหม่";
@@ -911,7 +957,6 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                                     default : state = "";
                                             break;
                                }
-<<<<<<< HEAD
                                     var today = new Date();
                                     var dd = today.getDate();
                                     var mm = today.getMonth()+1; //January is 0!
@@ -925,14 +970,6 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                                     }
                                     var n = yyyy+'-'+mm+'-'+dd;
                                    console.log(n);
-=======
-                                    var d = new Date();
-                                   var today = d.getDate().length;
-                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
-                                   var tomonth = d.getMonth().length;
-                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
-                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
->>>>>>> origin/master
                                    switch (val['docDate']){
                                         case n :
                                                state += ",<img src='images/New.png' width='24'> ใหม่";
@@ -1008,6 +1045,7 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
 
 
 function clicksubmit(){
+    console.log("clickadditem");
     console.log(document.getElementById("DocNo").value);
     var DocNo = document.getElementById("DocNo").value;
     var no = document.getElementById("noitems").value;
@@ -1240,11 +1278,7 @@ function pluspr(){
                 var js = jQuery.parseJSON(prl);
                 console.log(js);
                 if(JSON.stringify(js)=="[]"){
-<<<<<<< HEAD
                     alertify.alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
-=======
-                    alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
->>>>>>> origin/master
                 }else{
                         var wday = document.getElementById("defdate").value;
                         var discript = document.getElementById("discript").value;
@@ -1255,11 +1289,7 @@ function pluspr(){
                             priority = 0;
                         }
                         if(discript==""||apCode == "null"){
-<<<<<<< HEAD
                             alertify.alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-=======
-                            alert("กรุณากรอกข้อมูลให้ครบถ้วน");
->>>>>>> origin/master
                         }else{
                                 $.ajax({
                                            url: localStorage.api_url_server+"NPInventoryWs/pr/updatePR",
@@ -1320,7 +1350,6 @@ function pluspr(){
                                                                     default : var status = "";
                                                                             break;
                                                                }
-<<<<<<< HEAD
                                                                     var today = new Date();
                                                                     var dd = today.getDate();
                                                                     var mm = today.getMonth()+1; //January is 0!
@@ -1333,14 +1362,6 @@ function pluspr(){
                                                                         mm='0'+mm
                                                                     }
                                                                     var n = yyyy+'-'+mm+'-'+dd;
-=======
-                                                                   var d = new Date();
-                                                                   var today = d.getDate().length;
-                                                                    if(today<1){today="0"+d.getDate();}else{today=d.getDate();}
-                                                                   var tomonth = d.getMonth().length;
-                                                                    if(tomonth<1){tomonth="0"+(d.getMonth()+1);}else{tomonth="0"+d.getMonth();}
-                                                                   var n = d.getFullYear()+"-"+tomonth+"-"+today;
->>>>>>> origin/master
                                                                    console.log(val['docDate']+"/"+n);
                                                                    switch (val['docDate']){
                                                                         case n :
@@ -1364,11 +1385,7 @@ function pluspr(){
                                                    }
 
                                                    });
-<<<<<<< HEAD
                                            alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว");
-=======
-                                           alert("บันทึกข้อมูลเรียบร้อยแล้ว");
->>>>>>> origin/master
                                            $.mobile.changePage("#pagepr");
                                            },
                                            error: function (error){
@@ -1622,14 +1639,29 @@ function searchapcode(){
                 //console.log(JSON.stringify(apcode));
                 var textven = "";
                 var name = "";
+                var listapcode = "";
                 $.each(js, function(key, val) {
                      textven = val['apCode'];
                      name = val['apName'];
+                     listapcode += '<label onclick="addapcode(';
+                     listapcode += "'"+textven+"' ,";
+                     listapcode += "'"+name+"'";
+                     listapcode += ')"><a href="#">'+textven+' '+name+'</a></label>';
                 });
-                    document.getElementById("apCodeven").value = textven;
-                    document.getElementById("nameven").innerHTML = name;
+                   // document.getElementById("apCodeven").value = textven;
+                    document.getElementById("nameven").innerHTML = listapcode;
            }
     });
 
 
+}
+
+function addapcode(textven, name){
+    console.log(textven);
+    console.log(name);
+    document.getElementById("apCodevendor").innerHTML = '<a href="#vendor" data-rel="popup" class="ui-btn ui-icon-search ui-btn-icon-right">'+textven+'<br>'+name+'</a>';
+    document.getElementById("apCodeven").value = textven;
+    document.getElementById("vender").value = "";
+    document.getElementById("nameven").innerHTML = "-- ชื่อเจ้าหนี้ --";
+    $('#vendor').popup('close');
 }

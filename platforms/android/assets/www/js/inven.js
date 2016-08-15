@@ -248,8 +248,9 @@ var date = curr_date + "/" + curr_month
                      //alert(localStorage.receivestatus+" save complete!!")
                      //search_rc_no();
                      //select_op_vender(localStorage.porefno);
-                     $.mobile.changePage("#receive",{transition: 'slidefade'});
-                     focus_search();
+                     //$.mobile.changePage("#receive",{transition: 'slidefade'});
+
+                     show_receive();
 
                      },
                      error: function (error){
@@ -342,7 +343,7 @@ function scan_search_item(scan_value){
                                                                               //result_scanner +='<label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>';
                                                                              document.getElementById("product_show").innerHTML = result_scanner;
 
-                                                                             $.mobile.changePage("#receive_scan");
+                                                                              $.mobile.changePage("#receive_scan",{transition: 'slidefade'});
                                                                              //document.getElementById("amount_scanner").focus();
                                                                              $("#receive_scan").bind('pageshow', function() {
                                                                              			$('#amount_scanner').focus();
@@ -356,6 +357,55 @@ function scan_search_item(scan_value){
                                                                   }
                                                                   });
 
+}
+
+function show_receive(){
+$.ajax({
+                          url: localStorage.api_url_server+""+localStorage.api_url_list_receive,
+                          data: '{"accessToken":"","search":"'+document.getElementById("search_receive_doc").value+'"}',
+                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"admin"}
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(list_receive){
+                          console.log(list_receive);
+                            if(list_receive.resp.isSuccess==1){
+                                                     var rc_l = JSON.stringify(list_receive);
+                                                     var rc_ls = rc_l.split(":[");
+                                                     var strl = rc_ls[1].split("]}");
+                                                     rc_l = "["+strl[0]+"]";
+                                                     var jsl = jQuery.parseJSON(rc_l);
+                                                     console.log(JSON.stringify(jsl));
+                                                     var count = jsl.length;
+                                                     var list = "";
+                                                      for(var i = 0;i<count;i++){
+                                                      if(jsl[i].isCancel==1){
+
+                                                      list += '<a href="#" class="ui-btn ui-corner-all" style="background: #FF3333; color: gray;" onclick="show_receive_detail(';
+                                                      list += "'"+jsl[i].recNo+"'"+","+"'"+jsl[i].poRefNo+"')";
+                                                      list += '">'+jsl[i].recNo+'<br>'+jsl[i].apName+'</a>';
+                                                      }else{
+
+                                                     list += '<a href="#" class="todo-deleteview ui-btn ui-corner-all" data-delete-id="'+jsl[i].recNo+'" data-deleterow-id="i'+jsl[i].recNo+'" data-delete-poRefNo="'+jsl[i].poRefNo+'" id="i'+jsl[i].recNo+'" onclick="show_receive_detail(';
+                                                     list += "'"+jsl[i].recNo+"'"+","+"'"+jsl[i].poRefNo+"')";
+                                                     list += '">'+jsl[i].recNo+'<br>'+jsl[i].apName+'</a>';
+
+                                                     }
+
+
+                                                      }
+                                                      document.getElementById("list_receive").innerHTML = list;
+
+                                                      $.mobile.changePage("#receive_list",{transition: 'slidefade'});
+                                                      focus_receive_list();
+
+                                                      }else if(list_receive.resp.isSuccess==0){alertify.error("ไม่มีใบรับเข้า !!");}
+                          },
+                          error: function (error){
+                          alertify.error(error);
+                          }
+                          });
 }
 
 

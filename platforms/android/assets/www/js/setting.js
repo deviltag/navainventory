@@ -105,6 +105,21 @@ if(localStorage.api_url_vender){
           document.getElementById("api12").value = document.getElementById("api12_s").value;
   }
 
+ if(localStorage.api_url_list_receive){
+         document.getElementById("api13").value = localStorage.api_url_list_receive;
+ }else{
+     localStorage.api_url_list_receive = document.getElementById("api13_s").value;
+     document.getElementById("api13").value = document.getElementById("api13_s").value;
+ }
+
+
+ if(localStorage.api_url_delete_receive){
+    document.getElementById("api14").value = localStorage.api_url_delete_receive;
+ }else{
+    localStorage.api_url_delete_receive = document.getElementById("api14_s").value;
+    document.getElementById("api14").value = document.getElementById("api14_s").value;
+ }
+
 
 });
 
@@ -124,6 +139,8 @@ $("#set").click(function() {
     localStorage.api_url_insertpr = document.getElementById("api10").value;
     localStorage.api_url_gendocno = document.getElementById("api11").value;
     localStorage.api_url_search_item_pr = document.getElementById("api12").value;
+    localStorage.api_url_list_receive = document.getElementById("api13").value;
+    localStorage.api_url_delete_receive = document.getElementById("api14").value;
     alert("บันทึกข้อมูลเรียบร้อยแล้ว")
 
 
