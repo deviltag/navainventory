@@ -923,6 +923,43 @@
     </div>
 </div>
 
+<!--//////////////////////////////////////////////////////////// scan Receive item edit ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="receive_scan_edit">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_receive_scan_edit"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+
+        <h2 class="sub_title">scan item</h2>
+        <hr class="hr">
+        <div id="product_show_e"></div>
+        <label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner_e"></label>
+        <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
+        <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
+
+
+
+    </div>
+
+
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#receive_list_detail_edit" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li onclick="submit_scan_edit()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_receive_scan_edit" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+
 <!--////////////////////////////////////////////////////////////  Receive list ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="receive_list">
     <div data-role="none" id="header" >
@@ -1009,11 +1046,11 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#receive_list_edit" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li><a href="#receive_list" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel_receive_list_detail" data-display="overlay">
+    <div data-role="panel" id="myPanel_receive_list_detail_edit" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <hr>

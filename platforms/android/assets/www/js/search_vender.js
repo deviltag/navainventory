@@ -237,9 +237,8 @@ function select_op_vender(get_detail){
 }
 
 function search_rc_no(){
-//localStorage.receiveNumber = "";
-//alert(localStorage.porefno+" "+localStorage.receiveNumber);
-//alert(localStorage.receiveNumber)
+
+
 if(localStorage.receiveNumber){
 
 	                $.ajax({
@@ -346,9 +345,7 @@ if(localStorage.receiveNumber){
 
 
                                                  });
-                                                 }else{
-                                                 alertify.error("ไม่มีใบรับสินค้า !!");
-                                                 }
+            }else{alertify.error("ไม่มีใบรับสินค้า !!");}
 
 }
 
@@ -356,7 +353,6 @@ if(localStorage.receiveNumber){
 function show_receive_detail(r,p){
 
 
-if(localStorage.receiveNumber){
 
 	                $.ajax({
                                                      url: localStorage.api_url_server+""+localStorage.api_url_search,
@@ -389,6 +385,7 @@ if(localStorage.receiveNumber){
                                                                                  rc_de_head1 += "<p>ชื่อเจ้าหนี้ :"+rc_detail1.apName+"</p>";
                                                                                  rc_de_head1 += "<p>ราคารวม :"+rc_detail1.sumOfItemAmount.toLocaleString()+" บาท</p>";
                                                                                  rc_de_head1 += "<p>ราคารวมภาษี :"+rc_detail1.totalAmount.toLocaleString()+" บาท</p>";
+                                                                                 rc_de_head1 += "<p>ยกเลิก & คอนเฟิร์ม</p>";
                                                                                  if(rc_detail1.isDocCancel == "0"){
                                                                                  rc_de_head1 += "<p>สถานะใบรับสินค้า : ปกติ </p>";
                                                                                  }else if(rc_detail1.isDocCancel == "1"){
@@ -442,9 +439,116 @@ if(localStorage.receiveNumber){
 
 
                                                  });
-                                                 }else{
-                                                 alertify.error("ไม่มีใบรับสินค้า !!");
-                                                 }
+
+}
+
+
+function show_receive_detail_edit(r,p){
+
+$.ajax({
+                                                     url: localStorage.api_url_server+""+localStorage.api_url_search,
+                                                     data: '{"accessToken":"","docNo":"'+p+'","recNo":"'+r+'"}',
+                                                     //{"accessToken":"","docNo":"'+localStorage.porefno+'","recNo":"'+localStorage.receiveNumber+'"}
+                                                     contentType: "application/json; charset=utf-8",
+                                                     dataType: "json",
+                                                     type: "POST",
+                                                     cache: false,
+                                                     success: function(rc_detail_e){
+                                                     console.log(JSON.stringify(rc_detail_e));
+                                                     //console.log(rc_detail.resp.isSuccess);
+                                                     if(rc_detail_e.resp.isSuccess==1){
+                                                     var rc_d_e = JSON.stringify(rc_detail_e);
+                                                     var rc_ds_e = rc_d_e.split(":[");
+                                                     var str_e = rc_ds_e[1].split("]}");
+                                                     rc_d_e = "["+str_e[0]+"]";
+                                                     var js_e = jQuery.parseJSON(rc_d_e);
+                                                    // alert(JSON.stringify(rc_detail.isSuccess));
+                                                     console.log(JSON.stringify(js_e));
+                                                                            //document.getElementById("PO").innerHTML = JSON.stringify(js);
+                                                     var count_e = js_e.length;
+                                                     //alert(count)
+                                                                                 var rc_de_head_e = "";                         //console.log(count);
+                                                                                 var rc_de_e = "";
+                                                                                 rc_de_head_e += "<h2 class='sub_title'>เลขที่ ใบรับเข้า :"+r+"</h2>";
+                                                                                 rc_de_head_e += "<h2 class='sub_title'>เลขที่ PO :"+p+"</h2>";
+                                                                                 rc_de_head_e += "<p> วันที่ออกเอกสาร :"+rc_detail_e.docDate+"</p>";
+                                                                                 rc_de_head_e += "<p>รหัสเจ้าหนี้ :"+rc_detail_e.apCode+"</p>";
+                                                                                 rc_de_head_e += "<p>ชื่อเจ้าหนี้ :"+rc_detail_e.apName+"</p>";
+                                                                                 rc_de_head_e += "<p>ราคารวม :"+rc_detail_e.sumOfItemAmount.toLocaleString()+" บาท</p>";
+                                                                                 rc_de_head_e += "<p>ราคารวมภาษี :"+rc_detail_e.totalAmount.toLocaleString()+" บาท</p>";
+                                                                                 rc_de_e += '<p style="color:red; font-size:12px;text-align:center;">** สแกนสินค้าเพื่อรับสินค้า **</p>';
+                                                                                 localStorage.re_no = r;
+                                                                                 localStorage.po_no = p;
+
+
+
+
+
+                                                                                 rc_de_e += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
+                                                                                 rc_de_e += '<div class="ui-block-a"><b>สินค้า</b></div>';
+                                                                                 rc_de_e += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                                                                                 rc_de_e += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
+                                                                                 rc_de_e += '<div class="ui-block-d"><b>จำนวนรับเข้า</b></div>';
+                                                                                 rc_de_e += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
+                                                                                 for(var i = 0;i<js_e.length;i++){
+                                                                                 if(js_e[i].isListCancel == "1"){
+                                                                                 //console.log(js[i].code);
+                                                                                 //data-row-id="4" id="4"
+                                                                                 if(js_e[i].status=="0"){
+
+                                                                                 rc_de_e += '<div class="ui-grid-d blur" style="text-align:center; font-size:12px; color:#ccc;">';
+                                                                                 }else{
+                                                                                 rc_de_e += '<div class="todo-uncancel_editview ui-grid-d blur" data-uncancel-id="'+js_e[i].barCode+'" data-uncancelrow-id="i'+js_e[i].barCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-unreceive="'+js_e[i].rcQty+'" id="i'+js_e[i].barCode+'" style="text-align:center; font-size:12px;">';
+
+                                                                                 //rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
+                                                                                 //rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
+                                                                                 //rc_de += '"  style="text-align:center; font-size:12px;">';
+                                                                                 }
+                                                                                 }else{
+                                                                                 if(js_e[i].status=="0"){
+                                                                                 rc_de_e += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">';
+                                                                                 }else{
+
+                                                                                 rc_de_e += '<div class="todo-cancel_editview ui-grid-d" data-cancel-id="'+js_e[i].barCode+'" data-cancelrow-id="i'+js_e[i].barCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-receive="'+js_e[i].rcQty+'" id="i'+js_e[i].barCode+'" style="text-align:center; font-size:12px;">';
+
+                                                                                 //rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
+                                                                                 //rc_de += "'"+js[i].barCode+"')";
+                                                                                 //rc_de += '"  style="text-align:center; font-size:12px;">';
+                                                                                 }
+
+                                                                                 }
+                                                                                 rc_de_e += '<div class="ui-block-a">'+js_e[i].itemName+'</div>';
+                                                                                 rc_de_e += '<div class="ui-block-b"> '+js_e[i].remainQty+' '+js_e[i].unitCode+' </div>';
+                                                                                 rc_de_e += '<div class="ui-block-c"> '+js_e[i].price.toLocaleString()+' </div>';
+                                                                                 rc_de_e += '<div class="ui-block-d"> '+js_e[i].rcQty+' </div>';
+                                                                                 //rc_de += '<div class="ui-block-d"> '+js[i].amount.toLocaleString()+' </div>';
+
+                                                                                  if(js_e[i].status==0){
+                                                                                    rc_de_e += '<div class="ui-block-d"><img src="images/Warning.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js_e[i].status==1){
+                                                                                    rc_de_e += '<div class="ui-block-d"><img src="images/tick.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js_e[i].status==2){
+                                                                                    rc_de_e += '<div class="ui-block-d"><img src="images/minus.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js_e[i].status==3){
+                                                                                    rc_de_e += '<div class="ui-block-d"><img src="images/plus.png" class="receive_status"></div></div><hr>';
+                                                                                  }else if(js_e[i].status==4){
+                                                                                    rc_de_e += '<div class="ui-block-d"><img src="images/private.png" class="receive_status"></div></div><hr>';
+                                                                                  }
+                                                                                 //rc_de += '<div class="ui-block-d">'+js[i].amount.toLocaleString()+' บาท</div></div><hr>';
+                                                                                            //rc_de +="</label>";
+                                                                                                 }
+                                                                                 //rc_de += '</table>';
+                                                                                 document.getElementById("rv_head_edit").innerHTML = rc_de_head_e;
+                                                                                 document.getElementById("rv_detail_edit").innerHTML = rc_de_e;
+                                                                                 $.mobile.changePage("#receive_list_detail_edit",{transition: 'slidefade'});
+                                                                                 }else if(rc_detail_e.resp.isSuccess==0){alertify.error("ไม่มีใบรับสินค้า !!");}
+                                                                                 },
+                                                                                 error: function (error){
+                                                                                 alertify.error(error);
+                                                                                }
+
+
+                                                 });
 
 }
 
@@ -506,7 +610,7 @@ var se_search ="";
 //document.getElementById("show_search_item").innerHTML = se_item;
 }
 
-function cancel_item(delete_item){
+function cancel_item(delete_item,rcq){
 //alert(delete_item)
 var d = new Date();
 var curr_date = d.getDate();
@@ -517,7 +621,7 @@ var date = curr_date + "/" + curr_month
 if (confirm('ต้องการยกเลิกสินค้านี้หรือไม ?')) {
       $.ajax({
                         url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
-                        data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+delete_item+'","qty":"","isCancel":"1","userID":"admin"}',
+                        data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+delete_item+'","qty":"'+rcq+'","isCancel":"1","userID":"admin"}',
                                //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -575,6 +679,74 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
 
 }
 
+function cancel_item_edit(delete_item,rcq,po_e,rv_e){
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth()+1;
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+if (confirm('ต้องการยกเลิกสินค้านี้หรือไม ?')) {
+      $.ajax({
+                        url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                        data: '{"accessToken":"","docNo":"'+rv_e+'","docDate":"'+date+'","poRefNo":"'+po_e+'","barCode":"'+delete_item+'","qty":"'+rcq+'","isCancel":"1","userID":"admin"}',
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST",
+                        cache: false,
+                        success: function(additem_res){
+                        console.log(additem_res);
+                        alertify.error("ยกเลิกเรียบร้อยแล้ว !!");
+                        document.getElementById("amount_scanner").value = "";
+                        document.getElementById("product_show").innerHTML = "";
+                        show_receive_detail_edit(rv_e,po_e);
+                        $.mobile.changePage("#receive_list_detail_edit");
+
+                        },
+                        error: function (error){
+                        alert(error);
+                        }
+                        });
+    }
+
+}
+
+function uncancel_item_edit(undelete_item,rcq,po_e,rv_e){
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth()+1;
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+if (confirm('ต้องการคืนค่าสินค้านี้หรือไม ?')) {
+      $.ajax({
+                        url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                        data: '{"accessToken":"","docNo":"'+rv_e+'","docDate":"'+date+'","poRefNo":"'+po_e+'","barCode":"'+undelete_item+'","qty":"'+rcq+'","isCancel":"0","userID":"admin"}',
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        type: "POST",
+                        cache: false,
+                        success: function(additem_res){
+                        console.log(additem_res);
+                        alertify.success("คืนค่าเรียบร้อยแล้ว !!");
+                        document.getElementById("amount_scanner").value = "";
+                        document.getElementById("product_show").innerHTML = "";
+                        show_receive_detail_edit(rv_e,po_e);
+                        $.mobile.changePage("#receive_list_detail_edit");
+
+                        },
+                        error: function (error){
+                        alertify.error(error);
+                        }
+                        });
+    }
+
+}
+
+
+
 function delete_receive(delete_deceive_no,poref_no){
 //alert(delete_deceive_no);
 //alert(poref_no);
@@ -602,6 +774,16 @@ if (confirm('ต้องการลบใบรับเข้านี้ห�
                         });
     }
 }
+
+
+    function check_submit(){
+    if(localStorage.receivestatus == "1"){
+    alertify.alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
+    return false;
+    }else{$.mobile.changePage("#receive");}
+    }
+
+//================================================== cancel receive =================================================================
 
 $(document).on('taphold', '.todo-uncancelview', function() {
        // console.log("DEBUG - Go popup");
@@ -668,13 +850,77 @@ $(document).on('taphold', '.todo-cancelview', function() {
     });
 
 
-    function check_submit(){
-    if(localStorage.receivestatus == "1"){
-    alertify.alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
-    return false;
-    }else{$.mobile.changePage("#receive");}
-    }
+//================================================== cancel edit receive =================================================================
+$(document).on('taphold', '.todo-uncancel_editview', function() {
+       // console.log("DEBUG - Go popup");
+      var link_name = $(this).attr('data-uncancel-id');
+      var link_id = $(this).attr('data-uncancelrow-id');
+      var rcqtys = $(this).attr('data-unreceive');
+      var po = $(this).attr('data_po_no');
+      var rv = $(this).attr('data_receive_no');
+      var $popUp = $("<div/>").popup({
+        dismissible: true,
 
+        //theme: "a",
+        transition: "pop",
+        arrow: "b",
+        positionTo: '#'+link_id
+        }).on("popupafterclose", function () {
+    //remove the popup when closing
+    $(this).remove();
+    }).css({
+   'padding': '15%',
+   'color': '#fff',
+   'background': 'green'
+   });
+    console.log(link_name);
+    console.log('#'+link_id);
+    $("<a>", {
+    text: "UnHold",
+    href: "#",
+    onclick: "uncancel_item_edit("+link_name+","+rcqtys+",'"+po+"','"+rv+"');"
+    }).appendTo($popUp);
+
+    $popUp.popup('open').enhanceWithin();
+
+    });
+
+$(document).on('taphold', '.todo-cancel_editview', function() {
+       // console.log("DEBUG - Go popup");
+      var link_name = $(this).attr('data-cancel-id');
+      var link_id = $(this).attr('data-cancelrow-id');
+      var rcqtys = $(this).attr('data-receive');
+      var po = $(this).attr('data_po_no');
+      var rv = $(this).attr('data_receive_no');
+
+      var $popUp = $("<div/>").popup({
+        dismissible: true,
+
+        //theme: "a",
+        transition: "pop",
+        arrow: "b",
+        positionTo: '#'+link_id
+        }).on("popupafterclose", function () {
+    //remove the popup when closing
+    $(this).remove();
+    }).css({
+   'padding': '15%',
+   'color': '#fff',
+   'background': 'red'
+   });
+    console.log(link_name);
+    console.log('#'+link_id);
+    $("<a>", {
+    text: "Hold",
+    href: "#",
+    onclick: "cancel_item_edit("+link_name+","+rcqtys+",'"+po+"','"+rv+"');"
+    }).appendTo($popUp);
+
+    $popUp.popup('open').enhanceWithin();
+
+    });
+
+//========================================================= delete list rv =================================================================
 $(document).on('taphold', '.todo-deleteview', function() {
        // console.log("DEBUG - Go popup");
       var link_name = $(this).attr('data-delete-id');

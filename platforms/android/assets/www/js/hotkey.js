@@ -42,6 +42,9 @@ document.addEventListener("keydown", function(event) {
                     case 13: searchpo();
                              return false;
                              break;
+                    case 0: show_receive();
+                             return false;
+                             break;
                     default:
                              break;
                     }
@@ -91,7 +94,16 @@ document.addEventListener("keydown", function(event) {
                    default:
                            break;
                    }
+            }else if(page=="receive_scan_edit"){
+            switch (event.keyCode){
+                   case 13: submit_scan_edit();
+                          return false;
+                          break;
+                   default:
+                          break;
+                   }
             }
+
 
 
 
@@ -126,6 +138,10 @@ function onDeviceReady(){
                 return false;
             }else{$.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});}
        }else if($.mobile.activePage.is('#receive_list')){
+            $.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#receive_scan_edit')){
+            $.mobile.changePage('#receive_list_detail_edit',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#receive_list_detail_edit')){
             $.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_list_detail')){
             $.mobile.changePage('#receive_list',{transition: 'slidefade',reverse: true});

@@ -140,7 +140,8 @@ alertify.error(localStorage.receivestatus)
 }
 function submit_scan(){
 if(document.getElementById("amount_scanner").value==""){
-alertify.alert("กรุณากรอกจำนวนที่ต้องการ")
+alertify.alert("กรุณากรอกจำนวนที่ต้องการ");
+return false;
 }else{
 var d = new Date();
 var curr_date = d.getDate();
@@ -222,6 +223,47 @@ $.ajax({
 localStorage.receivestatus = "1";
 
 }
+}
+//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}')
+}
+
+
+function submit_scan_edit(){
+if(document.getElementById("amount_scanner_e").value==""){
+alertify.alert("กรุณากรอกจำนวนที่ต้องการ");
+return false;
+}else{
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth()+1;
+var curr_year = d.getFullYear();
+var date = curr_date + "/" + curr_month
++ "/" + curr_year;
+//alert(date);
+
+        $.ajax({
+                          url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
+                          data: '{"accessToken":"","docNo":"'+localStorage.re_no+'","docDate":"'+date+'","poRefNo":"'+localStorage.po_no+'","barCode":"'+localStorage.barCode_rv_e+'","qty":"'+document.getElementById("amount_scanner_e").value+'","isCancel":"0","userID":"admin"}',
+                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"admin"}
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(additem_res){
+                          console.log(additem_res);
+                          alertify.success("เพิ่มสินค้าในใบรับเข้าเรียบร้อยแล้ว !!");
+                          document.getElementById("amount_scanner_e").value = "";
+                          document.getElementById("product_show").innerHTML = "";
+                          show_receive_detail_edit(localStorage.re_no,localStorage.po_no);
+                          //$.mobile.changePage("#receive_item");
+
+                          },
+                          error: function (error){
+                          alertify.error(error);
+                          }
+                          });
+
+
 }
 //alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}')
 }
@@ -359,6 +401,63 @@ function scan_search_item(scan_value){
 
 }
 
+
+function scan_search_item_edit(scan_value){
+ var result_scanner_e = "";
+                           $.ajax({
+                                                                  url: localStorage.api_url_server+""+localStorage.api_url_serchitem,
+                                                                  data: '{"accessToken":"","docNo":"","type":"1","barCode":"'+scan_value+'"}',
+                                                                  contentType: "application/json; charset=utf-8",
+                                                                  dataType: "json",
+                                                                  type: "POST",
+                                                                  cache: false,
+                                                                  success: function(item_e){
+                                                                  console.log(JSON.stringify(item_e));
+                                                                  if(item_e.resp.isSuccess== "0"){
+                                                                  alertify.error("Barcode ไม่ถูกต้อง !!")
+                                                                  }else{
+
+                                                                  var item_d_e = JSON.stringify(item_e);
+                                                                  var item_ds_e = item_d_e.split(":[");
+                                                                  var item_str_e = item_ds_e[1].split("]}");
+                                                                  item_d_e = "["+item_str_e[0]+"]";
+                                                                  var item_js_e = jQuery.parseJSON(item_d_e);
+                                                                  // alertify.error(JSON.stringify(po_detail.isSuccess));
+                                                                  console.log(JSON.stringify(item_js_e));
+                                                                  //document.getElementById("PO").innerHTML = JSON.stringify(js);
+                                                                  var count_e = item_js_e.length;
+                                                                            for(var i = 0;i<count_e;i++){
+                                                                               result_scanner_e +="<p>รหัสสินค้า : "+item_js_e[i].itemCode+"</p>";
+                                                                               result_scanner_e +="<p>Barcode สินค้า : "+item_js_e[i].barCode+"</p>";
+                                                                               result_scanner_e +="<p>ชื่อสินค้า : "+item_js_e[i].itemName+"</p>";
+                                                                               result_scanner_e +="<p>หน่วยนับ : "+item_js_e[i].unitCode+"</p>";
+                                                                               localStorage.itemCode_rv_e = item_js_e[i].itemCode;
+                                                                               localStorage.barCode_rv_e = item_js_e[i].barCode;
+                                                                               localStorage.itemName_rv_e = item_js_e[i].itemName;
+                                                                               localStorage.unitCode_rv_e = item_js_e[i].unitCode;
+
+                                                                               //[{"itemCode":"8850025518361","barCode":"8850025518361","itemName":"ยูเอฟชี น้ำมะพร้าว","unitCode":"กระป๋อง","price":15,"qtyRC":0}]
+                                                                             }
+
+                                                                              //result_scanner +='<label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>';
+                                                                             document.getElementById("product_show_e").innerHTML = result_scanner_e;
+
+                                                                              $.mobile.changePage("#receive_scan_edit",{transition: 'slidefade'});
+                                                                             //document.getElementById("amount_scanner").focus();
+                                                                             $("#receive_scan_edit").bind('pageshow', function() {
+                                                                             			$('#amount_scanner_e').focus();
+                                                                             });
+
+                                                                       }
+
+                                                                  },
+                                                                  error: function (error){
+                                                                  alertify.error(error);
+                                                                  }
+                                                                  });
+
+}
+
 function show_receive(){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_list_receive,
@@ -380,16 +479,23 @@ $.ajax({
                                                      var count = jsl.length;
                                                      var list = "";
                                                       for(var i = 0;i<count;i++){
-                                                      if(jsl[i].isCancel==1){
 
+                                                            if(jsl[i].isCancel==1){
                                                       list += '<a href="#" class="ui-btn ui-corner-all" style="background: #FF3333; color: gray;" onclick="show_receive_detail(';
                                                       list += "'"+jsl[i].recNo+"'"+","+"'"+jsl[i].poRefNo+"')";
                                                       list += '">'+jsl[i].recNo+'<br>'+jsl[i].apName+'</a>';
+
                                                       }else{
 
-                                                     list += '<a href="#" class="todo-deleteview ui-btn ui-corner-all" data-delete-id="'+jsl[i].recNo+'" data-deleterow-id="i'+jsl[i].recNo+'" data-delete-poRefNo="'+jsl[i].poRefNo+'" id="i'+jsl[i].recNo+'" onclick="show_receive_detail(';
-                                                     list += "'"+jsl[i].recNo+"'"+","+"'"+jsl[i].poRefNo+"')";
-                                                     list += '">'+jsl[i].recNo+'<br>'+jsl[i].apName+'</a>';
+                                                            if(jsl[i].isConfirm==1){
+                                                      list += '<a href="#" class="todo-deleteview ui-btn ui-corner-all" data-delete-id="'+jsl[i].recNo+'" data-deleterow-id="i'+jsl[i].recNo+'" data-delete-poRefNo="'+jsl[i].poRefNo+'" id="i'+jsl[i].recNo+'" onclick="show_receive_detail(';
+                                                      list += "'"+jsl[i].recNo+"'"+","+"'"+jsl[i].poRefNo+"')";
+                                                      list += '">'+jsl[i].recNo+'<br>'+jsl[i].apName+'</a>';
+                                                            }else{
+                                                      list += '<a href="#" class="todo-deleteview ui-btn ui-corner-all" data-delete-id="'+jsl[i].recNo+'" data-deleterow-id="i'+jsl[i].recNo+'" data-delete-poRefNo="'+jsl[i].poRefNo+'" id="i'+jsl[i].recNo+'" onclick="show_receive_detail_edit(';
+                                                      list += "'"+jsl[i].recNo+"'"+","+"'"+jsl[i].poRefNo+"')";
+                                                      list += '">'+jsl[i].recNo+'<br>'+jsl[i].apName+'</a>';
+                                                              }
 
                                                      }
 
@@ -439,6 +545,12 @@ window.addEventListener('native.onscanbarcode', function (e) {
                            break;
              case "receive_show" :
                            scan_search_item(e.scanResult);
+                           break;
+             case "receive_list_detail_edit" :
+                           scan_search_item_edit(e.scanResult);
+                           break;
+             case "receive_scan_edit" :
+                           scan_search_item_edit(e.scanResult);
                            break;
              case "transferup_item" :
                            document.getElementById("product_scan_up").value=e.scanResult;
