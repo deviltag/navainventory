@@ -117,7 +117,13 @@ function onDeviceReady(){
     document.addEventListener("backbutton", function(e){
 
         if($.mobile.activePage.is('#pageone')){
-           navigator.app.exitApp();
+            var r = confirm("ต้องการออกจากโปรแกรมหรือไม่ !");
+            if (r == true) {
+                navigator.app.exitApp();
+            } else {
+                return false;
+            }
+
        }else if($.mobile.activePage.is('#pagetwo')){
             $.mobile.changePage('#pageone',{transition: 'slidefade',reverse: true});
            //alert("กรุณาออกจากระบบ !!");

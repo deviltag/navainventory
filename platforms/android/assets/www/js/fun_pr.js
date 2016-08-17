@@ -44,6 +44,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
                 			 break;
              case "pluspr" : //alert("M150");
+             //alert(page);
                              console.log(document.getElementById("DocNo").value);
                              var DocNo = document.getElementById("DocNo").value;
                                 $.ajax({
@@ -142,8 +143,9 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                                  $("#itemdetail").show();
                                  $("#scanbaritem").hide();
                                  //document.getElementById("citem").focus();
-                                 return false;
-                                 $.mobile.changePage("#additem");
+                                  $.mobile.changePage("#additem");
+                                  return false;
+
 
 
 
