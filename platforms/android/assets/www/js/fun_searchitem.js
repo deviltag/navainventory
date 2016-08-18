@@ -9,6 +9,6 @@ function rewh(){
      document.getElementById("itemdtail").innerHTML = item;
      document.getElementById("whtitle").style.textAlign = "center";
      document.getElementById("itemdtail").style.textAlign = "center";
-
+     $("#itemdtail").hide();
      $.mobile.changePage("#searchitem");
 }
