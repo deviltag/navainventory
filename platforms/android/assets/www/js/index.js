@@ -45,6 +45,38 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+
+                var networkState = navigator.connection.type;
+                var states = {};
+                states[Connection.UNKNOWN] = 'Unknown connection';
+                states[Connection.ETHERNET] = 'Ethernet connection';
+                states[Connection.WIFI] = 'WiFi connection ready!!';
+                states[Connection.CELL_2G] = 'Cell 2G connection ready!!';
+                states[Connection.CELL_3G] = 'Cell 3G connection ready!!';
+                states[Connection.CELL_4G] = 'Cell 4G connection ready!!';
+                states[Connection.CELL] = 'Cell generic connection ready!!';
+                states[Connection.NONE] = 'No network connection';
+
+                if(states[networkState]== states[Connection.NONE]){
+                    alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
+                        if (e) {
+                            navigator.app.exitApp();
+                        } else {
+                            $.mobile.changePage("#pageone");
+                        }
+                    });
+                }else if(states[networkState]== states[Connection.UNKNOWN]){
+                    alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
+                        if (e) {
+                            navigator.app.exitApp();
+                        } else {
+                            $.mobile.changePage("#pageone");
+                        }
+                    });
+                }else{
+                alertify.success(states[networkState]);
+                }
+
         //window.addEventListener("native.onscanbarcode",function(e){
         //alert(e.scanResult);
 
