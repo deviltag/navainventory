@@ -107,8 +107,9 @@
             <div class="col-xs-6 col-md-6"><a href="#setting" data-transition="slidefade">
                 <div><img src="images/setting.png" class="main_menu"><br><b>setting(5)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-xs-6 col-md-6" onclick="rewh()"><a href="#" data-transition="slidefade">
                 <div><img src="images/searchitem.png" class="main_menu"><br><b>searchitem(6)</b></div>
+                </a>
             </div>
         </div>
     </div>
@@ -1527,6 +1528,38 @@
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock countitem ////////////////////////////////////////////////////////////////-->
+
+<!--////////////////////////////////////////////////////////////page search item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="searchitem">
+    <div data-role="none" id="header">
+        <a href="#myPanel_countitem"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+
+        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label><hr>
+        <label id="whtitle" style="border-bottom:1px dotted black; padding-bottom:5%;"></label>
+        <input type="hidden" id="valwh">
+        <div id="itemdtail" style="border-bottom:1px dotted black; padding-bottom:5%;"></div>
+    </div>
+
+
+    <div data-role="footer" id="footer">
+        <div data-role="navbar">
+            <ul id="count2">
+                <li><a href="#pagetwo" class="ui-btn-active ui-state-persist" data-icon="home" id="footer-nav" data-transition="slidefade" data-direction="reverse">HOME</a></li>
+                <li onclick="rewh()" ><a href="#" class="ui-btn-active ui-state-persist" data-icon="refresh" id="footer-nav">refresh</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_countitem" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--////////////////////////////////////////////////////////////page search item////////////////////////////////////////////////////////////////-->
+
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="setting">
     <div data-role="none" id="header">
@@ -1636,6 +1669,8 @@
 <script src="js/search_vender.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/ng-cordova.min.js"></script>
 
 <script type="text/javascript">
         app.initialize();
