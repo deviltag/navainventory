@@ -102,6 +102,14 @@ document.addEventListener("keydown", function(event) {
                    default:
                           break;
                    }
+            }else if(page=="setting"){
+            switch (event.keyCode){
+                   case 13: set_api();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
             }
 
 
