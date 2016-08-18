@@ -122,8 +122,8 @@ if(localStorage.api_url_vender){
 
 
 });
-
-$("#set").click(function() {
+function set_api(){
+//$("#set").click(function() {
     localStorage.api_url_server = document.getElementById("server").value;
     localStorage.api_url_server_nava = document.getElementById("server_nava").value;
     localStorage.api_url_login = document.getElementById("apilogin").value;
@@ -144,4 +144,5 @@ $("#set").click(function() {
     alert("บันทึกข้อมูลเรียบร้อยแล้ว")
 
 
-});
+//});
+}

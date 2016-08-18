@@ -17,6 +17,8 @@ document.addEventListener("keydown", function(event) {
                             break;
                     case 53: $.mobile.changePage("#setting",{transition: 'slidefade'});
                             break;
+                    case 54: rewh();
+                            break;
                     default: $.mobile.changePage("#pagetwo",{transition: 'slidefade'});
                             break;
                 }
@@ -102,6 +104,14 @@ document.addEventListener("keydown", function(event) {
                    default:
                           break;
                    }
+            }else if(page=="setting"){
+            switch (event.keyCode){
+                   case 13: set_api();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
             }
 
 
@@ -185,8 +195,9 @@ function onDeviceReady(){
             $.mobile.changePage('#shelves',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#setting')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#searchitem')){
+            $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_search')){
-
            navigator.app.backHistory();
        }
 
