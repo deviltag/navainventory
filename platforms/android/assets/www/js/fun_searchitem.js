@@ -1,15 +1,3 @@
-$(document).ready(function(){
-
-    $('.desc').hide();
-
-    $('.work').mouseover(function(){
-        $('.desc', this).stop(true,true).slideDown('900');
-    });
-
-    $('.work').mouseleave(function(){
-        $('.desc', this).slideUp('900');
-    });
-});
 window.addEventListener('native.onscanbarcode', function (schitem) {
        var page = "";
        //alert(pr.scanResult);

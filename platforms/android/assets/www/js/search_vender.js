@@ -3,6 +3,9 @@ $(document).ready(function(){
 if(localStorage.receivestatus == null ||localStorage.receivestatus == "" ){
 localStorage.receivestatus = "0";
 }
+$("#pageone").bind('pageshow', function() {
+ $('#username').focus();
+ });
 
 
 //alert(localStorage.api_url_server+""+localStorage.api_url_vender)
@@ -74,6 +77,22 @@ function focus_receive_list(){
  });
 }
 
+function user_focus(){
+ $("#pageone").bind('pageshow', function() {
+ $('#username').focus();
+ });
+}
+function pass_focus(){
+ $("#pageone").bind('pageshow', function() {
+ $('#passwd').focus();
+ });
+}
+function pass_s_focus(){
+
+ $("#pagelogin").bind('pageshow', function() {
+ $('#passwds').focus();
+ });
+}
 function focus_search_item(){
  $("#receive_search").bind('pageshow', function() {
  $('#receive_search_item').focus();

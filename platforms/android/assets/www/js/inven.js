@@ -1,66 +1,84 @@
 function cnklogin(){
-if(document.forms["login"]["username"].value== "" || document.forms["login"]["username"].value == null){
-  alertify.error("กรุณากรอกข้อมูล Username !!");
-  document.forms["login"]["username"].focus();
-  return false;
-  }
-  else if(document.forms["login"]["passwd"].value == "" || document.forms["login"]["passwd"].value == null){
+  //alert(document.getElementById("username").value+","+document.getElementById("passwd").value);
+if(document.getElementById("username").value== "" || document.getElementById("username").value == null){
+  document.getElementById("username").focus;
+  $('#username').focus();
+}else if(document.getElementById("passwd").value == "" || document.getElementById("passwd").value == null){
   alertify.error("กรุณากรอกข้อมูล Password !!");
-  document.forms["login"]["passwd"].focus();
-  return false;
-  }else{
-  if(document.forms["login"]["username"].value == "admin" && document.forms["login"]["passwd"].value == "1234"){
-  alertify.success("Login Success !!");
-   $.mobile.changePage( "#pagetwo", {
-  type: "post",
-  //data: $( "form#search" ).serialize(),
-  //changeHash: false
-});
-
-  //$.mobile.changePage("#pagetwo")
-  //$.mobile.loadPage("#pagetwo");
-  // window.location = "test.html"; 
-  //navigator.app.loadUrl("#pagetwo")
-  //window.location.href("index.html/#pagetwo");
-  //window.open("#pagetwo");
-  //$.mobile.changePage("#pagetwo", {transition:"slide"});
-  //$("#pagetwo").show();
-  return false;
-  /* $.ajax({
-                url: "http://qserver.nopadol.com:8080/ReOrderWS/reorder/login",
-                data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                type: "POST",
-                cache: false,
-               success: function(result){ 
-                //console.log(result);
-                //var obj = JSON.stringify(result);
-                localStorage.userID = result.userID;
-                localStorage.userName = result.userName;
-                localStorage.levelID = result.levelID;
-                localStorage.expertTeam = result.expertTeam;
-                localStorage.lastname = result.lastname;
-                localStorage.status = "0";
-                document.getElementById('user').innerHTML = "ยินดีต้อนรับ "+localStorage.userID+" เขาสู่ระบบ";
-                document.getElementById('eptype').innerHTML = localStorage.expertTeam;*/
-  }else{
-  alertify.error("Error Password or Username");
-  return false;
+  $('#passwd').focus();
+}else{
+  login(document.getElementById("username").value,document.getElementById("passwd").value);
   }
-  }
-  
-  
 }
 
-function login(){
-if(document.forms["login"]["username"].value == "admin" && document.forms["login"]["passwd"].value == "1234"){
-    alertify.success("test");
+
+  function cnkloginscan(){
+  //alert(localStorage.username+""+document.getElementById("passwds").value)
+    if(document.getElementById("passwds").value == "" || document.getElementById("passwds").value == null){
+    alertify.error("กรุณากรอกข้อมูล Password !!");
+    $('#passwds').focus();
     return false;
-  }else{
-  alertify.error("Error Password or Username");
-  return false;
+    }else{
+    login(localStorage.username,document.getElementById("passwds").value);
+    }
+    }
+
+
+function login(username,pass){
+    $.ajax({
+                                        url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
+                                        data: '{"name":"'+username+'","password":"'+pass+'"}',
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        type: "POST",
+                                        cache: false,
+                                           success: function(result){
+                                           //alert(result.links.related);
+                                           if(result.status=="success"){
+                                            //var obj = JSON.stringify(result);
+                                            localStorage.username=username;
+                                            localStorage.url_menu_tree_user = result.links.related;
+                                            console.log(result);
+                                            document.getElementById("username").value = "";
+                                            document.getElementById("passwd").value = "";
+                                            document.getElementById("passwds").value = "";
+                                            alertify.success("login สำเร็จ");
+                                            $.mobile.changePage("#pagetwo",{transition: 'slidefade'});
+                                            }else{
+                                            alertify.error("Username หรือ Password ไม่ถูกต้อง !!");
+                                            document.getElementById("passwd").value = "";
+                                            document.getElementById("passwds").value = "";
+                                            $('#username').focus();
+                                            return false;
+
+                                            }
+                                            },
+                                           error: function (error) {
+                                           document.getElementById("passwd").value = "";
+                                           document.getElementById("passwds").value = "";
+                                           alertify.error("Username หรือ Password ไม่ถูกต้อง !!");
+                                           $('#username').focus();
+                                           return false;
+                                            }
+
+     });
+
 }
+function logout(){
+
+var out = confirm("ต้องการออกจากระบบหรือไม่ !");
+      if (out == true) {
+      localStorage.removeItem('username');
+      localStorage.removeItem('url_menu_tree_user');
+      document.getElementById("username").value = "";
+      document.getElementById("passwd").value = "";
+      document.getElementById("passwds").value = "";
+      $.mobile.changePage("#pageone",{transition: 'slidefade',reverse: true});
+
+      }else{
+          return false;
+      }
+
 
 }
 /*

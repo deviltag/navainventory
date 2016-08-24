@@ -16,63 +16,67 @@ window.addEventListener('native.onscanbarcode', function (pr) {
        console.log(page);
                 			//document.getElementById("noitems").value = pr.scanResult;
        switch(page){
-             case "pageone" :
-             //alert(localStorage.api_url_server_nava+""+localStorage.api_url_login)
-                            var networkState = navigator.connection.type;
-                            var states = {};
-                            states[Connection.UNKNOWN] = 'Unknown connection';
-                            states[Connection.ETHERNET] = 'Ethernet connection';
-                            states[Connection.WIFI] = 'WiFi connection ready!!';
-                            states[Connection.CELL_2G] = 'Cell 2G connection ready!!';
-                            states[Connection.CELL_3G] = 'Cell 3G connection ready!!';
-                            states[Connection.CELL_4G] = 'Cell 4G connection ready!!';
-                            states[Connection.CELL] = 'Cell generic connection ready!!';
-                            states[Connection.NONE] = 'No network connection';
+            case "pageone" :
+                         //alert(localStorage.api_url_server_nava+""+localStorage.api_url_login)
+                                        var networkState = navigator.connection.type;
+                                        var states = {};
+                                        states[Connection.UNKNOWN] = 'Unknown connection';
+                                        states[Connection.ETHERNET] = 'Ethernet connection';
+                                        states[Connection.WIFI] = 'WiFi connection ready!!';
+                                        states[Connection.CELL_2G] = 'Cell 2G connection ready!!';
+                                        states[Connection.CELL_3G] = 'Cell 3G connection ready!!';
+                                        states[Connection.CELL_4G] = 'Cell 4G connection ready!!';
+                                        states[Connection.CELL] = 'Cell generic connection ready!!';
+                                        states[Connection.NONE] = 'No network connection';
 
-                            if(states[networkState]== states[Connection.NONE]){
-                                alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
-                                    if (e) {
-                                        navigator.app.exitApp();
-                                    } else {
-                                        $.mobile.changePage("#pageone");
-                                    }
-                                });
-                            }else if(states[networkState]== states[Connection.UNKNOWN]){
-                                alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
-                                    if (e) {
-                                        navigator.app.exitApp();
-                                    } else {
-                                        $.mobile.changePage("#pageone");
-                                    }
-                                });
-                            }else{
+                                        if(states[networkState]== states[Connection.NONE]){
+                                            alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
+                                                if (e) {
+                                                    navigator.app.exitApp();
+                                                } else {
+                                                    $.mobile.changePage("#pageone");
+                                                }
+                                            });
+                                        }else if(states[networkState]== states[Connection.UNKNOWN]){
+                                            alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
+                                                if (e) {
+                                                    navigator.app.exitApp();
+                                                } else {
+                                                    $.mobile.changePage("#pageone");
+                                                }
+                                            });
+                                        }else{
+                                            localStorage.username = pr.scanResult;
+                                            document.getElementById("show_user").innerHTML = "<h3>"+localStorage.username+"</h3>";
+                                            pass_s_focus();
+                                            $.mobile.changePage("#pagelogin");
 
-                                $.ajax({
-                                    url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
-                                    data: '{"name":"tom","password":"1234"}',
-                                    contentType: "application/json; charset=utf-8",
-                                    dataType: "json",
-                                    type: "POST",
-                                    cache: false,
-                                       success: function(result){
-                                        //var obj = JSON.stringify(result);
-                                        alertify.success("login : "+result.Message+" สถานะ : "+result.Status);
-                                        console.log(result);
-                                        $.mobile.changePage("#pagetwo");
-                                        },
-                                       error: function (error) {
-                                       alertify.error("can't call api");
-                                        //alert("can't call api");
-                                        $.mobile.changePage("#pagetwo");
+                                            /*$.ajax({
+                                                url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
+                                                data: '{"name":"tom","password":"1234"}',
+                                                contentType: "application/json; charset=utf-8",
+                                                dataType: "json",
+                                                type: "POST",
+                                                cache: false,
+                                                   success: function(result){
+                                                    //var obj = JSON.stringify(result);
+                                                    alertify.success("login : "+result.Message+" สถานะ : "+result.Status);
+                                                    console.log(result);
+                                                    $.mobile.changePage("#pagetwo");
+                                                    },
+                                                   error: function (error) {
+                                                   alertify.error("can't call api");
+                                                    //alert("can't call api");
+                                                    $.mobile.changePage("#pagetwo");
+                                                    }
+
+                                              });*/
+
+                                              return false;
+                                             // $.mobile.changePage("#pagetwo");
                                         }
-
-                                  });
-
-                                  return false;
-                                 // $.mobile.changePage("#pagetwo");
-                            }
-                			 break;
-             case "pluspr" : //alert("M150");
+                            			 break;
+            case "pluspr" : //alert("M150");
              //alert(page);
                              console.log(document.getElementById("DocNo").value);
                              var DocNo = document.getElementById("DocNo").value;
@@ -473,12 +477,12 @@ $(document).on('taphold', '.todo-listview', function() {
         positionTo: '#'+link_id
         }).on("popupafterclose", function () {
     //remove the popup when closing
-    $(this).remove();
-    }).css({
-   'padding': '10%',
-   'color': '#fff',
-   'background': 'red'
-   });
+            $(this).remove();
+        }).css({
+           'padding': '10%',
+           'color': '#fff',
+           'background': 'red'
+        });
     console.log('#'+link_id);
     $("<a>", {
     text: "Cancel",

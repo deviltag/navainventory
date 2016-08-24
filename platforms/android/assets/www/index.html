@@ -30,7 +30,6 @@
 
     </div>
 </div>
-
 <!--////////////////////////////////////////////////////////////page one ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="pageone">
     <div data-role="none" id="header">
@@ -42,28 +41,25 @@
             <div id="form-div">
                 <img src="images/inventory-logo.png" class="logo">
 
-                <form class="form" name="login" method="POST" id="theForm"
-                      onSubmit="return cnklogin()">
-                    <br><br>
+                <br><br>
 
 
-                    <p class="username">
-                        <input name="username" type="text"
-                               class="validate[required,custom[onlyLetter],length[0,100]] feedback-input"
-                               placeholder="Username" id="username" data-role="none"/>
-                    </p>
-                    <p class="password">
-                        <input name="passwd" type="password"
-                               class="validate[required,custom[password]] feedback-input"
-                               id="password" placeholder="Password" data-role="none"/>
-                    </p>
+                <p class="username">
+                    <input name="username" type="text"
+                           class="validate[required,custom[onlyLetter],length[0,100]] feedback-input"
+                           placeholder="Username" id="username" data-role="none"/>
+                </p>
+                <p class="password">
+                    <input name="passwd" type="password"
+                           class="validate[required,custom[password]] feedback-input"
+                           id="passwd" placeholder="Password" data-role="none"/>
+                </p>
 
-                    <div class="submit">
-                        <input type="submit" class="button-green" value="login" data-role="none"/>
-                        <div class="ease"></div>
-                    </div>
+                <div class="submit">
+                    <input type="submit" class="button-green" value="login" data-role="none" onclick="cnklogin()"/>
+                    <div class="ease"></div>
+                </div>
 
-                </form>
             </div>
         </div>
     </div>
@@ -74,6 +70,40 @@
 </div>
 
 
+
+<!--////////////////////////////////////////////////////////////page one ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="pagelogin">
+    <div data-role="none" id="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <div id="form-main">
+
+            <div id="form-div">
+                <img src="images/inventory-logo.png" class="logo">
+
+                <br><br>
+                <div id="show_user"></div>
+                <br>
+                <p class="password">
+                    <input name="passwds" type="password"
+                           class="validate[required,custom[password]] feedback-input"
+                           id="passwds" placeholder="Password" data-role="none"/>
+                </p>
+
+                <div class="submit">
+                    <input type="submit" class="button-green" value="login" data-role="none" onclick="cnkloginscan()"/>
+                    <div class="ease"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div data-role="footer" id="footer">
+    </div>
+
+</div>
 <!--////////////////////////////////////////////////////////////page two ////////////////////////////////////////////////////////////////-->
 
 
@@ -1547,10 +1577,10 @@
             <div id="itemdtail" style="border-bottom:1px dotted gray; padding-bottom:2%;">
                 <div id="bt-item"><font color="red">SCANBARCODE ITEM</font></div>
                 <span id="de-item"></span>
+
             </div>
 
     </div>
-
 
     <div data-role="footer" id="footer">
         <div data-role="navbar">
