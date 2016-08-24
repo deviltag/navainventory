@@ -1308,13 +1308,12 @@
     <div  data-role="main" class="ui-content" id="main">
 
         <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
-        <label>
-            <select id="CTwh" name="warehouse" onchange="return select_wh(this)" >
-                <option value="0" id="defult">กรุณาเลือกคลังสินค้า</option>
-                <option value="S1">S1</option>
-                <option value="S2">S2</option>
-            </select>
-        </label>
+        <label id="shelves1"><img src="images/barcoder-icon.png">
+            <b><h3><p>SCANBARCODE</p></h3>
+                <h4>
+                    <p>คลังสินค้า</p>
+                </h4>
+            </b></label>
 
     </div>
 
@@ -1344,6 +1343,7 @@
 
         <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
         <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh"></span><input type="hidden" id="wh"></label><hr>
+        <input type="hidden" id="whvalue">
         <label style="text-align:center; vertical-align: middle; border-bottom:1px solid gray;">
             <div class="ui-grid-d">
                 <div class="ui-block-a">
