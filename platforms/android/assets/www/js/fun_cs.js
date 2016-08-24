@@ -13,7 +13,41 @@ window.addEventListener('native.onscanbarcode', function (ci) {
        //alert(page);
        console.log("count : " + page);
 switch(page){
+
+             case "stock"   :
+                              $.ajax({
+                                      url: localStorage.api_url_server+"NPInventoryWs/pr/searchWH",
+                                      data: '{"accessToken":"","search":"'+ci.scanResult+'"}',
+                                      contentType: "application/json; charset=utf-8",
+                                      dataType: "json",
+                                      type: "POST",
+                                      cache: false,
+                                      success: function(result){
+                                            console.log(JSON.stringify(result.warehouseList));
+                                            var whName = "";
+                                            var whLocal = "";
+                                            $.each(result.warehouseList, function(key, val) {
+                                                  whName = val['whName'].trim();
+                                                  whLocal = val['location'].trim();
+                                            });
+
+
+                                            document.getElementById("wh").innerHTML = "คลัง : "+whName+"  "+whLocal;
+                                            document.getElementById("wh2").innerHTML = "คลัง : "+whName+"  "+whLocal;
+                                            document.getElementById("whvalue").value = whName;
+
+                                            $.mobile.changePage("#countstock");
+                                      },
+                                      error: function (error) {
+                                            alertify.error("can't call api");
+                                      }
+
+                              });
+
+                            break;
+
              case "shelves" :
+
                             alert("ชั้นเก็บที่ : "+ ci.scanResult);
                             document.getElementById("shel").value = ci.scanResult;
                             document.getElementById("CTshelves").innerHTML = ci.scanResult;
@@ -46,14 +80,6 @@ switch(page){
                          break;
            	}
 });
-
-function select_wh(warehouse){
-    alert(warehouse.value);
-    document.getElementById("wh").innerHTML = "คลัง : "+warehouse.value;
-    document.getElementById("wh2").innerHTML = "คลัง : "+warehouse.value;
-   // document.getElementById("wh").value = "คลัง : "+warehouse.value;
-    $.mobile.changePage("#countstock");
-}
 
 function skipshelves(){
     if (confirm('คุณไม่ต้องการเลือกชั้นเก็บใช่หรือไม่ ?')) {
