@@ -570,9 +570,6 @@ window.addEventListener('native.onscanbarcode', function (e) {
              case "receive_scan_edit" :
                            scan_search_item_edit(e.scanResult);
                            break;
-             case "transferup_item" :
-                           document.getElementById("product_scan_up").value=e.scanResult;
-                           break;
                 			}
 
 
