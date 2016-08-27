@@ -137,7 +137,7 @@
             <div class="col-xs-6 col-md-6"><a href="#setting" data-transition="slidefade">
                 <div><img src="images/setting.png" class="main_menu"><br><b>setting(5)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6" onclick="rewh()"><a href="#" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:rewh()" data-transition="slidefade">
                 <div><img src="images/searchitem.png" class="main_menu"><br><b>searchitem(6)</b></div>
                 </a>
             </div>
@@ -1342,6 +1342,8 @@
     <div  data-role="main" class="ui-content" id="main">
 
         <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
+        <label style="font-size:18px; padding-left:5%;"><img src="images/is.png">&nbsp; : <span id="docIS"></span></label>
+        <input type="hidden" id="valdocIS">
         <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh"></span><input type="hidden" id="wh"></label><hr>
         <input type="hidden" id="whvalue">
         <label style="text-align:center; vertical-align: middle; border-bottom:1px solid gray;">
@@ -1447,7 +1449,7 @@
                 <input type="hidden" name="itemname" readonly id="EitemsName">
             </label>
             <label>จำนวน :
-                <input type="number" name="count" id="Ecounts" value="56">
+                <input type="number" name="count" id="Ecounts">
             </label>
             <label>หน่วยนับ : <span id="ECTunit"></span>
                 <input type="hidden" name="unit" id="ECunit">
@@ -1498,7 +1500,6 @@
         <div data-role="navbar">
             <ul>
                 <li onclick="backstock()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li onclick="skipshelves()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="arrow-r" id="footer-nav" data-transition="slidefade">ข้าม</a></li>
             </ul>
         </div>
     </div>
