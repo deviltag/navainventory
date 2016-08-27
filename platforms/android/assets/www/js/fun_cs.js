@@ -24,6 +24,9 @@ switch(page){
                                       cache: false,
                                       success: function(result){
                                             console.log(JSON.stringify(result.warehouseList));
+                                            if(JSON.stringify(result.warehouseList)==="[]"){
+                                                alertify.alert("ไม่มีข้อมูลคลังสินค้า");
+                                            }else{
                                             var whName = "";
                                             var whLocal = "";
                                             $.each(result.warehouseList, function(key, val) {
@@ -31,12 +34,29 @@ switch(page){
                                                   whLocal = val['location'].trim();
                                             });
 
+                                                    $.ajax({
+                                                               url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
+                                                               data: '{"type":"3","search":"58089"}',
+                                                               contentType: "application/json; charset=utf-8",
+                                                               dataType: "json",
+                                                               type: "POST",
+                                                               cache: false,
+                                                               success: function(Is){
+                                                                    console.log(Is.docno);
+                                                                    document.getElementById("valdocIS").value = Is.docno;
+                                                                    document.getElementById("docIS").innerHTML = Is.docno;
+                                                               },
+                                                               error: function (error) {
+                                                                    alertify.error("can't call api");
+                                                               }
 
+                                                    });
                                             document.getElementById("wh").innerHTML = "คลัง : "+whName+"  "+whLocal;
                                             document.getElementById("wh2").innerHTML = "คลัง : "+whName+"  "+whLocal;
                                             document.getElementById("whvalue").value = whName;
 
                                             $.mobile.changePage("#countstock");
+                                            }
                                       },
                                       error: function (error) {
                                             alertify.error("can't call api");
@@ -47,90 +67,170 @@ switch(page){
                             break;
 
              case "shelves" :
+                              var stockWH = document.getElementById("whvalue").value;
+                              $.ajax({
+                                      url: localStorage.api_url_server+"NPInventoryWs/pr/searchShelf",
+                                      data: '{"accessToken":"38850025531385","searchWH":"'+stockWH+'","searchShelf":"'+ci.scanResult+'"}',
+                                      contentType: "application/json; charset=utf-8",
+                                      dataType: "json",
+                                      type: "POST",
+                                      cache: false,
+                                      success: function(result){
+                                            console.log(JSON.stringify(result.shelfList));
+                                            if(JSON.stringify(result.shelfList)=="[]"){
+                                                alertify.alert("ไม่มีข้อมูลชั้นเก็บสินค้า");
+                                            }else{
+                                            var shelName = "";
+                                            $.each(result.shelfList, function(key, val) {
+                                                  shelName = val['shelfName'].trim();
+                                            });
 
-                            alert("ชั้นเก็บที่ : "+ ci.scanResult);
-                            document.getElementById("shel").value = ci.scanResult;
-                            document.getElementById("CTshelves").innerHTML = ci.scanResult;
-                            document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
-                            document.getElementById("CTitemname").innerHTML = "";
-                            document.getElementById("CTunit").innerHTML = "";
+                                            document.getElementById("shel").value = shelName;
+                                            document.getElementById("CTshelves").innerHTML = shelName;
+                                            document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
+                                            document.getElementById("CTitemname").innerHTML = "";
+                                            document.getElementById("CTunit").innerHTML = "";
+                                            document.getElementById("itemNo").value = "";
+                                            document.getElementById("itemsName").value = "";
+                                            document.getElementById("Cunit").value = "";
+                                            document.getElementById("counts").value = "";
 
-                            document.getElementById("itemNo").value = "";
-                            document.getElementById("itemsName").value = "";
-                            document.getElementById("Cunit").value = "";
+                                            $("#count1").show();
+                                            $("#count2").hide();
+                                            $.mobile.changePage("#countitem");
+                                            }
+                                      },
+                                      error: function (error) {
+                                            alertify.error("can't call api");
+                                      }
 
-                            $("#count1").show();
-                            $("#count2").hide();
-                            $.mobile.changePage("#countitem");
+                              });
                     	 break;
              case "countitem" :
+                                   var DocNo = document.getElementById("valdocIS").value;
+                                   $.ajax({
+                                           url: localStorage.api_url_server+""+localStorage.api_url_search_item_pr,
+                                           data: '{"barcode":"'+ci.scanResult+'","docno":"'+DocNo+'","type":"3"}',
+                                           contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                           type: "POST",
+                                           cache: false,
+                                           success: function(result){
+                                                //console.log(JSON.stringify(result));
+                                                console.log(JSON.stringify(result.listBarcode));
+                                                var itemcode = "";
+                                                var itemName = "";
+                                                var range = "";
+                                                var cntitem = "";
+                                                var units = "";
 
-                            $("#count1").hide();
-                            $("#count2").show();
+                                                if(result.listBarcode==null){
+                                                    console.log("data listbarcode : null");
 
-                            document.getElementById("CTitemno").innerHTML = ci.scanResult;
-                            document.getElementById("CTitemname").innerHTML = "M150";
-                            document.getElementById("CTunit").innerHTML = "ขวด";
+                                                    $.each(result.listPRBarcode, function(key, val) {
+                                                           itemcode = val['itemcode'];
+                                                           itemName = val['itemname'];
+                                                           range = val['range'];
+                                                           if(val['qty']==0){
+                                                           cntitem = "";
+                                                           }else{
+                                                           cntitem = val['qty'];
+                                                           }
 
-                            document.getElementById("itemNo").value = ci.scanResult;
-                            document.getElementById("itemsName").value = "M150";
-                            document.getElementById("Cunit").value = "ขวด";
+                                                           units = val['unitcode'];
+                                                           apcode = val['apCode'];
+                                                           apname = val['apName'];
 
-                            $.mobile.changePage("#countitem");
+                                                    });
+
+                                                }else{
+                                                    $.each(result.listBarcode, function(key, val) {
+                                                        itemcode = val['itemcode'];
+                                                        itemName = val['itemname'];
+                                                        range = val['range'];
+                                                        if(val['qty']==0){
+                                                        cntitem = "";
+                                                        }else{
+                                                        cntitem = val['qty'];
+                                                        }
+                                                        units = val['unitcode'];
+                                                        apcode = val['apCode'];
+                                                        apname = val['apName'];
+                                                    });
+                                                }
+                                                $("#count1").hide();
+                                                $("#count2").show();
+
+                                                document.getElementById("CTitemno").innerHTML = itemcode;
+                                                document.getElementById("CTitemname").innerHTML = itemName;
+                                                document.getElementById("CTunit").innerHTML = units;
+
+                                                document.getElementById("itemNo").value = itemcode;
+                                                document.getElementById("itemsName").value = itemName;
+                                                document.getElementById("Cunit").value = units;
+                                                document.getElementById("counts").value = cntitem;
+                                                $('#counts').focus();
+
+                                                $.mobile.changePage("#countitem");
+                                           },
+                                           error: function (error) {
+                                           alertify.error("can't call api");
+                                           $.mobile.changePage("#countitem");
+                                           }
+
+                                        });
+
                          break;
            	}
 });
 
-function skipshelves(){
-    if (confirm('คุณไม่ต้องการเลือกชั้นเก็บใช่หรือไม่ ?')) {
-        document.getElementById("shel").value = "0";
-        document.getElementById("CTshelves").innerHTML = "ไม่มีชั้นเก็บ";
-        document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
-        document.getElementById("CTitemname").innerHTML = "";
-        document.getElementById("CTunit").innerHTML = "";
-        document.getElementById("itemNo").value = "";
-        document.getElementById("itemsName").value = "";
-        document.getElementById("Cunit").value = "";
-        document.getElementById("counts").value = "";
-        $.mobile.changePage("#countitem");
-        $("#count1").show();
-        $("#count2").hide();
-    } else {
-        $.mobile.changePage("#shelves");
-    }
-
-}
-
 function backstock(){
    // alert("back");
-    document.getElementById("defult").selected = "true";
-    $.mobile.changePage("#stock");
+    //document.getElementById("whvalue").value
+    $.mobile.changePage("#countstock");
     //window.location="#stock";
 }
 
 function savestock(){
-
+    var DocNo = document.getElementById("valdocIS").value;
     var sv = document.getElementById("shel").value;
     var noitem = document.getElementById("itemNo").value;
-    var nitem = document.getElementById("itemsName").value;
+    var wh = document.getElementById("whvalue").value;
     var citem = document.getElementById("counts").value;
     var uitem = document.getElementById("Cunit").value;
     if(citem == ""||noitem == ""){
     alert("กรุณากรอกข้อมูลให้ครบด้วย !!");
     }else{
-    alert('result:[{"shelves":"'+sv+'","itemNo":"'+noitem+'","itemName":"'+nitem+'","Citem":"'+citem+'","Cunit":"'+uitem+'"}]');
-    document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
-    document.getElementById("CTitemname").innerHTML = "";
-    document.getElementById("CTunit").innerHTML = "";
-    document.getElementById("itemNo").value = "";
-    document.getElementById("itemsName").value = "";
-    document.getElementById("Cunit").value = "";
-    document.getElementById("counts").value = "";
+    console.log('result:[{"docNo":"'+DocNo+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
 
-    $("#count1").show();
-    $("#count2").hide();
-    $("#scanitemcode").show();
-    $.mobile.changePage("#countitem");
+         $.ajax({
+                 url: localStorage.api_url_server+"NPInventoryWs/pr/insertIS",
+                 data: '{"docNo":"'+DocNo+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 type: "POST",
+                 cache: false,
+                 success: function(result){
+                    console.log(JSON.stringify(result));
+                    document.getElementById("CTitemno").innerHTML = "** SCANBARCODE ITEM **";
+                    document.getElementById("CTitemname").innerHTML = "";
+                    document.getElementById("CTunit").innerHTML = "";
+                    document.getElementById("itemNo").value = "";
+                    document.getElementById("itemsName").value = "";
+                    document.getElementById("Cunit").value = "";
+                    document.getElementById("counts").value = "";
+
+                    $("#count1").show();
+                    $("#count2").hide();
+                    $("#scanitemcode").show();
+                    alertify.success("บันทีกข้อมูลเรียบร้อยแล้ว!");
+                    $.mobile.changePage("#countitem");
+                 },
+                 error: function (error) {
+                    alertify.error("can't call api");
+                    $.mobile.changePage("#countitem");
+                 }
+            });
     }
 
 }
