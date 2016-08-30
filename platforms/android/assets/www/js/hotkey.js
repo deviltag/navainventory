@@ -196,8 +196,6 @@ function onDeviceReady(){
             $.mobile.changePage('#transfer_normal',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
-       }else if($.mobile.activePage.is('#countstock')){
-            $.mobile.changePage('#stock',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#stockedit')){
             $.mobile.changePage('#countstock',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#shelves')){
@@ -207,6 +205,8 @@ function onDeviceReady(){
        }else if($.mobile.activePage.is('#setting')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#searchitem')){
+            $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_search')){
            navigator.app.backHistory();
