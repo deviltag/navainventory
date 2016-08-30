@@ -38,9 +38,11 @@ document.addEventListener("keydown", function(event) {
                 }
             }else if(page=="transfer"){
                 switch (event.keyCode){
-                    case 49: $.mobile.changePage("#transferup",{transition: 'slidefade'});
+                    case 49:openwh();
+                            $.mobile.changePage("#transferup",{transition: 'slidefade'});
                             break;
-                    case 50: $.mobile.changePage("#transferdown",{transition: 'slidefade'});
+                    case 50:openwh();
+                            $.mobile.changePage("#transferdown",{transition: 'slidefade'});
                             break;
                     case 51: $.mobile.changePage("#transfer_damage",{transition: 'slidefade'});
                             break;
@@ -126,8 +128,23 @@ document.addEventListener("keydown", function(event) {
                    default:
                            break;
                     }
+            }else if(page=="transferup_item"){
+            switch (event.keyCode){
+                   case 13: submit_transferup();
+                          return false;
+                          break;
+                   default:
+                          break;
+                   }
+            }else if(page=="transferdown_item"){
+            switch (event.keyCode){
+                   case 13: submit_transferdown();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
             }
-
 
 
 
@@ -190,12 +207,18 @@ function onDeviceReady(){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_isp_item')){
             $.mobile.changePage('#transfer_isp',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#transfer_rtv')){
+            $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#transfer_rtv_item')){
+            $.mobile.changePage('#transfer_rtv',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_normal')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_normal_item')){
             $.mobile.changePage('#transfer_normal',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#countstock')){
+            $.mobile.changePage('#stock',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#stockedit')){
             $.mobile.changePage('#countstock',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#shelves')){
@@ -209,7 +232,7 @@ function onDeviceReady(){
        }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_search')){
-           navigator.app.backHistory();
+            navigator.app.backHistory();
        }
 
 

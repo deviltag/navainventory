@@ -291,10 +291,43 @@ hr.hr {
   -ms-user-select: none;
   user-select: none;
 }
+.whselect {
+    border: 1px solid #ccc;
+    width: 100%;
+    height:30px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+}
 }
 
 /*===============================================================================================mobile==========================================================*/
 @media (max-width: 767px) {
+/*=======================================================================option==================================================================================*/
+.whselect {
+    border: 1px solid #ccc;
+    width: 100%;
+    height:30px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.whselect select {
+    padding: 5px 8px;
+    width: 130%;
+    height:30px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.whselect select:focus {
+    outline: none;
+}
+ /*=======================================================================option==================================================================================*/
 .ui-grid-d{
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -365,7 +398,7 @@ hr.hr {
 	color:#000;
 	top: 0;
 	left:0;
-	background:url(../images/navavending_logo.png) no-repeat #fff 10px;
+	background:url(../images/LOGO-NOPADOL-white.png) no-repeat #fff 10px;
 	background-size:40%;
 	background-position: center;
 	border-bottom: 5px solid #7ccb1c; 

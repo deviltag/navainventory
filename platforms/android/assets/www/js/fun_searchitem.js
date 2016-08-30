@@ -306,8 +306,6 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                     }
 });
 
-
-
 function rewh(){
 
      document.getElementById("valwh").value = "";

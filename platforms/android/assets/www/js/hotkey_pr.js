@@ -117,7 +117,13 @@ document.addEventListener("keydown", function(event) {
 
 });
 
+//document.addEventListener("deviceready", onDeviceReady, false);
+
+//function onDeviceReady(){
     document.addEventListener("backbutton", function(pr){
+    //var page="";
+    // page = $.mobile.activePage.attr('id');
+    //console.log(page);
         if($.mobile.activePage.is('#listpr')){
                $.mobile.changePage("#pagepr",{transition: 'slidefade',reverse: true});
         }else if($.mobile.activePage.is('#pluspr')){
@@ -125,5 +131,19 @@ document.addEventListener("keydown", function(event) {
         }else if($.mobile.activePage.is('#additem')){
                $.mobile.changePage("#pluspr",{transition: 'slidefade',reverse: true} );
         }
+        /*switch(page){
+            //case "pagepr" : $.mobile.changePage("#pagetwo",{transition: 'slidefade',reverse: true});
+            //               return false
+            //               break;
+            case "listpr" : $.mobile.changePage("#pagepr",{transition: 'slidefade',reverse: true});
+                           break;
+            case "pluspr" : backdetail();
+                            break;
+            case "additem" : $.mobile.changePage("#pluspr",{transition: 'slidefade',reverse: true} );
+                           break;
+
+            default : $.mobile.changePage("#"+page);
+                      break;
+        }*/
     }, false);
 

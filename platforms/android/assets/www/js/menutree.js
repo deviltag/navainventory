@@ -1,14 +1,12 @@
   $.ajax({
-              url: localStorage.api_url_server_nava+"v1/menus",
+              url: localStorage.url_menu_tree_user,
               //data: '{"userID":"'+login.username.value+'","pwd":"'+login.pwd.value+'"}',
-              //contentType: "application/json; charset=utf-8",
-              //dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
               type: "GET",
               cache: false,
               success: function(result){
-                     var mytree =
-                          result
-                     ;
+                     var mytree = result;
                      $('.tree').treeview({
                      color: "#428bca",
                      levels: 1,
@@ -16,7 +14,7 @@
                      collapseIcon: 'glyphicon glyphicon-minus',
                      nodeIcon: 'glyphicon glyphicon-bookmark',
                      enableLinks: true,
-                     data: mytree}
-                     );
+                     data: mytree
+                     });
               }
      });

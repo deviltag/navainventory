@@ -1,86 +1,4 @@
-function cnklogin(){
-  //alert(document.getElementById("username").value+","+document.getElementById("passwd").value);
-if(document.getElementById("username").value== "" || document.getElementById("username").value == null){
-  document.getElementById("username").focus;
-  $('#username').focus();
-}else if(document.getElementById("passwd").value == "" || document.getElementById("passwd").value == null){
-  alertify.error("กรุณากรอกข้อมูล Password !!");
-  $('#passwd').focus();
-}else{
-  login(document.getElementById("username").value,document.getElementById("passwd").value);
-  }
-}
 
-
-  function cnkloginscan(){
-  //alert(localStorage.username+""+document.getElementById("passwds").value)
-    if(document.getElementById("passwds").value == "" || document.getElementById("passwds").value == null){
-    alertify.error("กรุณากรอกข้อมูล Password !!");
-    $('#passwds').focus();
-    return false;
-    }else{
-    login(localStorage.username,document.getElementById("passwds").value);
-    }
-    }
-
-
-function login(username,pass){
-    $.ajax({
-                                        url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
-                                        data: '{"name":"'+username+'","password":"'+pass+'"}',
-                                        contentType: "application/json; charset=utf-8",
-                                        dataType: "json",
-                                        type: "POST",
-                                        cache: false,
-                                           success: function(result){
-                                           //alert(result.links.related);
-                                           if(result.status=="success"){
-                                            //var obj = JSON.stringify(result);
-                                            localStorage.username=username;
-                                            localStorage.url_menu_tree_user = result.links.related;
-                                            console.log(result);
-                                            document.getElementById("username").value = "";
-                                            document.getElementById("passwd").value = "";
-                                            document.getElementById("passwds").value = "";
-                                            alertify.success("login สำเร็จ");
-                                            $.mobile.changePage("#pagetwo",{transition: 'slidefade'});
-                                            }else{
-                                            alertify.error("Username หรือ Password ไม่ถูกต้อง !!");
-                                            document.getElementById("passwd").value = "";
-                                            document.getElementById("passwds").value = "";
-                                            $('#username').focus();
-                                            return false;
-
-                                            }
-                                            },
-                                           error: function (error) {
-                                           document.getElementById("passwd").value = "";
-                                           document.getElementById("passwds").value = "";
-                                           alertify.error("Username หรือ Password ไม่ถูกต้อง !!");
-                                           $('#username').focus();
-                                           return false;
-                                            }
-
-     });
-
-}
-function logout(){
-
-var out = confirm("ต้องการออกจากระบบหรือไม่ !");
-      if (out == true) {
-      localStorage.removeItem('username');
-      localStorage.removeItem('url_menu_tree_user');
-      document.getElementById("username").value = "";
-      document.getElementById("passwd").value = "";
-      document.getElementById("passwds").value = "";
-      $.mobile.changePage("#pageone",{transition: 'slidefade',reverse: true});
-
-      }else{
-          return false;
-      }
-
-
-}
 /*
 function pluspr(){
 	alert("บันทึกข้อมูลแล้ว!!");
@@ -172,8 +90,8 @@ if(localStorage.receivestatus=="0"){
 //alertify.error(localStorage.receivestatus+" ยังไม่มีใบ")
 $.ajax({
          url: localStorage.api_url_server+""+localStorage.api_url_insert,
-         data: '{"accessToken":"","docNo":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}',
-         //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
+         data: '{"accessToken":"","docNo":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"'+localStorage.username+'"}',
+         //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"'+localStorage.username+'"}
          contentType: "application/json; charset=utf-8",
          dataType: "json",
          type: "POST",
@@ -184,8 +102,8 @@ $.ajax({
          //alertify.error(insert_res.docNo)
          $.ajax({
                   url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
-                  data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"admin"}',
-                         //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                  data: '{"accessToken":"","docNo":"'+insert_res.docNo+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"'+localStorage.username+'"}',
+                         //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"'+localStorage.username+'"}
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
                   type: "POST",
@@ -211,7 +129,7 @@ $.ajax({
          });
 
 
-        //alert('"accessToken":"","Docdate":"'+date+'","apCode":"'+localStorage.apcode+'","PoRefNo":"'+localStorage.porefno+'","userID":"admin"')
+        //alert('"accessToken":"","Docdate":"'+date+'","apCode":"'+localStorage.apcode+'","PoRefNo":"'+localStorage.porefno+'","userID":"'+localStorage.username+'"')
         localStorage.receivestatus = "1";
 
         }else{
@@ -219,8 +137,8 @@ $.ajax({
 
         $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
-                          data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"admin"}',
-                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"admin"}
+                          data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","isCancel":"0","userID":"'+localStorage.username+'"}',
+                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"'+localStorage.username+'"}
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -242,7 +160,7 @@ localStorage.receivestatus = "1";
 
 }
 }
-//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}')
+//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"'+localStorage.username+'"}')
 }
 
 
@@ -261,8 +179,8 @@ var date = curr_date + "/" + curr_month
 
         $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
-                          data: '{"accessToken":"","docNo":"'+localStorage.re_no+'","docDate":"'+date+'","poRefNo":"'+localStorage.po_no+'","barCode":"'+localStorage.barCode_rv_e+'","qty":"'+document.getElementById("amount_scanner_e").value+'","isCancel":"0","userID":"admin"}',
-                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"admin"}
+                          data: '{"accessToken":"","docNo":"'+localStorage.re_no+'","docDate":"'+date+'","poRefNo":"'+localStorage.po_no+'","barCode":"'+localStorage.barCode_rv_e+'","qty":"'+document.getElementById("amount_scanner_e").value+'","isCancel":"0","userID":"'+localStorage.username+'"}',
+                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"'+localStorage.username+'"}
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -283,7 +201,7 @@ var date = curr_date + "/" + curr_month
 
 
 }
-//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"admin"}')
+//alert('{"accessToken":"","docNo":"","docDate":"'+date+'","apCode":"'+localStorage.apcode+'","poRefNo":"'+localStorage.porefno+'","barCode":"'+localStorage.barCode_rv+'""itemCode":"'+localStorage.itemCode_rv+'","itemName":"'+localStorage.itemName_rv+'","qty":"'+document.getElementById("amount_scanner").value+'","unitCode":"'+localStorage.unitCode_rv+'","lineNumber":"0","userID":"'+localStorage.username+'"}')
 }
 
 function submit_receive(){
@@ -295,8 +213,8 @@ var date = curr_date + "/" + curr_month
 + "/" + curr_year;
             $.ajax({
                      url: localStorage.api_url_server+""+localStorage.api_url_insert,
-                     data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"1","userID":"admin"}',
-                     //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"admin"}
+                     data: '{"accessToken":"","docNo":"'+localStorage.receiveNumber+'","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"1","userID":"'+localStorage.username+'"}',
+                     //{"accessToken":"","docDate":"'+date+'","poRefNo":"'+localStorage.porefno+'","isCompleteSave":"0","userID":"'+localStorage.username+'"}
                      contentType: "application/json; charset=utf-8",
                      dataType: "json",
                      type: "POST",
@@ -480,7 +398,7 @@ function show_receive(){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_list_receive,
                           data: '{"accessToken":"","search":"'+document.getElementById("search_receive_doc").value+'"}',
-                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"admin"}
+                                 //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","isCancel":"0","userID":"'+localStorage.username+'"}
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",

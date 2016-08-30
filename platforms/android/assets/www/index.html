@@ -39,7 +39,7 @@
         <div id="form-main">
 
             <div id="form-div">
-                <img src="images/inventory-logo.png" class="logo">
+                <a href="#pagetwo"><img src="images/inventory-logo.png" class="logo"></a>
 
                 <br><br>
 
@@ -59,7 +59,6 @@
                     <input type="submit" class="button-green" value="login" data-role="none" onclick="cnklogin()"/>
                     <div class="ease"></div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -147,7 +146,7 @@
 
     <div data-role="footer" id="footer" data-enhance="false">
 
-        <label style="padding:2% 0 0 5%;"><i>NAVA Inventory V.1  BY IT nopadol</i></label>
+        <label style="padding:2% 0 0 5%;"><i>Inventory V.1  BY IT nopadol</i></label>
 
     </div>
     <div data-role="panel" id="myPanel_main" data-display="overlay">
@@ -165,8 +164,8 @@
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">โอนสินค้า</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
+            <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
+            <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
         </div>
         <div class="row">
             <div class="col-xs-6 col-md-6"><a href="#transfer_damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย(3)</b></div></a></div>
@@ -203,19 +202,14 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของขึ้นรถ</h2>
-        <form>
+        <label>เลือกคลังต้นทาง</label>
+        <div id="whtypestoreup"></div>
+        <label>เลือกคลังปลายทาง</label>
+        <div id="whtypevanup"></div>
 
-            <p>เลือกคลังต้นทาง<select>
-                <option>wh1</option>
-                <option>wh2</option>
-                <option>wh3</option>
-            </select></p>
-            <p>เลือกคลังปลายทาง<select>
-                <option>car1</option>
-                <option>car1</option>
-                <option>car1</option>
-            </select></p>
-            <br>
+
+
+
 
             <fieldset data-role="controlgroup">
                 <legend>summery</legend>
@@ -223,31 +217,14 @@
 
             </fieldset>
 
-            <!--<div class="ui-grid-a">
-                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-            </div>
-
-            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-            </div>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#transferup_item" class="next">ตกลง</a><button type="submit" class="next">บันทึก</button></li>
-                </ul>
-            </div>-->
-        </form>
-
     </div>
 
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transferup_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
-                <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" >บันทึก</a></li>
+                <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="tranfer_up_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+                <li onclick="save_up();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -265,28 +242,12 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของขึ้นรถ</h2>
-        <form>
+        <p style="color:red; text-align:center">**แสกนสินค้าที่ต้องการโอน**</p>
+        <div id="item_show_up"></div>
+        <input type="number" name="amount_up_item" id="amount_up_item" placeholder="จำนวน">
+        <input type="hidden" id="stock_show_up">
 
-            <input type="text" name="product1" placeholder="สินค้า" id="product_scan_up">
-            <input type="number" name="num1" placeholder="จำนวน">
-            <input type="text" name="unit1" placeholder="หน่วยนับ">
 
-            <!--<div class="ui-grid-a">
-                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-            </div>
-
-            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-            </div>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#transferup" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">จบ</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a><button type="submit" class="next">บันทึก</button></li>
-                </ul>
-            </div>-->
-        </form>
 
     </div>
 
@@ -294,7 +255,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transferup" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">ตกลง</a></li>
+                <li onclick="submit_transferup();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">ตกลง</a></li>
             </ul>
         </div>
     </div>
@@ -312,50 +273,19 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของลงรถ</h2>
-        <form>
-
-            <p>เลือกคลังต้นทาง<select>
-                <option>car1</option>
-                <option>car1</option>
-                <option>car1</option>
-            </select></p>
-            <p>เลือกคลังปลายทาง<select>
-                <option>wh1</option>
-                <option>wh2</option>
-                <option>wh3</option>
-
-            </select></p>
-            <fieldset data-role="controlgroup">
-                <legend>summery</legend>
-                <p>...........................................</p>
-
-            </fieldset>
-
-            <!--<div class="ui-grid-a">
-                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-            </div>
-
-            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-            </div>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#transfer" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">Exit</a></li>
-                    <li><a href="#transferdown_item" data-role="button" class="next">ตกลง</a><button type="submit" class="next">บันทึก</button></li>
-                </ul>
-            </div>-->
-        </form>
+        <label>เลือกคลังต้นทาง</label>
+        <div  id="whtypevandown"></div>
+        <label>เลือกคลังปลายทาง</label>
+        <div  id="whtypestoredown"></div>
 
     </div>
 
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transferdown_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
-                <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="tranfer_down_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+                <li onclick="save_down();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
             </ul>
         </div>
     </div>
@@ -373,36 +303,20 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของลงรถ</h2>
-        <form>
+        <p style="color:red; text-align:center">**แสกนสินค้าที่ต้องการโอน**</p>
 
-            <input type="text" name="product1" placeholder="สินค้า">
-            <input type="number" name="num1" placeholder="จำนวน">
-            <input type="text" name="unit1" placeholder="หน่วยนับ">
+        <div id="item_show_down"></div>
+        <input type="hidden" id="stock_show_down">
+        <input type="number" name="amount_down_item" id="amount_down_item" placeholder="จำนวน">
 
-            <!--<div class="ui-grid-a">
-                <div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
-                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
-            </div>
-
-            <div data-role="controlgroup" data-type="horizontal" class="ui-grid-a">
-                    <a href="#" data-role="button" data-icon="home" id="homePageButton">Home Page</a>
-                    <a href="#" data-role="button" data-icon="forward" data-iconpos="right" id="logOutButton">Log Out</a>
-            </div>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#transferdown" data-role="button"  data-transition="slidefade" data-direction="reverse" class="exit">จบ</a></li>
-                    <li><a href="#" data-role="button" class="next">บันทึก</a><button type="submit" class="next">บันทึก</button></li>
-                </ul>
-            </div>-->
-        </form>
 
     </div>
 
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#transferup" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
-                <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">ตกลง</a></li>
+                <li><a href="#transferdown" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="submit_transferdown();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">ตกลง</a></li>
             </ul>
         </div>
     </div>
@@ -651,26 +565,7 @@
 
     <div data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
-        <hr class="hr">
-        <form>
-            <p>เลือกคลังต้นทาง<select>
-                <option>wh1</option>
-                <option>wh2</option>
-                <option>wh3</option>
-                <option>car1</option>
-                <option>car2</option>
-                <option>car3</option>
-            </select></p>
-            <p>เลือกคลังปลายทาง<select>
-                <option>wh1</option>
-                <option>wh2</option>
-                <option>wh3</option>
-                <option>car1</option>
-                <option>car2</option>
-                <option>car3</option>
-            </select></p>
 
-        </form>
         <fieldset data-role="controlgroup">
             <legend>summery</legend>
             <p>...........................................</p>
@@ -681,12 +576,65 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transfer_rtv_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
-                <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+                <li><a href="#transfer_normal_from" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">โอนสินค้า</a></li>
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel_trannormal" data-display="overlay">
+    <div data-role="panel" id="myPanel_trannormal_from" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transfer_normal_from ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_normal_from">
+    <div data-role="none" id="header">
+        <a href="#myPanel_trannormal_from" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
+        <hr class="hr">
+        <h3 style="color:red;">แสกนคลังต้นทาง...</h3>
+        <div id="transfer_nor_from"></div>
+
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#transfer_normal_to" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav">ต่อไป</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_trannormal_from" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transfer_normal_to ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_normal_to">
+    <div data-role="none" id="header">
+        <a href="#myPanel_trannormal_to" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
+        <hr class="hr">
+        <h3 style="color:red;">แสกนคลังปลายทาง...</h3>
+        <div id="transfer_nor_to"></div>
+
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#transfer_normal_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav">ต่อไป</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_trannormal_to" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
         <div id="tree" class="tree"></div>
@@ -731,8 +679,8 @@
         <div class="ui-field-contain">
             <label for="search">Search Vender:</label>
 
-                <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
-                <!--<a href="#" class="ui-btn ui-corner-all" onclick="return searchpo();">ค้นหา</a>-->
+            <input type="search" name="search" id="search" placeholder="Search for Vender..." onkeyup="return searchpo();">
+            <!--<a href="#" class="ui-btn ui-corner-all" onclick="return searchpo();">ค้นหา</a>-->
 
         </div>
         <!--<select onchange="select_warehouse(this)">
@@ -891,12 +839,12 @@
 
     <div  data-role="main" class="ui-content" id="main">
 
-            <h2 class="sub_title">item search</h2>
-            <label>ค้นหา item : <input type="text" name="receive_search_item" id="receive_search_item"></label>
-            <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left ui-corner-all" onclick="search_receive()">ค้นหา</a>
-            <div id="show_search_item"></div>
-            <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
-            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
+        <h2 class="sub_title">item search</h2>
+        <label>ค้นหา item : <input type="text" name="receive_search_item" id="receive_search_item"></label>
+        <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left ui-corner-all" onclick="search_receive()">ค้นหา</a>
+        <div id="show_search_item"></div>
+        <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
+        <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
 
 
 
@@ -927,12 +875,12 @@
 
     <div  data-role="main" class="ui-content" id="main">
 
-            <h2 class="sub_title">scan item</h2>
-            <hr class="hr">
-            <div id="product_show"></div>
-            <label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>
-            <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
-            <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
+        <h2 class="sub_title">scan item</h2>
+        <hr class="hr">
+        <div id="product_show"></div>
+        <label>กรอกจำนวน : <input type="number" name="receive1" id="amount_scanner"></label>
+        <!--<a href="#" onclick="scan_receive()" class="ui-btn" id="scan_btn">Scan</a>
+        <a href="#" onclick="scan_cancel()" class="ui-btn" style="display:none;" id="scan_cancel">cancel</a>-->
 
 
 
@@ -1232,7 +1180,7 @@
                 </div>
 
                 <div data-role="footer">
-                    <h1>Nava Inven V0.1</h1>
+                    <h1>Inventory V0.1</h1>
                 </div>
             </div>
 
@@ -1413,7 +1361,6 @@
     <div data-role="footer" id="footer">
         <div data-role="navbar">
             <ul>
-                <li onclick="backstock()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav">ย้อนกลับ</a></li>
                 <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
                 <li><a href="#shelves" class="ui-btn-active ui-state-persist" data-icon="search" id="footer-nav" data-transition="slidefade">ตรวจนับสินค้า</a></li>
             </ul>
@@ -1465,7 +1412,6 @@
             <ul>
                 <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav">ย้อนกลับ</a></li>
                 <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
-                <li onclick="deleteitem()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade">Delete</a></li>
             </ul>
         </div>
     </div>
@@ -1570,16 +1516,16 @@
 
         <label style="font-size:24px; margin-bottom:0;"><img src="images/stock1.png" width="32"><b>ระบบตรวจสอบสินค้า</b></label><hr>
 
-            <label id="whtitle" style="border-bottom:1px dotted gray; padding-bottom:2%;">
-                <div id="bt-wh" style="padding-bottom:2%;"><font color="red">SCANBARCODE WAREHOUSE</font></div>
-                <span id="de-wh"></span>
-            </label>
-            <input type="hidden" id="valwh">
-            <div id="itemdtail" style="border-bottom:1px dotted gray; padding-bottom:2%;">
-                <div id="bt-item"><font color="red">SCANBARCODE ITEM</font></div>
-                <span id="de-item"></span>
+        <label id="whtitle" style="border-bottom:1px dotted gray; padding-bottom:2%;">
+            <div id="bt-wh" style="padding-bottom:2%;"><font color="red">SCANBARCODE WAREHOUSE</font></div>
+            <span id="de-wh"></span>
+        </label>
+        <input type="hidden" id="valwh">
+        <div id="itemdtail" style="border-bottom:1px dotted gray; padding-bottom:2%;">
+            <div id="bt-item"><font color="red">SCANBARCODE ITEM</font></div>
+            <span id="de-item"></span>
 
-            </div>
+        </div>
 
     </div>
 
@@ -1707,20 +1653,19 @@
 
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/login.js"></script>
 <script src="js/setting.js"></script>
 <script src="js/fun_pr.js"></script>
 <script src="js/fun_cs.js"></script>
 <script src="js/inven.js"></script>
 <script src="js/fun_searchitem.js"></script>
 <script src="js/search_vender.js"></script>
-<script type="text/javascript">
-        app.initialize();
-
-</script>
+<script src="js/function_transfer.js"></script>
+<script type="text/javascript">app.initialize();</script>
 <script src="js/hotkey.js"></script>
+<script src="js/menutree.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-treeview.min.js"></script>
-<script src="js/menutree.js"></script>
 <script src="js/hotkey_pr.js"></script>
 <script src="js/alertify.js"></script>
 </body>
