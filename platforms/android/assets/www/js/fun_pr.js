@@ -24,14 +24,11 @@ window.addEventListener('native.onscanbarcode', function (pr) {
 
             case "additem" : additems(localStorage.barcode);
                              break;
-
-
-
-                             			}
+       }
 });
             $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_prlist,
-                   data: '{"type":"0","search":"58089"}',
+                   data: '{"type":"1","search":"'+localStorage.username+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
                    type: "POST",
@@ -58,16 +55,14 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                            prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
                            var wantDate = val['wantDate'];
-                           //if(wantDate!=null){
+                           if(wantDate!=null){
                            wdate = val['wantDate'].split("-");
                            day = wdate[2];
                            month = wdate[1];
                            year = (parseInt(wdate[0])+543);
 
                            wantDate = day+"/"+month+"/"+year;
-                          /* }else{
-                           cancelPR(val['docNo']);
-                           }*/
+                           }
 
                            prlist += '<div class="ui-block-b">'+wantDate+'</div>';
                            prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
@@ -262,7 +257,7 @@ function rslogin(result){
 function prlist(){
             $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_prlist,
-                   data: '{"type":"0","search":"58089"}',
+                   data: '{"type":"1","search":"'+localStorage.username+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
                    type: "POST",
@@ -289,16 +284,16 @@ function prlist(){
                            prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
                            var wantDate = val['wantDate'];
-                           //if(wantDate!=null){
-                               wdate = val['wantDate'].split("-");
-                               day = wdate[2];
-                               month = wdate[1];
-                               year = (parseInt(wdate[0])+543);
+                           if(wantDate!=null){
+                           wdate = val['wantDate'].split("-");
+                           day = wdate[2];
+                           month = wdate[1];
+                           year = (parseInt(wdate[0])+543);
 
-                               wantDate = day+"/"+month+"/"+year;
-                           /*}else{
-                               cancelPR(val['docNo']);
-                           }*/
+                           wantDate = day+"/"+month+"/"+year;
+                           }else{
+                            cancelPR(DocNo)
+                           }
 
                            prlist += '<div class="ui-block-b">'+wantDate+'</div>';
                            prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
@@ -347,6 +342,7 @@ function prlist(){
 
                    });
 }
+//window.setInterval(prlist, 1000);
 
 $(document).on('taphold', '.todo-listview', function() {
        // console.log("DEBUG - Go popup");
@@ -377,100 +373,19 @@ $(document).on('taphold', '.todo-listview', function() {
     $popUp.popup('open').enhanceWithin();
 
     });
+
 function cancelPR(Docno){
   //alert(Docno);
 $.ajax({
     url: localStorage.api_url_server+"NPInventoryWs/pr/cancelPR",
-    data: '{"accessToken": "","docNo": "'+Docno+'","userID": "58089","isCancel": "1"}',
+    data: '{"accessToken": "","docNo": "'+Docno+'","userID": "'+localStorage.username+'","isCancel": "1"}',
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     type: "POST",
     cache: false,
     success: function(isCancel){
     console.log(isCancel);
-    $.ajax({
-           url: localStorage.api_url_server+localStorage.api_url_prlist,
-           data: '{"type":"0","search":"58089"}',
-           contentType: "application/json; charset=utf-8",
-           dataType: "json",
-           type: "POST",
-           cache: false,
-           success: function(result){
-               //console.log(JSON.stringify(result));
-               var prl = JSON.stringify(result);
-               //console.log(prl);
-               var prlp = prl.split(":[");
-               var str = prlp[1].split("]}");
-               prl = "["+str[0]+"]";
-               var js = jQuery.parseJSON(prl);
-               var prlist = "";
-               var wdate = "";
-               var x = 1;
-                  $.each(js, function(key, val) {
-                  //console.log(val['docNo']);
-
-                  prlist += '<label class="todo-listview" data-view-id="';
-                  prlist += "'"+val['docNo']+"'";
-                  prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
-                  prlist += "'"+val['docNo']+"'";
-                  prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
-                  prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
-
-                  var wantDate = val['wantDate'];
-                  if(wantDate!=null){
-                  wdate = val['wantDate'].split("-");
-                  day = wdate[2];
-                  month = wdate[1];
-                  year = (parseInt(wdate[0])+543);
-
-                  wantDate = day+"/"+month+"/"+year;
-                  }
-
-                  prlist += '<div class="ui-block-b">'+wantDate+'</div>';
-                  prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
-                  switch (val['status']){
-                      case 1 : var status = "<img src='images/Warning.png' width='24'>";
-                               break;
-                      case 2 : var status = "<img src='images/quick.png' width='24'>";
-                               break;
-                      default: var status = "";
-                               break;
-                  }
-                    var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth()+1; //January is 0!
-
-                    var yyyy = today.getFullYear();
-                    if(dd<10){
-                        dd='0'+dd
-                    }
-                    if(mm<10){
-                        mm='0'+mm
-                    }
-                    var n = yyyy+'-'+mm+'-'+dd;
-                  //console.log(n);
-                  switch (val['docDate']){
-                      case n :
-                               status += "<img src='images/New.png' width='24'>";
-                               break;
-                  }
-
-                           prlist += '<div class="ui-block-d">'+status+'</div>';
-                           prlist += '</div></label></a><hr>';
-                            x++;
-                        });
-                        document.getElementById("prlist").innerHTML = prlist;
-
-                        //console.log(JSON.stringify(js));
-
-                       $.mobile.changePage("#pagepr");
-                           },
-                   error: function (error){
-                        console.log(JSON.stringify(error));
-                       // $.mobile.changePage("#pagepr");
-                   }
-
-                   });
+        prlist();
     },
     error: function(error){
         console.log(JSON.stringify(error));
@@ -479,12 +394,14 @@ $.ajax({
 });
   }
 
+
+
 function backdetail(){
     console.log("backlink");
     var Docno = document.getElementById("DocNo").value;
      $.ajax({
             url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-            data: '{"type":"0","searchDocno":"'+Docno+'"}',
+            data: '{"type":"1","searchDocno":"'+Docno+'"}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             type: "POST",
@@ -520,9 +437,11 @@ function backdetail(){
 
 
 function prdetail(DocNo){
+    //alert(DocNo);
+    //document.getElementById("LDocNo").value = DocNo;
     $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                       data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
                        type: "POST",
@@ -680,7 +599,7 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                 console.log(JSON.stringify(result));
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                       data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
                        type: "POST",
@@ -842,7 +761,7 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                 console.log(JSON.stringify(result));
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                       data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
                        type: "POST",
@@ -961,6 +880,7 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
 
 function clicksubmit(){
     console.log("clickadditem");
+
     console.log(document.getElementById("DocNo").value);
     var DocNo = document.getElementById("DocNo").value;
     var no = document.getElementById("noitems").value;
@@ -968,6 +888,7 @@ function clicksubmit(){
     var grade = document.getElementById("gradeitem").value;
     var cnt = document.getElementById("citem").value;
     var units = document.getElementById("units").value;
+    console.log('{"docNo":"'+DocNo+'","itemCode":"'+no+'","itemName":"'+name+'","unitcode":"'+units+'","qty":"'+cnt+'","isCancel":"0"}');
     console.log(no);
    if(no=="null"){
           alertify.alert("รหัสสินค้านี้เป็นค่า null ไม่สามารถบันทึกได้ กรุณาสแกนสินค้าอื่น ๆ ");
@@ -993,7 +914,7 @@ function clicksubmit(){
                                                 console.log(JSON.stringify(result));
                                                  $.ajax({
                                                                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                                                                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                                                                       data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                                                                        contentType: "application/json; charset=utf-8",
                                                                        dataType: "json",
                                                                        type: "POST",
@@ -1092,7 +1013,7 @@ function clicksubmit(){
 }
 
 function sumdetail(){
-
+console.log(localStorage.username);
 $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
            data: '{"type":"1","search":"'+localStorage.username+'"}',
@@ -1115,7 +1036,7 @@ $.ajax({
 
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                       data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                       data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                        contentType: "application/json; charset=utf-8",
                        dataType: "json",
                        type: "POST",
@@ -1194,7 +1115,7 @@ function pluspr(){
     }
     $.ajax({
             url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-            data: '{"type":"0","searchDocno":"'+Docno+'"}',
+            data: '{"type":"1","searchDocno":"'+Docno+'"}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             type: "POST",
@@ -1233,7 +1154,7 @@ function pluspr(){
 
                                            $.ajax({
                                                    url: localStorage.api_url_server+localStorage.api_url_prlist,
-                                                   data: '{"type":"0","search":"'+localStorage.username+'"}',
+                                                   data: '{"type":"1","search":"'+localStorage.username+'"}',
                                                    contentType: "application/json; charset=utf-8",
                                                    dataType: "json",
                                                    type: "POST",
@@ -1260,14 +1181,14 @@ function pluspr(){
                                                            prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
                                                            var wantDate = val['wantDate'];
-                                                          // if(wantDate!=null){
+                                                           if(wantDate!=null){
                                                            wdate = val['wantDate'].split("-");
                                                            day = wdate[2];
                                                            month = wdate[1];
                                                            year = (parseInt(wdate[0])+543);
 
                                                            wantDate = day+"/"+month+"/"+year;
-                                                           //}
+                                                           }
 
                                                            prlist += '<div class="ui-block-b">'+wantDate+'</div>';
                                                            prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
@@ -1376,7 +1297,7 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                 console.log(JSON.stringify(result));
                 $.ajax({
                         url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                        data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                        data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST",
@@ -1497,7 +1418,7 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
                 console.log(JSON.stringify(result));
                 $.ajax({
                         url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
-                        data: '{"type":"0","searchDocno":"'+DocNo+'"}',
+                        data: '{"type":"1","searchDocno":"'+DocNo+'"}',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST",
@@ -1575,6 +1496,7 @@ function searchapcode(){
                 var str = apC[1].split("]}");
                 ap = "["+str[0]+"]";
                 var js = jQuery.parseJSON(ap);
+                //console.log(JSON.stringify(apcode));
                 var textven = "";
                 var name = "";
                 var listapcode = "";
@@ -1586,6 +1508,7 @@ function searchapcode(){
                      listapcode += "'"+name+"'";
                      listapcode += ')"><a href="#">'+textven+' '+name+'</a></label>';
                 });
+                   // document.getElementById("apCodeven").value = textven;
                     document.getElementById("nameven").innerHTML = listapcode;
            }
     });

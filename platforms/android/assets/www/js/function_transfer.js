@@ -111,8 +111,9 @@ $.ajax({
                           console.log("STORE "+JSON.stringify(store));
                           var counts = store.data.length;
 
-                          var store_list_up= "<select id='whstore_up' class='whselect'>";
-                          var store_list_down= "<select id='whstore_down' class='whselect'>";
+
+                          var store_list_up= "<select id='whstore_up' class='whselect' onchange='select_shelfstore(this)'>";
+                          var store_list_down= "<select id='whstore_down' class='whselect'  onchange='select_shelfstore(this)'>";
                           for(var i = 0;i<counts;i++){
                           store_list_up += "<option value='"+store.data[i].code+"'>"+store.data[i].code+" "+store.data[i].name+"</option>";
                           store_list_down += "<option value='"+store.data[i].code+"'>"+store.data[i].code+" "+store.data[i].name+"</option>";
@@ -122,7 +123,9 @@ $.ajax({
                           store_list_down += "</select>";
                           document.getElementById("whtypestoreup").innerHTML = store_list_up;
                           document.getElementById("whtypestoredown").innerHTML = store_list_down;
+
                           wh_type_van();
+                          //select_shelfstore();
                           },
                           error: function (error){
                           alertify.error(error);
@@ -143,8 +146,8 @@ $.ajax({
                           console.log("VAN "+JSON.stringify(van));
                           var countv = van.data.length;
 
-                          var van_list_up= "<select id='whvan_up' class='whselect'>";
-                          var van_list_down= "<select id='whvan_down' class='whselect'>";
+                          var van_list_up= "<select id='whvan_up' class='whselect' onchange='select_shelfvan(this)'>";
+                          var van_list_down= "<select id='whvan_down' class='whselect' onchange='select_shelfvan(this)'>";
                           for(var i = 0;i<countv;i++){
                           van_list_up += "<option value='"+van.data[i].code+"'>"+van.data[i].code+" "+van.data[i].location+"</option>";
                           van_list_down += "<option value='"+van.data[i].code+"'>"+van.data[i].code+" "+van.data[i].location+"</option>";
@@ -155,6 +158,74 @@ $.ajax({
                           document.getElementById("whtypevanup").innerHTML = van_list_up;
                           document.getElementById("whtypevandown").innerHTML = van_list_down;
                             //$popUp1.popup("close");
+                            select_shelfstore();
+                            select_shelfvan();
+                          },
+                          error: function (error){
+                          alertify.error(error);
+                          }
+                          });
+                          return false;
+}
+
+function sh_type_van(whcode){
+$.ajax({
+                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchshelf",
+                          data: '{"accessToken":"","refCode":"'+whcode+'","search":""}',
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(vansh){
+                          console.log("vansh "+JSON.stringify(vansh));
+                          var countv = vansh.data.length;
+
+                          var vansh_list_up= "<select id='vshelfup' class='whselect'>";
+                          var vansh_list_down= "<select id='vshelfdown' class='whselect'>";
+                          for(var i = 0;i<countv;i++){
+                          vansh_list_up += "<option value='"+vansh.data[i].code+"'>"+vansh.data[i].code+" "+vansh.data[i].name+"</option>";
+                          vansh_list_down += "<option value='"+vansh.data[i].code+"'>"+vansh.data[i].code+" "+vansh.data[i].name+"</option>";
+
+                          }
+                          vansh_list_up += "</select>";
+                          vansh_list_down += "</select>";
+                          document.getElementById("shtypevanup").innerHTML = vansh_list_up;
+                          document.getElementById("shtypevandown").innerHTML = vansh_list_down;
+                            //$popUp1.popup("close");
+
+                          },
+                          error: function (error){
+                          alertify.error(error);
+                          }
+                          });
+                          return false;
+}
+
+function sh_type_store(whcode){
+$.ajax({
+                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchshelf",
+                          data: '{"accessToken":"","refCode":"'+whcode+'","search":""}',
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(storesh){
+                          console.log("storesh "+JSON.stringify(storesh));
+                          var countv = storesh.data.length;
+
+                          var storesh_list_up= "<select id='sshelfup' class='whselect'>";
+                          var storesh_list_down= "<select id='sshelfdown' class='whselect'>";
+                          for(var i = 0;i<countv;i++){
+                          storesh_list_up += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
+                          storesh_list_down += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
+
+                          }
+                          storesh_list_up += "</select>";
+                          storesh_list_down += "</select>";
+                          document.getElementById("shtypestoreup").innerHTML = storesh_list_up;
+                          document.getElementById("shtypestoredown").innerHTML = storesh_list_down;
+                            //$popUp1.popup("close");
+
                           },
                           error: function (error){
                           alertify.error(error);
@@ -192,6 +263,47 @@ $.ajax({
                           return false;
 }
 
+//=============================================================================================shelf store=============================================================================
+function select_shelfstore(whStore){
+var sstore = "";
+if($.mobile.activePage.is('#transferup')){
+if(whStore){
+sstore = whStore.value;
+}else{
+var ss_up = document.getElementById("whstore_up");
+sstore = ss_up.options[ss_up.selectedIndex].value;
+}
+}else if($.mobile.activePage.is('#transferdown')){
+if(whStore){
+sstore = whStore.value;
+}else{
+var ss_up = document.getElementById("whstore_down");
+sstore = ss_up.options[ss_up.selectedIndex].value;
+}
+}
+sh_type_store(sstore);
+}
+//=============================================================================================shelf van=============================================================================
+function select_shelfvan(whVan){
+var svan = "";
+if($.mobile.activePage.is('#transferup')){
+if(whVan){
+svan = whVan.value;
+}else{
+var ss_up = document.getElementById("whvan_up");
+svan = ss_up.options[ss_up.selectedIndex].value;
+}
+}else if($.mobile.activePage.is('#transferdown')){
+if(whVan){
+svan = whVan.value;
+}else{
+var ss_up = document.getElementById("whvan_down");
+svan = ss_up.options[ss_up.selectedIndex].value;
+}
+}
+sh_type_van(svan);
+}
+
 
 function get_item_transfer(wh,bar){
 if(wh=="up"){
@@ -208,19 +320,18 @@ $.ajax({
                           cache: false,
                           success: function(item_t){
                           console.log(item_t);
-                          //"whCode": "A01","whName": "A01 ","location": "บริษัท เบทาโกร(ลำพูน)"
-                          /*var item_t_l = JSON.stringify(item_t);
-                          var item_t_ls = item_t_l.split(":[");
-                          var stritem_t = item_t_ls[1].split("]}");
-                          item_t_l = "["+stritem_t[0]+"]";
-                          var item_tl = jQuery.parseJSON(item_t_l);
-                          console.log(JSON.stringify(item_tl));*/
-
                           var item_t_list="";
                           var stock_item =0;
+                          if(stkRemain==0){
+                            item_t_list += "<p>ชื่อสินค้า : "+item_t.data[0].itemName+"</p>";
+                            item_t_list += "<p>หน่วยนับ : "+item_t.data[0].unitCode+"</p>";
+                            item_t_list += "<p style='color:red;'>จำนวนคงเหลือ : ไม่มีสินค้า</p>";
+                            item_t_list += "<p style='color:red; text-align:center;'>** สินค้าไม่พอสำหรับการโอน **</p>";
+                            }else{
                             item_t_list += "<p>ชื่อสินค้า : "+item_t.data[0].itemName+"</p>";
                             item_t_list += "<p>หน่วยนับ : "+item_t.data[0].unitCode+"</p>";
                             item_t_list += "<p>จำนวนคงเหลือ : "+item_t.data[0].stkRemain+"</p>";
+                            }
                             stock_item = item_t.data[0].stkRemain;
                             localStorage.transferBarcode =item_t.data[0].barCode;
                             localStorage.transferItemcode =item_t.data[0].itemCode;
@@ -241,6 +352,7 @@ $.ajax({
                           }
                           });
 }
+//========================================================================== เลือกคลังโอนขึ้น ============================================================================
 function tranfer_up_select(){
 document.getElementById("item_show_up").innerHTML = "";
 document.getElementById("item_show_down").innerHTML = "";
@@ -248,10 +360,20 @@ document.getElementById("item_show_down").innerHTML = "";
 var s_up = document.getElementById("whstore_up");
 var strstore_up = s_up.options[s_up.selectedIndex].value;
 localStorage.transferup_from = strstore_up;
+
 var v_up = document.getElementById("whvan_up");
 var strvan_up = v_up.options[v_up.selectedIndex].value;
 localStorage.transferup_to = strvan_up;
-var r = confirm("ต้องการโอนสินค้าจากคลัง "+localStorage.transferup_from+" ไปยัง "+localStorage.transferup_to+" ใช่หรือไม่ !!");
+
+var ss_up = document.getElementById("sshelfup");
+var sstrstore_up = ss_up.options[ss_up.selectedIndex].value;
+localStorage.transfersup_from = sstrstore_up;
+
+var vv_up = document.getElementById("vshelfup");
+var vstrvan_up = vv_up.options[vv_up.selectedIndex].value;
+localStorage.transfersup_to = vstrvan_up;
+
+var r = confirm("ต้องการโอนสินค้าจากคลัง "+localStorage.transferup_from+" ชั้นเก็บ "+localStorage.transfersup_from+" ไปยัง "+localStorage.transferup_to+" ชั้นเก็บ "+localStorage.transfersup_to+" ใช่หรือไม่ !!");
             if (r == true) {
                $.mobile.changePage("#transferup_item",{transition: 'slidefade'});
             } else {
@@ -283,7 +405,7 @@ $.ajax({
 
                           $.ajax({
                                                     url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"","qty":"'+document.getElementById("amount_up_item").value+'","refNo":""}',
+                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+document.getElementById("amount_up_item").value+'","refNo":""}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
@@ -308,7 +430,7 @@ $.ajax({
 }else{
  $.ajax({
                           url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"","qty":"'+document.getElementById("amount_up_item").value+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transferup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transferup_to+'","qty":"'+document.getElementById("amount_up_item").value+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -327,6 +449,7 @@ $.ajax({
 }
 }
 }
+//========================================================================== บันทึก โอนขึ้นรถ ============================================================================
 function save_up(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
@@ -340,7 +463,7 @@ $.ajax({
                           console.log(trf_h);
                           localStorage.transferNo = "";
                           localStorage.transferstatus = "0";
-                          alertify.success("บันทึกใบรับเข้าเรียบร้อยแล้ว");
+                          alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
                           alertify.error("error");
@@ -350,7 +473,8 @@ $.ajax({
 alertify.error("ยังไม่มีการทำใบรับสินค้า");
 }
 }
-//========================================================================== โอนลงรถ ============================================================================
+//========================================================================== เลือกคลังโอนขึ้น ============================================================================
+
 
 function tranfer_down_select(){
 document.getElementById("item_show_up").innerHTML = "";
@@ -363,14 +487,24 @@ localStorage.transferdown_from = strvan_down;
 var s_down = document.getElementById("whstore_down");
 var strstore_down = s_down.options[s_down.selectedIndex].value;
 localStorage.transferdown_to = strstore_down;
-var d = confirm("ต้องการโอนสินค้าจากคลัง "+localStorage.transferdown_from+" ไปยัง "+localStorage.transferdown_to+" ใช่หรือไม่ !!");
+
+
+var ss_down = document.getElementById("sshelfdown");
+var sstrstore_down = ss_down.options[ss_down.selectedIndex].value;
+localStorage.transfersdown_from = sstrstore_down;
+
+var vv_down = document.getElementById("vshelfdown");
+var vstrvan_down = vv_down.options[vv_down.selectedIndex].value;
+localStorage.transfersdown_to = vstrvan_down;
+
+var d = confirm("ต้องการโอนสินค้าจากคลัง "+localStorage.transferdown_from+" ชั้นเก็บ "+localStorage.transfersdown_from+" ไปยัง "+localStorage.transferdown_to+" ชั้นเก็บ "+localStorage.transfersdown_to+"  ใช่หรือไม่ !!");
             if (d == true) {
                $.mobile.changePage("#transferdown_item",{transition: 'slidefade'});
             } else {
                 return false;
             }
 }
-
+//========================================================================== โอนลงรถ ============================================================================
 function submit_transferdown(){
 var amountdown = document.getElementById("amount_down_item").value;
 var stockdown = document.getElementById("stock_show_down").value;
@@ -395,7 +529,7 @@ $.ajax({
 
                           $.ajax({
                                                     url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"-","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"-","qty":"'+document.getElementById("amount_down_item").value+'","refNo":""}',
+                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_from+'","qty":"'+document.getElementById("amount_down_item").value+'","refNo":""}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
@@ -419,7 +553,7 @@ $.ajax({
 }else{
  $.ajax({
                           url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"-","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"-","qty":"'+document.getElementById("amount_down_item").value+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_to+'","qty":"'+document.getElementById("amount_down_item").value+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -438,7 +572,7 @@ $.ajax({
 }
 }
 }
-
+//========================================================================== บันทึก โอนลงรถ ============================================================================
 function save_down(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
@@ -452,7 +586,7 @@ $.ajax({
                           console.log(trf_h);
                           localStorage.transferNo = "";
                           localStorage.transferstatus = "0";
-                          alertify.success("บันทึกใบรับเข้าเรียบร้อยแล้ว");
+                          alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
                           alertify.error("error");
