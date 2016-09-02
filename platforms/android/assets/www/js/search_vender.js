@@ -827,7 +827,7 @@ $(document).on('taphold', '.todo-uncancelview', function() {
     console.log(link_name);
     console.log('#'+link_id);
     $("<a>", {
-    text: "UnHold",
+    text: "Return",
     href: "#",
     onclick: "uncancel_item("+link_name+","+rcqtys+");"
     }).appendTo($popUp);
@@ -895,7 +895,7 @@ $(document).on('taphold', '.todo-uncancel_editview', function() {
     console.log(link_name);
     console.log('#'+link_id);
     $("<a>", {
-    text: "UnHold",
+    text: "Return",
     href: "#",
     onclick: "uncancel_item_edit("+link_name+","+rcqtys+",'"+po+"','"+rv+"');"
     }).appendTo($popUp);
@@ -963,7 +963,7 @@ $(document).on('taphold', '.todo-deleteview', function() {
     console.log(link_name);
     console.log('#'+link_id);
     $("<a>", {
-    text: "Delete",
+    text: "Cancel",
     href: "#",
     onclick: 'delete_receive('+"'"+link_name+"'"+','+"'"+poRefNo+"'"+');'
     }).appendTo($popUp);

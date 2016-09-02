@@ -163,7 +163,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">โอนสินค้า</h1>
-        <a href="#" onclick="search_tf();" class="ui-btn ui-corner-all">แสดงใบโอนสินค้า</a>
+        <a href="#" onclick="search_tf(); openwh();" class="ui-btn ui-corner-all">แสดงใบโอนสินค้า</a>
         <div class="row">
             <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
             <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
@@ -229,6 +229,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ใบโอนสินค้า</h2>
+        <p style="color:red;text-align:center;">**แสกนสินค้าที่ต้องการโอน**</p>
         <div id="show_hdetail_tf"></div>
         <div id="show_detail_tf"></div>
 
@@ -326,6 +327,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของขึ้นรถ</h2>
+        <p style="color:red;text-align:center;">**แสกนสินค้าที่ต้องการโอน**</p>
         <div id="show_hdetail_tfup"></div>
         <div id="show_detail_tfup"></div>
 
@@ -425,6 +427,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">ยกของลงรถ</h2>
+        <p style="color:red;text-align:center;">**แสกนสินค้าที่ต้องการโอน**</p>
         <div id="show_hdetail_tfdown"></div>
         <div id="show_detail_tfdown"></div>
 

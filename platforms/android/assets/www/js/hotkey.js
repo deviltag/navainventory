@@ -27,7 +27,8 @@ document.addEventListener("keydown", function(event) {
                             break;
                     case 51: $.mobile.changePage("#stock",{transition: 'slidefade'});
                             break;
-                    case 52: $.mobile.changePage("#transfer",{transition: 'slidefade'});
+                    case 52: openwh();
+                            $.mobile.changePage("#transfer",{transition: 'slidefade'});
                             break;
                     case 53: $.mobile.changePage("#setting",{transition: 'slidefade'});
                             break;
@@ -144,8 +145,23 @@ document.addEventListener("keydown", function(event) {
                    default:
                            break;
                     }
+            }else if(page=="transferup"){
+            switch (event.keyCode){
+                   case 0: tranfer_up_select();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
+            }else if(page=="transferdown"){
+            switch (event.keyCode){
+                   case 0: tranfer_down_select();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
             }
-
 
 
 });
@@ -191,14 +207,22 @@ function onDeviceReady(){
             $.mobile.changePage('#receive_list',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#transferlist')){
+            $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#transfer_detail')){
+            checkstatus();
        }else if($.mobile.activePage.is('#transferup')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transferup_item')){
             $.mobile.changePage('#transferup',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#transferup_detail')){
+            checkstatus();
        }else if($.mobile.activePage.is('#transferdown')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transferdown_item')){
             $.mobile.changePage('#transferdown',{transition: 'slidefade',reverse: true});
+       }else if($.mobile.activePage.is('#transferdown_detail')){
+            checkstatus();
        }else if($.mobile.activePage.is('#transfer_damage')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_damage_item')){

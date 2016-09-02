@@ -103,8 +103,6 @@ function openwh(){
 
 wh_type_store();
 
-
-
 }
 
 function wh_type_store(){
@@ -834,10 +832,15 @@ $.ajax({
                           var count = tf_l.data.length;
                           var tf_list ="";
                           for(var i = 0;i<count;i++){
-                          tf_list += '<a href="#" class="ui-btn ui-corner-all" onclick="search_detail(';
+                          if(tf_l.data[i].isCancel=="1"){
+                          tf_list += '<a href="#" style="background: #FF3333; color: gray;" class="ui-btn ui-corner-all" onclick="search_detail(';
                           tf_list += "'"+tf_l.data[i].docNo+"')";
                           tf_list += '">'+tf_l.data[i].docNo+'</a>';
-
+                          }else{
+                          tf_list += '<a href="#" class="ui-btn ui-corner-all todo-cancel_transfer" cancel-id="'+tf_l.data[i].docNo+'" data-cancelrow-id="i'+tf_l.data[i].docNo+'" cancelrefNo="'+tf_l.data[i].refDocNo+'" id="i'+tf_l.data[i].docNo+'" onclick="search_detail(';
+                          tf_list += "'"+tf_l.data[i].docNo+"')";
+                          tf_list += '">'+tf_l.data[i].docNo+'</a>';
+                            }
                           }
                           document.getElementById("show_tflist").innerHTML = tf_list;
                           $.mobile.changePage("#transferlist",{transition: 'slidefade'});
@@ -889,7 +892,7 @@ alertify.error("ใบโอนสินค้าถูกบันทึกแ�
 return false;
 }else{
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/insert",
+                          url: localStorage.api_url_server+"NPReceiveWs/trn/cancel",
                           data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -907,3 +910,64 @@ $.ajax({
                           });
           }
 }
+//================================================================================cancel=====================================================================================
+function cancel_transfer(transferNo,refNo){
+
+if (confirm('ต้องการยกเลิกใบโอนสินค้าหรือไม่ ??')) {
+
+$.ajax({
+                          url: localStorage.api_url_server+"NPReceiveWs/trn/cancel",
+                          data: '{"accessToken":"","docNo":"'+transferNo+'","refNo":"'+refNo+'","userID":"'+localStorage.username+'"}',
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(cancel){
+                          console.log(cancel);
+                          $.mobile.changePage("#transferlist",{transition: 'slidefade'});
+                          alertify.success("ยกเลิกใบโอนสินค้าเรียบร้อยแล้ว");
+                          },
+                          error: function (error){
+                          alertify.error("error");
+                          }
+                          });
+                          }
+}
+//========================================================= hold to cancel transfer =================================================================
+
+
+    function xxxxxxx(x,y){
+
+    alert(x+" , "+y)
+    }
+    $(document).on('taphold', '.todo-cancel_transfer', function() {
+           // console.log("DEBUG - Go popup");
+          var link_name = $(this).attr('cancel-id');
+          var link_id = $(this).attr('data-cancelrow-id');
+          var RefNo = $(this).attr('cancelrefNo');
+          var $popUp = $("<div/>").popup({
+            dismissible: true,
+
+            //theme: "a",
+            transition: "pop",
+            arrow: "b",
+            positionTo: '#'+link_id
+            }).on("popupafterclose", function () {
+        //remove the popup when closing
+        $(this).remove();
+        }).css({
+       'padding': '15%',
+       'color': '#fff',
+       'background': 'red'
+       });
+        console.log(link_name);
+        console.log('#'+link_id);
+        $("<a>", {
+        text: "Cancel",
+        href: "#",
+        onclick: 'cancel_transfer('+"'"+link_name+"'"+','+"'"+RefNo+"'"+');'
+        }).appendTo($popUp);
+
+        $popUp.popup('open').enhanceWithin();
+
+        });
