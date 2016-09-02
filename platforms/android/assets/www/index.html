@@ -163,6 +163,7 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">โอนสินค้า</h1>
+        <a href="#" onclick="search_tf();" class="ui-btn ui-corner-all">แสดงใบโอนสินค้า</a>
         <div class="row">
             <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
             <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
@@ -193,6 +194,91 @@
 
         <div id="tree" class="tree"></div>
     </div>
+</div><!--//////////////////////////////////////////////////////////// transferlist ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferlist">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_transferup"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">แสดงใบโอนสินค้า</h2>
+
+        <div id="show_tflist"></div>
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_transferup" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+
+<!--//////////////////////////////////////////////////////////// transfer_detail ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_detail">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_transfer_detail"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ใบโอนสินค้า</h2>
+        <div id="show_hdetail_tf"></div>
+        <div id="show_detail_tf"></div>
+
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="save_edit();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_transfer_detail" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transfer_item ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_item">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_tranup1"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ยกของขึ้นรถ</h2>
+        <p style="color:red; text-align:center">**แสกนสินค้าที่ต้องการโอน**</p>
+        <div id="item_show_edit"></div>
+        <input type="number" name="amount_edit_item" id="amount_edit_item" placeholder="จำนวน">
+        <input type="hidden" id="stock_show_edit">
+
+
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transfer_detail" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="transfer_edit();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">ตกลง</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_tranup1" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <div id="tree" class="tree"></div>
+    </div>
 </div>
 <!--//////////////////////////////////////////////////////////// transferup ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transferup">
@@ -214,15 +300,35 @@
         <label>เลือกชั้นเก็บปลายทาง</label>
         <div id="shtypevanup"></div>
 
+        <div id="show_tflist"></div>
 
+    </div>
 
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="tranfer_up_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_tranup" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
 
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transferup_detail ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferup_detail">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_transferup_detail"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
 
-            <fieldset data-role="controlgroup">
-                <legend>summery</legend>
-                <p>...........................................</p>
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ยกของขึ้นรถ</h2>
+        <div id="show_hdetail_tfup"></div>
+        <div id="show_detail_tfup"></div>
 
-            </fieldset>
 
     </div>
 
@@ -230,12 +336,11 @@
         <div data-role="navbar">
             <ul>
                 <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li onclick="tranfer_up_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
-                <li onclick="save_up();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
+                <li onclick="save_down();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel_tranup" data-display="overlay">
+    <div data-role="panel" id="myPanel_transferup_detail" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <div id="tree" class="tree"></div>
@@ -301,13 +406,40 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
                 <li onclick="tranfer_down_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
-                <li onclick="save_down();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
             </ul>
         </div>
     </div>
     <div data-role="panel" id="myPanel_trandown" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transferdown_detail ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transferdown_detail">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_transferdown_detail"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ยกของลงรถ</h2>
+        <div id="show_hdetail_tfdown"></div>
+        <div id="show_detail_tfdown"></div>
+
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="save_down();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_transferdown_detail" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <div id="tree" class="tree"></div>
