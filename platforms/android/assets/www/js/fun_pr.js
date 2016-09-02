@@ -26,90 +26,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
                              break;
        }
 });
-            $.ajax({
-                   url: localStorage.api_url_server+localStorage.api_url_prlist,
-                   data: '{"type":"1","search":"'+localStorage.username+'"}',
-                   contentType: "application/json; charset=utf-8",
-                   dataType: "json",
-                   type: "POST",
-                   cache: false,
-                   success: function(result){
-                        //console.log(JSON.stringify(result));
-                        var prl = JSON.stringify(result);
-                        //console.log(prl);
-                        var prlp = prl.split(":[");
-                        var str = prlp[1].split("]}");
-                        prl = "["+str[0]+"]";
-                        var js = jQuery.parseJSON(prl);
-                        var prlist = "";
-                        var wdate = "";
-                        var x = 1;
-                        $.each(js, function(key, val) {
-                           //console.log(val['docNo']);
 
-                           prlist += '<label class="todo-listview" data-view-id="';
-                           prlist += "'"+val['docNo']+"'";
-                           prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
-                           prlist += "'"+val['docNo']+"'";
-                           prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
-                           prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
-
-                           var wantDate = val['wantDate'];
-                           if(wantDate!=null){
-                           wdate = val['wantDate'].split("-");
-                           day = wdate[2];
-                           month = wdate[1];
-                           year = (parseInt(wdate[0])+543);
-
-                           wantDate = day+"/"+month+"/"+year;
-                           }
-
-                           prlist += '<div class="ui-block-b">'+wantDate+'</div>';
-                           prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
-                               switch (val['status']){
-                                    case 1 : var status = "<img src='images/Warning.png' width='24'>";
-                                            break;
-                                    case 2 : var status = "<img src='images/quick.png' width='24'>";
-                                            break;
-                                    default: var status = "";
-                                            break;
-                               }
-                                    var today = new Date();
-                                    var dd = today.getDate();
-                                    var mm = today.getMonth()+1; //January is 0!
-
-                                    var yyyy = today.getFullYear();
-                                    if(dd<10){
-                                        dd='0'+dd
-                                    }
-                                    if(mm<10){
-                                        mm='0'+mm
-                                    }
-                                    var n = yyyy+'-'+mm+'-'+dd;
-                                   //console.log(n);
-                                   switch (val['docDate']){
-                                        case n :
-                                               status += "<img src='images/New.png' width='24'>";
-                                               break;
-                                   }
-
-                           prlist += '<div class="ui-block-d">'+status+'</div>';
-                           prlist += '</div></label></a><hr>';
-                            x++;
-                        });
-                        document.getElementById("prlist").innerHTML = prlist;
-
-                        //console.log(JSON.stringify(js));
-
-                      //  $.mobile.changePage("#pagepr");
-                           },
-                        error: function (error){
-                        //console.log(JSON.stringify(error));
-                        alertify.error("api qserver can't connect!!");
-                       // $.mobile.changePage("#pagepr");
-                   }
-
-                   });
 function additems(barcode){
                             console.log("function additems "+barcode);
                              console.log(document.getElementById("DocNo").value);
@@ -255,6 +172,22 @@ function rslogin(result){
 }
 
 function prlist(){
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
+
             $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_prlist,
                    data: '{"type":"1","search":"'+localStorage.username+'"}',
@@ -263,19 +196,32 @@ function prlist(){
                    type: "POST",
                    cache: false,
                    success: function(result){
-                        //console.log(JSON.stringify(result));
+                   console.log(JSON.stringify(result.listData));
+                   if(JSON.stringify(result.listData)!="[]"){
                         var prl = JSON.stringify(result);
                         console.log(prl);
-                        var prlp = prl.split(":[");
-                        var str = prlp[1].split("]}");
-                        prl = "["+str[0]+"]";
-                        var js = jQuery.parseJSON(prl);
                         var prlist = "";
                         var wdate = "";
                         var x = 1;
-                        $.each(js, function(key, val) {
+                        $.each(result.listData, function(key, val) {
                            //console.log(val['docNo']);
-
+                           var wantDate = val['wantDate'];
+                            if(wantDate==null){
+                                $.ajax({
+                                       url: localStorage.api_url_server+"NPInventoryWs/pr/cancelPR",
+                                       data: '{"accessToken": "","docNo": "'+val['docNo']+'","userID": "'+localStorage.username+'","isCancel": "1"}',
+                                       contentType: "application/json; charset=utf-8",
+                                       dataType: "json",
+                                       type: "POST",
+                                       cache: false,
+                                       success: function(isCancel){
+                                       console.log(isCancel);
+                                       },
+                                       error: function (error){
+                                       console.log(error);
+                                       }
+                                   });
+                           }else{
                            prlist += '<label class="todo-listview" data-view-id="';
                            prlist += "'"+val['docNo']+"'";
                            prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
@@ -283,7 +229,6 @@ function prlist(){
                            prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
                            prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
 
-                           var wantDate = val['wantDate'];
                            if(wantDate!=null){
                            wdate = val['wantDate'].split("-");
                            day = wdate[2];
@@ -291,8 +236,6 @@ function prlist(){
                            year = (parseInt(wdate[0])+543);
 
                            wantDate = day+"/"+month+"/"+year;
-                           }else{
-                            cancelPR(DocNo)
                            }
 
                            prlist += '<div class="ui-block-b">'+wantDate+'</div>';
@@ -327,17 +270,19 @@ function prlist(){
                            prlist += '<div class="ui-block-d">'+status+'</div>';
                            prlist += '</div></label></a><hr>';
                             x++;
+                           }
                         });
                         document.getElementById("prlist").innerHTML = prlist;
-                        //alert("refrech!!");
-                        //console.log(JSON.stringify(js));
-
-                      //  $.mobile.changePage("#pagepr");
-                           },
-                        error: function (error){
+                        $.mobile.changePage("#pagepr",{transition: 'slidefade'});
+                     }else{
+                        alertify.alert("ไม่มีข้อมูลใบ PR ค้าง สำหรับผู้ใช้งานนี้ !!");
+                        document.getElementById("prlist").innerHTML = "";
+                        $.mobile.changePage("#pagepr",{transition: 'slidefade'});
+                     }
+                   },
+                   error: function (error){
                         console.log(JSON.stringify(error));
                         alertify.error("api qserver can't connect!!");
-                       // $.mobile.changePage("#pagepr");
                    }
 
                    });
@@ -349,7 +294,7 @@ $(document).on('taphold', '.todo-listview', function() {
       var link_name = $(this).attr('data-view-id');
       var link_id = $(this).attr('data-row-id');
       var $popUp = $("<div/>").popup({
-        dismissible: true,
+        dismissible: false,
 
         //theme: "a",
         transition: "pop",
@@ -373,9 +318,23 @@ $(document).on('taphold', '.todo-listview', function() {
     $popUp.popup('open').enhanceWithin();
 
     });
-
 function cancelPR(Docno){
-  //alert(Docno);
+
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
 $.ajax({
     url: localStorage.api_url_server+"NPInventoryWs/pr/cancelPR",
     data: '{"accessToken": "","docNo": "'+Docno+'","userID": "'+localStorage.username+'","isCancel": "1"}',
@@ -385,7 +344,89 @@ $.ajax({
     cache: false,
     success: function(isCancel){
     console.log(isCancel);
-        prlist();
+    $.ajax({
+           url: localStorage.api_url_server+localStorage.api_url_prlist,
+           data: '{"type":"1","search":"'+localStorage.username+'"}',
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           type: "POST",
+           cache: false,
+           success: function(result){
+               //console.log(JSON.stringify(result));
+               var prl = JSON.stringify(result);
+               //console.log(prl);
+               var prlp = prl.split(":[");
+               var str = prlp[1].split("]}");
+               prl = "["+str[0]+"]";
+               var js = jQuery.parseJSON(prl);
+               var prlist = "";
+               var wdate = "";
+               var x = 1;
+                  $.each(js, function(key, val) {
+                  //console.log(val['docNo']);
+
+                  prlist += '<label class="todo-listview" data-view-id="';
+                  prlist += "'"+val['docNo']+"'";
+                  prlist += '" data-row-id="'+x+'" id="'+x+'"><a href="#" onclick="prdetail(';
+                  prlist += "'"+val['docNo']+"'";
+                  prlist += ')" ><div class="ui-grid-c" style="text-align:center; font-size:14px;">';
+                  prlist += '<div class="ui-block-a" data-view-id="1">'+val['docNo']+'</div>';
+
+                  var wantDate = val['wantDate'];
+                  if(wantDate!=null){
+                  wdate = val['wantDate'].split("-");
+                  day = wdate[2];
+                  month = wdate[1];
+                  year = (parseInt(wdate[0])+543);
+
+                  wantDate = day+"/"+month+"/"+year;
+                  }
+
+                  prlist += '<div class="ui-block-b">'+wantDate+'</div>';
+                  prlist += '<div class="ui-block-c">'+val['diffDate']+' วัน</div>';
+                  switch (val['status']){
+                      case 1 : var status = "<img src='images/Warning.png' width='24'>";
+                               break;
+                      case 2 : var status = "<img src='images/quick.png' width='24'>";
+                               break;
+                      default: var status = "";
+                               break;
+                  }
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth()+1; //January is 0!
+
+                    var yyyy = today.getFullYear();
+                    if(dd<10){
+                        dd='0'+dd
+                    }
+                    if(mm<10){
+                        mm='0'+mm
+                    }
+                    var n = yyyy+'-'+mm+'-'+dd;
+                  //console.log(n);
+                  switch (val['docDate']){
+                      case n :
+                               status += "<img src='images/New.png' width='24'>";
+                               break;
+                  }
+
+                           prlist += '<div class="ui-block-d">'+status+'</div>';
+                           prlist += '</div></label></a><hr>';
+                            x++;
+                        });
+                        document.getElementById("prlist").innerHTML = prlist;
+
+                        //console.log(JSON.stringify(js));
+
+                       $.mobile.changePage("#pagepr");
+                           },
+                   error: function (error){
+                        console.log(JSON.stringify(error));
+                       // $.mobile.changePage("#pagepr");
+                   }
+
+                   });
     },
     error: function(error){
         console.log(JSON.stringify(error));
@@ -398,6 +439,23 @@ $.ajax({
 
 function backdetail(){
     console.log("backlink");
+
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
+
     var Docno = document.getElementById("DocNo").value;
      $.ajax({
             url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
@@ -438,7 +496,22 @@ function backdetail(){
 
 function prdetail(DocNo){
     //alert(DocNo);
-    //document.getElementById("LDocNo").value = DocNo;
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
+
     $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
                        data: '{"type":"1","searchDocno":"'+DocNo+'"}',
@@ -459,6 +532,8 @@ function prdetail(DocNo){
                             var dif = "";
                             var ite = 1;
                             var detail = "";
+                            var venID = "";
+                            var venName = "";
 
                            console.log(JSON.stringify(js));
                             var today = new Date();
@@ -476,7 +551,13 @@ function prdetail(DocNo){
                             console.log(n);
                             var state = "";
                            $.each(js, function(key, val) {
-
+                               if(val['apcode']!=null){
+                                    venID = val['apcode'];
+                                    venName = val['apname'];
+                               }else{
+                                    venID = "รายการอาจไม่สมบูรณ์";
+                                    venName = "-";
+                               }
                                switch (val['status']){
                                     case 1 : state = "<img src='images/Warning.png' width='24'> ค้าง";
                                             break;
@@ -540,6 +621,8 @@ function prdetail(DocNo){
                             document.getElementById("diffdate").innerHTML = dif;
 
                             document.getElementById("prldetail").innerHTML = detail;
+                            document.getElementById("vendorID").innerHTML = venID;
+                            document.getElementById("vendorName").innerHTML = venName;
 
                             $.mobile.changePage("#listpr");
                                },
@@ -560,7 +643,7 @@ $(document).on('taphold', '.todo-detailitem', function() {
       var link_id = $(this).attr('id');
       var data = link_name.split("/");
       var $popUp = $("<div/>").popup({
-        dismissible: true,
+        dismissible: false,
 
         //theme: "a",
         transition: "pop",
@@ -577,7 +660,7 @@ $(document).on('taphold', '.todo-detailitem', function() {
     console.log(link_name);
     console.log('#'+link_id);
     $("<a>", {
-    text: "Cancel",
+    text: "Hold",
     href: "#",
     onclick: "MyItemdetail('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
     }).appendTo($popUp);
@@ -587,6 +670,22 @@ $(document).on('taphold', '.todo-detailitem', function() {
     });
 
 function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
+
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
     console.log("detailItem "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:1");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
@@ -722,7 +821,7 @@ $(document).on('taphold', '.todo-detailitem-hold', function() {
       var link_id = $(this).attr('id');
       var data = link_name.split("/");
       var $popUp = $("<div/>").popup({
-        dismissible: true,
+        dismissible: false,
 
         //theme: "a",
         transition: "pop",
@@ -749,6 +848,22 @@ $(document).on('taphold', '.todo-detailitem-hold', function() {
 
     });
 function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
+
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
     console.log("detailItem "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:'0'");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
@@ -879,8 +994,24 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
 
 
 function clicksubmit(){
-    console.log("clickadditem");
 
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
+
+    console.log("clickadditem");
     console.log(document.getElementById("DocNo").value);
     var DocNo = document.getElementById("DocNo").value;
     var no = document.getElementById("noitems").value;
@@ -888,7 +1019,6 @@ function clicksubmit(){
     var grade = document.getElementById("gradeitem").value;
     var cnt = document.getElementById("citem").value;
     var units = document.getElementById("units").value;
-    console.log('{"docNo":"'+DocNo+'","itemCode":"'+no+'","itemName":"'+name+'","unitcode":"'+units+'","qty":"'+cnt+'","isCancel":"0"}');
     console.log(no);
    if(no=="null"){
           alertify.alert("รหัสสินค้านี้เป็นค่า null ไม่สามารถบันทึกได้ กรุณาสแกนสินค้าอื่น ๆ ");
@@ -929,6 +1059,7 @@ function clicksubmit(){
                                                                               var detail = "";
                                                                               var ite = 1;
                                                                               console.log(JSON.stringify(obj.listItem));
+
                                                                                     $.each(obj.listItem, function(key, val) {
                                                                                     itemno = val['itemcode'];
                                                                                     itemname = val['itemname'];
@@ -1013,7 +1144,22 @@ function clicksubmit(){
 }
 
 function sumdetail(){
-console.log(localStorage.username);
+
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
 $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
            data: '{"type":"1","search":"'+localStorage.username+'"}',
@@ -1026,13 +1172,13 @@ $.ajax({
                 var DocNo = result.docno;
                 document.getElementById("titelpr").innerHTML = '<img src="images/PRicon.png"><b>'+result.docno+'</b>';
                 document.getElementById("DocNo").value = DocNo;
-                var sel = 'วันที่ต้องการ :<select id="defdate" name="date">';
+                var sel = 'วันที่ต้องการ :<select id="defdate" data-role="none" class="whselect">';
                     sel += '<option value="1">1 วัน</option>';
                     sel += '<option value="3">3 วัน</option>';
                     sel += '<option value="5">5 วัน</option>';
                     sel += '<option value="7">7 วัน</option></select>';
+                document.getElementById("defdate1").innerHTML = sel;
                 document.getElementById("discript").value = "";
-                document.getElementById("switch").checked = false;
 
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
@@ -1104,6 +1250,21 @@ $.ajax({
 
 function pluspr(){
 
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
     var Docno = document.getElementById("DocNo").value;
     var apCode = document.getElementById("apCodeven").value;
     console.log(Docno);
@@ -1254,14 +1415,12 @@ function pluspr(){
 
 $(document).on('taphold', '.todo-itemview-hold', function() {
        // console.log("DEBUG - Go popup");
-       console.log('hold');
-      var link_name = $(this).attr('data-item-id');
+       console.log('hold plus item');
+    var link_name = $(this).attr('data-item-id');
       var link_id = $(this).attr('data-itemrow-id');
       var data = link_name.split("/");
       var $popUp = $("<div/>").popup({
-        dismissible: true,
-
-        //theme: "a",
+        dismissible: false,
         transition: "pop",
         arrow: "b",
         positionTo: '#'+link_id
@@ -1276,7 +1435,7 @@ $(document).on('taphold', '.todo-itemview-hold', function() {
     console.log(link_name);
     console.log('#'+link_id);
     $("<a>", {
-    text: "hold",
+    text: "Hold",
     href: "#",
     onclick: "MyItem('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
     }).appendTo($popUp);
@@ -1284,7 +1443,25 @@ $(document).on('taphold', '.todo-itemview-hold', function() {
     $popUp.popup('open').enhanceWithin();
 
     });
+
 function MyItem(DocNo, itemcode, itemname, qty, unitcode){
+
+            var $ipop = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($ipop);
+              $ipop.popup('open');
+
     //alert("cancel "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:'1'");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
@@ -1304,10 +1481,6 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                         cache: false,
                         success: function(result){
                             var prl = JSON.stringify(result);
-                            var prlp = prl.split(":[");
-                            var str = prlp[1].split("]}");
-                            prl = "["+str[0]+"]";
-                            var js = jQuery.parseJSON(prl);
                             var itemno = "";
                             var itemname = "";
                             var cnt = "";
@@ -1315,7 +1488,7 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                             var sitemno = "";
                             var detail = "";
                             var ite = 1;
-                                $.each(js, function(key, val) {
+                                $.each(result.listItem, function(key, val) {
                                 itemno = val['itemcode'];
                                 itemname = val['itemname'];
                                 cnt = val['qty']+" "+val['unitcode'];
@@ -1380,9 +1553,7 @@ $(document).on('taphold', '.todo-itemview', function() {
       var link_id = $(this).attr('data-itemrow-id');
       var data = link_name.split("/");
       var $popUp = $("<div/>").popup({
-        dismissible: true,
-
-        //theme: "a",
+        dismissible: false,
         transition: "pop",
         arrow: "b",
         positionTo: '#'+link_id
@@ -1407,6 +1578,22 @@ $(document).on('taphold', '.todo-itemview', function() {
     });
 
 function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
+
+            var $popUp = $("<div>").popup({
+              dismissible: false,
+              theme: "b",
+              positionto: "window",
+              transition: "flip",
+              }).css({
+                'background': '#F8F8FF',
+                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                'width' : 100
+              });;
+              $("<img>", {
+              src: "images/loading.gif"
+              }).appendTo($popUp);
+              $popUp.popup('open');
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
            data: '{"docNo":"'+DocNo+'","itemCode":"'+itemcode+'","itemName":"'+itemname+'","unitcode":"'+unitcode+'","qty":"'+qty+'","isCancel":"0"}',
@@ -1517,6 +1704,7 @@ function searchapcode(){
 }
 
 function addapcode(textven, name){
+
     console.log(textven);
     console.log(name);
     document.getElementById("apCodevendor").innerHTML = '<a href="#vendor" data-rel="popup" class="ui-btn ui-icon-search ui-btn-icon-right">'+textven+'<br>'+name+'</a>';
