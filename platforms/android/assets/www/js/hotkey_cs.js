@@ -11,6 +11,7 @@ document.addEventListener("keydown", function(event) {
                             $.mobile.changePage('#shelves',{transition: 'slidefade',reverse: true});
                             break;
                     case 13 :
+                            savedata();
                             console.log("update IS");
                             break;
                 }

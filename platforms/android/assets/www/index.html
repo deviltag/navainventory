@@ -138,7 +138,7 @@
             </a></div>
             <div class="col-xs-6 col-md-6"><a href="javascript:rewh()" data-transition="slidefade">
                 <div><img src="images/searchitem.png" class="main_menu"><br><b>searchitem(6)</b></div>
-                </a>
+            </a>
             </div>
         </div>
     </div>
@@ -240,11 +240,37 @@
         <div data-role="navbar">
             <ul>
                 <li onclick="checkstatus();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li onclick="save_edit();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">บันทึก</a></li>
             </ul>
         </div>
     </div>
     <div data-role="panel" id="myPanel_transfer_detail" data-display="overlay">
+        <h2>Overlay Panel</h2><hr>
+
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transfer_details ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_details">
+    <div data-role="none" id="header" >
+        <a href="#myPanel_transfer_details"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div  data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">ใบโอนสินค้า</h2>
+        <div id="show_hdetail_tfs"></div>
+        <div id="show_detail_tfs"></div>
+
+
+    </div>
+
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transferlist" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_transfer_details" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <div id="tree" class="tree"></div>
@@ -257,7 +283,7 @@
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
-        <h2 class="sub_title">ยกของขึ้นรถ</h2>
+        <h2 class="sub_title">รายละเอียดสินค้า</h2>
         <p style="color:red; text-align:center">**แสกนสินค้าที่ต้องการโอน**</p>
         <div id="item_show_edit"></div>
         <input type="number" name="amount_edit_item" id="amount_edit_item" placeholder="จำนวน">
@@ -368,7 +394,7 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#transferup" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="check_cancel();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
                 <li onclick="submit_transferup();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">ตกลง</a></li>
             </ul>
         </div>
@@ -468,7 +494,7 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#transferdown" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="check_cancel();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
                 <li onclick="submit_transferdown();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">ตกลง</a></li>
             </ul>
         </div>
@@ -1250,6 +1276,15 @@
         <label style="clear:both;"><div id="title"><b>วันที่ต้องการ</b></div><div id="wantdate"></div></label>
         <label style="clear:both;"><div id="title"><b>สถานะ</b></div><div id="status"></div></label>
         <label style="clear:both;"><div id="title"><b>อายุใบ PR</b></div><div id="diffdate"></div></label>
+        <label style="clear:both;"><div id="title"><b>เจ้าหนี้</b></div><div id="vendorID"></div></label>
+        <label style="clear:both;"> <div class="ui-grid-a" >
+            <div class="ui-block-a" id="title">
+                <b>ชื่อเจ้าหนี้</b>
+            </div>
+            <div class="ui-block-b">
+                <span id="vendorName"></span>
+            </div>
+        </div></label>
 
 
         <hr>
@@ -1283,18 +1318,15 @@
     <div  data-role="main" class="ui-content" id="main" style="margin-bottom:20%;">
 
         <label style="font-size:20px;"><span id="titelpr"></span><br><img src="images/newpr.png" width="22"> รายการสินค้า</label>
-        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-c" style="text-align:center;">
+        <label style="border-bottom:1px solid black; padding:2%;"><div class="ui-grid-b" style="text-align:center;">
             <b><div class="ui-block-a" style="width:30%">
                 รหัสสินค้า
             </div>
-                <div class="ui-block-b" style="width:25%">
+                <div class="ui-block-b" style="width:50%">
                     ชื่อสินค้า
                 </div>
-                <div class="ui-block-c" style="width:25%">
+                <div class="ui-block-c" style="width:20%">
                     จำนวน
-                </div>
-                <div class="ui-block-d" style="width:15%">
-                    Range
                 </div></b>
         </div>
         </label>
@@ -1302,9 +1334,9 @@
         <label style="border-bottom:1px dashed black; padding:2%; color:red; text-align:center">
             <h5>** SCANBARCODE เพื่อเพิ่มรายการสินค้า **</h5>
         </label>
-        <label>
+        <label id="defdate1">
             วันที่ต้องการ :
-            <select id="defdate" name="date">
+            <select id="defdate" name="date" data-role="none" class="whselect">
                 <option value="1">1 วัน</option>
                 <option value="3">3 วัน</option>
                 <option value="5">5 วัน</option>
@@ -1467,7 +1499,7 @@
             </div>
         </label>
 
-        <label style="text-align:center; border-bottom:1px gray dashed;" onclick="editstock()">
+        <label style="text-align:center; border-bottom:1px gray dashed;">
             <div class="ui-grid-d">
                 <div class="ui-block-a">
                     0001
@@ -1526,55 +1558,6 @@
     </div>
 </div>
 <!--////////////////////////////////////////////////////////////page stock detail ////////////////////////////////////////////////////////////////-->
-
-
-<!--////////////////////////////////////////////////////////////page stock edit ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="stockedit">
-    <div data-role="none" id="header">
-        <a href="#myPanel_stockedit"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
-    </div>
-
-    <div  data-role="main" class="ui-content" id="main">
-
-        <label style="font-size:24px;"><img src="images/stock1.png" width="32"><b>ระบบนับสต๊อกสินค้า</b></label>
-        <label style="font-size:18px; padding-left:5%;"><img src="images/warehouse.png">&nbsp;<span id="wh2"></span></label><hr>
-        <div id="itemcnt" style="margin-bottom: 20%;">
-            <label>ชั้นเก็บ : <span id="ECTshelves"></span>
-                <input type="hidden" name="shelves" readonly id="Eshel" size="50">
-            </label>
-            <label>รหัสสินค้า : <span id="ECTitemno"></span>
-                <input type="hidden" name="itemno" readonly id="EitemNo">
-            </label>
-            <label>ชื่อสินค้า : <span id="ECTitemname"></span>
-                <input type="hidden" name="itemname" readonly id="EitemsName">
-            </label>
-            <label>จำนวน :
-                <input type="number" name="count" id="Ecounts">
-            </label>
-            <label>หน่วยนับ : <span id="ECTunit"></span>
-                <input type="hidden" name="unit" id="ECunit">
-            </label>
-
-        </div>
-
-    </div>
-
-
-    <div data-role="footer" id="footer">
-        <div data-role="navbar">
-            <ul>
-                <li><a href="#countstock" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav">ย้อนกลับ</a></li>
-                <li onclick="savedata()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
-            </ul>
-        </div>
-    </div>
-    <div data-role="panel" id="myPanel_stockedit" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <div id="tree" class="tree"></div>
-    </div>
-</div>
-<!--////////////////////////////////////////////////////////////page stock edit ////////////////////////////////////////////////////////////////-->
 
 <!--////////////////////////////////////////////////////////////page stock shelves ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="shelves">
@@ -1748,31 +1731,31 @@
 
             <label for="api8">api PR List</label>
             <input type="text" name="api8" id="api8">
-            <input type="hidden" id="api8_s" value="NPInventoryWs/pr/prList">
+            <input type="hidden" id="api8_s" value="NPInventoryWs/V1/pr/prList">
 
             <label for="api9">api PR Detail</label>
             <input type="text" name="api9" id="api9">
-            <input type="hidden" id="api9_s" value="NPInventoryWs/pr/prDetail">
+            <input type="hidden" id="api9_s" value="NPInventoryWs/V1/pr/prDetail">
 
             <label for="api10">api insertPR</label>
             <input type="text" name="api10" id="api10">
-            <input type="hidden" id="api10_s" value="NPInventoryWs/pr/insertPR">
+            <input type="hidden" id="api10_s" value="NPInventoryWs/V1/pr/insertPR">
 
             <label for="api11">api PRGenDocno</label>
             <input type="text" name="api11" id="api11">
-            <input type="hidden" id="api11_s" value="NPInventoryWs/pr/PRGenDocno">
+            <input type="hidden" id="api11_s" value="NPInventoryWs/V1/inven/genDocno">
 
             <label for="api12">api search item pr</label>
             <input type="text" name="api12" id="api12">
-            <input type="hidden" id="api12_s" value="NPInventoryWs/pr/searchItem">
+            <input type="hidden" id="api12_s" value="NPInventoryWs/V1/inven/searchItem">
 
-             <label for="api13">api list receive</label>
-             <input type="text" name="api13" id="api13">
-             <input type="hidden" id="api13_s" value="NPReceiveWs/rc/listdocno">
+            <label for="api13">api list receive</label>
+            <input type="text" name="api13" id="api13">
+            <input type="hidden" id="api13_s" value="NPReceiveWs/rc/listdocno">
 
-             <label for="api14">api delete receive doc</label>
-             <input type="text" name="api14" id="api14">
-             <input type="hidden" id="api14_s" value="NPReceiveWs/rc/cancel">
+            <label for="api14">api delete receive doc</label>
+            <input type="text" name="api14" id="api14">
+            <input type="hidden" id="api14_s" value="NPReceiveWs/rc/cancel">
 
 
 
