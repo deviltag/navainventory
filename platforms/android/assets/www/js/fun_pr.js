@@ -39,10 +39,10 @@ function additems(barcode){
                                            type: "POST",
                                            cache: false,
                                            success: function(result){
-
+                                            console.log(JSON.stringify(result));
                                                 var itemcode = "";
                                                 var itemName = "";
-                                                var range = "";
+                                                var rank = "";
                                                 var cntitem = "";
                                                 var units = "";
                                                 var apcode = "";
@@ -53,7 +53,7 @@ function additems(barcode){
                                                     $.each(result.listPRBarcode, function(key, val) {
                                                            itemcode = val['itemcode'];
                                                            itemName = val['itemname'];
-                                                           range = val['range'];
+                                                           rank = val['range'];
                                                            cntitem = val['qty'];
                                                            units = val['unitcode'];
                                                            apcode = val['apCode'];
@@ -65,7 +65,7 @@ function additems(barcode){
                                                     $.each(result.listBarcode, function(key, val) {
                                                         itemcode = val['itemcode'];
                                                         itemName = val['itemname'];
-                                                        range = val['range'];
+                                                        rank = val['range'];
                                                         cntitem = val['qty'];
                                                         units = val['unitcode'];
                                                         apcode = val['apCode'];
@@ -100,7 +100,7 @@ function additems(barcode){
                                                 document.getElementById("DocNo").value = DocNo;
                                                 document.getElementById("noitems").value = itemcode;
                                                 document.getElementById("nameitems").value = itemName;
-                                                document.getElementById("gradeitem").value = range;
+                                                document.getElementById("gradeitem").value = rank;
                                                 document.getElementById("units").value = units;
                                                 if(cntitem==0){
                                                     document.getElementById("citem").value = "";
@@ -110,7 +110,7 @@ function additems(barcode){
 
                                                 document.getElementById("Tnoitem").innerHTML = itemcode;
                                                 document.getElementById("TNameitem").innerHTML = itemName;
-                                                document.getElementById("Tgrade").innerHTML = range;
+                                                document.getElementById("Tgrade").innerHTML = rank;
                                                 document.getElementById("Tunit").innerHTML = units;
                                            },
                                            error: function (error) {
@@ -208,7 +208,7 @@ function prlist(){
                            var wantDate = val['wantDate'];
                             if(wantDate==null){
                                 $.ajax({
-                                       url: localStorage.api_url_server+"NPInventoryWs/pr/cancelPR",
+                                       url: localStorage.api_url_server+"NPInventoryWs/V1/pr/cancelPR",
                                        data: '{"accessToken": "","docNo": "'+val['docNo']+'","userID": "'+localStorage.username+'","isCancel": "1"}',
                                        contentType: "application/json; charset=utf-8",
                                        dataType: "json",
@@ -274,15 +274,18 @@ function prlist(){
                         });
                         document.getElementById("prlist").innerHTML = prlist;
                         $.mobile.changePage("#pagepr",{transition: 'slidefade'});
+                        $popUp.popup('close');
                      }else{
                         alertify.alert("ไม่มีข้อมูลใบ PR ค้าง สำหรับผู้ใช้งานนี้ !!");
                         document.getElementById("prlist").innerHTML = "";
                         $.mobile.changePage("#pagepr",{transition: 'slidefade'});
+                        $popUp.popup('close');
                      }
                    },
                    error: function (error){
                         console.log(JSON.stringify(error));
                         alertify.error("api qserver can't connect!!");
+                        $popUp.popup('close');
                    }
 
                    });
@@ -336,7 +339,7 @@ function cancelPR(Docno){
               }).appendTo($popUp);
               $popUp.popup('open');
 $.ajax({
-    url: localStorage.api_url_server+"NPInventoryWs/pr/cancelPR",
+    url: localStorage.api_url_server+"NPInventoryWs/V1/pr/cancelPR",
     data: '{"accessToken": "","docNo": "'+Docno+'","userID": "'+localStorage.username+'","isCancel": "1"}',
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -420,9 +423,11 @@ $.ajax({
                         //console.log(JSON.stringify(js));
 
                        $.mobile.changePage("#pagepr");
+                       $popUp.popup('close');
                            },
                    error: function (error){
                         console.log(JSON.stringify(error));
+                        $popUp.popup('close');
                        // $.mobile.changePage("#pagepr");
                    }
 
@@ -430,6 +435,7 @@ $.ajax({
     },
     error: function(error){
         console.log(JSON.stringify(error));
+        $popUp.popup('close');
     }
 
 });
@@ -472,21 +478,29 @@ function backdetail(){
                      var js = jQuery.parseJSON(prl);
                      console.log(js);
                      if(JSON.stringify(js)=="[]"){
-                        if (confirm('รายการนี้ไม่สมบูรณ์ ท่านต้องการยกเลิกการทำรายการนี้หรือไม่ ?')) {
-                        var Docno = document.getElementById("DocNo").value;
-                        cancelPR(Docno);
-                        console.log("cancel pr");
-                        }else{
-                           $.mobile.changePage("#pluspr",{transition: 'slidefade',reverse: true});
-                        }
+                       alertify.confirm("รายการนี้ไม่สมบูรณ์ ท่านต้องการยกเลิกการทำรายการนี้หรือไม่ ?", function (e){
+                            if (e) {
+                                   var Docno = document.getElementById("DocNo").value;
+                                   cancelPR(Docno);
+                                   console.log("cancel pr");
+                                   $popUp.popup('close');// user clicked "ok"
+                            } else {
+                                   $.mobile.changePage("#pluspr",{transition: 'slidefade',reverse: true});
+                                   $popUp.popup('close');
+                            }
+                        });
                      }else{
-                        if (confirm('ใบ PR นี้มีสินค้าอยู่ ท่านต้องกายกเลิกหรือไม่ ?')) {
-                        var Docno = document.getElementById("DocNo").value;
-                        cancelPR(Docno);
-                        console.log("cancel pr");
-                        }else{
-                            $.mobile.changePage("pluspr",{transition: 'slidefade',reverse: true});
-                        }
+                        alertify.confirm("ใบ PR นี้มีสินค้าอยู่ ท่านต้องกายกเลิกหรือไม่ ?", function (e){
+                            if (e){
+                                var Docno = document.getElementById("DocNo").value;
+                                cancelPR(Docno);
+                                console.log("cancel pr");
+                                $popUp.popup('close');
+                            }else{
+                                $.mobile.changePage("pluspr",{transition: 'slidefade',reverse: true});
+                                $popUp.popup('close');
+                            }
+                        });
                      }
             }
      });
@@ -604,7 +618,7 @@ function prdetail(DocNo){
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
-                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>Range</b></div><div class='ui-block-b'>"+val['range']+"</div>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>rank</b></div><div class='ui-block-b'>"+val['rank']+"</div>";
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
@@ -625,10 +639,12 @@ function prdetail(DocNo){
                             document.getElementById("vendorName").innerHTML = venName;
 
                             $.mobile.changePage("#listpr");
+                            $popUp.popup('close');
                                },
                        error: function (error){
                             console.log(error);
                             $.mobile.changePage("#pagepr");
+                            $popUp.popup('close');
                        }
 
            });
@@ -642,7 +658,7 @@ $(document).on('taphold', '.todo-detailitem', function() {
       var link_data = $(this).attr('data-detail-id');
       var link_id = $(this).attr('id');
       var data = link_name.split("/");
-      var $popUp = $("<div/>").popup({
+      var $hold = $("<div/>").popup({
         dismissible: false,
 
         //theme: "a",
@@ -663,9 +679,9 @@ $(document).on('taphold', '.todo-detailitem', function() {
     text: "Hold",
     href: "#",
     onclick: "MyItemdetail('"+data[0]+"','"+data[1]+"', '"+data[2]+"', "+data[3]+", '"+data[4]+"');"
-    }).appendTo($popUp);
+    }).appendTo($hold);
 
-    $popUp.popup('open').enhanceWithin();
+    $hold.popup('open').enhanceWithin();
 
     });
 
@@ -777,7 +793,7 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
-                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>Range</b></div><div class='ui-block-b'>"+val['range']+"</div>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>rank</b></div><div class='ui-block-b'>"+val['rank']+"</div>";
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
@@ -796,10 +812,12 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                             document.getElementById("prldetail").innerHTML = detail;
 
                             $.mobile.changePage("#listpr");
+                            $popUp.popup('close');
                                },
                        error: function (error){
                             console.log(error);
                             $.mobile.changePage("#pagepr");
+                            $popUp.popup('close');
                        }
 
            });
@@ -954,7 +972,7 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
-                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>Range</b></div><div class='ui-block-b'>"+val['range']+"</div>";
+                                detail += "<div class='ui-block-a' style='text-align:right; padding-right:10%;'><b>rank</b></div><div class='ui-block-b'>"+val['rank']+"</div>";
                                 detail += "</div>";
 
                                 detail += "<div class='ui-grid-a' style='margin-top:2%; margin-left:0;'>";
@@ -973,16 +991,19 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                             document.getElementById("prldetail").innerHTML = detail;
 
                             $.mobile.changePage("#listpr");
+                            $popUp.popup('close');
                                },
                        error: function (error){
                             console.log(error);
                             $.mobile.changePage("#pagepr");
+                            $popUp.popup('close');
                        }
 
            });
                   },
                   error: function (error){
                          console.log(error);
+                         $popUp.popup('close');
                   }
 
     });
@@ -1022,14 +1043,17 @@ function clicksubmit(){
     console.log(no);
    if(no=="null"){
           alertify.alert("รหัสสินค้านี้เป็นค่า null ไม่สามารถบันทึกได้ กรุณาสแกนสินค้าอื่น ๆ ");
-          $ .mobile.changePage("#additem");
+          $.mobile.changePage("#additem");
+          $popUp.popup('close');
    }else if(no==""){
        alertify.alert("ท่านยังไม่ได้ scan สินค้า กรุณา scan สินค้าด้วย");
        $ .mobile.changePage("#additem");
+       $popUp.popup('close');
    }else{
         if(cnt == ""){
             alertify.alert("ท่านยังไม่ได้กรอกจำนวนสินค้า กรุณากรอกจำนวนให้ถูกต้อง!!");
             $.mobile.changePage("#additem");
+            $popUp.popup('close');
         }else{
 
 
@@ -1054,7 +1078,7 @@ function clicksubmit(){
                                                                               var itemno = "";
                                                                               var itemname = "";
                                                                               var cnt = "";
-                                                                              var range = "";
+                                                                              var rank = "";
                                                                               var sitemno = "";
                                                                               var detail = "";
                                                                               var ite = 1;
@@ -1064,7 +1088,7 @@ function clicksubmit(){
                                                                                     itemno = val['itemcode'];
                                                                                     itemname = val['itemname'];
                                                                                     cnt = val['qty']+" "+val['unitcode'];
-                                                                                    range = val['range'];
+                                                                                    rank = val['range'];
 
                                                                                     console.log(itemno);
                                                                                     if(itemno==null){
@@ -1095,13 +1119,11 @@ function clicksubmit(){
                                                                                         }
                                                                                         console.log(str1);
                                                                                             detail += '<label '+blur+' data-item-id="'+val['docNo']+'/'+itemno+'/'+val['itemname']+'/'+val['qty']+'/'+val['unitcode']+'" data-itemrow-id="i'+ite+'" id="i'+ite+'"><a href="#">';
-                                                                                            detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
+                                                                                            detail += "<div class='ui-grid-b' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
                                                                                             detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
-                                                                                            detail += "<div class='ui-block-b' style='width:28%;'>"+itemname+"</div>";
-                                                                                            detail += "<div class='ui-block-c' style='width:18%;'>"+cnt+'</div>';
-                                                                                            detail += "<div class='ui-block-d' style='width:24%;'>"+range+"</div>";
+                                                                                            detail += "<div class='ui-block-b' style='width:50%;'>"+itemname+"</div>";
+                                                                                            detail += "<div class='ui-block-c' style='width:20%;'>"+cnt+'</div>';
                                                                                             detail += "</div></a></label>";
-
                                                                                             ite++;
 
                                                                                         });
@@ -1111,16 +1133,19 @@ function clicksubmit(){
                                                                                         //alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units+",DocPR :"+DocNo);
 
                                                                                         $.mobile.changePage("#pluspr");
+                                                                                        $popUp.popup('close');
                                                                                             },
                                                                                         error: function (error){
                                                                                             console.log(error);
                                                                                             $.mobile.changePage("#pluspr");
+                                                                                            $popUp.popup('close');
                                                                                         }
 
                                                                        });
                                            },
                                            error: function (error){
                                                 console.log(error);
+                                                $popUp.popup('close');
                                            }
 
                                });
@@ -1136,8 +1161,7 @@ function clicksubmit(){
                 document.getElementById("Tgrade").innerHTML = "";
                 document.getElementById("Tunit").innerHTML = "";
                 $("#itemdetail").show();
-
-
+                $popUp.popup('close');
         }
 
    }
@@ -1196,7 +1220,7 @@ $.ajax({
                        var itemno = "";
                        var itemname = "";
                        var cnt = "";
-                       var range = "";
+                       var rank = "";
                        var sitemno = "";
                        var detail = "";
                        var ite = 1;
@@ -1204,7 +1228,7 @@ $.ajax({
                              itemno = val['itemcode'];
                              itemname = val['itemname'];
                              cnt = val['qty']+" "+val['unitcode'];
-                             range = val['range'];
+                             rank = val['range'];
                              sitemno = Math.ceil(itemno.length/10);
                              var s = 0;
                              var l = 8;
@@ -1216,11 +1240,10 @@ $.ajax({
                              }
                              console.log(str1);
                                   detail += '<label class="todo-itemview" data-item-id="'+itemno+'" data-itemrow-id="i'+ite+'" id="i'+ite+'"><a href="#">';
-                                  detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
+                                  detail += "<div class='ui-grid-b' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
                                   detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
                                   detail += "<div class='ui-block-b' style='width:28%;'>"+itemname+"</div>";
                                   detail += "<div class='ui-block-c' style='width:18%;'>"+cnt+'</div>';
-                                  detail += "<div class='ui-block-d' style='width:24%;'>"+range+"</div>";
                                   detail += "</div></a></label>";
 
                                   ite++;
@@ -1230,10 +1253,12 @@ $.ajax({
                                 document.getElementById("sumitem").innerHTML = detail;
 
                                 $.mobile.changePage("#pluspr");
+                                $popUp.popup('close');
                                    },
                            error: function (error){
                                 console.log(error);
                                 $.mobile.changePage("#pluspr");
+                                $popUp.popup('close');
                            }
 
                });
@@ -1241,6 +1266,7 @@ $.ajax({
            error: function (error){
                 console.log(error);
                 $.mobile.changePage("#pagepr");
+                $popUp.popup('close');
            }
 
     });
@@ -1290,6 +1316,7 @@ function pluspr(){
                 console.log(js);
                 if(JSON.stringify(js)=="[]"){
                     alertify.alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
+                    $popUp.popup('close');
                 }else{
                         var wday = document.getElementById("defdate").value;
                         var discript = document.getElementById("discript").value;
@@ -1300,10 +1327,11 @@ function pluspr(){
                             priority = 0;
                         }
                         if(discript==""||apCode == "null"){
-                            alertify.alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+                            alertify.alert("กรุณากรอกข้อมูลให้ครบถ้วน!!");
+                            $popUp.popup('close');
                         }else{
                                 $.ajax({
-                                           url: localStorage.api_url_server+"NPInventoryWs/pr/updatePR",
+                                           url: localStorage.api_url_server+"NPInventoryWs/V1/pr/updatePR",
                                            data: '{"docNo": "'+Docno+'","workman":"'+localStorage.username+'","wantday":"'+wday+'","description":"'+discript+'","priority":"'+priority+'","isCancel":"0","apCode":"'+apCode+'"}',
                                            contentType: "application/json; charset=utf-8",
                                            dataType: "json",
@@ -1386,22 +1414,26 @@ function pluspr(){
                                                         });
                                                         document.getElementById("prlist").innerHTML = prlist;
                                                         localStorage.apcode="";
+                                                        $popUp.popup('close');
                                                         //console.log(JSON.stringify(js));
 
                                                       //  $.mobile.changePage("#pagepr");
                                                            },
                                                    error: function (error){
                                                         console.log(JSON.stringify(error));
+                                                        $popUp.popup('close');
                                                        // $.mobile.changePage("#pagepr");
                                                    }
 
                                                    });
                                            alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว");
                                            $.mobile.changePage("#pagepr");
+                                           $popUp.popup('close');
                                            },
                                            error: function (error){
                                              console.log(JSON.stringify(error));
                                              $.mobile.changePage("#pluspr");
+                                             $popUp.popup('close');
                                            }
 
                                    });
@@ -1484,7 +1516,7 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                             var itemno = "";
                             var itemname = "";
                             var cnt = "";
-                            var range = "";
+                            var rank = "";
                             var sitemno = "";
                             var detail = "";
                             var ite = 1;
@@ -1492,7 +1524,7 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                                 itemno = val['itemcode'];
                                 itemname = val['itemname'];
                                 cnt = val['qty']+" "+val['unitcode'];
-                                range = val['range'];
+                                rank = val['range'];
                                 console.log(itemno);
                                 if(itemno==null){
                                     sitemno=itemno;
@@ -1519,11 +1551,10 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                                 }
                                 console.log(str1);
                                 detail += '<label '+blur+' data-item-id="'+val['docNo']+'/'+itemno+'/'+val['itemname']+'/'+val['qty']+'/'+val['unitcode']+'" data-itemrow-id="i'+ite+'" id="i'+ite+'"><a href="#">';
-                                detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
+                                detail += "<div class='ui-grid-b' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
                                 detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
-                                detail += "<div class='ui-block-b' style='width:28%;'>"+itemname+"</div>";
-                                detail += "<div class='ui-block-c' style='width:18%;'>"+cnt+'</div>';
-                                detail += "<div class='ui-block-d' style='width:24%;'>"+range+"</div>";
+                                detail += "<div class='ui-block-b' style='width:50%;'>"+itemname+"</div>";
+                                detail += "<div class='ui-block-c' style='width:20%;'>"+cnt+'</div>';
                                 detail += "</div></a></label>";
                                 ite++;
 
@@ -1532,16 +1563,19 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                             document.getElementById("sumitem").innerHTML = detail;
 
                             $.mobile.changePage("#pluspr");
+                            $ipop.popup('close');
                             },
                             error: function (error){
                                  console.log(error);
                                  $.mobile.changePage("#pluspr");
+                                 $ipop.popup('close');
                             }
 
                         });
                   },
                   error: function (error){
                          console.log(error);
+                         $ipop.popup('close');
                   }
 
     });
@@ -1619,7 +1653,7 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
                             var itemno = "";
                             var itemname = "";
                             var cnt = "";
-                            var range = "";
+                            var rank = "";
                             var sitemno = "";
                             var detail = "";
                             var ite = 1;
@@ -1627,7 +1661,7 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
                                  itemno = val['itemcode'];
                                  itemname = val['itemname'];
                                  cnt = val['qty']+" "+val['unitcode'];
-                                 range = val['range'];
+                                 rank = val['range'];
                                  sitemno = Math.ceil(itemno.length/10);
                                  var s = 0;
                                  var l = 8;
@@ -1644,11 +1678,10 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
                                  }
                                     console.log(str1);
                                     detail += '<label '+blur+' data-item-id="'+val['docNo']+'/'+itemno+'/'+val['itemname']+'/'+val['qty']+'/'+val['unitcode']+'" data-itemrow-id="i'+ite+'" id="i'+ite+'"><a href="#">';
-                                    detail += "<div class='ui-grid-c' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
+                                    detail += "<div class='ui-grid-b' style='border-bottom:1px dashed black; padding:2%; text-align:center; font-size:14px;'>";
                                     detail += "<div class='ui-block-a' style='width:30%;'>"+str1+"</div>";
-                                    detail += "<div class='ui-block-b' style='width:28%;'>"+itemname+"</div>";
-                                    detail += "<div class='ui-block-c' style='width:18%;'>"+cnt+'</div>';
-                                    detail += "<div class='ui-block-d' style='width:24%;'>"+range+"</div>";
+                                    detail += "<div class='ui-block-b' style='width:50%;'>"+itemname+"</div>";
+                                    detail += "<div class='ui-block-c' style='width:20%;'>"+cnt+'</div>';
                                     detail += "</div></a></label>";
 
                                         ite++;
@@ -1657,10 +1690,12 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
 
                     document.getElementById("sumitem").innerHTML = detail;
                     $.mobile.changePage("#pluspr");
+                    $popUp.popup('close');
                     },
                     error: function (error){
                            console.log(error);
                            $.mobile.changePage("#pluspr");
+                           $popUp.popup('close');
                     }
                 });
            }
@@ -1671,7 +1706,7 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
 function searchapcode(){
     var valapCode = document.getElementById("vender").value;
     $.ajax({
-           url: localStorage.api_url_server+"NPInventoryWs/pr/searchVendor",
+           url: localStorage.api_url_server+"NPInventoryWs/V1/pr/searchVendor",
            data: '{"search":"'+valapCode+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",

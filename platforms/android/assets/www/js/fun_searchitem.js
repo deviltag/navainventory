@@ -11,7 +11,11 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
           page = $(this)[0].activeElement.id;
        });
         switch(page){
-                    case "searchitem" :
+                    case "searchitem" : itemProfile(localStorage.barcode);
+                                    break;
+                    }
+});
+function itemProfile(bcitem){
                                         var valwh = document.getElementById("valwh").value;
                                         var tiwh = "";
                                         var itemdetail = "";
@@ -35,8 +39,8 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                           $popUp.popup('open');
 
                                          $.ajax({
-                                                url: localStorage.api_url_server+"NPInventoryWs/pr/searchWH",
-                                                data: '{"accessToken":"","search":"'+localStorage.barcode+'"}',
+                                                url: localStorage.api_url_server+"NPInventoryWs/V1/is/searchWH",
+                                                data: '{"accessToken":"","search":"'+bcitem+'"}',
                                                 contentType: "application/json; charset=utf-8",
                                                 dataType: "json",
                                                 type: "POST",
@@ -52,7 +56,7 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                             });
                                                             document.getElementById("de-wh").innerHTML = "<b>คลัง : </b>&nbsp;&nbsp;"+whName+" <i> "+whLoca+" </i>";
                                                             document.getElementById("de-wh").style.textAlign = "left";
-                                                            document.getElementById("valwh").value =  localStorage.barcode;
+                                                            document.getElementById("valwh").value =  bcitem;
                                                             $("#bt-wh").hide();
                                                             $("#bt-item").show();
                                                             $("#de-wh").show();
@@ -95,8 +99,8 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                           $popUp.popup('open');
 
                                         $.ajax({
-                                                url: localStorage.api_url_server+"NPInventoryWs/pr/itemProfile",
-                                                data: '{"accessToken":"","whCode":"'+document.getElementById("valwh").value+'","itemCode":"'+schitem.scanResult+'"}',
+                                                url: localStorage.api_url_server+"NPInventoryWs/V1/it/itemProfile",
+                                                data: '{"accessToken":"","whCode":"'+document.getElementById("valwh").value+'","itemCode":"'+bcitem+'"}',
                                                 //data: '{"accessToken":"","whCode":"A44","itemCode":"8851123218016"}',
                                                 contentType: "application/json; charset=utf-8",
                                                 dataType: "json",
@@ -123,7 +127,7 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                     var js = result.itemProfileList;
                                                     //console.log(js);
                                                     $.each(js, function(key, val) {
-                                                        bcCode = schitem.scanResult;
+                                                        bcCode = bcitem;
                                                         itemCode = val['itemCode'];
                                                         itemName = val['itemName'];
                                                         unitCode = val['unitCode'];
@@ -300,11 +304,7 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                         });
 
                                         }
-
-
-                                    break;
-                    }
-});
+}
 
 function rewh(){
 

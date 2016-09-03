@@ -24,7 +24,7 @@ switch(page){
 
 function searchWHis(result){
     $.ajax({
-           url: localStorage.api_url_server+"NPInventoryWs/pr/searchWH",
+           url: localStorage.api_url_server+"NPInventoryWs/V1/is/searchWH",
            data: '{"accessToken":"","search":"'+result+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -44,7 +44,7 @@ function searchWHis(result){
 
                       $.ajax({
                              url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
-                             data: '{"type":"3","search":"58089"}',
+                             data: '{"type":"3","search":"'+localStorage.username+'"}',
                              contentType: "application/json; charset=utf-8",
                              dataType: "json",
                              type: "POST",
@@ -60,7 +60,6 @@ function searchWHis(result){
 
                       });
                       document.getElementById("wh").innerHTML = "คลัง : "+whName+"  "+whLocal;
-                      document.getElementById("wh2").innerHTML = "คลัง : "+whName+"  "+whLocal;
                       document.getElementById("whvalue").value = whName;
 
                       $.mobile.changePage("#countstock");
@@ -76,7 +75,7 @@ function searchWHis(result){
 function searchSHis(shelfCode){
     var stockWH = document.getElementById("whvalue").value;
     $.ajax({
-        url: localStorage.api_url_server+"NPInventoryWs/pr/searchShelf",
+        url: localStorage.api_url_server+"NPInventoryWs/V1/is/searchShelf",
         data: '{"accessToken":"38850025531385","searchWH":"'+stockWH+'","searchShelf":"'+shelfCode+'"}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -170,6 +169,7 @@ function searchItem(itemCode){
                  document.getElementById("itemsName").value = itemName;
                  document.getElementById("Cunit").value = units;
                  document.getElementById("counts").value = cntitem;
+
                  $('#counts').focus();
 
                  $.mobile.changePage("#countitem");
@@ -202,7 +202,7 @@ function savestock(){
     console.log('result:[{"docNo":"'+DocNo+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
 
          $.ajax({
-                 url: localStorage.api_url_server+"NPInventoryWs/pr/insertIS",
+                 url: localStorage.api_url_server+"NPInventoryWs/V1/is/insertIS",
                  data: '{"docNo":"'+DocNo+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
@@ -234,28 +234,24 @@ function savestock(){
 }
 
 function savedata(){
-
-}
-
-function editstock(){
-       document.getElementById("Eshel").value = "WH1";
-       document.getElementById("EitemNo").value = "5122456333";
-       document.getElementById("EitemsName").value = "M150";
-       document.getElementById("Ecounts").value = "56";
-       document.getElementById("ECunit").value = "ขวด";
-
-       document.getElementById("ECTshelves").innerHTML = "WH1";
-       document.getElementById("ECTitemno").innerHTML = "5122456333";
-       document.getElementById("ECTitemname").innerHTML = "M150";
-       document.getElementById("ECTunit").innerHTML = "ขวด";
-   $.mobile.changePage("#stockedit");
-}
-
-function deleteitem(){
-    if(confirm("คุณต้องการลบรายการนับสินค้ารายการนี้ใช่หรือไม่!!")){
-        alert("ลบเรียบร้อย!!");
-        $.mobile.changePage("#countstock");
-    }else{
-        $.mobile.changePage("#stockedit");
-    }
+    var DocNo = document.getElementById("valdocIS").value;
+    var UserID = localStorage.username;
+    console.log('Update IS :{"DocNo":"'+DocNo+'","userID":"'+UserID+'","isCancel":"0"}');
+    $.ajax({
+        url: "http://s01xp.dyndns.org:8080/NPInventoryWs/V1/is/confirmIS",
+        data: '{"docNo":"'+DocNo+'","user":"'+UserID+'","isCancel":"0"}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        type: "POST",
+        cache: false,
+        success: function(result){
+            console.log(JSON.stringify(result));
+            $.mobile.changePage("#stock",{transition: 'slidefade'});
+        },
+        error: function(err){
+            alertify.alert("Update IS ERROR!!");
+            $.mobile.changePage("#countitem",{transition: 'slidefade'});
+        }
+    });
+    $.mobile.changePage("#stock",{transition: 'slidefade'});
 }
