@@ -738,9 +738,9 @@ $.ajax({
                           for(var i = 0;i<count;i++){
                           //tfd_show += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">';
                             if(tf_h.data[i].qty !="0"){
-                                    tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                                    tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="u'+tf_h.data[i].itemCode+'" id="u'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }else{
-                                    tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
+                                    tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
                             }
                            //tfd_show += "<p>"+tf_h.data[i].itemCode+"</a>";
                            tfd_show += '<div class="ui-block-a">'+tf_h.data[i].itemName+'</div>';
@@ -763,7 +763,7 @@ $.ajax({
 
 }
 
-//=================================================================================================searchdetailup==============================================================================
+//=================================================================================================searchdetaildown==============================================================================
 function search_detaildown(tfNo){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
@@ -788,11 +788,11 @@ $.ajax({
                           tfd_show += '</div></label><hr>';
 
                           for(var i = 0;i<count;i++){
-                          if(tf_h.data[i].qty =="0"){
-                                tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfer blur" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
-                            }else{
-                                tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" style="text-align:center; font-size:12px;">';
-                            }
+                          if(tf_h.data[i].qty !="0"){
+                               tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="d'+tf_h.data[i].itemCode+'" id="d'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                          }else{
+                               tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
+                          }
                            //tfd_show += "<p>"+tf_h.data[i].itemCode+"</a>";
                            tfd_show += '<div class="ui-block-a">'+tf_h.data[i].itemName+'</div>';
                            tfd_show += '<div class="ui-block-b"> '+tf_h.data[i].qty+' '+tf_h.data[i].unitCode+' </div>';
@@ -884,9 +884,9 @@ $.ajax({
 
                           for(var i = 0;i<count;i++){
                             if(tf_h.data[i].isCancel=="1"){
-                          tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfer blur" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                          tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfer blur" data-uncancelitem-id="'+tf_h.data[i].barCode+'" data-uncancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }else{
-                          tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                          tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="e'+tf_h.data[i].itemCode+'" id="e'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }
                           //class=" data-delete-id="'+jsl[i].recNo+'" data-deleterow-id="i'+jsl[i].recNo+'" data-delete-poRefNo="'+jsl[i].poRefNo+'" id="i'+jsl[i].recNo+'" onclick="show_receive_detail(';
                            //tfd_show += "<p>"+tf_h.data[i].itemCode+"</a>";
@@ -1123,7 +1123,6 @@ $.ajax({
        'color': '#fff',
        'background': 'red'
        });
-        console.log(link_name);
         console.log('#'+link_id);
         $("<a>", {
         text: "Cancel",
@@ -1140,7 +1139,7 @@ $.ajax({
     $(document).on('taphold', '.todo-cancelitemtransfer', function() {
            // console.log("DEBUG - Go popup");
           var link_name = $(this).attr('cancelitem-id');
-          var link_id = $(this).attr('data-cancelitemrow-id');
+          var link_ids = $(this).attr('data-cancelitemrow-id');
           var icode = $(this).attr('iceode');
           var bcode = $(this).attr('bceode');
           var fromwh = $(this).attr('whfrom');
@@ -1156,7 +1155,7 @@ $.ajax({
             //theme: "a",
             transition: "pop",
             arrow: "b",
-            positionTo: '#'+link_id
+            positionTo: '#'+link_ids
             }).on("popupafterclose", function () {
         //remove the popup when closing
         $(this).remove();
@@ -1165,8 +1164,7 @@ $.ajax({
        'color': '#fff',
        'background': 'red'
        });
-        console.log(link_name);
-        console.log('#'+link_id);
+        console.log('#'+link_ids);
         $("<a>", {
         text: "Hold",
         href: "#",
@@ -1180,8 +1178,8 @@ $.ajax({
 
     $(document).on('taphold', '.todo-uncancelitemtransfer', function() {
            // console.log("DEBUG - Go popup");
-          var link_name = $(this).attr('cancelitem-id');
-          var link_id = $(this).attr('data-cancelitemrow-id');
+          var link_name = $(this).attr('uncancelitem-id');
+          var link_id = $(this).attr('data-uncancelitemrow-id');
           var icode = $(this).attr('iceode');
           var bcode = $(this).attr('bceode');
           var fromwh = $(this).attr('whfrom');
@@ -1206,7 +1204,6 @@ $.ajax({
        'color': '#fff',
        'background': 'green'
        });
-        console.log(link_name);
         console.log('#'+link_id);
         $("<a>", {
         text: "return",
@@ -1217,13 +1214,13 @@ $.ajax({
         $popUp.popup('open').enhanceWithin();
 
         });
-
+//uncancel_item_transfer
 //========================================================= hold to uncancel item transfer =================================================================
 
     $(document).on('taphold', '.todo-uncancelitemtransfernosave', function() {
            // console.log("DEBUG - Go popup");
-          var link_name = $(this).attr('cancelitem-id');
-          var link_id = $(this).attr('data-cancelitemrow-id');
+          var link_name = $(this).attr('uncancelitemnosave-id');
+          var link_idn = $(this).attr('data-uncancelitemrownosave-id');
           var icode = $(this).attr('iceode');
           var bcode = $(this).attr('bceode');
           var $popUp = $("<div/>").popup({
@@ -1232,7 +1229,7 @@ $.ajax({
             //theme: "a",
             transition: "pop",
             arrow: "b",
-            positionTo: '#'+link_id
+            positionTo: '#'+link_idn
             }).on("popupafterclose", function () {
         //remove the popup when closing
         $(this).remove();
@@ -1241,8 +1238,7 @@ $.ajax({
        'color': '#fff',
        'background': 'green'
        });
-        console.log(link_name);
-        console.log('#'+link_id);
+        console.log('#'+link_idn);
         $("<a>", {
         text: "return",
         href: "#",
@@ -1266,11 +1262,12 @@ function uncancel_nosave(b){
             get_item_transfer("up",b);
             $.mobile.changePage("#transferup_item",{transition: 'slidefade'});
             document.getElementById("amount_up_item").value = "";
-
-        }else if($.mobile.activePage.is('#transferup')){
+            amountup_focus();
+        }else if($.mobile.activePage.is('#transferdown_detail')){
             get_item_transfer("down",b);
             $.mobile.changePage("#transferdown_item",{transition: 'slidefade'});
             document.getElementById("amount_down_item").value = "";
+            amountdown_focus();
         }
     }
 }
