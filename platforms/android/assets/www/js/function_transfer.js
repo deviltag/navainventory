@@ -130,7 +130,7 @@ wh_type_store();
 function wh_type_store(){
 
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchwarehouse",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
                           data: '{"accessToken":"","type":"1","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -165,7 +165,7 @@ $.ajax({
 
 function wh_type_van(){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchwarehouse",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
                           data: '{"accessToken":"","type":"2","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -199,7 +199,7 @@ $.ajax({
 
 function sh_type_van(whcode){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchshelf",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_tf,
                           data: '{"accessToken":"","refCode":"'+whcode+'","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -233,7 +233,7 @@ $.ajax({
 
 function sh_type_store(whcode){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchshelf",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_tf,
                           data: '{"accessToken":"","refCode":"'+whcode+'","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -267,7 +267,7 @@ $.ajax({
 
 function wh_type_machine(){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchwarehouse",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
                           data: '{"accessToken":"","type":"3","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -345,7 +345,7 @@ swhcode = localStorage.transfersdown_from;
 }
 alert(whcode+" , "+swhcode)
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchitemstock",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
                           data: '{"accessToken":"","type":"1","whCode":"'+whcode+'","shelf":"'+swhcode+'","search":"'+bar+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -391,7 +391,7 @@ $.ajax({
 function get_item_transferedit(bar){
 
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchitemstock",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
                           data: '{"accessToken":"","type":"1","whCode":"'+localStorage.fromWHd+'","shelf":"'+localStorage.fromSHd+'","search":"'+bar+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -469,7 +469,7 @@ return false;
 }else{
 if(localStorage.transferstatus=="0"){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/insert",
+                          url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
                           data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -533,7 +533,7 @@ $.ajax({
 function save_up(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/insert",
+                          url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
                           data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -598,7 +598,7 @@ return false;
 }else{
 if(localStorage.transferstatus=="0"){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/insert",
+                          url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
                           data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -661,7 +661,7 @@ $.ajax({
 function save_down(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/insert",
+                          url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
                           data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -714,7 +714,7 @@ $.mobile.changePage("#transferdown",{transition: 'slidefade',reverse: true});
 //=================================================================================================searchdetailup==============================================================================
 function search_detailup(tfNo){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchdetails",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
                           data: '{"accessToken":"","type":"","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -766,7 +766,7 @@ $.ajax({
 //=================================================================================================searchdetailup==============================================================================
 function search_detaildown(tfNo){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchdetails",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
                           data: '{"accessToken":"","type":"0","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -819,7 +819,7 @@ if(type){
 types = type;
 }else{types ="1";}
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/searchdetails",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
                           data: '{"accessToken":"","type":"'+types+'","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -921,7 +921,7 @@ $.ajax({
 
 function search_tf(){
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/search",
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchtlist_tf,
                           data: '{"accessToken":"","type":"1","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -970,7 +970,7 @@ alertify.error("กรุณากรอกจำนวนที่ถูกต�
 return false;
 }else{
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                          url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
                           data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","barCode":"'+localStorage.transfereBarcode+'","itemCode":"'+localStorage.transfereItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.fromWHd+'","fromShelfCode":"'+localStorage.fromSHd+'","toWHCode":"'+localStorage.toWHd+'","toShelfCode":"'+localStorage.toSHd+'","qty":"'+amountedit+'","refNo":"","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -996,7 +996,7 @@ alertify.error("ใบโอนสินค้าถูกบันทึกแ�
 return false;
 }else{
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/cancel",
+                          url: localStorage.api_url_server+""+localStorage.api_url_cancel_tf,
                           data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -1020,7 +1020,7 @@ function cancel_transfer(transferNo,refNo){
 if (confirm('ต้องการยกเลิกใบโอนสินค้าหรือไม่ ??')) {
 
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/cancel",
+                          url: localStorage.api_url_server+""+localStorage.api_url_cancel_tf,
                           data: '{"accessToken":"","docNo":"'+transferNo+'","refNo":"'+refNo+'","userID":"'+localStorage.username+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -1044,7 +1044,7 @@ function cancel_item_transfer(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,ref
 if (confirm('ต้องการยกเลิกสินค้าหรือไม่ ??')) {
 
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                          url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
                           data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -1073,7 +1073,7 @@ function uncancel_item_transfer(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,r
 if (confirm('ต้องการ return สินค้าหรือไม่ ??')) {
 
 $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                          url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
                           data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",

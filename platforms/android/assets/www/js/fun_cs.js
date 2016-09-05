@@ -24,7 +24,7 @@ switch(page){
 
 function searchWHis(result){
     $.ajax({
-           url: localStorage.api_url_server+"NPInventoryWs/V1/is/searchWH",
+           url: localStorage.api_url_server+""+localStorage.api_url_searchwh_is,
            data: '{"accessToken":"","search":"'+result+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -75,7 +75,7 @@ function searchWHis(result){
 function searchSHis(shelfCode){
     var stockWH = document.getElementById("whvalue").value;
     $.ajax({
-        url: localStorage.api_url_server+"NPInventoryWs/V1/is/searchShelf",
+        url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_is,
         data: '{"accessToken":"38850025531385","searchWH":"'+stockWH+'","searchShelf":"'+shelfCode+'"}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -238,7 +238,7 @@ function savedata(){
     var UserID = localStorage.username;
     console.log('Update IS :{"DocNo":"'+DocNo+'","userID":"'+UserID+'","isCancel":"0"}');
     $.ajax({
-        url: "http://s01xp.dyndns.org:8080/NPInventoryWs/V1/is/confirmIS",
+        url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_is+""+localStorage.api_url_confirm_is,
         data: '{"docNo":"'+DocNo+'","user":"'+UserID+'","isCancel":"0"}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",

@@ -1070,7 +1070,7 @@
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#receive_item" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
+                <li onclick="check_back_receive()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">กลับ</a></li>
                 <li onclick="submit_scan()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade" data-direction="reverse">บันทึก</a></li>
             </ul>
         </div>
@@ -1697,10 +1697,11 @@
             <input type="text" name="server_nava" id="server_nava" placeholder="apiserver_nava">
             <input type="hidden" id="apiserver_nava_s" value="http://api.nava.work:8000/">
 
+
             <label for="apilogin">api login</label>
             <input type="text" name="apilogin" id="apilogin">
             <input type="hidden" id="apilogin_s" value="v1/users/login">
-
+            <p>====================================== Receive ======================================</p>
             <label for="api1">api search vender</label>
             <input type="text" name="api1" id="api1">
             <input type="hidden" id="api1_s" value="NPReceiveWs/rc/vendor">
@@ -1729,6 +1730,14 @@
             <input type="text" name="api7" id="api7">
             <input type="hidden" id="api7_s" value="NPReceiveWs/rc/search">
 
+            <label for="api13">api list receive</label>
+            <input type="text" name="api13" id="api13">
+            <input type="hidden" id="api13_s" value="NPReceiveWs/rc/listdocno">
+
+            <label for="api14">api delete receive doc</label>
+            <input type="text" name="api14" id="api14">
+            <input type="hidden" id="api14_s" value="NPReceiveWs/rc/cancel">
+            <p>====================================== PR ======================================</p>
             <label for="api8">api PR List</label>
             <input type="text" name="api8" id="api8">
             <input type="hidden" id="api8_s" value="NPInventoryWs/V1/pr/prList">
@@ -1749,15 +1758,89 @@
             <input type="text" name="api12" id="api12">
             <input type="hidden" id="api12_s" value="NPInventoryWs/V1/inven/searchItem">
 
-            <label for="api13">api list receive</label>
-            <input type="text" name="api13" id="api13">
-            <input type="hidden" id="api13_s" value="NPReceiveWs/rc/listdocno">
+            <label for="api15">api list receive</label>
+            <input type="text" name="api15" id="api15">
+            <input type="hidden" id="api15_s" value="NPInventoryWs/V1/pr/cancelPR">
 
-            <label for="api14">api delete receive doc</label>
-            <input type="text" name="api14" id="api14">
-            <input type="hidden" id="api14_s" value="NPReceiveWs/rc/cancel">
+            <label for="api16">api delete receive doc</label>
+            <input type="text" name="api16" id="api16">
+            <input type="hidden" id="api16_s" value="NPInventoryWs/V1/pr/searchVendor">
+
+            <label for="api33">api updatePR</label>
+            <input type="text" name="api33" id="api33">
+            <input type="hidden" id="api33_s" value="NPInventoryWs/V1/pr/updatePR">
+
+            <p>====================================== stock count ======================================</p>
+            <label for="api17">api searchWH</label>
+            <input type="text" name="api17" id="api17">
+            <input type="hidden" id="api17_s" value="NPInventoryWs/V1/is/searchWH">
+
+            <label for="api18">api searchShelf</label>
+            <input type="text" name="api18" id="api18">
+            <input type="hidden" id="api18_s" value="NPInventoryWs/V1/is/searchShelf">
+
+            <label for="api19">api confirmIS</label>
+            <input type="text" name="api19" id="api19">
+            <input type="hidden" id="api19_s" value="NPInventoryWs/V1/is/confirmIS">
+
+            <!--<label for="api20">api xxx</label>
+            <input type="text" name="api20" id="api20">
+            <input type="hidden" id="api20_s" value="NPInventoryWs/V1/is/xxx">
+
+            <label for="api21">api xxx</label>
+            <input type="text" name="api21" id="api21">
+            <input type="hidden" id="api21_s" value="NPInventoryWs/V1/is/xxx">
+
+            <label for="api22">api xxx</label>
+            <input type="text" name="api22" id="api22">
+            <input type="hidden" id="api22_s" value="NPInventoryWs/V1/is/xxx">
+
+            <label for="api23">api xxx</label>
+            <input type="text" name="api23" id="api23">
+            <input type="hidden" id="api23_s" value="NPInventoryWs/V1/is/xxx">
 
 
+            <label for="api24">api xxx</label>
+            <input type="text" name="api24" id="api24">
+            <input type="hidden" id="api24_s" value="NPInventoryWs/V1/is/xxx">-->
+            <p>====================================== transfer ======================================</p>
+            <label for="api25">api search warehouse</label>
+            <input type="text" name="api25" id="api25">
+            <input type="hidden" id="api25_s" value="NPReceiveWs/trn/searchwarehouse">
+
+            <label for="api26">api search shelf</label>
+            <input type="text" name="api26" id="api26">
+            <input type="hidden" id="api26_s" value="NPReceiveWs/trn/searchshelf">
+
+            <label for="api27">api search item</label>
+            <input type="text" name="api27" id="api27">
+            <input type="hidden" id="api27_s" value="NPReceiveWs/trn/searchitemstock">
+
+            <label for="api28">api insert transfer</label>
+            <input type="text" name="api28" id="api28">
+            <input type="hidden" id="api28_s" value="NPReceiveWs/trn/insert">
+
+            <label for="api29">api manage item</label>
+            <input type="text" name="api29" id="api29">
+            <input type="hidden" id="api29_s" value="NPReceiveWs/trn/manageitem">
+
+            <label for="api30">api search transfer doc</label>
+            <input type="text" name="api30" id="api30">
+            <input type="hidden" id="api30_s" value="NPReceiveWs/trn/search">
+
+            <label for="api31">api search transfer detail</label>
+            <input type="text" name="api31" id="api31">
+            <input type="hidden" id="api31_s" value="NPReceiveWs/trn/searchdetails">
+
+
+            <label for="api32">api cancel receive doc</label>
+            <input type="text" name="api32" id="api32">
+            <input type="hidden" id="api32_s" value="NPReceiveWs/trn/cancel">
+            <p>====================================== item profile ======================================</p>
+
+            <label for="api34">api itemProfile</label>
+            <input type="text" name="api34" id="api34">
+            <input type="hidden" id="api34_s" value="NPInventoryWs/V1/it/itemProfile">
 
         </form>
 

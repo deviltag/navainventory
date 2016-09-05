@@ -213,7 +213,7 @@ function onDeviceReady(){
        }else if($.mobile.activePage.is('#receive_item')){
             $.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_scan')){
-            $.mobile.changePage('#receive_item',{transition: 'slidefade',reverse: true});
+           check_back_receive();
        }else if($.mobile.activePage.is('#receive_show')){
             if(localStorage.receivestatus == "1"){
                 alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");

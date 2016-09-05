@@ -76,7 +76,13 @@ function focus_receive_list(){
  $('#search_receive_doc').focus();
  });
 }
-
+function check_back_receive(){
+if(localStorage.receivestatus=="1"){
+$.mobile.changePage('#receive_show',{transition: 'slidefade',reverse: true});
+}else{
+$.mobile.changePage('#receive_item',{transition: 'slidefade',reverse: true});
+}
+}
 function user_focus(){
  $("#pageone").bind('pageshow', function() {
  $('#username').focus();
@@ -220,7 +226,7 @@ function select_op_vender(get_detail){
                                                                                  po_de += '<p style="color:red; font-size:12px;text-align:center;">** สแกนสินค้าเพื่อรับสินค้า **</p>';
                                                                                  po_de += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  po_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
-                                                                                 po_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                                                                                 po_de += '<div class="ui-block-b"><b>จำนวนค้างรับ</b></div>';
                                                                                  po_de += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
                                                                                  po_de += '<div class="ui-block-d"><b>ราคา</b></div>';
                                                                                  po_de += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
@@ -301,7 +307,7 @@ if(localStorage.receiveNumber){
 
                                                                                  rc_de += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  rc_de += '<div class="ui-block-a"><b>สินค้า</b></div>';
-                                                                                 rc_de += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                                                                                 rc_de += '<div class="ui-block-b"><b>จำนวนค้างรับ</b></div>';
                                                                                  rc_de += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
                                                                                  rc_de += '<div class="ui-block-d"><b>จำนวนรับเข้า</b></div>';
                                                                                  rc_de += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
@@ -416,7 +422,7 @@ function show_receive_detail(r,p){
 
                                                                                  rc_de1 += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  rc_de1 += '<div class="ui-block-a"><b>สินค้า</b></div>';
-                                                                                 rc_de1 += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                                                                                 rc_de1 += '<div class="ui-block-b"><b>จำนวนค้างรับ</b></div>';
                                                                                  rc_de1 += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
                                                                                  rc_de1 += '<div class="ui-block-d"><b>จำนวนรับเข้า</b></div>';
                                                                                  rc_de1 += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
@@ -505,7 +511,7 @@ $.ajax({
 
                                                                                  rc_de_e += '<label><div class="ui-grid-d" style="text-align:center;  font-size:14px;">';
                                                                                  rc_de_e += '<div class="ui-block-a"><b>สินค้า</b></div>';
-                                                                                 rc_de_e += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                                                                                 rc_de_e += '<div class="ui-block-b"><b>จำนวนค้างรับ</b></div>';
                                                                                  rc_de_e += '<div class="ui-block-c"><b>ราคา/หน่วย</b></div>';
                                                                                  rc_de_e += '<div class="ui-block-d"><b>จำนวนรับเข้า</b></div>';
                                                                                  rc_de_e += '<div class="ui-block-e"><b>สถานะ</b></div></div></label><hr>';
@@ -517,7 +523,7 @@ $.ajax({
 
                                                                                  rc_de_e += '<div class="ui-grid-d blur" style="text-align:center; font-size:12px; color:#ccc;">';
                                                                                  }else{
-                                                                                 rc_de_e += '<div class="todo-uncancel_editview ui-grid-d blur" data-uncancel-id="'+js_e[i].barCode+'" data-uncancelrow-id="i'+js_e[i].barCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-unreceive="'+js_e[i].rcQty+'" id="i'+js_e[i].barCode+'" style="text-align:center; font-size:12px;">';
+                                                                                 rc_de_e += '<div class="todo-uncancel_editview ui-grid-d blur" data-uncancel-id="'+js_e[i].itemCode+'" data-uncancelrow-id="i'+js_e[i].itemCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-unreceive="'+js_e[i].rcQty+'" id="i'+js_e[i].itemCode+'" style="text-align:center; font-size:12px;">';
 
                                                                                  //rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
                                                                                  //rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
@@ -528,7 +534,7 @@ $.ajax({
                                                                                  rc_de_e += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">';
                                                                                  }else{
 
-                                                                                 rc_de_e += '<div class="todo-cancel_editview ui-grid-d" data-cancel-id="'+js_e[i].barCode+'" data-cancelrow-id="i'+js_e[i].barCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-receive="'+js_e[i].rcQty+'" id="i'+js_e[i].barCode+'" style="text-align:center; font-size:12px;">';
+                                                                                 rc_de_e += '<div class="todo-cancel_editview ui-grid-d" data-cancel-id="'+js_e[i].itemCode+'" data-cancelrow-id="i'+js_e[i].itemCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-receive="'+js_e[i].rcQty+'" id="i'+js_e[i].itemCode+'" style="text-align:center; font-size:12px;">';
 
                                                                                  //rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
                                                                                  //rc_de += "'"+js[i].barCode+"')";

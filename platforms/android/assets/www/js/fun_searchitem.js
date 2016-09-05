@@ -39,7 +39,7 @@ function itemProfile(bcitem){
                                           $popUp.popup('open');
 
                                          $.ajax({
-                                                url: localStorage.api_url_server+"NPInventoryWs/V1/is/searchWH",
+                                                url: localStorage.api_url_server+""+ localStorage.api_url_searchwh_is,
                                                 data: '{"accessToken":"","search":"'+bcitem+'"}',
                                                 contentType: "application/json; charset=utf-8",
                                                 dataType: "json",
@@ -99,7 +99,7 @@ function itemProfile(bcitem){
                                           $popUp.popup('open');
 
                                         $.ajax({
-                                                url: localStorage.api_url_server+"NPInventoryWs/V1/it/itemProfile",
+                                                url: localStorage.api_url_server+""+localStorage.api_url_profile_it,
                                                 data: '{"accessToken":"","whCode":"'+document.getElementById("valwh").value+'","itemCode":"'+bcitem+'"}',
                                                 //data: '{"accessToken":"","whCode":"A44","itemCode":"8851123218016"}',
                                                 contentType: "application/json; charset=utf-8",

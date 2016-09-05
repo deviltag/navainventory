@@ -208,7 +208,7 @@ function prlist(){
                            var wantDate = val['wantDate'];
                             if(wantDate==null){
                                 $.ajax({
-                                       url: localStorage.api_url_server+"NPInventoryWs/V1/pr/cancelPR",
+                                       url: localStorage.api_url_server+""+localStorage.api_url_cancelPr,
                                        data: '{"accessToken": "","docNo": "'+val['docNo']+'","userID": "'+localStorage.username+'","isCancel": "1"}',
                                        contentType: "application/json; charset=utf-8",
                                        dataType: "json",
@@ -339,7 +339,7 @@ function cancelPR(Docno){
               }).appendTo($popUp);
               $popUp.popup('open');
 $.ajax({
-    url: localStorage.api_url_server+"NPInventoryWs/V1/pr/cancelPR",
+    url: localStorage.api_url_server+""+localStorage.api_url_cancelPr,
     data: '{"accessToken": "","docNo": "'+Docno+'","userID": "'+localStorage.username+'","isCancel": "1"}',
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -1331,7 +1331,7 @@ function pluspr(){
                             $popUp.popup('close');
                         }else{
                                 $.ajax({
-                                           url: localStorage.api_url_server+"NPInventoryWs/V1/pr/updatePR",
+                                           url: localStorage.api_url_server+""+localStorage.api_url_updatepr,
                                            data: '{"docNo": "'+Docno+'","workman":"'+localStorage.username+'","wantday":"'+wday+'","description":"'+discript+'","priority":"'+priority+'","isCancel":"0","apCode":"'+apCode+'"}',
                                            contentType: "application/json; charset=utf-8",
                                            dataType: "json",
@@ -1706,7 +1706,7 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
 function searchapcode(){
     var valapCode = document.getElementById("vender").value;
     $.ajax({
-           url: localStorage.api_url_server+"NPInventoryWs/V1/pr/searchVendor",
+           url: localStorage.api_url_server+""+localStorage.api_url_searchvendorPR,
            data: '{"search":"'+valapCode+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
