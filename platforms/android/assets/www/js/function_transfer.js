@@ -45,6 +45,11 @@ window.addEventListener('native.onscanbarcode', function (t) {
             case "transfer_item" :
                           get_item_transferedit(t.scanResult);
                           break;
+            case "transfer_normal_item" :
+                          get_item_transfer(t.scanResult);
+                          break;
+
+
 
 
        }
@@ -121,11 +126,6 @@ var curr_year = d.getFullYear();
 var date = curr_date + "-" + curr_month
 + "-" + curr_year;
 
-function openwh(){
-
-wh_type_store();
-
-}
 
 function wh_type_store(){
 
@@ -141,8 +141,8 @@ $.ajax({
                           var counts = store.data.length;
 
 
-                          var store_list_up= "<select id='whstore_up' class='whselect' onchange='select_shelfstore(this)'>";
-                          var store_list_down= "<select id='whstore_down' class='whselect'  onchange='select_shelfstore(this)'>";
+                          var store_list_up= "<select id='whstore_up' class='whselect' data-role='none' onchange='select_shelfstore(this)'>";
+                          var store_list_down= "<select id='whstore_down' class='whselect' data-role='none'  onchange='select_shelfstore(this)'>";
                           for(var i = 0;i<counts;i++){
                           store_list_up += "<option value='"+store.data[i].code+"'>"+store.data[i].code+" "+store.data[i].name+"</option>";
                           store_list_down += "<option value='"+store.data[i].code+"'>"+store.data[i].code+" "+store.data[i].name+"</option>";
@@ -175,8 +175,8 @@ $.ajax({
                           console.log("VAN "+JSON.stringify(van));
                           var countv = van.data.length;
 
-                          var van_list_up= "<select id='whvan_up' class='whselect' onchange='select_shelfvan(this)'>";
-                          var van_list_down= "<select id='whvan_down' class='whselect' onchange='select_shelfvan(this)'>";
+                          var van_list_up= "<select id='whvan_up' class='whselect' data-role='none' onchange='select_shelfvan(this)'>";
+                          var van_list_down= "<select id='whvan_down' class='whselect' data-role='none' onchange='select_shelfvan(this)'>";
                           for(var i = 0;i<countv;i++){
                           van_list_up += "<option value='"+van.data[i].code+"'>"+van.data[i].code+" "+van.data[i].location+"</option>";
                           van_list_down += "<option value='"+van.data[i].code+"'>"+van.data[i].code+" "+van.data[i].location+"</option>";
@@ -188,7 +188,7 @@ $.ajax({
                           document.getElementById("whtypevandown").innerHTML = van_list_down;
                             //$popUp1.popup("close");
 
-                            select_shelfvan();
+                            select_shelfstore();
                           },
                           error: function (error){
                           alertify.error(error);
@@ -209,8 +209,8 @@ $.ajax({
                           console.log("vansh "+JSON.stringify(vansh));
                           var countv = vansh.data.length;
 
-                          var vansh_list_up= "<select id='vshelfup' class='whselect'>";
-                          var vansh_list_down= "<select id='vshelfdown' class='whselect'>";
+                          var vansh_list_up= "<select id='vshelfup' data-role='none' class='whselect'>";
+                          var vansh_list_down= "<select id='vshelfdown' data-role='none' class='whselect'>";
                           for(var i = 0;i<countv;i++){
                           vansh_list_up += "<option value='"+vansh.data[i].code+"'>"+vansh.data[i].code+" "+vansh.data[i].name+"</option>";
                           vansh_list_down += "<option value='"+vansh.data[i].code+"'>"+vansh.data[i].code+" "+vansh.data[i].name+"</option>";
@@ -221,7 +221,6 @@ $.ajax({
                           document.getElementById("shtypevanup").innerHTML = vansh_list_up;
                           document.getElementById("shtypevandown").innerHTML = vansh_list_down;
                             //$popUp1.popup("close");
-                            select_shelfstore();
 
                           },
                           error: function (error){
@@ -243,8 +242,8 @@ $.ajax({
                           console.log("storesh "+JSON.stringify(storesh));
                           var countv = storesh.data.length;
 
-                          var storesh_list_up= "<select id='sshelfup' class='whselect'>";
-                          var storesh_list_down= "<select id='sshelfdown' class='whselect'>";
+                          var storesh_list_up= "<select id='sshelfup' data-role='none' class='whselect'>";
+                          var storesh_list_down= "<select id='sshelfdown' data-role='none' class='whselect'>";
                           for(var i = 0;i<countv;i++){
                           storesh_list_up += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
                           storesh_list_down += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
@@ -255,6 +254,7 @@ $.ajax({
                           document.getElementById("shtypestoreup").innerHTML = storesh_list_up;
                           document.getElementById("shtypestoredown").innerHTML = storesh_list_down;
                             //$popUp1.popup("close");
+                            select_shelfvan();
 
                           },
                           error: function (error){
@@ -278,7 +278,7 @@ $.ajax({
 
                           var countv = machine.data.length;
 
-                          var machine_list= "<select id='whmachine' class='whselect'>";
+                          var machine_list= "<select id='whmachine' data-role='none' class='whselect'>";
                           for(var i = 0;i<countv;i++){
                           machine_list += "<option value='"+machine.data[i].code+"'>"+machine.data[i].code+" "+machine.data[i].location+"</option>";
 
@@ -311,6 +311,7 @@ var ss_up = document.getElementById("whstore_down");
 sstore = ss_up.options[ss_up.selectedIndex].value;
 }
 }
+console.log(sstore)
 sh_type_store(sstore);
 }
 //=============================================================================================shelf van=============================================================================
@@ -343,7 +344,7 @@ swhcode = localStorage.transfersup_from;
 whcode = localStorage.transferdown_from;
 swhcode = localStorage.transfersdown_from;
 }
-alert(whcode+" , "+swhcode)
+//alert(whcode+" , "+swhcode)
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
                           data: '{"accessToken":"","type":"1","whCode":"'+whcode+'","shelf":"'+swhcode+'","search":"'+bar+'"}',
@@ -457,7 +458,7 @@ var r = confirm("ต้องการโอนสินค้าจากคล
 }
 //========================================================================== โอนขึ้นรถ ============================================================================
 function submit_transferup(){
-
+alert(localStorage.transferstatus);
 var amountup = document.getElementById("amount_up_item").value;
 var stockup = document.getElementById("stock_show_up").value;
 if(amountup==""||amountup==null){
@@ -480,7 +481,7 @@ $.ajax({
                           localStorage.transferNo = trf_h.docNo;
 
                           $.ajax({
-                                                    url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                                                    url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
                                                     data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
@@ -509,7 +510,7 @@ $.ajax({
 }else{
 //console.log('{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}')
  $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                          url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
                           data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
@@ -609,7 +610,7 @@ $.ajax({
                           localStorage.transferNo = trf_h.docNo;
 
                           $.ajax({
-                                                    url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                                                    url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
                                                     data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_from+'","qty":"'+amountdown+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
@@ -636,7 +637,7 @@ $.ajax({
                           });
 }else{
  $.ajax({
-                          url: localStorage.api_url_server+"NPReceiveWs/trn/manageitem",
+                          url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
                           data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_to+'","qty":"'+amountdown+'","refNo":"","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",

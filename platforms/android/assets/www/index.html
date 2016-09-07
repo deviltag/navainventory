@@ -163,10 +163,10 @@
 
     <div  data-role="main" class="ui-content" id="main">
         <h1 class="title">โอนสินค้า</h1>
-        <a href="#" onclick="search_tf(); openwh();" class="ui-btn ui-corner-all">แสดงใบโอนสินค้า</a>
+        <a href="#" onclick="search_tf();" class="ui-btn ui-corner-all">แสดงใบโอนสินค้า</a>
         <div class="row">
-            <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
-            <div class="col-xs-6 col-md-6" onclick="openwh();"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
+            <div class="col-xs-6 col-md-6" onclick="wh_type_store();"><a href="#transferup" data-transition="slidefade"><div><img src="images/uptruck.png"  class="main_menu"><br><b>ยกของขึ้นรถ(1)</b></div></a></div>
+            <div class="col-xs-6 col-md-6" onclick="wh_type_store();"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
         </div>
         <div class="row">
             <div class="col-xs-6 col-md-6"><a href="#transfer_damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย(3)</b></div></a></div>
@@ -174,7 +174,7 @@
         </div>
         <div class="row">
             <div class="col-xs-6 col-md-6"><a href="#transfer_rtv" data-transition="slidefade"><div><img src="images/vender.png"  class="main_menu"><br><b>โอนสินค้าคืน Vender(5)</b></div></a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transfer_normal" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ(6)</b></div></a></div>
+            <div class="col-xs-6 col-md-6" onclick="wh_normal();"><a href="#" data-transition="slidefade"><div><img src="images/transfer1.png"  class="main_menu"><br><b>โอนแบบปกติ(6)</b></div></a></div>
         </div>
         <br>
         <br>
@@ -197,7 +197,7 @@
 </div><!--//////////////////////////////////////////////////////////// transferlist ////////////////////////////////////////////////////////////////-->
 <div data-role="page" id="transferlist">
     <div data-role="none" id="header" >
-        <a href="#myPanel_transferup"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
+        <a href="#myPanel_transferlist"  data-role="none"><img src="images/grid.png" class="open_panel"></a>
     </div>
 
     <div  data-role="main" class="ui-content" id="main">
@@ -214,7 +214,7 @@
             </ul>
         </div>
     </div>
-    <div data-role="panel" id="myPanel_transferup" data-display="overlay">
+    <div data-role="panel" id="myPanel_transferlist" data-display="overlay">
         <h2>Overlay Panel</h2><hr>
 
         <div id="tree" class="tree"></div>
@@ -335,6 +335,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="wh_type_store();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="refresh" id="footer-nav" data-transition="slidefade">refresh</a></li>
                 <li onclick="tranfer_up_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
             </ul>
         </div>
@@ -435,6 +436,7 @@
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="wh_type_store();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="refresh" id="footer-nav" data-transition="slidefade">refresh</a></li>
                 <li onclick="tranfer_down_select();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
             </ul>
         </div>
@@ -745,75 +747,25 @@
     <div data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
 
-        <fieldset data-role="controlgroup">
-            <legend>summery</legend>
-            <p>...........................................</p>
-
-        </fieldset>
+        เลือกคลังต้นทาง :
+        <div id="wh_normaleup"></div>
+        เลือกชั้นเก็บต้นทาง :
+        <div id="shnormal_up"></div>
+        เลือกคลังปลายทาง :
+        <div id="wh_normaledown"></div>
+        เลือกชั้นเก็บปลายทาง :
+        <div id="shnormal_down"></div>
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transfer_normal_from" class="ui-btn-active ui-state-persist" data-icon="plus" id="footer-nav">โอนสินค้า</a></li>
+                <li onclick="wh_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="refresh" id="footer-nav" data-transition="slidefade">refresh</a></li>
+                <li onclick="transfer_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav">โอนสินค้า</a></li>
             </ul>
         </div>
     </div>
     <div data-role="panel" id="myPanel_trannormal_from" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <div id="tree" class="tree"></div>
-    </div>
-</div>
-<!--//////////////////////////////////////////////////////////// transfer_normal_from ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="transfer_normal_from">
-    <div data-role="none" id="header">
-        <a href="#myPanel_trannormal_from" data-role="none"><img src="images/grid.png" class="open_panel"></a>
-    </div>
-
-    <div data-role="main" class="ui-content" id="main">
-        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
-        <hr class="hr">
-        <h3 style="color:red;">แสกนคลังต้นทาง...</h3>
-        <div id="transfer_nor_from"></div>
-
-    </div>
-    <div data-role="footer" id="footer" data-enhance="false">
-        <div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transfer_normal_to" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav">ต่อไป</a></li>
-            </ul>
-        </div>
-    </div>
-    <div data-role="panel" id="myPanel_trannormal_from" data-display="overlay">
-        <h2>Overlay Panel</h2>
-        <hr>
-        <div id="tree" class="tree"></div>
-    </div>
-</div>
-<!--//////////////////////////////////////////////////////////// transfer_normal_to ////////////////////////////////////////////////////////////////-->
-<div data-role="page" id="transfer_normal_to">
-    <div data-role="none" id="header">
-        <a href="#myPanel_trannormal_to" data-role="none"><img src="images/grid.png" class="open_panel"></a>
-    </div>
-
-    <div data-role="main" class="ui-content" id="main">
-        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
-        <hr class="hr">
-        <h3 style="color:red;">แสกนคลังปลายทาง...</h3>
-        <div id="transfer_nor_to"></div>
-
-    </div>
-    <div data-role="footer" id="footer" data-enhance="false">
-        <div data-role="navbar">
-            <ul>
-                <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transfer_normal_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav">ต่อไป</a></li>
-            </ul>
-        </div>
-    </div>
-    <div data-role="panel" id="myPanel_trannormal_to" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
         <div id="tree" class="tree"></div>
@@ -828,17 +780,16 @@
     <div data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
         <hr class="hr">
-        <form>
 
-            <input type="text" name="product1" placeholder="สินค้า">
-            <input type="number" name="num1" placeholder="จำนวน">
-            <input type="text" name="unit1" placeholder="หน่วยนับ">
+        <p style="color:red; text-align:center">**แสกนสินค้าที่ต้องการโอน**</p>
+        <div id="item_show_n"></div>
+        <input type="number" name="amount_n_item" id="amount_n_item" placeholder="จำนวน">
+        <input type="hidden" id="stock_show_n">
 
-        </form>
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
-        <a href="#transfer_normal" data-transition="slidefade" data-role="none"
-           data-direction="reverse"><img src="images/back1.png" width="32"></a>
+        <li><a href="#transfer_normal" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+        <li onclick="submit_transfer_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">โอนสินค้า</a></li>
     </div>
     <div data-role="panel" id="myPanel_trannormal1" data-display="overlay">
         <h2>Overlay Panel</h2>
@@ -1844,6 +1795,7 @@
 <script src="js/fun_searchitem.js"></script>
 <script src="js/search_vender.js"></script>
 <script src="js/function_transfer.js"></script>
+<script src="js/function_transfer_n.js"></script>
 <script type="text/javascript">app.initialize();</script>
 <script src="js/hotkey.js"></script>
 <script src="js/menutree.js"></script>

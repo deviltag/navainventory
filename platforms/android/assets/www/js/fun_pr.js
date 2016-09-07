@@ -19,6 +19,8 @@ window.addEventListener('native.onscanbarcode', function (pr) {
        switch(page){
             case "pageone" : rslogin(localStorage.barcode);
                             break;
+            case "pagelogin" : rslogin(localStorage.barcode);
+                                        break;
             case "pluspr" : additems(localStorage.barcode);
                              break;
 

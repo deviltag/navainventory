@@ -319,7 +319,7 @@ if(localStorage.receiveNumber){
 
                                                                                  rc_de += '<div class="ui-grid-d blur" style="text-align:center; font-size:12px; color:#ccc;">';
                                                                                  }else{
-                                                                                 rc_de += '<div class="todo-uncancelview ui-grid-d blur" data-uncancel-id="'+js[i].barCode+'" data-uncancelrow-id="i'+js[i].barCode+'" data-unreceive="'+js[i].rcQty+'" id="i'+js[i].barCode+'" style="text-align:center; font-size:12px;">';
+                                                                                 rc_de += '<div class="todo-uncancelview ui-grid-d blur" data-uncancel-id="'+js[i].barCode+'" data-uncancelrow-id="i'+js[i].itemCode+'" data-unreceive="'+js[i].rcQty+'" id="i'+js[i].itemCode+'" style="text-align:center; font-size:12px;">';
 
                                                                                  //rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
                                                                                  //rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
@@ -330,7 +330,7 @@ if(localStorage.receiveNumber){
                                                                                  rc_de += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">';
                                                                                  }else{
 
-                                                                                 rc_de += '<div class="todo-cancelview ui-grid-d" data-cancel-id="'+js[i].barCode+'" data-cancelrow-id="i'+js[i].barCode+'" data-receive="'+js[i].rcQty+'" id="i'+js[i].barCode+'" style="text-align:center; font-size:12px;">';
+                                                                                 rc_de += '<div class="todo-cancelview ui-grid-d" data-cancel-id="'+js[i].barCode+'" data-cancelrow-id="i'+js[i].itemCode+'" data-receive="'+js[i].rcQty+'" id="i'+js[i].itemCode+'" style="text-align:center; font-size:12px;">';
 
                                                                                  //rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
                                                                                  //rc_de += "'"+js[i].barCode+"')";
@@ -523,7 +523,7 @@ $.ajax({
 
                                                                                  rc_de_e += '<div class="ui-grid-d blur" style="text-align:center; font-size:12px; color:#ccc;">';
                                                                                  }else{
-                                                                                 rc_de_e += '<div class="todo-uncancel_editview ui-grid-d blur" data-uncancel-id="'+js_e[i].itemCode+'" data-uncancelrow-id="i'+js_e[i].itemCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-unreceive="'+js_e[i].rcQty+'" id="i'+js_e[i].itemCode+'" style="text-align:center; font-size:12px;">';
+                                                                                 rc_de_e += '<div class="todo-uncancel_editview ui-grid-d blur" data-uncancel-id="'+js_e[i].barCode+'" data-uncancelrow-id="i'+js_e[i].itemCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-unreceive="'+js_e[i].rcQty+'" id="i'+js_e[i].itemCode+'" style="text-align:center; font-size:12px;">';
 
                                                                                  //rc_de += '<div class="ui-grid-d blur" onclick="uncancel_item(';
                                                                                  //rc_de += "'"+js[i].barCode+"','"+js[i].rcQty+"')";
@@ -534,7 +534,7 @@ $.ajax({
                                                                                  rc_de_e += '<div class="ui-grid-d" style="text-align:center; font-size:12px;">';
                                                                                  }else{
 
-                                                                                 rc_de_e += '<div class="todo-cancel_editview ui-grid-d" data-cancel-id="'+js_e[i].itemCode+'" data-cancelrow-id="i'+js_e[i].itemCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-receive="'+js_e[i].rcQty+'" id="i'+js_e[i].itemCode+'" style="text-align:center; font-size:12px;">';
+                                                                                 rc_de_e += '<div class="todo-cancel_editview ui-grid-d" data-cancel-id="'+js_e[i].barCode+'" data-cancelrow-id="i'+js_e[i].itemCode+'" data_receive_no="'+r+'" data_po_no="'+p+'" data-receive="'+js_e[i].rcQty+'" id="i'+js_e[i].itemCode+'" style="text-align:center; font-size:12px;">';
 
                                                                                  //rc_de += '<div class="ui-grid-d" onclick="cancel_item(';
                                                                                  //rc_de += "'"+js[i].barCode+"')";
@@ -714,8 +714,8 @@ var date = curr_date + "/" + curr_month
 if (confirm('ต้องการยกเลิกสินค้านี้หรือไม ?')) {
       $.ajax({
                         url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
-                        data: '{"accessToken":"","docNo":"'+rv_e+'","docDate":"'+date+'","poRefNo":"'+po_e+'","barCode":"'+delete_item+'","qty":"'+rcq+'","isCancel":"1","userID":"admin"}',
-                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                        data: '{"accessToken":"","docNo":"'+rv_e+'","docDate":"'+date+'","poRefNo":"'+po_e+'","barCode":"'+delete_item+'","qty":"'+rcq+'","isCancel":"1","userID":"'+localStorage.username+'"}',
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"'+localStorage.username+'"}
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST",
@@ -747,8 +747,8 @@ var date = curr_date + "/" + curr_month
 if (confirm('ต้องการคืนค่าสินค้านี้หรือไม ?')) {
       $.ajax({
                         url: localStorage.api_url_server+""+localStorage.api_url_manageitem,
-                        data: '{"accessToken":"","docNo":"'+rv_e+'","docDate":"'+date+'","poRefNo":"'+po_e+'","barCode":"'+undelete_item+'","qty":"'+rcq+'","isCancel":"0","userID":"admin"}',
-                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                        data: '{"accessToken":"","docNo":"'+rv_e+'","docDate":"'+date+'","poRefNo":"'+po_e+'","barCode":"'+undelete_item+'","qty":"'+rcq+'","isCancel":"0","userID":"'+localStorage.username+'"}',
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"'+localStorage.username+'"}
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST",
@@ -781,7 +781,7 @@ if (confirm('ต้องการลบใบรับเข้านี้ห�
       $.ajax({
                         url: localStorage.api_url_server+""+localStorage.api_url_delete_receive,
                         data: '{"accessToken":"","docNo":"'+poref_no+'","recNo":"'+delete_deceive_no+'"}',
-                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"admin"}
+                               //{"accessToken":"","docNo":"testnava","docDate":"28/07/2016","poRefNo":"PO5806-0033","barCode":"1000040","qty":"10","userID":"'+localStorage.username+'"}
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         type: "POST",

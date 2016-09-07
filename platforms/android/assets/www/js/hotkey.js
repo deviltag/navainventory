@@ -27,7 +27,7 @@ document.addEventListener("keydown", function(event) {
                             break;
                     case 51: $.mobile.changePage("#stock",{transition: 'slidefade'});
                             break;
-                    case 52: openwh();
+                    case 52: wh_type_store();
                             $.mobile.changePage("#transfer",{transition: 'slidefade'});
                             break;
                     case 53: $.mobile.changePage("#setting",{transition: 'slidefade'});
@@ -39,10 +39,10 @@ document.addEventListener("keydown", function(event) {
                 }
             }else if(page=="transfer"){
                 switch (event.keyCode){
-                    case 49:openwh();
+                    case 49:wh_type_store();
                             $.mobile.changePage("#transferup",{transition: 'slidefade'});
                             break;
-                    case 50:openwh();
+                    case 50:wh_type_store();
                             $.mobile.changePage("#transferdown",{transition: 'slidefade'});
                             break;
                     case 51: $.mobile.changePage("#transfer_damage",{transition: 'slidefade'});
@@ -51,7 +51,7 @@ document.addEventListener("keydown", function(event) {
                             break;
                     case 53: $.mobile.changePage("#transfer_rtv",{transition: 'slidefade'});
                             break;
-                    case 54: $.mobile.changePage("#transfer_normal",{transition: 'slidefade'});
+                    case 54: wh_normal();
                             break;
                     default: $.mobile.changePage("#transfer",{transition: 'slidefade'});
                             break;
