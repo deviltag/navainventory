@@ -59,9 +59,10 @@ function searchWHis(result){
                              }
 
                       });
+
                       document.getElementById("wh").innerHTML = "คลัง : "+whName+"  "+whLocal;
                       document.getElementById("whvalue").value = whName;
-
+                      isList();
                       $.mobile.changePage("#countstock");
                   }
            },
@@ -185,6 +186,7 @@ function searchItem(itemCode){
 function backstock(){
    // alert("back");
     //document.getElementById("whvalue").value
+    isList();
     $.mobile.changePage("#countstock");
     //window.location="#stock";
 }
@@ -254,4 +256,73 @@ function savedata(){
         }
     });
     $.mobile.changePage("#stock",{transition: 'slidefade'});
+}
+
+function isList(){
+    console.log("list is detail");
+    var DocNo = document.getElementById("valdocIS").value;
+    $.ajax({
+            url: "http://s01xp.dyndns.org:8080/NPInventoryWs/V1/is/isList",
+            data: '{"accessToken":"","docNo":"IS342"}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            type: "POST",
+            cache: false,
+            success: function(result){
+                console.log(JSON.stringify(result.listData));
+                var detail = "";
+                $.each(result.listData, function(key,val){
+                itemno = val['itemCode'];
+
+                if(itemno==null){
+                     sitemno=itemno;
+                }else{
+                     sitemno = Math.ceil(itemno.length/6);
+                     console.log(sitemno);
+                }
+                var s = 0;
+                var str1 = "";
+                if(sitemno!=null){
+                  for(var i = 0;i<sitemno;i++){
+                       str1 += itemno.substr(s,6)+"<br>";
+                       s += 6;
+                  }
+                }else{
+                  str1=sitemno;
+                }
+                    detail += '<label style="text-align:center; border-bottom:1px gray dashed;">';
+                         detail += '<div class="ui-grid-d">';
+                          detail += '<div class="ui-block-a">';
+                                 detail += str1;
+                          detail += '</div>';
+                          detail += '<div class="ui-block-b">';
+                                 detail += val['itemName'];
+                          detail += '</div>';
+                          detail += '<div class="ui-block-c">';
+                                 detail += val['whCode'];
+                          detail += '</div>';
+                          detail += '<div class="ui-block-d">';
+                                 detail += val['diffQty']+"  "+val['unitCode'];
+                          detail += '</div>';
+                          detail += '<div class="ui-block-e">';
+
+                            if(val['diffQty']!="0"){
+                                detail += '<img src="images/Alert.png" width="24">';
+                            }else if(val['diffQty']=="0"){
+                                detail += '<img src="images/check.png" width="24">';
+                            }
+
+                          detail += '</div>';
+                         detail += '</div>';
+                    detail += '</label>';
+                });
+
+                document.getElementById("detail").innerHTML = detail;
+               // $.mobile.changePage("#countitem",{transition: 'slidefade'});
+            },
+            error: function(err){
+                alertify.alert("Update IS ERROR!!");
+                $.mobile.changePage("#countitem",{transition: 'slidefade'});
+            }
+        });
 }
