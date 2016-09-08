@@ -116,27 +116,27 @@
     <div data-role="main" class="ui-content" id="main">
         <h1 class="title">Main</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="javascript:persi(1)" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="#pagepr" data-transition="slidefade">
                 <div><img src="images/pr2.png" class="main_menu"><br><b>PR(1)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6"><a href="javascript:persi(2)" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6" onclick="focus_search()"><a href="#receive" data-transition="slidefade">
                 <div><img src="images/product-receive.png" class="main_menu"><br><b>รับสินค้า(2)</b>
                 </div>
             </a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="javascript:persi(3)" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="#stock" data-transition="slidefade">
                 <div><img src="images/stock1.png" class="main_menu"><br><b>นับสต๊อกสินค้า(3)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6"><a href="javascript:persi(4)" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="#transfer" data-transition="slidefade">
                 <div><img src="images/transfer1.png" class="main_menu"><br><b>โอนสินค้า(4)</b></div>
             </a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="javascript:persi(12)" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="#setting" data-transition="slidefade">
                 <div><img src="images/setting.png" class="main_menu"><br><b>setting(5)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6"><a href="javascript:persi(11)" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:rewh()" data-transition="slidefade">
                 <div><img src="images/searchitem.png" class="main_menu"><br><b>searchitem(6)</b></div>
             </a>
             </div>
@@ -788,10 +788,43 @@
 
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
-        <li><a href="#transfer_normal" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-        <li onclick="submit_transfer_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">โอนสินค้า</a></li>
+        <div data-role="navbar">
+            <ul>
+                <li onclick="check_cancel_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="submit_transfer_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">โอนสินค้า</a></li>
+            </ul>
+        </div>
     </div>
     <div data-role="panel" id="myPanel_trannormal1" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+
+<!--//////////////////////////////////////////////////////////// transfer_normal_detail ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_normal_detail">
+    <div data-role="none" id="header">
+        <a href="#myPanel_transfer_normal_detail" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
+        <hr class="hr">
+
+        <p style="color:red;text-align:center;">**แสกนสินค้าที่ต้องการโอน**</p>
+        <div id="show_hdetail_tfn"></div>
+        <div id="show_detail_tfn"></div>
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#transfer_normal" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="save_normal();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_transfer_normal_detail" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
         <div id="tree" class="tree"></div>
@@ -1450,7 +1483,46 @@
             </div>
         </label>
 
-        <div id="detail"></div>
+        <label style="text-align:center; border-bottom:1px gray dashed;">
+            <div class="ui-grid-d">
+                <div class="ui-block-a">
+                    0001
+                </div>
+                <div class="ui-block-b">
+                    M150
+                </div>
+                <div class="ui-block-c">
+                    ch1
+                </div>
+                <div class="ui-block-d">
+                    5
+                </div>
+                <div class="ui-block-e">
+                    <img src="images/Alert.png" width="24">
+                </div>
+            </div>
+        </label>
+
+        <label style="text-align:center; border-bottom:1px gray dashed;" onclick="editstock()">
+            <div class="ui-grid-d">
+                <div class="ui-block-a">
+                    0002
+                </div>
+                <div class="ui-block-b">
+                    carabol
+                </div>
+                <div class="ui-block-c">
+                    ch1
+                </div>
+                <div class="ui-block-d">
+                    0
+                </div>
+                <div class="ui-block-e">
+                    <img src="images/check.png" width="24">
+                </div>
+            </div>
+        </label>
+
 
     </div>
 
@@ -1784,10 +1856,7 @@
 
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
-
 <script src="js/login.js"></script>
-<script src="js/permission.js"></script>
-
 <script src="js/setting.js"></script>
 <script src="js/fun_pr.js"></script>
 <script src="js/fun_cs.js"></script>

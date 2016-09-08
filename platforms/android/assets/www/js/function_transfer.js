@@ -46,8 +46,15 @@ window.addEventListener('native.onscanbarcode', function (t) {
                           get_item_transferedit(t.scanResult);
                           break;
             case "transfer_normal_item" :
-                          get_item_transfer(t.scanResult);
+                          get_item_transfer_normal(t.scanResult);
                           break;
+            case "transfer_normal_detail" :
+                          get_item_transfer_normal(t.scanResult);
+                          document.getElementById("amount_n_item").value ="";
+                          $.mobile.changePage("#transfer_normal_item",{transition: 'slidefade'});
+                          amountnormal_focus();
+                          break;
+
 
 
 

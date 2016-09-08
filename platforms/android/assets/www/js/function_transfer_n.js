@@ -147,7 +147,7 @@ var d = confirm("ต้องการโอนสินค้าจากคล
             }
 }
 //========================================================get item transfer normal=============================================================================
-function get_item_transfer(bar){
+function get_item_transfer_normal(bar){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
                           data: '{"accessToken":"","type":"1","whCode":"'+localStorage.transfernormalwh_from+'","shelf":"'+localStorage.transfernormalsh_from+'","search":"'+bar+'"}',
@@ -169,11 +169,11 @@ $.ajax({
                             item_n_list += "<p>หน่วยนับ : "+item_n.data[0].unitCode+"</p>";
                             item_n_list += "<p>จำนวนคงเหลือ : "+item_n.data[0].stkRemain+"</p>";
                             }
-                            stock_item = item_n.data[0].stkRemain;
-                            localStorage.transferBarcode =item_n.data[0].barCode;
-                            localStorage.transferItemcode =item_n.data[0].itemCode;
+                            stock_item_n = item_n.data[0].stkRemain;
+                            localStorage.transferBarcode_n =item_n.data[0].barCode;
+                            localStorage.transferItemcode_n =item_n.data[0].itemCode;
 
-                          document.getElementById("stock_show_n").value = stock_item;
+                          document.getElementById("stock_show_n").value = stock_item_n;
                           document.getElementById("item_show_n").innerHTML = item_n_list;
                           $('#amount_n_item').focus();
 
@@ -186,7 +186,7 @@ $.ajax({
 }
 
 //======================================================submit transfer normal==================================================================================
-function submit_transfernormal(){
+function submit_transfer_normal(){
 var amountnormal = document.getElementById("amount_n_item").value;
 var stocknormal = document.getElementById("stock_show_n").value;
 if(amountnormal==""||amountnormal==null){
@@ -206,21 +206,21 @@ $.ajax({
                           cache: false,
                           success: function(trf_h){
                           console.log(trf_h);
-                          localStorage.transferNo = trf_h.docNo;
+                          localStorage.transferNo_n = trf_h.docNo;
 
                           $.ajax({
                                                     url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transfernormalwh_from+'","fromShelfCode":"'+localStorage.transfernormalsh_from+'","toWHCode":"'+localStorage.transfernormalwh_to+'","toShelfCode":"'+localStorage.transfernormalsh_to+'","qty":"'+amountnormal+'","refNo":"","isCancel":"0"}',
+                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo_n+'","barCode":"'+localStorage.transferBarcode_n+'","itemCode":"'+localStorage.transferItemcode_n+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transfernormalwh_from+'","fromShelfCode":"'+localStorage.transfernormalsh_from+'","toWHCode":"'+localStorage.transfernormalwh_to+'","toShelfCode":"'+localStorage.transfernormalsh_to+'","qty":"'+amountnormal+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
                                                     cache: false,
                                                     success: function(trf_i){
                                                     console.log(trf_i);
-                                                    alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
+                                                    alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo_n);
                                                     localStorage.transferstatus="1";
-                                                    document.getElementById("amount_normal_item").value ="";
-                                                    search_detailnormal(localStorage.transferNo)
+                                                    document.getElementById("amount_n_item").value ="";
+                                                    search_detailnormal(localStorage.transferNo_n)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
 
@@ -235,7 +235,245 @@ $.ajax({
                           }
                           });
 }else{
+                          $.ajax({
+                                                    url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
+                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo_n+'","barCode":"'+localStorage.transferBarcode_n+'","itemCode":"'+localStorage.transferItemcode_n+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transfernormalwh_from+'","fromShelfCode":"'+localStorage.transfernormalsh_from+'","toWHCode":"'+localStorage.transfernormalwh_to+'","toShelfCode":"'+localStorage.transfernormalsh_to+'","qty":"'+amountnormal+'","refNo":"","isCancel":"0"}',
+                                                    contentType: "application/json; charset=utf-8",
+                                                    dataType: "json",
+                                                    type: "POST",
+                                                    cache: false,
+                                                    success: function(trf_i){
+                                                    console.log(trf_i);
+                                                    alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo_n);
+                                                    localStorage.transferstatus="1";
+                                                    document.getElementById("amount_n_item").value ="";
+                                                    search_detailnormal(localStorage.transferNo_n)
+                                                    //$.mobile.changePage("#transferup",{transition: 'slidefade'});
+
+
+                                                    },
+                                                    error: function (error){
+                                                    alertify.error("error");
+                                                    }
+                                                    });
 
 }
+}
+}
+//========================================================= search detail normal====================================================================
+function search_detailnormal(tfNo){
+$.ajax({
+                          url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
+                          data: '{"accessToken":"","type":"","search":"'+tfNo+'"}',
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(tf_n){
+                          console.log(tf_n);
+                          var tfnh_show = "<p>เลขที่เอกสาร nn : "+tf_n.docNo+"</p>";
+                          tfnh_show += "<p>วันที่ทำเอกสาร : "+tf_n.docDate+"</p>";
+                          tfnh_show += "<p>มูลค่ารวม : "+tf_n.sumOfAmount+" บาท</p>";
+
+                          var count = tf_n.data.length;
+                          var tfnd_show = '<hr>';
+                          tfnd_show += '<label><div class="ui-grid-c" style="text-align:center;  font-size:14px;">';
+                          tfnd_show += '<div class="ui-block-a"><b>สินค้า</b></div>';
+                          tfnd_show += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                          tfnd_show += '<div class="ui-block-c"><b>จากคลัง/ชั้นเก็บ</b></div>';
+                          tfnd_show += '<div class="ui-block-d"><b>เข้าคลัง/ชั้นเก็บ</b></div>';
+                          tfnd_show += '</div></label><hr>';
+
+                          for(var i = 0;i<count;i++){
+                          //tfnd_show += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">';
+                            if(tf_n.data[i].qty !="0"){
+                                    tfnd_show += '<div class="ui-grid-c todo-cancelitemtransfern" data-cancelitemn-id="'+tf_n.data[i].barCode+'" data-cancelitemnrow-id="x'+tf_n.data[i].itemCode+'" id="x'+tf_n.data[i].itemCode+'" icode="'+tf_n.data[i].itemCode+'" bcode="'+tf_n.data[i].barCode+'" whfrom="'+tf_n.data[i].fromWH+'" shfrom="'+tf_n.data[i].fromShelf+'" whto="'+tf_n.data[i].toWH+'" shto="'+tf_n.data[i].toShelf+'" tfno="'+tf_n.docNo+'" rfno="'+tf_n.refDocNo+'" tfamount="'+tf_n.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                            }else{
+                                    tfnd_show += '<div class="ui-grid-c todo-uncancelitemtransfernnosave blur" data-uncancelitemn-id="'+tf_n.data[i].barCode+'" data-uncancelitemrownn-id="z'+tf_n.data[i].itemCode+'" id="z'+tf_n.data[i].itemCode+'" icode="'+tf_n.data[i].itemCode+'" bcode="'+tf_n.data[i].barCode+'" whfrom="'+tf_n.data[i].fromWH+'" shfrom="'+tf_n.data[i].fromShelf+'" whto="'+tf_n.data[i].toWH+'" shto="'+tf_n.data[i].toShelf+'" tfno="'+tf_n.docNo+'" rfno="'+tf_n.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
+                            }
+                           //tfnd_show += "<p>"+tf_n.data[i].itemCode+"</a>";
+                           tfnd_show += '<div class="ui-block-a">'+tf_n.data[i].itemName+'</div>';
+                           tfnd_show += '<div class="ui-block-b"> '+tf_n.data[i].qty+' '+tf_n.data[i].unitCode+' </div>';
+                           tfnd_show += '<div class="ui-block-c"> '+tf_n.data[i].fromWH+'/'+tf_n.data[i].fromShelf+'</div>';
+                           tfnd_show += '<div class="ui-block-d"> '+tf_n.data[i].toWH+'/'+tf_n.data[i].toShelf+'</div></div><hr>';
+
+                          }
+                          tfnd_show += '</div>';
+
+                          document.getElementById("show_hdetail_tfn").innerHTML = tfnh_show;
+                          document.getElementById("show_detail_tfn").innerHTML = tfnd_show;
+                          $.mobile.changePage("#transfer_normal_detail",{transition: 'slidefade'});
+
+                          },
+                          error: function (error){
+                          alertify.error("error");
+                          }
+                          });
+
+}
+//=============================================================================================== save transfer normal =========================================================
+function save_normal(){
+if( localStorage.transferstatus=="1"){
+$.ajax({
+                          url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo_n+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(s_tfn){
+                          console.log(s_tfn);
+                          localStorage.transferNo_n = "";
+                          localStorage.transferstatus = "0";
+                          alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
+                          },
+                          error: function (error){
+                          alertify.error("error");
+                          }
+                          });
+}else{
+alertify.error("ใบโอนสินค้าถูกบันทึกแล้ว");
+}
+}
+//======================================================================== cancel item normal ==================================================================================
+
+    $(document).on('taphold', '.todo-cancelitemtransfern', function() {
+           // console.log("DEBUG - Go popup");
+          var link_name = $(this).attr('cancelitemn-id');
+          var link_id = $(this).attr('data-cancelitemnrow-id');
+          var itemcode = $(this).attr('icode');
+          var barcode = $(this).attr('bcode');
+          var whfrom = $(this).attr('whfrom');
+          var shfrom = $(this).attr('shfrom');
+          var whto = $(this).attr('whto');
+          var shto = $(this).attr('shto');
+          var tfno = $(this).attr('tfno');
+          var rfno = $(this).attr('rfno');
+          var tfamount = $(this).attr('tfamount');
+          var $popUp = $("<div/>").popup({
+            dismissible: true,
+
+            //theme: "a",
+            transition: "pop",
+            arrow: "b",
+            positionTo: '#'+link_id
+            }).on("popupafterclose", function () {
+        //remove the popup when closing
+        $(this).remove();
+        }).css({
+       'padding': '15%',
+       'color': '#fff',
+       'background': 'red'
+       });
+        console.log('#'+link_id);
+        $("<a>", {
+        text: "Hold",
+        href: "#",
+        onclick: 'cancel_item_transfern('+"'"+itemcode+"'"+','+"'"+barcode+"'"+','+"'"+whfrom+"'"+','+"'"+shfrom+"'"+','+"'"+whto+"'"+','+"'"+shto+"'"+','+"'"+tfno+"'"+','+"'"+rfno+"'"+','+"'"+tfamount+"'"+');'
+        }).appendTo($popUp);
+
+        $popUp.popup('open').enhanceWithin();
+
+        });
+
+function cancel_item_transfern(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,refno,amount){
+
+if (confirm('ต้องการยกเลิกสินค้าหรือไม่ ??')) {
+
+$.ajax({
+                          url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
+                          data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          type: "POST",
+                          cache: false,
+                          success: function(cancel_i){
+                          console.log(cancel_i);
+                          alertify.success("ยกเลิกสินค้าเรียบร้อยแล้ว");
+                          search_detailnormal(docno);
+                          },
+                          error: function (error){
+                          alertify.error("error");
+                          }
+                          });
+                          }
+}
+//======================================================================== uncancel item normal ==================================================================================
+
+    $(document).on('taphold', '.todo-uncancelitemtransfernnosave', function() {
+           // console.log("DEBUG - Go popup");
+          var link_name = $(this).attr('data-uncancelitemn-id');
+          var link_id = $(this).attr('data-uncancelitemrownn-id');
+          var itemcode = $(this).attr('icode');
+          var barcode = $(this).attr('bcode');
+          var whfrom = $(this).attr('whfrom');
+          var shfrom = $(this).attr('shfrom');
+          var whto = $(this).attr('whto');
+          var shto = $(this).attr('shto');
+          var tfno = $(this).attr('tfno');
+          var rfno = $(this).attr('rfno');
+          var tfamount = $(this).attr('tfamount');
+          var $popUp = $("<div/>").popup({
+            dismissible: true,
+
+            //theme: "a",
+            transition: "pop",
+            arrow: "b",
+            positionTo: '#'+link_id
+            }).on("popupafterclose", function () {
+        //remove the popup when closing
+        $(this).remove();
+        }).css({
+       'padding': '15%',
+       'color': '#fff',
+       'background': 'green'
+       });
+        console.log('#'+link_id);
+        $("<a>", {
+        text: "Retuen xxx",
+        href: "#",
+        onclick: 'uncanceln_nosave('+"'"+barcode+"'"+');'
+        }).appendTo($popUp);
+
+        $popUp.popup('open').enhanceWithin();
+
+        });
+function uncanceln_nosave(b){
+    if (confirm('ต้องการ return สินค้าหรือไม่ ??')) {
+            get_item_transfer_normal(b);
+            $.mobile.changePage("#transfer_normal_item",{transition: 'slidefade'});
+            document.getElementById("amount_n_item").value = "";
+            amountnormal_focus();
+
+    }
+}
+
+function amountnormal_focus(){
+    $("#transferup_item").bind('pageshow', function() {
+        $('#amount_n_item').focus();
+    });
+}
+
+
+function xxxzzz(z,x,c,v,b,n,m,a,s){
+alert(z+" , "+x+" , "+c+" , "+v+" , "+b+" , "+n+" , "+m+" , "+a+" , "+s)
+        }
+//==================================== check cancel normal==============================================================================
+function check_cancel_normal(){
+if(localStorage.transferstatus=="1"){
+$.mobile.changePage("#transfer_normal_detail",{transition: 'slidefade',reverse: true});
+}else{
+$.mobile.changePage("#transfer_normal",{transition: 'slidefade',reverse: true});
+}
+
+}
+
+//==================================== check status normal==============================================================================
+function checkstatus_normal(){
+if(localStorage.transferstatus=="1"){
+alertify.error("ท่านยังไม่ได้บันทึกใบโอนสินค้ากรุณาบันทึกก่อน");
+return false;
+}else{
+$.mobile.changePage("#transfer_normal",{transition: 'slidefade',reverse: true});
 }
 }

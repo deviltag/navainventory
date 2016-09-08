@@ -185,6 +185,22 @@ document.addEventListener("keydown", function(event) {
                    default:
                            break;
                     }
+            }else if(page=="transfer_normal_item"){
+            switch (event.keyCode){
+                   case 13: search_detailnormal();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
+            }else if(page=="transfer_normal_detail"){
+            switch (event.keyCode){
+                   case 13: save_normal();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
             }
 });
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -264,7 +280,9 @@ function onDeviceReady(){
        }else if($.mobile.activePage.is('#transfer_normal')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_normal_item')){
-            $.mobile.changePage('#transfer_normal',{transition: 'slidefade',reverse: true});
+            check_cancel_normal();
+       }else if($.mobile.activePage.is('#transfer_normal_detail')){
+            checkstatus_normal();
        }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#countstock')){

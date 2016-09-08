@@ -1205,6 +1205,10 @@ $.ajax({
                     sel += '<option value="7">7 วัน</option></select>';
                 document.getElementById("defdate1").innerHTML = sel;
                 document.getElementById("discript").value = "";
+                var elm = document.getElementById('switch');
+                		    if (false != elm.checked) {
+                		        elm.click();
+                		    }
 
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
