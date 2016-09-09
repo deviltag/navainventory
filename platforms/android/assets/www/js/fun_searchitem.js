@@ -236,7 +236,19 @@ function itemProfile(bcitem){
                                                                 itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
                                                                 itemdetail += 'วันที่ : </div>';
                                                                 itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['docdateIV']+'</div>';
+                                                                var dateIV = "";
+                                                                if(dateIV == null){
+                                                                    dateIV = "";
+                                                                }else{
+                                                                    dateIV = val['docdateIV'].split("-");
+                                                                    var day = dateIV[2];
+                                                                    var month = dateIV[1];
+                                                                    var year = (parseInt(dateIV[0])+543);
+
+                                                                    dateIV = day+"/"+month+"/"+year;
+                                                                }
+
+                                                                itemdetail += ''+dateIV+'</div>';
                                                                 itemdetail += '</div>';
 
                                                                 itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
@@ -250,7 +262,20 @@ function itemProfile(bcitem){
                                                                 itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
                                                                 itemdetail += 'วันที่ : </div>';
                                                                 itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['docdateRV']+'</div>';
+
+                                                                var dateRV = "";
+                                                                if(dateRV == null){
+                                                                    dateRV = "";
+                                                                }else{
+                                                                    dateRV = val['docdateRV'].split("-");
+                                                                    var day = dateRV[2];
+                                                                    var month = dateRV[1];
+                                                                    var year = (parseInt(dateRV[0])+543);
+
+                                                                    dateRV = day+"/"+month+"/"+year;
+                                                                }
+
+                                                                itemdetail += ''+dateRV+'</div>';
                                                                 itemdetail += '</div>';
 
                                                                 itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
@@ -264,7 +289,20 @@ function itemProfile(bcitem){
                                                                 itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
                                                                 itemdetail += 'วันที่ : </div>';
                                                                 itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['docdateTF']+'</div>';
+
+                                                                var dateTF = "";
+                                                                if(dateTF == null){
+                                                                    dateTF = "";
+                                                                }else{
+                                                                    dateTF = val['docdateTF'].split("-");
+                                                                    var day = dateTF[2];
+                                                                    var month = dateTF[1];
+                                                                    var year = (parseInt(dateTF[0])+543);
+
+                                                                    dateTF = day+"/"+month+"/"+year;
+                                                                }
+
+                                                                itemdetail += ''+dateTF+'</div>';
                                                                 itemdetail += '</div>';
 
                                                         itemdetail += '</div></label>';

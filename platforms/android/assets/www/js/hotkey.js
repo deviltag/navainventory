@@ -20,19 +20,18 @@ document.addEventListener("keydown", function(event) {
                 }
             }else if(page=="pagetwo"){
                 switch (event.keyCode){
-                    case 49: $.mobile.changePage("#pagepr",{transition: 'slidefade'});
+                    case 49: persi(1);
                             break;
-                    case 50: $.mobile.changePage("#receive",{transition: 'slidefade'});
+                    case 50: persi(2);
                              focus_search();
                             break;
-                    case 51: $.mobile.changePage("#stock",{transition: 'slidefade'});
+                    case 51: persi(3);
                             break;
-                    case 52: wh_type_store();
-                            $.mobile.changePage("#transfer",{transition: 'slidefade'});
+                    case 52: persi(4);
                             break;
-                    case 53: $.mobile.changePage("#setting",{transition: 'slidefade'});
+                    case 53: persi(12);
                             break;
-                    case 54: rewh();
+                    case 54: persi(11);
                             break;
                     default: $.mobile.changePage("#pagetwo",{transition: 'slidefade'});
                             break;

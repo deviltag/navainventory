@@ -551,6 +551,7 @@ $.ajax({
                           console.log(trf_h);
                           localStorage.transferNo = "";
                           localStorage.transferstatus = "0";
+                          $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
@@ -679,6 +680,7 @@ $.ajax({
                           console.log(trf_h);
                           localStorage.transferNo = "";
                           localStorage.transferstatus = "0";
+                          $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
@@ -745,7 +747,7 @@ $.ajax({
 
                           for(var i = 0;i<count;i++){
                           //tfd_show += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">';
-                            if(tf_h.data[i].qty !="0"){
+                            if(tf_h.data[i].isCancel == "0"){
                                     tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="u'+tf_h.data[i].itemCode+'" id="u'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }else{
                                     tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
@@ -796,7 +798,7 @@ $.ajax({
                           tfd_show += '</div></label><hr>';
 
                           for(var i = 0;i<count;i++){
-                          if(tf_h.data[i].qty !="0"){
+                          if(tf_h.data[i].isCancel == "0"){
                                tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="d'+tf_h.data[i].itemCode+'" id="d'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                           }else{
                                tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
@@ -1014,6 +1016,7 @@ $.ajax({
                           search_detail(localStorage.docnod,"1")
                           console.log(trf_h);
                           localStorage.docnod = "";
+                          $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){

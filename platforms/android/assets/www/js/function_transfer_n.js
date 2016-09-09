@@ -219,7 +219,7 @@ $.ajax({
                                                     console.log(trf_i);
                                                     alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo_n);
                                                     localStorage.transferstatus="1";
-                                                    document.getElementById("amount_n_item").value ="";
+                                                    document.getElementById("amount_n_item").value="";
                                                     search_detailnormal(localStorage.transferNo_n)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
@@ -246,7 +246,7 @@ $.ajax({
                                                     console.log(trf_i);
                                                     alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo_n);
                                                     localStorage.transferstatus="1";
-                                                    document.getElementById("amount_n_item").value ="";
+                                                    document.getElementById("amount_n_item").value="";
                                                     search_detailnormal(localStorage.transferNo_n)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
@@ -271,7 +271,7 @@ $.ajax({
                           cache: false,
                           success: function(tf_n){
                           console.log(tf_n);
-                          var tfnh_show = "<p>เลขที่เอกสาร nn : "+tf_n.docNo+"</p>";
+                          var tfnh_show = "<p>เลขที่เอกสาร n : "+tf_n.docNo+"</p>";
                           tfnh_show += "<p>วันที่ทำเอกสาร : "+tf_n.docDate+"</p>";
                           tfnh_show += "<p>มูลค่ารวม : "+tf_n.sumOfAmount+" บาท</p>";
 
@@ -286,7 +286,7 @@ $.ajax({
 
                           for(var i = 0;i<count;i++){
                           //tfnd_show += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">';
-                            if(tf_n.data[i].qty !="0"){
+                            if(tf_n.data[i].isCancel =="0"){
                                     tfnd_show += '<div class="ui-grid-c todo-cancelitemtransfern" data-cancelitemn-id="'+tf_n.data[i].barCode+'" data-cancelitemnrow-id="x'+tf_n.data[i].itemCode+'" id="x'+tf_n.data[i].itemCode+'" icode="'+tf_n.data[i].itemCode+'" bcode="'+tf_n.data[i].barCode+'" whfrom="'+tf_n.data[i].fromWH+'" shfrom="'+tf_n.data[i].fromShelf+'" whto="'+tf_n.data[i].toWH+'" shto="'+tf_n.data[i].toShelf+'" tfno="'+tf_n.docNo+'" rfno="'+tf_n.refDocNo+'" tfamount="'+tf_n.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }else{
                                     tfnd_show += '<div class="ui-grid-c todo-uncancelitemtransfernnosave blur" data-uncancelitemn-id="'+tf_n.data[i].barCode+'" data-uncancelitemrownn-id="z'+tf_n.data[i].itemCode+'" id="z'+tf_n.data[i].itemCode+'" icode="'+tf_n.data[i].itemCode+'" bcode="'+tf_n.data[i].barCode+'" whfrom="'+tf_n.data[i].fromWH+'" shfrom="'+tf_n.data[i].fromShelf+'" whto="'+tf_n.data[i].toWH+'" shto="'+tf_n.data[i].toShelf+'" tfno="'+tf_n.docNo+'" rfno="'+tf_n.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
@@ -325,6 +325,7 @@ $.ajax({
                           console.log(s_tfn);
                           localStorage.transferNo_n = "";
                           localStorage.transferstatus = "0";
+                          $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){

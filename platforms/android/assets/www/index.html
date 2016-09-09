@@ -39,7 +39,7 @@
         <div id="form-main">
 
             <div id="form-div">
-                <a href="#pagetwo"><img src="images/inventory-logo.png" class="logo"></a>
+                <img src="images/inventory-logo.png" class="logo">
 
                 <br><br>
 
@@ -104,10 +104,6 @@
 
 </div>
 <!--////////////////////////////////////////////////////////////page two ////////////////////////////////////////////////////////////////-->
-
-
-
-
 <div data-role="page" id="pagetwo">
     <div data-role="none" id="header">
         <a href="#myPanel_main" data-role="none"><img src="images/grid.png" class="open_panel"></a>
@@ -116,27 +112,27 @@
     <div data-role="main" class="ui-content" id="main">
         <h1 class="title">Main</h1>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#pagepr" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:persi(1)" data-transition="slidefade">
                 <div><img src="images/pr2.png" class="main_menu"><br><b>PR(1)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6" onclick="focus_search()"><a href="#receive" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:persi(2)" data-transition="slidefade">
                 <div><img src="images/product-receive.png" class="main_menu"><br><b>รับสินค้า(2)</b>
                 </div>
             </a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#stock" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:persi(3)" data-transition="slidefade">
                 <div><img src="images/stock1.png" class="main_menu"><br><b>นับสต๊อกสินค้า(3)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6"><a href="#transfer" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:persi(4)" data-transition="slidefade">
                 <div><img src="images/transfer1.png" class="main_menu"><br><b>โอนสินค้า(4)</b></div>
             </a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#setting" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:persi(12)" data-transition="slidefade">
                 <div><img src="images/setting.png" class="main_menu"><br><b>setting(5)</b></div>
             </a></div>
-            <div class="col-xs-6 col-md-6"><a href="javascript:rewh()" data-transition="slidefade">
+            <div class="col-xs-6 col-md-6"><a href="javascript:persi(11)" data-transition="slidefade">
                 <div><img src="images/searchitem.png" class="main_menu"><br><b>searchitem(6)</b></div>
             </a>
             </div>
@@ -1847,16 +1843,15 @@
 </div>
 <!--//////////////////////////////////////////////////////////////// setting ////////////////////////////////////////////////////////////////-->
 
-
-
-
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/ng-cordova.min.js" ></script>
 
 <script src="js/jquery-1.11.3.js"></script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
+
 <script src="js/login.js"></script>
+<script src="js/permission.js"></script>
 <script src="js/setting.js"></script>
 <script src="js/fun_pr.js"></script>
 <script src="js/fun_cs.js"></script>
@@ -1872,5 +1867,6 @@
 <script src="js/bootstrap-treeview.min.js"></script>
 <script src="js/hotkey_pr.js"></script>
 <script src="js/alertify.js"></script>
+
 </body>
 </html>

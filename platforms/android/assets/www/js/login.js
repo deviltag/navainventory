@@ -26,8 +26,8 @@ if(document.getElementById("username").value== "" || document.getElementById("us
 
 function login(username,pass){
     $.ajax({
-                                        //url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
-                                        url: "http://s01xp.dyndns.org/apiv2/MRDB_api.php/users/login",
+                                        url: localStorage.api_url_server_nava+""+localStorage.api_url_login,
+                                       // url: "http://s01xp.dyndns.org/apiv2/MRDB_api.php/users/login",
                                         data: '{"name":"'+username+'","password":"'+pass+'"}',
                                         contentType: "application/json; charset=utf-8",
                                         dataType: "json",
@@ -37,12 +37,15 @@ function login(username,pass){
                                            //alert(result.links.related);
                                            if(result.status=="success"){
                                             var obj = JSON.stringify(result);
-                                            console.log(obj);
-                                            localStorage.username=result.data.name;
+                                            console.log(result.data.Permission);
+                                            localStorage.username=result.data.user_name;
                                             localStorage.url_menu_tree_user = result.links.related;
-                                            //alert( localStorage.username)
-                                            //alertify.success(result.links.related);
-                                            console.log(result);
+                                            localStorage.setItem("permission", JSON.stringify(result.data.Permission));
+                                            console.log(result.data.user_name);
+
+                                            perdata();
+                                            tree();
+
                                             document.getElementById("username").value = "";
                                             document.getElementById("passwd").value = "";
                                             document.getElementById("passwds").value = "";
