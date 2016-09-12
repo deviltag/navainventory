@@ -54,8 +54,15 @@ window.addEventListener('native.onscanbarcode', function (t) {
                           $.mobile.changePage("#transfer_normal_item",{transition: 'slidefade'});
                           amountnormal_focus();
                           break;
-
-
+            case "transfer_damage_item" :
+                          get_item_transfer_damage(t.scanResult);
+                          break;
+            case "transfer_damage_detail" :
+                          get_item_transfer_damage(t.scanResult);
+                          document.getElementById("amount_damage").value ="";
+                          $.mobile.changePage("#transfer_damage_item",{transition: 'slidefade'});
+                          amountdamage_focus();
+                          break;
 
 
 
@@ -551,6 +558,7 @@ $.ajax({
                           console.log(trf_h);
                           localStorage.transferNo = "";
                           localStorage.transferstatus = "0";
+                          search_tf();
                           $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
@@ -680,6 +688,7 @@ $.ajax({
                           console.log(trf_h);
                           localStorage.transferNo = "";
                           localStorage.transferstatus = "0";
+                          search_tf();
                           $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
@@ -1016,6 +1025,7 @@ $.ajax({
                           search_detail(localStorage.docnod,"1")
                           console.log(trf_h);
                           localStorage.docnod = "";
+                          search_tf();
                           $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },

@@ -39,7 +39,7 @@
         <div id="form-main">
 
             <div id="form-div">
-                <img src="images/inventory-logo.png" class="logo">
+                <a href="#pagetwo"><img src="images/inventory-logo.png" class="logo"></a>
 
                 <br><br>
 
@@ -165,7 +165,7 @@
             <div class="col-xs-6 col-md-6" onclick="wh_type_store();"><a href="#transferdown" data-transition="slidefade"><div><img src="images/downtruck.png"  class="main_menu"><br><b>ยกของลงรถ(2)</b></div></a></div>
         </div>
         <div class="row">
-            <div class="col-xs-6 col-md-6"><a href="#transfer_damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย(3)</b></div></a></div>
+            <div class="col-xs-6 col-md-6" onclick="wh_dmg_from();"><a href="#transfer_damage" data-transition="slidefade"><div><img src="images/damage.png"  class="main_menu"><br><b>โอนสินค้าเสียหาย(3)</b></div></a></div>
             <div class="col-xs-6 col-md-6"><a href="#transfer_isp" data-transition="slidefade"><div><img src="images/t_isp.png"  class="main_menu"><br><b>โอนเข้าคลัง ISP(4)</b></div></a></div>
         </div>
         <div class="row">
@@ -512,34 +512,23 @@
     <div data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">โอนสินค้าเข้าคลัง DAMAGE</h2>
         <hr class="hr">
-        <form>
-            <p>เลือกคลังต้นทาง<select>
-                <option>wh1</option>
-                <option>wh2</option>
-                <option>wh3</option>
-                <option>car1</option>
-                <option>car2</option>
-                <option>car3</option>
-            </select></p>
-            <p>คลัง Damage<select>
-                <option>Damage1</option>
-                <option>Damage2</option>
-            </select></p>
+        <p>เลือกคลังต้นทาง :</p>
+        <div id="wh_dmgfrom"></div>
+        <p>เลือกชั้นเก็บต้นทาง :</p>
+        <div id="shdmg_from"></div>
+        <p>เลือกคลังปลายทาง :</p>
+        <div id="wh_dmg"></div>
+        <p>เลือกชั้นเก็บ Damage ปลายทาง :</p>
 
+        <div id="shdmg"></div>
 
-        </form>
-        <fieldset data-role="controlgroup">
-            <legend>summery</legend>
-            <p>...........................................</p>
-
-        </fieldset>
 
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
                 <li><a href="#transfer" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
-                <li><a href="#transfer_damage_item" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
+                <li onclick="transfer_dmg();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="action" id="footer-nav" data-transition="slidefade">โอนสินค้า</a></li>
                 <li onclick="xxxx()"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
             </ul>
         </div>
@@ -560,23 +549,48 @@
     <div data-role="main" class="ui-content" id="main">
         <h2 class="sub_title">โอนสินค้าเข้าคลัง DAMAGE</h2>
         <hr class="hr">
-        <form>
-
-            <input type="text" name="product3" placeholder="สินค้า">
-            <input type="number" name="num3" placeholder="จำนวน">
-            <input type="text" name="unit3" placeholder="หน่วยนับ">
-        </form>
+        <div id="item_show_d"></div>
+        <input type="number" id="amount_damage">
+        <input type="hidden" id="stock_show_d">
 
     </div>
     <div data-role="footer" id="footer" data-enhance="false">
         <div data-role="navbar">
             <ul>
-                <li><a href="#transfer_damage" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
+                <li onclick="check_cancel_damage();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="delete" id="footer-nav" data-transition="slidefade" data-direction="reverse">ยกเลิก</a></li>
                 <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav" data-transition="slidefade">ตกลง</a></li>
             </ul>
         </div>
     </div>
     <div data-role="panel" id="myPanel_trandamage1" data-display="overlay">
+        <h2>Overlay Panel</h2>
+        <hr>
+        <div id="tree" class="tree"></div>
+    </div>
+</div>
+<!--//////////////////////////////////////////////////////////// transfer_damage_detail ////////////////////////////////////////////////////////////////-->
+<div data-role="page" id="transfer_damage_detail">
+    <div data-role="none" id="header">
+        <a href="#myPanel_transfer_damage_detail" data-role="none"><img src="images/grid.png" class="open_panel"></a>
+    </div>
+
+    <div data-role="main" class="ui-content" id="main">
+        <h2 class="sub_title">โอนสินค้าแบบปกติ</h2>
+        <hr class="hr">
+
+        <p style="color:red;text-align:center;">**แสกนสินค้าที่ต้องการโอน**</p>
+        <div id="show_hdetail_tfn"></div>
+        <div id="show_detail_tfn"></div>
+    </div>
+    <div data-role="footer" id="footer" data-enhance="false">
+        <div data-role="navbar">
+            <ul>
+                <li onclick="checkstatus_damage();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="carat-l" id="footer-nav" data-transition="slidefade" data-direction="reverse">ย้อนกลับ</a></li>
+                <li onclick="save_damage();"><a href="#" class="ui-btn-active ui-state-persist" data-icon="check" id="footer-nav">บันทึก</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-role="panel" id="myPanel_transfer_damage_detail" data-display="overlay">
         <h2>Overlay Panel</h2>
         <hr>
         <div id="tree" class="tree"></div>
@@ -1860,6 +1874,7 @@
 <script src="js/search_vender.js"></script>
 <script src="js/function_transfer.js"></script>
 <script src="js/function_transfer_n.js"></script>
+<script src="js/function_transfer_dmg.js"></script>
 <script type="text/javascript">app.initialize();</script>
 <script src="js/hotkey.js"></script>
 <script src="js/menutree.js"></script>

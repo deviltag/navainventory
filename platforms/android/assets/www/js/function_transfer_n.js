@@ -1,3 +1,10 @@
+var d = new Date();
+var curr_date = d.getDate();
+var curr_month = d.getMonth()+1;
+var curr_year = d.getFullYear();
+var date = curr_date + "-" + curr_month
++ "-" + curr_year;
+
 function wh_normal(){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
@@ -22,8 +29,11 @@ $.ajax({
                                 loname = whnormal.data[i].location;
                             }
                           wh_normal_up += "<option value='"+whnormal.data[i].code+"'>"+whnormal.data[i].name+" "+loname+"</option>";
+                            if(i==1){
+                          wh_normal_down += "<option value='"+whnormal.data[i].code+"' selected='selected'>"+whnormal.data[i].name+" "+loname+"</option>";
+                            }else{
                           wh_normal_down += "<option value='"+whnormal.data[i].code+"'>"+whnormal.data[i].name+" "+loname+"</option>";
-
+                            }
                           }
                           wh_normal_up += "</select>";
                           wh_normal_down += "</select>";
@@ -49,7 +59,12 @@ snormal_up = whnormal_up.value;
 var sn_up = document.getElementById("whnormal_up");
 snormal_up = sn_up.options[sn_up.selectedIndex].value;
 }
+//$("#whnormal_down").children("option[value=" +snormal_up+ "]").hide();
+console.log(snormal_up);
+$("#whnormal_down option[value=" + snormal_up + "]").hide();
+$("#whnormal_down option[value!=" + snormal_up + "]").show();
 sh_normal_up(snormal_up);
+
 }
 //======================================================================== select sh normal down ===============================================================
 function select_shelfnormaldown(whnormal_down){
@@ -60,6 +75,8 @@ snormal_down = whnormal_down.value;
 var sn_down = document.getElementById("whnormal_down");
 snormal_down = sn_down.options[sn_down.selectedIndex].value;
 }
+$("#whnormal_up option[value=" + snormal_down + "]").hide();
+$("#whnormal_up option[value!=" + snormal_down + "]").show();
 sh_normal_down(snormal_down);
 }
 //======================================================================== show sh normal up ===============================================================
@@ -72,7 +89,7 @@ $.ajax({
                           type: "POST",
                           cache: false,
                           success: function(shnormal_up){
-                          console.log("shnormal_up "+JSON.stringify(shnormal_up));
+                          //console.log("shnormal_up "+JSON.stringify(shnormal_up));
                           var countv = shnormal_up.data.length;
 
                           var sshnormal_up= "<select id='showshnormal_up' data-role='none' class='whselect'>";
@@ -101,7 +118,7 @@ $.ajax({
                           type: "POST",
                           cache: false,
                           success: function(shnormal_down){
-                          console.log("shnormal_down "+JSON.stringify(shnormal_down));
+                          //console.log("shnormal_down "+JSON.stringify(shnormal_down));
                           var countv = shnormal_down.data.length;
 
                           var sshnormal_down= "<select id='showshnormal_down' data-role='none' class='whselect'>";
@@ -325,6 +342,7 @@ $.ajax({
                           console.log(s_tfn);
                           localStorage.transferNo_n = "";
                           localStorage.transferstatus = "0";
+                          search_tf();
                           $.mobile.changePage("#transferlist",{transition: 'slidefade'});
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
