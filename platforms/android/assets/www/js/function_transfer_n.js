@@ -449,7 +449,7 @@ $.ajax({
        });
         console.log('#'+link_id);
         $("<a>", {
-        text: "Retuen xxx",
+        text: "Return",
         href: "#",
         onclick: 'uncanceln_nosave('+"'"+barcode+"'"+');'
         }).appendTo($popUp);

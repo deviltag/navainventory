@@ -472,7 +472,7 @@ var r = confirm("ต้องการโอนสินค้าจากคล
 }
 //========================================================================== โอนขึ้นรถ ============================================================================
 function submit_transferup(){
-alert(localStorage.transferstatus);
+//alert(localStorage.transferstatus);
 var amountup = document.getElementById("amount_up_item").value;
 var stockup = document.getElementById("stock_show_up").value;
 if(amountup==""||amountup==null){
