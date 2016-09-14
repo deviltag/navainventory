@@ -291,14 +291,6 @@ hr.hr {
   -ms-user-select: none;
   user-select: none;
 }
-.whselect {
-    border: 1px solid #ccc;
-    width: 100%;
-    height:30px;
-    border-radius: 3px;
-    overflow: hidden;
-    background: #fafafa;
-}
 }
 
 /*===============================================================================================mobile==========================================================*/
@@ -604,5 +596,50 @@ input:focus, textarea:focus {
     #prldetail{
         font-size:14px;
         margin-bottom:0;
+    }
+    .custom-size-flipswitch.ui-flipswitch .ui-btn.ui-flipswitch-on {
+        text-indent: -4em;
+    }
+    .custom-size-flipswitch.ui-flipswitch .ui-flipswitch-off {
+        text-indent: 2em;
+    }
+    /* Custom widths are needed because the length of custom labels differs from
+       the length of the standard labels */
+    .custom-size-flipswitch.ui-flipswitch {
+        width: 8.875em;
+    }
+    .custom-size-flipswitch.ui-flipswitch.ui-flipswitch-active {
+        padding-left: 7em;
+        width: 1.875em;
+    }
+
+    .btn {
+        position: relative;
+      font-weight:bold;
+      width: 100px;
+      height: 35px;
+      border-radius: 3px;
+      border: 1px solid #c0c0c0;
+      margin:0 50px 40px 0;
+    }
+
+    /* buy btn */
+    .btn-buy {
+      background: #e30404;
+      color: #fff;
+    }
+
+    .btn-buy:hover {
+      background: #db1501;
+    }
+
+    /* sign in btn */
+    .btn-login {
+      background: #3ac802;
+      color: #fff;
+    }
+
+    .btn-login:hover {
+      background: #3ac802;
     }
 }
