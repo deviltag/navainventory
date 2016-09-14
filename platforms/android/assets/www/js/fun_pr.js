@@ -1,5 +1,6 @@
 localStorage.apcode = "";
 localStorage.apname = "";
+
 window.addEventListener('native.onscanbarcode', function (pr) {
        var page = "";
        //alert(pr.scanResult);
@@ -473,6 +474,7 @@ function backdetail(){
             type: "POST",
             cache: false,
             success: function(result){
+
                      var prl = JSON.stringify(result);
                      var prlp = prl.split(":[");
                      var str = prlp[1].split("]}");
@@ -1186,6 +1188,7 @@ function sumdetail(){
               src: "images/loading.gif"
               }).appendTo($popUp);
               $popUp.popup('open');
+
 $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
            data: '{"type":"1","search":"'+localStorage.username+'"}',
@@ -1205,10 +1208,13 @@ $.ajax({
                     sel += '<option value="7">7 วัน</option></select>';
                 document.getElementById("defdate1").innerHTML = sel;
                 document.getElementById("discript").value = "";
-                var elm = document.getElementById('switch');
-                		    if (false != elm.checked) {
-                		        elm.click();
-                		    }
+                var pai = document.getElementById("paility").value;
+                if(pai=="1"){
+                    change();
+                }
+
+
+
 
                 $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
@@ -1253,7 +1259,6 @@ $.ajax({
                                   detail += "</div></a></label>";
 
                                   ite++;
-
                              });
 
                                 document.getElementById("sumitem").innerHTML = detail;
@@ -1299,7 +1304,8 @@ function pluspr(){
               $popUp.popup('open');
     var Docno = document.getElementById("DocNo").value;
     var apCode = document.getElementById("apCodeven").value;
-    console.log(Docno);
+    var priority = document.getElementById("paility").value;
+  // console.log(Docno+" "+priority);
     console.log(document.getElementById("apCodeven").value);
     if(apCode){
         apCode = apCode;
@@ -1326,7 +1332,7 @@ function pluspr(){
                 }else{
                         var wday = document.getElementById("defdate").value;
                         var discript = document.getElementById("discript").value;
-                        var priority = document.getElementById("switch").checked;
+
                         if(priority==true){
                             priority = 1;
                         }else{
@@ -1753,4 +1759,21 @@ function addapcode(textven, name){
     document.getElementById("vender").value = "";
     document.getElementById("nameven").innerHTML = "-- ชื่อเจ้าหนี้ --";
     $('#vendor').popup('close');
+}
+
+function change(){
+	var pai = document.getElementById("paility");
+	if(pai.value=="1"){
+		pai.value="0";
+		document.getElementById("detail").innerHTML = "ไม่ด่วน";
+		document.getElementById("ims").src = "images/notquick.png";
+		pai.className="btn btn-login";
+	}else{
+		pai.value="1";
+		document.getElementById("detail").innerHTML = "ด่วน";
+		document.getElementById("ims").src = "images/quick.png";
+		pai.className = "btn btn-buy";
+	}
+
+	//alert(pai.value);
 }
