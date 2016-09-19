@@ -53,6 +53,7 @@ function searchWHis(result){
                                    console.log(Is.docno);
                                    document.getElementById("valdocIS").value = Is.docno;
                                    document.getElementById("docIS").innerHTML = Is.docno;
+                                   isList();
                              },
                              error: function (error) {
                                  alertify.error("can't call api");
@@ -115,9 +116,10 @@ function searchSHis(shelfCode){
 
 function searchItem(itemCode){
     var DocNo = document.getElementById("valdocIS").value;
+    var shel = document.getElementById("shel").value;
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_search_item_pr,
-           data: '{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3"}',
+           data: '{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
            type: "POST",
@@ -196,14 +198,15 @@ function savestock(){
     var wh = document.getElementById("whvalue").value;
     var citem = document.getElementById("counts").value;
     var uitem = document.getElementById("Cunit").value;
+    var userID = localStorage.username;
     if(citem == ""||noitem == ""){
     alert("กรุณากรอกข้อมูลให้ครบด้วย !!");
     }else{
-    console.log('result:[{"docNo":"'+DocNo+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
+    console.log('result:[{"docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
 
          $.ajax({
                  url: localStorage.api_url_server+"NPInventoryWs/V1/is/insertIS",
-                 data: '{"docNo":"'+DocNo+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
+                 data: '{"docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
                  type: "POST",
@@ -247,6 +250,13 @@ function savedata(){
         success: function(result){
             console.log(JSON.stringify(result));
             $.mobile.changePage("#stock",{transition: 'slidefade'});
+            document.getElementById("valdocIS").value = "";
+            document.getElementById("shel").value = "";
+            document.getElementById("itemNo").value = "";
+            document.getElementById("whvalue").value = "";
+            document.getElementById("counts").value = "";
+            document.getElementById("Cunit").value = "";
+            alertify.success("บันทึกใบนับที่ "+DocNo+" แล้ว");
         },
         error: function(err){
             alertify.alert("Update IS ERROR!!");
@@ -254,6 +264,7 @@ function savedata(){
         }
     });
     $.mobile.changePage("#stock",{transition: 'slidefade'});
+        d
 }
 
 function isList(){
@@ -269,51 +280,58 @@ function isList(){
             success: function(result){
                 console.log(JSON.stringify(result.listData));
                 var detail = "";
-                $.each(result.listData, function(key,val){
-                itemno = val['itemCode'];
 
-                if(itemno==null){
-                     sitemno=itemno;
+                if(JSON.stringify(result.listData)!="[]"){
+                    $.each(result.listData, function(key,val){
+                                    itemno = val['itemCode'];
+
+                                    if(itemno==null){
+                                         sitemno=itemno;
+                                    }else{
+                                         sitemno = Math.ceil(itemno.length/6);
+                                         console.log(sitemno);
+                                    }
+                                    var s = 0;
+                                    var str1 = "";
+                                    if(sitemno!=null){
+                                      for(var i = 0;i<sitemno;i++){
+                                           str1 += itemno.substr(s,6)+"<br>";
+                                           s += 6;
+                                      }
+                                    }else{
+                                      str1=sitemno;
+                                    }
+                                        detail += '<label style="text-align:center; border-bottom:1px gray dashed;">';
+                                             detail += '<div class="ui-grid-d">';
+                                              detail += '<div class="ui-block-a">';
+                                                     detail += str1;
+                                              detail += '</div>';
+                                              detail += '<div class="ui-block-b">';
+                                                     detail += val['itemName'];
+                                              detail += '</div>';
+                                              detail += '<div class="ui-block-c">';
+                                                     detail += val['shelfCode'];
+                                              detail += '</div>';
+                                              detail += '<div class="ui-block-d">';
+                                                     detail += val['diffQty']+"  "+val['unitCode'];
+                                              detail += '</div>';
+                                              detail += '<div class="ui-block-e">';
+
+                                                if(val['diffQty']!="0"){
+                                                    detail += '<img src="images/Alert.png" width="24">';
+                                                }else if(val['diffQty']=="0"){
+                                                    detail += '<img src="images/check.png" width="24">';
+                                                }
+
+                                              detail += '</div>';
+                                             detail += '</div>';
+                                        detail += '</label>';
+                                    });
                 }else{
-                     sitemno = Math.ceil(itemno.length/6);
-                     console.log(sitemno);
+                    detail = `<label style="border-bottom:1px dashed black; padding:2%; color:red; text-align:center">
+                                          <h5>** ยังไม่มีข้อมูลสินค้าที่นับในใบนับนี้ **</h5>
+                              </label>`;
                 }
-                var s = 0;
-                var str1 = "";
-                if(sitemno!=null){
-                  for(var i = 0;i<sitemno;i++){
-                       str1 += itemno.substr(s,6)+"<br>";
-                       s += 6;
-                  }
-                }else{
-                  str1=sitemno;
-                }
-                    detail += '<label style="text-align:center; border-bottom:1px gray dashed;">';
-                         detail += '<div class="ui-grid-d">';
-                          detail += '<div class="ui-block-a">';
-                                 detail += str1;
-                          detail += '</div>';
-                          detail += '<div class="ui-block-b">';
-                                 detail += val['itemName'];
-                          detail += '</div>';
-                          detail += '<div class="ui-block-c">';
-                                 detail += val['shelfCode'];
-                          detail += '</div>';
-                          detail += '<div class="ui-block-d">';
-                                 detail += val['diffQty']+"  "+val['unitCode'];
-                          detail += '</div>';
-                          detail += '<div class="ui-block-e">';
-
-                            if(val['diffQty']!="0"){
-                                detail += '<img src="images/Alert.png" width="24">';
-                            }else if(val['diffQty']=="0"){
-                                detail += '<img src="images/check.png" width="24">';
-                            }
-
-                          detail += '</div>';
-                         detail += '</div>';
-                    detail += '</label>';
-                });
 
                 document.getElementById("csdetail").innerHTML = detail;
                // $.mobile.changePage("#countitem",{transition: 'slidefade'});
