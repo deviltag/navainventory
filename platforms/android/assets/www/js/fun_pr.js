@@ -50,6 +50,7 @@ function additems(barcode){
                                                 var units = "";
                                                 var apcode = "";
                                                 var apname = "";
+                                                if(JSON.stringify(result.listBarcode)!="[]"){
                                                 if(result.listBarcode==null){
                                                     console.log("data listbarcode : null");
 
@@ -106,15 +107,24 @@ function additems(barcode){
                                                 document.getElementById("gradeitem").value = rank;
                                                 document.getElementById("units").value = units;
                                                 if(cntitem==0){
-                                                    document.getElementById("citem").value = "";
+                                                   document.getElementById("citem").value = "";
                                                 }else{
-                                                    document.getElementById("citem").value = cntitem;
+                                                   document.getElementById("citem").value = cntitem;
                                                 }
 
                                                 document.getElementById("Tnoitem").innerHTML = itemcode;
                                                 document.getElementById("TNameitem").innerHTML = itemName;
                                                 document.getElementById("Tgrade").innerHTML = rank;
                                                 document.getElementById("Tunit").innerHTML = units;
+                                                }else{
+                                                    alertify.alert("บาร์ดโค้ด "+barcode+" ไม่มีข้อมูลสินค้า");
+                                                    document.getElementById("Tnoitem").innerHTML = "<font color='red'><i>scanbacode สินค้าด้วย</i></font>";
+                                                    document.getElementById("TNameitem").innerHTML = "";
+                                                    document.getElementById("Tgrade").innerHTML = "";
+                                                    document.getElementById("Tunit").innerHTML = "";
+                                                }
+
+
                                            },
                                            error: function (error) {
                                            alertify.error("can't call api");
@@ -1188,7 +1198,7 @@ function sumdetail(){
               src: "images/loading.gif"
               }).appendTo($popUp);
               $popUp.popup('open');
-
+console.log('{"type":"1","search":"'+localStorage.username+'"}');
 $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
            data: '{"type":"1","search":"'+localStorage.username+'"}',

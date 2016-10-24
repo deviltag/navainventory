@@ -1,4 +1,5 @@
 window.addEventListener('native.onscanbarcode', function (schitem) {
+
        var page = "";
        //alert(pr.scanResult);
       // console.log(schitem.scanResult);
@@ -15,7 +16,7 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                     break;
                     }
 });
-function itemProfile(bcitem){
+            function itemProfile(bcitem){
                                         var valwh = document.getElementById("valwh").value;
                                         var tiwh = "";
                                         var itemdetail = "";
@@ -49,7 +50,8 @@ function itemProfile(bcitem){
                                                        var whName = "";
                                                        var whLoca = "";
                                                        var res = JSON.stringify(result.warehouseList);
-                                                       if(res != "[]"){
+                                                       if(res != "[]"){.3
+
                                                             $.each(result.warehouseList, function(key, wh) {
                                                                 whName = wh['whName'];
                                                                 whLoca = wh['location'];
@@ -66,7 +68,7 @@ function itemProfile(bcitem){
                                                            // console.log("whname = "+whLoca);
                                                        }else{
                                                             console.log("ไม่มีข้อมูล");
-                                                            alertify.alert("ไม่มีข้อมูล");
+                                                            alertify.alert("บาร์โค้ด "+bcitem+" ไม่มีข้อมูลทะเบียน");
                                                             $popUp.popup("close");
 
                                                        }
@@ -108,9 +110,10 @@ function itemProfile(bcitem){
                                                 cache: false,
                                                    success: function(result){
                                                    if(result.itemProfileList.length==0){
-                                                       alertify.alert("ไม่มีข้อมูล");
+                                                       alertify.alert("บาร์โค้ด "+bcitem+" ไม่มีข้อมูลทะเบียน");
                                                        $popUp.popup("close");
                                                        $("#bt-item").show();
+                                                       $("#de-item").hide();
                                                    }else{
                                                         var bcCode = "";
                                                         var itemCode = "";
@@ -139,6 +142,46 @@ function itemProfile(bcitem){
                                                         vendorCode = val['vendorCode'];
                                                         vendorName = val['vendorName'];
                                                     });
+                                                        if(bcCode==null){
+                                                            bcCode = "ไม่มีข้อมูล";
+                                                        }
+
+                                                        if(itemCode==null){
+                                                            itemCode = "ไม่มีข้อมูล";
+                                                        }
+
+                                                        if(itemName==null){
+                                                            itemName = "ไม่มีข้อมูล";
+                                                        }
+
+                                                        if(unitCode==null){
+                                                            unitCode = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(brandCode==null){
+                                                            brandCode = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(brandName==null){
+                                                            brandName = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(rang==null){
+                                                            rang = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(price==null){
+                                                            price = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(whCode==null){
+                                                            whCode = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(bcCode==null){
+                                                            bcCode = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(vendorCode==null){
+                                                            vendorCode = "ไม่มีข้อมูล";
+                                                        }
+                                                        if(vendorName==null){
+                                                            vendorName = "ไม่มีข้อมูล";
+                                                        }
+
                                                     console.log(whCode);
                                                         itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
                                                         itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
@@ -343,16 +386,36 @@ function itemProfile(bcitem){
 
                                         }
 }
+function ref(){
+ alertify.confirm("ท่านต้องการ scan คลังใหม่ หรือ ไม่ ?", function (e) {
+        if (e) {
+                    rewh();
+               } else {
+                    // user clicked "cancel"
+               }
+ });
+}
 
 function rewh(){
 
-     document.getElementById("valwh").value = "";
-     document.getElementById("bt-item").style.textAlign = "center";
-     document.getElementById("bt-wh").style.textAlign = "center";
-     $("#itemdtail").hide();
-     $("#de-wh").hide();
-     $("#bt-item").hide();
-     $("#bt-wh").show();
-     $("#de-item").hide();
-     $.mobile.changePage("#searchitem");
+            document.getElementById("valwh").value = "";
+            document.getElementById("bt-item").style.textAlign = "center";
+            document.getElementById("bt-wh").style.textAlign = "center";
+            $("#itemdtail").hide();
+            $("#de-wh").hide();
+            $("#bt-item").hide();
+            $("#bt-wh").show();
+            $("#de-item").hide();
+            $.mobile.changePage("#searchitem");
+}
+
+function backhome(){
+    alertify.confirm("ท่านต้องการออกจากระบบ itemProfile หรือ ไม่ ?", function (e) {
+        if (e) {
+            $.mobile.changePage("#pagetwo");
+        } else {
+            // user clicked "cancel"
+        }
+    });
+
 }

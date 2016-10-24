@@ -33,13 +33,19 @@ function searchWHis(result){
            success: function(result){
                   console.log(JSON.stringify(result.warehouseList));
                   if(JSON.stringify(result.warehouseList)==="[]"){
-                       alertify.alert("ไม่มีข้อมูลคลังสินค้า");
+                       alertify.alert("ไม่มีข้อมูลคลังสินค้าของ "+result);
                   }else{
                        var whName = "";
                        var whLocal = "";
                        $.each(result.warehouseList, function(key, val) {
+                       if(val['whName']!=null&&val['localtion']){
                             whName = val['whName'].trim();
                             whLocal = val['location'].trim();
+                       }else{
+                            whName = val['whName'];
+                            whLocal = val['location'];
+                       }
+
                        });
 
                       $.ajax({
@@ -86,7 +92,8 @@ function searchSHis(shelfCode){
         success: function(result){
             console.log(JSON.stringify(result.shelfList));
             if(JSON.stringify(result.shelfList)=="[]"){
-                 alertify.alert("ไม่มีข้อมูลชั้นเก็บสินค้า");
+                 alertify.alert("ไม่มีข้อมูลชั้นเก็บสินค้าของ "+shelfCode);
+
             }else{
                  var shelName = "";
                  $.each(result.shelfList, function(key, val) {
@@ -117,6 +124,7 @@ function searchSHis(shelfCode){
 function searchItem(itemCode){
     var DocNo = document.getElementById("valdocIS").value;
     var shel = document.getElementById("shel").value;
+    console.log('{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'"}');
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_search_item_pr,
            data: '{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'"}',
@@ -126,56 +134,62 @@ function searchItem(itemCode){
            cache: false,
            success: function(result){
                  console.log(JSON.stringify(result.listBarcode));
-                 var itemcode = "";
-                 var itemName = "";
-                 var range = "";
-                 var cntitem = "";
-                 var units = "";
+                 if(JSON.stringify(result.listBarcode)==="[]"){
+                     alertify.alert("บาร์โค้ด "+itemCode+" ไม่มีอยู่ในทะเบียนสินค้า");
+                 }else{
+                     var itemcode = "";
+                     var itemName = "";
+                     var range = "";
+                     var cntitem = "";
+                     var units = "";
 
-                 if(result.listBarcode==null){
-                     console.log("data listbarcode : null");
-                     $.each(result.listISBarcode, function(key, val) {
+                     if(result.listBarcode==null){
+                         console.log("data listbarcode : null");
+                         $.each(result.listISBarcode, function(key, val) {
+                             itemcode = val['itemcode'];
+                             itemName = val['itemname'];
+                             range = val['range'];
+                             if(val['qty']==0){
+                               cntitem = "";
+                             }else{
+                               cntitem = val['qty'];
+                             }
+                             units = val['unitcode'];
+                             apcode = val['apCode'];
+                             apname = val['apName'];
+                             console.log(cntitem);
+                         });
+                     }else{
+                         $.each(result.listBarcode, function(key, val) {
                          itemcode = val['itemcode'];
                          itemName = val['itemname'];
                          range = val['range'];
                          if(val['qty']==0){
-                           cntitem = "";
+                            cntitem = "";
                          }else{
-                           cntitem = val['qty'];
+                            cntitem = val['qty'];
                          }
-                         units = val['unitcode'];
-                         apcode = val['apCode'];
-                         apname = val['apName'];
-                     });
-                 }else{
-                     $.each(result.listBarcode, function(key, val) {
-                     itemcode = val['itemcode'];
-                     itemName = val['itemname'];
-                     range = val['range'];
-                     if(val['qty']==0){
-                        cntitem = "";
-                     }else{
-                        cntitem = val['qty'];
+                            units = val['unitcode'];
+                            apcode = val['apCode'];
+                            apname = val['apName'];
+                         });
+                         console.log(cntitem);
                      }
-                        units = val['unitcode'];
-                        apcode = val['apCode'];
-                        apname = val['apName'];
-                     });
+                     $("#count1").hide();
+                     $("#count2").show();
+                     document.getElementById("CTitemno").innerHTML = itemcode;
+                     document.getElementById("CTitemname").innerHTML = itemName;
+                     document.getElementById("CTunit").innerHTML = units;
+
+                     document.getElementById("itemNo").value = itemcode;
+                     document.getElementById("itemsName").value = itemName;
+                     document.getElementById("Cunit").value = units;
+                     document.getElementById("counts").value = cntitem;
+
+                     $('#counts').focus();
+
+                     $.mobile.changePage("#countitem");
                  }
-                 $("#count1").hide();
-                 $("#count2").show();
-                 document.getElementById("CTitemno").innerHTML = itemcode;
-                 document.getElementById("CTitemname").innerHTML = itemName;
-                 document.getElementById("CTunit").innerHTML = units;
-
-                 document.getElementById("itemNo").value = itemcode;
-                 document.getElementById("itemsName").value = itemName;
-                 document.getElementById("Cunit").value = units;
-                 document.getElementById("counts").value = cntitem;
-
-                 $('#counts').focus();
-
-                 $.mobile.changePage("#countitem");
            },
            error: function (error) {
                  alertify.error("can't call api");
