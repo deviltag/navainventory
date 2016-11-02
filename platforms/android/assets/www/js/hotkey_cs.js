@@ -7,8 +7,8 @@ document.addEventListener("keydown", function(event) {
             if(page=="countstock"){
                 switch (event.keyCode){
                     case 0 :
-                            console.log("pluspr");
-                            $.mobile.changePage('#shelves',{transition: 'slidefade',reverse: true});
+                            console.log("plusitem");
+                            $.mobile.changePage("#shelves",{transition: 'slidefade'});
                             break;
                     case 13 :
                             savedata();
@@ -22,14 +22,32 @@ document.addEventListener("keydown", function(event) {
                             console.log("insert IS item");
                             savestock();
                             break;
+                    case 0 :
+                            $("#scanitem").click();
+                            break;
+                }
+            }else if(page=="stock"){
+                switch(event.keyCode){
+                    case 0 :
+                            $("#scanwh").click();
+                            break;
+                }
+            }else if(page=="shelves"){
+                switch(event.keyCode){
+                    case 0 :
+                            $("#scansh").click();
+                            break;
                 }
             }
 
 });
 
     document.addEventListener("backbutton", function(pr){
-        if($.mobile.activePage.is('#countstock')){
-            alertify.alert("ท่านยังทำรายการไม่เสร็จ กรุณากดบันทึกรายการเพื่อทำรายการใหม่");
-        }
+        var page="";
+        page = $.mobile.activePage.attr('id');
+        console.log(page);
+                    if(page=="countstock"){
+                         c_s();
+                    }
     }, false);
 

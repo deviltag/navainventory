@@ -24,20 +24,24 @@ function perdata(){
                 focus_search();
                 $.mobile.changePage("#receive",{transition: 'slidefade'});
             }else if(id=="3"){
-                //$.mobile.changePage("#stock",{transition: 'slidefade'});
-                alertify.alert("ระบบยังไม่เปิดให้บริการ");
+                $.mobile.changePage("#stock",{transition: 'slidefade'});
+                //alertify.alert("ระบบยังไม่เปิดให้บริการ");
             }else if(id=="4"){
                 //alertify.alert("ระบบยังไม่เปิดให้บริการ");
+                wh_type_store();
                 $.mobile.changePage("#transfer",{transition: 'slidefade'});
             }else if(id=="5"){
-                alertify.alert("ระบบยังไม่เปิดให้บริการ");
-                //$.mobile.changePage("#transferup",{transition: 'slidefade'});
+                //alertify.alert("ระบบยังไม่เปิดให้บริการ");
+                wh_type_store();
+                $.mobile.changePage("#transferup",{transition: 'slidefade'});
             }else if(id=="6"){
-                alertify.alert("ระบบยังไม่เปิดให้บริการ");
-                //$.mobile.changePage("#transferdown",{transition: 'slidefade'});
+                //alertify.alert("ระบบยังไม่เปิดให้บริการ");
+                wh_dmg_from();
+                $.mobile.changePage("#transferdown",{transition: 'slidefade'});
             }else if(id=="7"){
-                alertify.alert("ระบบยังไม่เปิดให้บริการ");
-                //$.mobile.changePage("#transfer_damage",{transition: 'slidefade'});
+                //alertify.alert("ระบบยังไม่เปิดให้บริการ");
+                wh_dmg_from();
+                $.mobile.changePage("#transfer_damage",{transition: 'slidefade'});
             }else if(id=="8"){
                 alertify.alert("ระบบยังไม่เปิดให้บริการ");
                // $.mobile.changePage("#transfer_isp",{transition: 'slidefade'});
@@ -45,8 +49,8 @@ function perdata(){
                 alertify.alert("ระบบยังไม่เปิดให้บริการ");
                 //$.mobile.changePage("#transfer_rtv",{transition: 'slidefade'});
             }else if(id=="10"){
-                alertify.alert("ระบบยังไม่เปิดให้บริการ");
-                //$.mobile.changePage("#transfer_normal",{transition: 'slidefade'});
+               //alertify.alert("ระบบยังไม่เปิดให้บริการ");
+               wh_normal();
             }else if(id=="11"){
                 rewh();
             }else if(id=="12"){

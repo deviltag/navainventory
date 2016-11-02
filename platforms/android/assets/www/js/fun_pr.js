@@ -21,7 +21,14 @@ window.addEventListener('native.onscanbarcode', function (pr) {
             case "pageone" : rslogin(localStorage.barcode);
                             break;
             case "pagelogin" : rslogin(localStorage.barcode);
-                                        break;
+                               /*var cls = document.getElementsByClassName('cmsel');
+                               for(var i = 0; i < cls.length; i++){
+                               cls[i].innerHTML = `<select name="company" style=" width:100%; border:0; padding: 5%; background: #fff center; border-radius: 5px; margin-bottom:5%; margin-top:0%;">
+                                                   <option value="1">บริษัท นพดลพานิช จำกัด</option>
+                                                   <option value="2">บริษัท นวเวนดิ้ง จำกัด</option>
+                                                   </select>`;
+                               }*/
+                               break;
             case "pluspr" : additems(localStorage.barcode);
                              break;
 
@@ -160,6 +167,10 @@ function rslogin(result){
                                         states[Connection.NONE] = 'No network connection';
 
                                         if(states[networkState]== states[Connection.NONE]){
+                                             alertify.set({ labels: {
+                                                    ok     : "yes",
+                                                    cancel : "no"
+                                                } });
                                             alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
                                                 if (e) {
                                                     navigator.app.exitApp();
@@ -168,6 +179,10 @@ function rslogin(result){
                                                 }
                                             });
                                         }else if(states[networkState]== states[Connection.UNKNOWN]){
+                                             alertify.set({ labels: {
+                                                    ok     : "yes",
+                                                    cancel : "no"
+                                                } });
                                             alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
                                                 if (e) {
                                                     navigator.app.exitApp();
@@ -178,6 +193,13 @@ function rslogin(result){
                                         }else{
                                             localStorage.username = result;
                                             document.getElementById("show_user").innerHTML = "<h3>"+localStorage.username+"</h3>";
+                                               var cls = document.getElementsByClassName('cmsel');
+                                               for(var i = 0; i < cls.length; i++){
+                                               cls[i].innerHTML = `<select name="company" style=" width:100%; border:0; padding: 5%; background: #fff center; border-radius: 5px; margin-bottom:5%; margin-top:0%;">
+                                                                   <option value="1">บริษัท นพดลพานิช จำกัด</option>
+                                                                   <option value="2">บริษัท นวเวนดิ้ง จำกัด</option>
+                                                                   </select>`;
+                                               }
                                             pass_s_focus();
                                             $.mobile.changePage("#pagelogin");
 
@@ -492,6 +514,10 @@ function backdetail(){
                      var js = jQuery.parseJSON(prl);
                      console.log(js);
                      if(JSON.stringify(js)=="[]"){
+                         alertify.set({ labels: {
+                                ok     : "yes",
+                                cancel : "no"
+                            } });
                        alertify.confirm("รายการนี้ไม่สมบูรณ์ ท่านต้องการยกเลิกการทำรายการนี้หรือไม่ ?", function (e){
                             if (e) {
                                    var Docno = document.getElementById("DocNo").value;
@@ -504,6 +530,10 @@ function backdetail(){
                             }
                         });
                      }else{
+                         alertify.set({ labels: {
+                                ok     : "yes",
+                                cancel : "no"
+                            } });
                         alertify.confirm("ใบ PR นี้มีสินค้าอยู่ ท่านต้องกายกเลิกหรือไม่ ?", function (e){
                             if (e){
                                 var Docno = document.getElementById("DocNo").value;

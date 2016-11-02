@@ -259,8 +259,10 @@ $.ajax({
                           var storesh_list_up= "<select id='sshelfup' data-role='none' class='whselect'>";
                           var storesh_list_down= "<select id='sshelfdown' data-role='none' class='whselect'>";
                           for(var i = 0;i<countv;i++){
+                          if(storesh.data[i].code!="DMG"){
                           storesh_list_up += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
                           storesh_list_down += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
+                          }
 
                           }
                           storesh_list_up += "</select>";
@@ -485,7 +487,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"1","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -549,7 +551,7 @@ function save_up(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -616,7 +618,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"2","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -679,7 +681,7 @@ function save_down(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -951,14 +953,26 @@ $.ajax({
                           var count = tf_l.data.length;
                           var tf_list ="";
                           for(var i = 0;i<count;i++){
+                          var listdoctype = "";
+                          if(tf_l.data[i].docType=="0"){
+                          listdoctype = "ไม่ได้กำหนดหัวเอกสาร";
+                          }else if(tf_l.data[i].docType=="1"){
+                          listdoctype = "(โอนสินค้าขึ้นรถ)";
+                          }else if(tf_l.data[i].docType=="2"){
+                          listdoctype = "(โอนสินค้าลงรถ)";
+                          }else if(tf_l.data[i].docType=="3"){
+                          listdoctype = "(โอนสินค้าเสียหาย)";
+                          }else if(tf_l.data[i].docType=="6"){
+                          listdoctype = "(โอนสินค้าแบบปกติ)";
+                          }
                           if(tf_l.data[i].isCancel=="1"){
                           tf_list += '<a href="#" style="background: #FF3333; color: gray;" class="ui-btn ui-corner-all" onclick="search_detail(';
                           tf_list += "'"+tf_l.data[i].docNo+"')";
-                          tf_list += '">'+tf_l.data[i].docNo+'</a>';
+                          tf_list += '">'+tf_l.data[i].docNo+'<br>'+listdoctype+'</a>';
                           }else{
                           tf_list += '<a href="#" class="ui-btn ui-corner-all todo-cancel_transfer" cancel-id="'+tf_l.data[i].docNo+'" data-cancelrow-id="i'+tf_l.data[i].docNo+'" cancelrefNo="'+tf_l.data[i].refDocNo+'" id="i'+tf_l.data[i].docNo+'" onclick="search_detail(';
                           tf_list += "'"+tf_l.data[i].docNo+"')";
-                          tf_list += '">'+tf_l.data[i].docNo+'</a>';
+                          tf_list += '">'+tf_l.data[i].docNo+'<br>'+listdoctype+'</a>';
                             }
                           }
                           document.getElementById("show_tflist").innerHTML = tf_list;
@@ -1016,7 +1030,7 @@ return false;
 }else{
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_cancel_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",

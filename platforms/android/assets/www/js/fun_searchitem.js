@@ -387,6 +387,10 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                         }
 }
 function ref(){
+  alertify.set({ labels: {
+         ok     : "yes",
+         cancel : "no"
+     } });
  alertify.confirm("ท่านต้องการ scan คลังใหม่ หรือ ไม่ ?", function (e) {
         if (e) {
                     rewh();
@@ -410,6 +414,10 @@ function rewh(){
 }
 
 function backhome(){
+    alertify.set({ labels: {
+        ok     : "yes",
+        cancel : "no"
+    } });
     alertify.confirm("ท่านต้องการออกจากระบบ itemProfile หรือ ไม่ ?", function (e) {
         if (e) {
             $.mobile.changePage("#pagetwo");

@@ -244,7 +244,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"3","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -265,6 +265,7 @@ $.ajax({
                                                     alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferdamage);
                                                     localStorage.transferstatus="1";
                                                     document.getElementById("amount_damage").value="";
+                                                    //alert(localStorage.transferdamage);
                                                     search_detaildamage(localStorage.transferdamage)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
@@ -292,6 +293,7 @@ $.ajax({
                                                     alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferdamage);
                                                     localStorage.transferstatus="1";
                                                     document.getElementById("amount_damage").value="";
+                                                    //alert(localStorage.transferdamage);
                                                     search_detaildamage(localStorage.transferdamage)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
@@ -310,7 +312,7 @@ function save_damage(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferdamage+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferdamage+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -351,37 +353,37 @@ $.ajax({
                           cache: false,
                           success: function(tf_d){
                           console.log(tf_d);
-                          var tfnh_show = "<p>เลขที่เอกสาร n : "+tf_d.docNo+"</p>";
-                          tfnh_show += "<p>วันที่ทำเอกสาร : "+tf_d.docDate+"</p>";
-                          tfnh_show += "<p>มูลค่ารวม : "+tf_d.sumOfAmount+" บาท</p>";
+                          var tfdh_show = "<p>เลขที่เอกสาร : "+tf_d.docNo+"</p>";
+                          tfdh_show += "<p>วันที่ทำเอกสาร : "+tf_d.docDate+"</p>";
+                          tfdh_show += "<p>มูลค่ารวม : "+tf_d.sumOfAmount+" บาท</p>";
 
                           var count = tf_d.data.length;
-                          var tfnd_show = '<hr>';
-                          tfnd_show += '<label><div class="ui-grid-c" style="text-align:center;  font-size:14px;">';
-                          tfnd_show += '<div class="ui-block-a"><b>สินค้า</b></div>';
-                          tfnd_show += '<div class="ui-block-b"><b>จำนวน</b></div>';
-                          tfnd_show += '<div class="ui-block-c"><b>จากคลัง/ชั้นเก็บ</b></div>';
-                          tfnd_show += '<div class="ui-block-d"><b>เข้าคลัง/ชั้นเก็บ</b></div>';
-                          tfnd_show += '</div></label><hr>';
+                          var tfdd_show = '<hr>';
+                          tfdd_show += '<label><div class="ui-grid-c" style="text-align:center;  font-size:14px;">';
+                          tfdd_show += '<div class="ui-block-a"><b>สินค้า</b></div>';
+                          tfdd_show += '<div class="ui-block-b"><b>จำนวน</b></div>';
+                          tfdd_show += '<div class="ui-block-c"><b>จากคลัง/ชั้นเก็บ</b></div>';
+                          tfdd_show += '<div class="ui-block-d"><b>เข้าคลัง/ชั้นเก็บ</b></div>';
+                          tfdd_show += '</div></label><hr>';
 
                           for(var i = 0;i<count;i++){
-                          //tfnd_show += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">';
+                          //tfdd_show += '<div class="ui-grid-c" style="text-align:center; font-size:12px;">';
                             if(tf_d.data[i].isCancel =="0"){
-                                    tfnd_show += '<div class="ui-grid-c todo-cancelitemtransferd" data-cancelitemd-id="'+tf_d.data[i].barCode+'" data-cancelitemdrow-id="x'+tf_d.data[i].itemCode+'" id="x'+tf_d.data[i].itemCode+'" icode="'+tf_d.data[i].itemCode+'" bcode="'+tf_d.data[i].barCode+'" whfrom="'+tf_d.data[i].fromWH+'" shfrom="'+tf_d.data[i].fromShelf+'" whto="'+tf_d.data[i].toWH+'" shto="'+tf_d.data[i].toShelf+'" tfno="'+tf_d.docNo+'" rfno="'+tf_d.refDocNo+'" tfamount="'+tf_d.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                                    tfdd_show += '<div class="ui-grid-c todo-cancelitemtransferd" data-cancelitemd-id="'+tf_d.data[i].barCode+'" data-cancelitemdrow-id="dc'+tf_d.data[i].itemCode+'" id="dc'+tf_d.data[i].itemCode+'" icode="'+tf_d.data[i].itemCode+'" bcode="'+tf_d.data[i].barCode+'" whfrom="'+tf_d.data[i].fromWH+'" shfrom="'+tf_d.data[i].fromShelf+'" whto="'+tf_d.data[i].toWH+'" shto="'+tf_d.data[i].toShelf+'" tfno="'+tf_d.docNo+'" rfno="'+tf_d.refDocNo+'" tfamount="'+tf_d.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }else{
-                                    tfnd_show += '<div class="ui-grid-c todo-uncancelitemtransferdnosave blur" data-uncancelitemd-id="'+tf_d.data[i].barCode+'" data-uncancelitemdrow-id="z'+tf_d.data[i].itemCode+'" id="z'+tf_d.data[i].itemCode+'" icode="'+tf_d.data[i].itemCode+'" bcode="'+tf_d.data[i].barCode+'" whfrom="'+tf_d.data[i].fromWH+'" shfrom="'+tf_d.data[i].fromShelf+'" whto="'+tf_d.data[i].toWH+'" shto="'+tf_d.data[i].toShelf+'" tfno="'+tf_d.docNo+'" rfno="'+tf_d.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
+                                    tfdd_show += '<div class="ui-grid-c todo-uncancelitemtransferdnosave blur" data-uncancelitemd-id="'+tf_d.data[i].barCode+'" data-uncancelitemdrow-id="du'+tf_d.data[i].itemCode+'" id="du'+tf_d.data[i].itemCode+'" icode="'+tf_d.data[i].itemCode+'" bcode="'+tf_d.data[i].barCode+'" whfrom="'+tf_d.data[i].fromWH+'" shfrom="'+tf_d.data[i].fromShelf+'" whto="'+tf_d.data[i].toWH+'" shto="'+tf_d.data[i].toShelf+'" tfno="'+tf_d.docNo+'" rfno="'+tf_d.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
                             }
-                           //tfnd_show += "<p>"+tf_d.data[i].itemCode+"</a>";
-                           tfnd_show += '<div class="ui-block-a">'+tf_d.data[i].itemName+'</div>';
-                           tfnd_show += '<div class="ui-block-b"> '+tf_d.data[i].qty+' '+tf_d.data[i].unitCode+' </div>';
-                           tfnd_show += '<div class="ui-block-c"> '+tf_d.data[i].fromWH+'/'+tf_d.data[i].fromShelf+'</div>';
-                           tfnd_show += '<div class="ui-block-d"> '+tf_d.data[i].toWH+'/'+tf_d.data[i].toShelf+'</div></div><hr>';
+                           //tfdd_show += "<p>"+tf_d.data[i].itemCode+"</a>";
+                           tfdd_show += '<div class="ui-block-a">'+tf_d.data[i].itemName+'</div>';
+                           tfdd_show += '<div class="ui-block-b"> '+tf_d.data[i].qty+' '+tf_d.data[i].unitCode+' </div>';
+                           tfdd_show += '<div class="ui-block-c"> '+tf_d.data[i].fromWH+'/'+tf_d.data[i].fromShelf+'</div>';
+                           tfdd_show += '<div class="ui-block-d"> '+tf_d.data[i].toWH+'/'+tf_d.data[i].toShelf+'</div></div><hr>';
 
                           }
-                          tfnd_show += '</div>';
+                          tfdd_show += '</div>';
 
-                          document.getElementById("show_hdetail_tfd").innerHTML = tfnh_show;
-                          document.getElementById("show_detail_tfd").innerHTML = tfnd_show;
+                          document.getElementById("show_hdetail_tfd").innerHTML = tfdh_show;
+                          document.getElementById("show_detail_tfd").innerHTML = tfdd_show;
                           $.mobile.changePage("#transfer_damage_detail",{transition: 'slidefade'});
 
                           },
@@ -392,7 +394,7 @@ $.ajax({
 
 }
 //========================================================= hold to cancel damage =======================================================
-$(document).on('taphold', '.todo-cancelitemtransfern', function() {
+$(document).on('taphold', '.todo-cancelitemtransferd', function() {
            // console.log("DEBUG - Go popup");
           var link_name = $(this).attr('cancelitemd-id');
           var link_id = $(this).attr('data-cancelitemdrow-id');
@@ -424,12 +426,90 @@ $(document).on('taphold', '.todo-cancelitemtransfern', function() {
         $("<a>", {
         text: "Hold",
         href: "#",
-        onclick: 'cancel_item_transfern('+"'"+itemcode+"'"+','+"'"+barcode+"'"+','+"'"+whfrom+"'"+','+"'"+shfrom+"'"+','+"'"+whto+"'"+','+"'"+shto+"'"+','+"'"+tfno+"'"+','+"'"+rfno+"'"+','+"'"+tfamount+"'"+');'
+        onclick: 'cancel_item_transferd('+"'"+itemcode+"'"+','+"'"+barcode+"'"+','+"'"+whfrom+"'"+','+"'"+shfrom+"'"+','+"'"+whto+"'"+','+"'"+shto+"'"+','+"'"+tfno+"'"+','+"'"+rfno+"'"+','+"'"+tfamount+"'"+');'
         }).appendTo($popUp);
 
         $popUp.popup('open').enhanceWithin();
 
         });
+
+ //======================================================= cancel  damage ===========================================================
+ function cancel_item_transferd(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,refno,amount){
+
+ if (confirm('ต้องการยกเลิกสินค้าหรือไม่ ??')) {
+
+ $.ajax({
+                           url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
+                           data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
+                           contentType: "application/json; charset=utf-8",
+                           dataType: "json",
+                           type: "POST",
+                           cache: false,
+                           success: function(cancel_i){
+                           console.log(cancel_i);
+                           alertify.success("ยกเลิกสินค้าเรียบร้อยแล้ว");
+                           search_detaildamage(docno);
+                           },
+                           error: function (error){
+                           alertify.error("error");
+                           }
+                           });
+                           }
+ }
+
+ //========================================================= hold to uncancel damage =======================================================
+ $(document).on('taphold', '.todo-uncancelitemtransferdnosave', function() {
+            // console.log("DEBUG - Go popup");
+           var link_name = $(this).attr('uncancelitemd-id');
+           var link_id = $(this).attr('data-uncancelitemdrow-id');
+           var itemcode = $(this).attr('icode');
+           var barcode = $(this).attr('bcode');
+           var whfrom = $(this).attr('whfrom');
+           var shfrom = $(this).attr('shfrom');
+           var whto = $(this).attr('whto');
+           var shto = $(this).attr('shto');
+           var tfno = $(this).attr('tfno');
+           var rfno = $(this).attr('rfno');
+           var tfamount = $(this).attr('tfamount');
+           var $popUp = $("<div/>").popup({
+             dismissible: true,
+
+             //theme: "a",
+             transition: "pop",
+             arrow: "b",
+             positionTo: '#'+link_id
+             }).on("popupafterclose", function () {
+         //remove the popup when closing
+         $(this).remove();
+         }).css({
+        'padding': '15%',
+        'color': '#fff',
+        'background': 'red'
+        });
+         console.log('#'+link_id);
+         $("<a>", {
+         text: "Return",
+         href: "#",
+         onclick: 'uncanceld_nosave('+"'"+barcode+"'"+');'
+         }).appendTo($popUp);
+
+         $popUp.popup('open').enhanceWithin();
+
+         });
+
+  //======================================================= uncancel  damage ===========================================================
+  function uncanceld_nosave(b){
+      if (confirm('ต้องการ return สินค้าหรือไม่ ??')) {
+              get_item_transfer_damage(b);
+              $.mobile.changePage("#transfer_damage_item",{transition: 'slidefade'});
+              document.getElementById("amount_damage").value = "";
+              amountdamage_focus();
+
+      }
+  }
+function test_para(z,x,c,v,b,n,m,a,s){
+alert(z+" , "+x+" , "+c+" , "+v+" , "+b+" , "+n+" , "+m+" , "+a+" , "+s)
+        }
 //==================================== check status damage==============================================================================
 function checkstatus_damage(){
 if(localStorage.transferstatus=="1"){

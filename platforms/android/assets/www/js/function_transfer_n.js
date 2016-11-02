@@ -216,7 +216,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"6","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -333,7 +333,7 @@ function save_normal(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo_n+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
+                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo_n+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",

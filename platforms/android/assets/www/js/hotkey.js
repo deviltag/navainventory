@@ -38,19 +38,17 @@ document.addEventListener("keydown", function(event) {
                 }
             }else if(page=="transfer"){
                 switch (event.keyCode){
-                    case 49:wh_type_store();
-                            $.mobile.changePage("#transferup",{transition: 'slidefade'});
+                    case 49:persi(5);
                             break;
-                    case 50:wh_type_store();
-                            $.mobile.changePage("#transferdown",{transition: 'slidefade'});
+                    case 50:persi(6);
                             break;
-                    case 51: $.mobile.changePage("#transfer_damage",{transition: 'slidefade'});
+                    case 51: persi(7);
                             break;
-                    case 52: $.mobile.changePage("#transfer_isp",{transition: 'slidefade'});
+                    case 52: persi(8);
                             break;
-                    case 53: $.mobile.changePage("#transfer_rtv",{transition: 'slidefade'});
+                    case 53: persi(9);
                             break;
-                    case 54: wh_normal();
+                    case 54: persi(10);
                             break;
                     default: $.mobile.changePage("#transfer",{transition: 'slidefade'});
                             break;
@@ -184,9 +182,17 @@ document.addEventListener("keydown", function(event) {
                    default:
                            break;
                     }
+            }else if(page=="transfer_normal"){
+            switch (event.keyCode){
+                   case 0: transfer_normal();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
             }else if(page=="transfer_normal_item"){
             switch (event.keyCode){
-                   case 13: search_detailnormal();
+                   case 13: submit_transfer_normal();
                            return false;
                            break;
                    default:
@@ -200,6 +206,39 @@ document.addEventListener("keydown", function(event) {
                    default:
                            break;
                     }
+            }else if(page=="transfer_damage"){
+            switch (event.keyCode){
+                   case 0: transfer_dmg();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
+            }else if(page=="transfer_damage_item"){
+            switch (event.keyCode){
+                   case 13: submit_transfer_damage();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
+            }else if(page=="transfer_damage_detail"){
+            switch (event.keyCode){
+                   case 13: save_damage();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
+            }else if(page=="transfer_item"){
+            switch (event.keyCode){
+                   case 13: transfer_edit();
+                           return false;
+                           break;
+                   default:
+                           break;
+                    }
+
             }
 });
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -231,7 +270,7 @@ function onDeviceReady(){
            check_back_receive();
        }else if($.mobile.activePage.is('#receive_show')){
             if(localStorage.receivestatus == "1"){
-                alert("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
+                alertify.error("ยังไม่ได้บันทึกใบรับเข้า กรุณาบันทึกก่อน");
                 return false;
             }else{$.mobile.changePage('#receive',{transition: 'slidefade',reverse: true});}
        }else if($.mobile.activePage.is('#receive_list')){
@@ -267,7 +306,9 @@ function onDeviceReady(){
        }else if($.mobile.activePage.is('#transfer_damage')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_damage_item')){
-            $.mobile.changePage('#transfer_damage',{transition: 'slidefade',reverse: true});
+            check_cancel_damage();
+       }else if($.mobile.activePage.is('#transfer_damage_detail')){
+            checkstatus_damage();
        }else if($.mobile.activePage.is('#transfer_isp')){
             $.mobile.changePage('#transfer',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#transfer_isp_item')){
@@ -284,18 +325,15 @@ function onDeviceReady(){
             checkstatus_normal();
        }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
-       }else if($.mobile.activePage.is('#countstock')){
-            $.mobile.changePage('#stock',{transition: 'slidefade',reverse: true});
-       }else if($.mobile.activePage.is('#stockedit')){
-            $.mobile.changePage('#countstock',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#shelves')){
+            isList();
             $.mobile.changePage('#countstock',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#countitem')){
-            $.mobile.changePage('#shelves',{transition: 'slidefade',reverse: true});
+            CSback()
        }else if($.mobile.activePage.is('#setting')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#searchitem')){
-            $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
+             backhome();
        }else if($.mobile.activePage.is('#stock')){
             $.mobile.changePage('#pagetwo',{transition: 'slidefade',reverse: true});
        }else if($.mobile.activePage.is('#receive_search')){
