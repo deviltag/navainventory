@@ -118,13 +118,15 @@ $.ajax({
 
                   },
                   error: function (error){
-                  alertify.error(error);
+                  switch_url();
+                  submit_scan();
                   }
                   });
 
          },
          error: function (error){
-         alertify.error(error);
+         switch_url();
+         submit_scan();
          }
          });
 
@@ -153,7 +155,8 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          submit_scan();
                           }
                           });
 localStorage.receivestatus = "1";
@@ -195,7 +198,8 @@ var date = curr_date + "/" + curr_month
 
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          submit_scan_edit();
                           }
                           });
 
@@ -232,7 +236,8 @@ var date = curr_date + "/" + curr_month
 
                      },
                      error: function (error){
-                     alertify.error(error);
+                     switch_url();
+                     submit_receive();
                      }
                      });
 
@@ -331,7 +336,8 @@ function scan_search_item(scan_value){
 
                                                                   },
                                                                   error: function (error){
-                                                                  alertify.error(error);
+                                                                  switch_url();
+                                                                  scan_search_item(scan_value);
                                                                   }
                                                                   });
 
@@ -388,7 +394,8 @@ function scan_search_item_edit(scan_value){
 
                                                                   },
                                                                   error: function (error){
-                                                                  alertify.error(error);
+                                                                  switch_url();
+                                                                  scan_search_item_edit(scan_value);
                                                                   }
                                                                   });
 
@@ -445,7 +452,8 @@ $.ajax({
                                                       }else if(list_receive.resp.isSuccess==0){alertify.error("ไม่มีใบรับเข้า !!");}
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          show_receive();
                           }
                           });
 }

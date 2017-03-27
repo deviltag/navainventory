@@ -1,10 +1,9 @@
 localStorage.apcode = "";
 localStorage.apname = "";
-
 window.addEventListener('native.onscanbarcode', function (pr) {
        var page = "";
        //alert(pr.scanResult);
-       console.log(pr.scanResult);
+    //   console.log(pr.scanResult);
 
 
        if(page == ""){
@@ -14,7 +13,7 @@ window.addEventListener('native.onscanbarcode', function (pr) {
           page = $(this)[0].activeElement.id;
        });
 
-       console.log(page);
+      // console.log(page);
        localStorage.barcode = pr.scanResult;
 
        switch(page){
@@ -32,18 +31,21 @@ window.addEventListener('native.onscanbarcode', function (pr) {
             case "pluspr" : additems(localStorage.barcode);
                              break;
 
-            case "additem" : additems(localStorage.barcode);
+            case "additem" : document.activeElement.blur();
+                             additems(localStorage.barcode);
                              break;
        }
 });
 
 function additems(barcode){
+                            loading();
+                            document.activeElement.blur();
                             console.log("function additems "+barcode);
                              console.log(document.getElementById("DocNo").value);
                              var DocNo = document.getElementById("DocNo").value;
                                 $.ajax({
                                            url: localStorage.api_url_server+""+localStorage.api_url_search_item_pr,
-                                           data: '{"barcode":"'+barcode+'","docno":"'+DocNo+'","type":"1"}',
+                                           data: '{"accessToken":"'+localStorage.token+'","barcode":"'+barcode+'","docno":"'+DocNo+'","type":"1"}',
                                            contentType: "application/json; charset=utf-8",
                                            dataType: "json",
                                            type: "POST",
@@ -71,7 +73,6 @@ function additems(barcode){
                                                            apname = val['apName'];
 
                                                     });
-
                                                 }else{
                                                     $.each(result.listBarcode, function(key, val) {
                                                         itemcode = val['itemcode'];
@@ -106,8 +107,9 @@ function additems(barcode){
                                                 }
                                                 console.log(localStorage.apcode);
                                                 $("#additem").bind('pageshow', function() {
-                                                    $('#citem').focus();
+                                                    document.activeElement.blur();
                                                 });
+                                                document.activeElement.blur();
                                                 document.getElementById("DocNo").value = DocNo;
                                                 document.getElementById("noitems").value = itemcode;
                                                 document.getElementById("nameitems").value = itemName;
@@ -131,11 +133,12 @@ function additems(barcode){
                                                     document.getElementById("Tunit").innerHTML = "";
                                                 }
 
-
+                                            closeload();
                                            },
                                            error: function (error) {
                                            alertify.error("can't call api");
                                            $.mobile.changePage("#pluspr");
+                                           closeload();
                                            }
 
                                         });
@@ -146,83 +149,16 @@ function additems(barcode){
                                  $("#itemdetail").show();
                                  $("#scanbaritem").hide();
                                  $.mobile.changePage("#additem");
-
+                                 localStorage.enter = null;
                                   return false;
 
 
 
 }
 
-function rslogin(result){
-
-                                        var networkState = navigator.connection.type;
-                                        var states = {};
-                                        states[Connection.UNKNOWN] = 'Unknown connection';
-                                        states[Connection.ETHERNET] = 'Ethernet connection';
-                                        states[Connection.WIFI] = 'WiFi connection ready!!';
-                                        states[Connection.CELL_2G] = 'Cell 2G connection ready!!';
-                                        states[Connection.CELL_3G] = 'Cell 3G connection ready!!';
-                                        states[Connection.CELL_4G] = 'Cell 4G connection ready!!';
-                                        states[Connection.CELL] = 'Cell generic connection ready!!';
-                                        states[Connection.NONE] = 'No network connection';
-
-                                        if(states[networkState]== states[Connection.NONE]){
-                                             alertify.set({ labels: {
-                                                    ok     : "yes",
-                                                    cancel : "no"
-                                                } });
-                                            alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
-                                                if (e) {
-                                                    navigator.app.exitApp();
-                                                } else {
-                                                    $.mobile.changePage("#pageone");
-                                                }
-                                            });
-                                        }else if(states[networkState]== states[Connection.UNKNOWN]){
-                                             alertify.set({ labels: {
-                                                    ok     : "yes",
-                                                    cancel : "no"
-                                                } });
-                                            alertify.confirm("การเชื่อมต่อล้มเหลวเนื่องจากข้องผิดพลาดทางซิร์ฟเวอร์ กรุณาตรวจสัญญาณอินเทอร์เน็ตของท่าน", function (e) {
-                                                if (e) {
-                                                    navigator.app.exitApp();
-                                                } else {
-                                                    $.mobile.changePage("#pageone");
-                                                }
-                                            });
-                                        }else{
-                                            localStorage.username = result;
-                                            document.getElementById("show_user").innerHTML = "<h3>"+localStorage.username+"</h3>";
-                                               var cls = document.getElementsByClassName('cmsel');
-                                               for(var i = 0; i < cls.length; i++){
-                                               cls[i].innerHTML = `<select name="company" style=" width:100%; border:0; padding: 5%; background: #fff center; border-radius: 5px; margin-bottom:5%; margin-top:0%;">
-                                                                   <option value="1">บริษัท นพดลพานิช จำกัด</option>
-                                                                   <option value="2">บริษัท นวเวนดิ้ง จำกัด</option>
-                                                                   </select>`;
-                                               }
-                                            pass_s_focus();
-                                            $.mobile.changePage("#pagelogin");
-
-                                        }
-}
 
 function prlist(){
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
-
+            loading();
             $.ajax({
                    url: localStorage.api_url_server+localStorage.api_url_prlist,
                    data: '{"type":"1","search":"'+localStorage.username+'"}',
@@ -309,21 +245,22 @@ function prlist(){
                         });
                         document.getElementById("prlist").innerHTML = prlist;
                         $.mobile.changePage("#pagepr",{transition: 'slidefade'});
-                        $popUp.popup('close');
+                        closeload();
                      }else{
                         alertify.alert("ไม่มีข้อมูลใบ PR ค้าง สำหรับผู้ใช้งานนี้ !!");
                         document.getElementById("prlist").innerHTML = "";
                         $.mobile.changePage("#pagepr",{transition: 'slidefade'});
-                        $popUp.popup('close');
+                        closeload();
                      }
                    },
                    error: function (error){
                         console.log(JSON.stringify(error));
                         alertify.error("api qserver can't connect!!");
-                        $popUp.popup('close');
+                        closeload();
                    }
 
                    });
+                   localStorage.enter = null;
 }
 //window.setInterval(prlist, 1000);
 
@@ -357,22 +294,7 @@ $(document).on('taphold', '.todo-listview', function() {
 
     });
 function cancelPR(Docno){
-
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
+loading();
 $.ajax({
     url: localStorage.api_url_server+""+localStorage.api_url_cancelPr,
     data: '{"accessToken": "","docNo": "'+Docno+'","userID": "'+localStorage.username+'","isCancel": "1"}',
@@ -458,45 +380,30 @@ $.ajax({
                         //console.log(JSON.stringify(js));
 
                        $.mobile.changePage("#pagepr");
-                       $popUp.popup('close');
+                       closeload();
                            },
                    error: function (error){
                         console.log(JSON.stringify(error));
-                        $popUp.popup('close');
+                        closeload();
                        // $.mobile.changePage("#pagepr");
                    }
 
                    });
-    },
-    error: function(error){
-        console.log(JSON.stringify(error));
-        $popUp.popup('close');
-    }
+        },
+        error: function(error){
+            console.log(JSON.stringify(error));
+            closeload();
+        }
 
-});
-  }
+    });
+localStorage.enter = null;
+}
 
 
 
 function backdetail(){
     console.log("backlink");
-
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
-
+    loading();
     var Docno = document.getElementById("DocNo").value;
      $.ajax({
             url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
@@ -523,10 +430,10 @@ function backdetail(){
                                    var Docno = document.getElementById("DocNo").value;
                                    cancelPR(Docno);
                                    console.log("cancel pr");
-                                   $popUp.popup('close');// user clicked "ok"
+                                   closeload();// user clicked "ok"
                             } else {
                                    $.mobile.changePage("#pluspr",{transition: 'slidefade',reverse: true});
-                                   $popUp.popup('close');
+                                   closeload();
                             }
                         });
                      }else{
@@ -539,37 +446,22 @@ function backdetail(){
                                 var Docno = document.getElementById("DocNo").value;
                                 cancelPR(Docno);
                                 console.log("cancel pr");
-                                $popUp.popup('close');
+                                closeload();
                             }else{
                                 $.mobile.changePage("pluspr",{transition: 'slidefade',reverse: true});
-                                $popUp.popup('close');
+                                closeload();
                             }
                         });
                      }
             }
      });
-
+    localStorage.enter = null;
 }
 
 
 function prdetail(DocNo){
     //alert(DocNo);
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
-
+    loading();
     $.ajax({
                        url: localStorage.api_url_server+""+localStorage.api_url_prdetail,
                        data: '{"type":"1","searchDocno":"'+DocNo+'"}',
@@ -683,16 +575,16 @@ function prdetail(DocNo){
                             document.getElementById("vendorName").innerHTML = venName;
 
                             $.mobile.changePage("#listpr");
-                            $popUp.popup('close');
+                            closeload();
                                },
                        error: function (error){
                             console.log(error);
                             $.mobile.changePage("#pagepr");
-                            $popUp.popup('close');
+                            closeload();
                        }
 
            });
-
+    localStorage.enter = null;
    // $.mobile.changePage("#listpr");
 }
 ////////////////////////////////////////////////////////////
@@ -731,21 +623,7 @@ $(document).on('taphold', '.todo-detailitem', function() {
 
 function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
 
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
+    loading();
     console.log("detailItem "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:1");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
@@ -871,7 +749,7 @@ function MyItemdetail(DocNo, itemcode, itemname, qty, unitcode){
                   }
 
     });
-
+    localStorage.enter = null;
 
   }
 //////////////////////////// hold ///////////////////////////////////
@@ -911,21 +789,7 @@ $(document).on('taphold', '.todo-detailitem-hold', function() {
     });
 function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
 
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
+    loading();
     console.log("detailItem "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:'0'");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
@@ -1035,23 +899,23 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
                             document.getElementById("prldetail").innerHTML = detail;
 
                             $.mobile.changePage("#listpr");
-                            $popUp.popup('close');
+                            closeload();
                                },
                        error: function (error){
                             console.log(error);
                             $.mobile.changePage("#pagepr");
-                            $popUp.popup('close');
+                            closeload();
                        }
 
            });
                   },
                   error: function (error){
                          console.log(error);
-                         $popUp.popup('close');
+                         closeload();
                   }
 
     });
-
+localStorage.enter = null;
 
   }
 ///////////////////////////////////////////////////////////////
@@ -1060,22 +924,7 @@ function MyItemhold(DocNo, itemcode, itemname, qty, unitcode){
 
 function clicksubmit(){
 
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
-
+    loading();
     console.log("clickadditem");
     console.log(document.getElementById("DocNo").value);
     var DocNo = document.getElementById("DocNo").value;
@@ -1088,16 +937,16 @@ function clicksubmit(){
    if(no=="null"){
           alertify.alert("รหัสสินค้านี้เป็นค่า null ไม่สามารถบันทึกได้ กรุณาสแกนสินค้าอื่น ๆ ");
           $.mobile.changePage("#additem");
-          $popUp.popup('close');
+          closeload();
    }else if(no==""){
        alertify.alert("ท่านยังไม่ได้ scan สินค้า กรุณา scan สินค้าด้วย");
        $ .mobile.changePage("#additem");
-       $popUp.popup('close');
+       closeload();
    }else{
         if(cnt == ""){
             alertify.alert("ท่านยังไม่ได้กรอกจำนวนสินค้า กรุณากรอกจำนวนให้ถูกต้อง!!");
             $.mobile.changePage("#additem");
-            $popUp.popup('close');
+            closeload();
         }else{
 
 
@@ -1177,19 +1026,19 @@ function clicksubmit(){
                                                                                         //alert("รหัสสินค้า: "+no+", ชื่อสินค้า: "+name+", เกรด: "+grade+", จำนวน: "+cnt+", หน่วยนับ: "+units+",DocPR :"+DocNo);
 
                                                                                         $.mobile.changePage("#pluspr");
-                                                                                        $popUp.popup('close');
+                                                                                        closeload();
                                                                                             },
                                                                                         error: function (error){
                                                                                             console.log(error);
                                                                                             $.mobile.changePage("#pluspr");
-                                                                                            $popUp.popup('close');
+                                                                                            closeload();
                                                                                         }
 
                                                                        });
                                            },
                                            error: function (error){
                                                 console.log(error);
-                                                $popUp.popup('close');
+                                                closeload();
                                            }
 
                                });
@@ -1205,33 +1054,20 @@ function clicksubmit(){
                 document.getElementById("Tgrade").innerHTML = "";
                 document.getElementById("Tunit").innerHTML = "";
                 $("#itemdetail").show();
-                $popUp.popup('close');
+                closeload();
         }
 
    }
+   localStorage.enter = null;
 }
 
 function sumdetail(){
 
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
+loading();
 console.log('{"type":"1","search":"'+localStorage.username+'"}');
 $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
-           data: '{"type":"1","search":"'+localStorage.username+'"}',
+           data: '{"accessToken":"'+localStorage.token+'","type":"1","search":"'+localStorage.username+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
            type: "POST",
@@ -1304,12 +1140,12 @@ $.ajax({
                                 document.getElementById("sumitem").innerHTML = detail;
 
                                 $.mobile.changePage("#pluspr");
-                                $popUp.popup('close');
+                                closeload();
                                    },
                            error: function (error){
                                 console.log(error);
                                 $.mobile.changePage("#pluspr");
-                                $popUp.popup('close');
+                                closeload();
                            }
 
                });
@@ -1317,31 +1153,17 @@ $.ajax({
            error: function (error){
                 console.log(error);
                 $.mobile.changePage("#pagepr");
-                $popUp.popup('close');
+                closeload();
            }
 
     });
 
-
+localStorage.enter = null;
 }
 
 function pluspr(){
 
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
+loading();
     var Docno = document.getElementById("DocNo").value;
     var apCode = document.getElementById("apCodeven").value;
     var priority = document.getElementById("paility").value;
@@ -1368,7 +1190,7 @@ function pluspr(){
                 console.log(js);
                 if(JSON.stringify(js)=="[]"){
                     alertify.alert("ยังไม่มีรายการสินค้าในใบ PR นี้ กรุณาสั่งสินค้าอย่างน้อย 1 รายการ");
-                    $popUp.popup('close');
+                    closeload();
                 }else{
                         var wday = document.getElementById("defdate").value;
                         var discript = document.getElementById("discript").value;
@@ -1380,7 +1202,7 @@ function pluspr(){
                         }
                         if(discript==""||apCode == "null"){
                             alertify.alert("กรุณากรอกข้อมูลให้ครบถ้วน!!");
-                            $popUp.popup('close');
+                            closeload();
                         }else{
                                 $.ajax({
                                            url: localStorage.api_url_server+""+localStorage.api_url_updatepr,
@@ -1466,7 +1288,7 @@ function pluspr(){
                                                         });
                                                         document.getElementById("prlist").innerHTML = prlist;
                                                         localStorage.apcode="";
-                                                        $popUp.popup('close');
+                                                        closeload();
                                                         //console.log(JSON.stringify(js));
 
                                                       //  $.mobile.changePage("#pagepr");
@@ -1480,12 +1302,12 @@ function pluspr(){
                                                    });
                                            alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว");
                                            $.mobile.changePage("#pagepr");
-                                           $popUp.popup('close');
+                                           closeload();
                                            },
                                            error: function (error){
                                              console.log(JSON.stringify(error));
                                              $.mobile.changePage("#pluspr");
-                                             $popUp.popup('close');
+                                             closeload();
                                            }
 
                                    });
@@ -1494,6 +1316,7 @@ function pluspr(){
                 }
             }
     });
+    localStorage.enter = null;
 }
 
 
@@ -1529,23 +1352,7 @@ $(document).on('taphold', '.todo-itemview-hold', function() {
     });
 
 function MyItem(DocNo, itemcode, itemname, qty, unitcode){
-
-            var $ipop = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($ipop);
-              $ipop.popup('open');
-
+    loading();
     //alert("cancel "+DocNo+" "+itemcode+" "+itemname+" "+qty+" "+unitcode+" isCancel:'1'");
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
@@ -1615,22 +1422,23 @@ function MyItem(DocNo, itemcode, itemname, qty, unitcode){
                             document.getElementById("sumitem").innerHTML = detail;
 
                             $.mobile.changePage("#pluspr");
-                            $ipop.popup('close');
+                            closeload();
                             },
                             error: function (error){
                                  console.log(error);
                                  $.mobile.changePage("#pluspr");
-                                 $ipop.popup('close');
+                                 closeload();
                             }
 
                         });
                   },
                   error: function (error){
                          console.log(error);
-                         $ipop.popup('close');
+                         closeload();
                   }
 
     });
+    localStorage.enter = null;
   }
 
 $(document).on('taphold', '.todo-itemview', function() {
@@ -1665,21 +1473,7 @@ $(document).on('taphold', '.todo-itemview', function() {
 
 function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
 
-            var $popUp = $("<div>").popup({
-              dismissible: false,
-              theme: "b",
-              positionto: "window",
-              transition: "flip",
-              }).css({
-                'background': '#F8F8FF',
-                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                'width' : 100
-              });;
-              $("<img>", {
-              src: "images/loading.gif"
-              }).appendTo($popUp);
-              $popUp.popup('open');
+loading();
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_insertpr,
            data: '{"docNo":"'+DocNo+'","itemCode":"'+itemcode+'","itemName":"'+itemname+'","unitcode":"'+unitcode+'","qty":"'+qty+'","isCancel":"0"}',
@@ -1742,17 +1536,18 @@ function MyItemReturn(DocNo, itemcode, itemname, qty, unitcode){
 
                     document.getElementById("sumitem").innerHTML = detail;
                     $.mobile.changePage("#pluspr");
-                    $popUp.popup('close');
+                    closeload();
                     },
                     error: function (error){
                            console.log(error);
                            $.mobile.changePage("#pluspr");
-                           $popUp.popup('close');
+                           closeload();
                     }
                 });
            }
 
     });
+    localStorage.enter = null;
 }
 
 function searchapcode(){
@@ -1787,7 +1582,7 @@ function searchapcode(){
            }
     });
 
-
+localStorage.enter = null;
 }
 
 function addapcode(textven, name){
@@ -1799,6 +1594,7 @@ function addapcode(textven, name){
     document.getElementById("vender").value = "";
     document.getElementById("nameven").innerHTML = "-- ชื่อเจ้าหนี้ --";
     $('#vendor').popup('close');
+    localStorage.enter = null;
 }
 
 function change(){
@@ -1814,6 +1610,40 @@ function change(){
 		document.getElementById("ims").src = "images/quick.png";
 		pai.className = "btn btn-buy";
 	}
-
+localStorage.enter = null;
 	//alert(pai.value);
+}
+
+var bodypr = document.querySelector('body');
+bodypr.onkeydown = function () {
+    //var item = document.getElementById("itemNo").value;
+    var page = "";
+ 	if(page == ""){
+             page = $.mobile.activePage.attr('id');
+    }
+    $(document).on("pageshow", function (c, data) {
+              page = $(this)[0].activeElement.id;
+    });
+   // console.log("page body pr "+page);
+    if(page=="additem"){
+            if (event.keyCode < 48 || event.keyCode > 57){
+            	 /*if(event.keyCode == 8){
+                     event.returnValue = true;
+                     var str = document.getElementById("citem").value;
+                     if(str!=""){
+                       var newStr = str.substring(0, str.length-1);
+                       document.getElementById("citem").value = newStr;
+                       return false;
+                     }
+
+                 }else{*/
+                     event.returnValue = false;
+                 //}
+            }else{
+                //event.returnValue = true;
+                console.log("pr "+event.keyCode);
+               // document.getElementById("citem").value += String.fromCharCode(event.keyCode);
+                //return false;
+            }
+    }
 }

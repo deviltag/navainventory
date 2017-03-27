@@ -36,7 +36,8 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          wh_dmg_from();
                           }
                           });
                           return false;
@@ -45,7 +46,7 @@ $.ajax({
 function wh_dmg(){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
-                          data: '{"accessToken":"","type":"1","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"1","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -74,7 +75,8 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          wh_dmg();
                           }
                           });
                           return false;
@@ -109,7 +111,7 @@ sh_damage(damage);
 function sh_damagefrom(whcode_dmgf){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_tf,
-                          data: '{"accessToken":"","refCode":"'+whcode_dmgf+'","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","refCode":"'+whcode_dmgf+'","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -129,7 +131,8 @@ $.ajax({
                             select_shelfdmg();
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          sh_damagefrom(whcode_dmgf);
                           }
                           });
                           return false;
@@ -139,7 +142,7 @@ $.ajax({
 function sh_damage(whcode_dmg){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_tf,
-                          data: '{"accessToken":"","refCode":"'+whcode_dmg+'","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","refCode":"'+whcode_dmg+'","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -160,7 +163,8 @@ $.ajax({
                             //select_shelfdmgfrom();
                           },
                           error: function (error){
-                          alertify.error(error);
+                          switch_url();
+                          sh_damage(whcode_dmg);
                           }
                           });
                           return false;
@@ -196,7 +200,7 @@ var d = confirm("ต้องการโอนสินค้าจากคล
 function get_item_transfer_damage(bar){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
-                          data: '{"accessToken":"","type":"1","whCode":"'+localStorage.transferdamagewh_from+'","shelf":"'+localStorage.transferdamagesh_from+'","search":"'+bar+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"1","whCode":"'+localStorage.transferdamagewh_from+'","shelf":"'+localStorage.transferdamagesh_from+'","search":"'+bar+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -226,7 +230,8 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                          switch_url();
+                          get_item_transfer_damage(bar);
                           }
                           });
 }
@@ -244,7 +249,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"3","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"3"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -255,7 +260,7 @@ $.ajax({
 
                           $.ajax({
                                                     url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferdamage+'","barCode":"'+localStorage.transferBarcode_d+'","itemCode":"'+localStorage.transferItemcode_d+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdamagewh_from+'","fromShelfCode":"'+localStorage.transferdamagesh_from+'","toWHCode":"'+localStorage.transferdamagewh_to+'","toShelfCode":"'+localStorage.transferdamagesh_to+'","qty":"'+amountdamage+'","refNo":"","isCancel":"0"}',
+                                                    data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferdamage+'","barCode":"'+localStorage.transferBarcode_d+'","itemCode":"'+localStorage.transferItemcode_d+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdamagewh_from+'","fromShelfCode":"'+localStorage.transferdamagesh_from+'","toWHCode":"'+localStorage.transferdamagewh_to+'","toShelfCode":"'+localStorage.transferdamagesh_to+'","qty":"'+amountdamage+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
@@ -265,25 +270,26 @@ $.ajax({
                                                     alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferdamage);
                                                     localStorage.transferstatus="1";
                                                     document.getElementById("amount_damage").value="";
-                                                    //alert(localStorage.transferdamage);
                                                     search_detaildamage(localStorage.transferdamage)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
 
                                                     },
                                                     error: function (error){
-                                                    alertify.error("error");
+                                                    switch_url();
+                                                    submit_transfer_damage();
                                                     }
                                                     });
                           },
                           error: function (error){
-                          alertify.error("error");
+                          switch_url();
+                          submit_transfer_damage();
                           }
                           });
 }else{
                           $.ajax({
                                                     url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferdamage+'","barCode":"'+localStorage.transferBarcode_d+'","itemCode":"'+localStorage.transferItemcode_d+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdamagewh_from+'","fromShelfCode":"'+localStorage.transferdamagesh_from+'","toWHCode":"'+localStorage.transferdamagewh_to+'","toShelfCode":"'+localStorage.transferdamagesh_to+'","qty":"'+amountdamage+'","refNo":"","isCancel":"0"}',
+                                                    data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferdamage+'","barCode":"'+localStorage.transferBarcode_d+'","itemCode":"'+localStorage.transferItemcode_d+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdamagewh_from+'","fromShelfCode":"'+localStorage.transferdamagesh_from+'","toWHCode":"'+localStorage.transferdamagewh_to+'","toShelfCode":"'+localStorage.transferdamagesh_to+'","qty":"'+amountdamage+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
@@ -293,14 +299,14 @@ $.ajax({
                                                     alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferdamage);
                                                     localStorage.transferstatus="1";
                                                     document.getElementById("amount_damage").value="";
-                                                    //alert(localStorage.transferdamage);
                                                     search_detaildamage(localStorage.transferdamage)
                                                     //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
 
                                                     },
                                                     error: function (error){
-                                                    alertify.error("error");
+                                                    switch_url();
+                                                    submit_transfer_damage();
                                                     }
                                                     });
 
@@ -312,7 +318,7 @@ function save_damage(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferdamage+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferdamage+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -326,7 +332,8 @@ $.ajax({
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
-                          alertify.error("error");
+                          switch_url();
+                          save_damage();
                           }
                           });
 }else{
@@ -346,7 +353,7 @@ $.mobile.changePage("#transfer_damage",{transition: 'slidefade',reverse: true});
 function search_detaildamage(tfNo){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
-                          data: '{"accessToken":"","type":"","search":"'+tfNo+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -388,7 +395,8 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                          switch_url();
+                          search_detaildamage(tfNo);
                           }
                           });
 
@@ -440,7 +448,7 @@ $(document).on('taphold', '.todo-cancelitemtransferd', function() {
 
  $.ajax({
                            url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
-                           data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
+                           data: '{"accessToken":"'+localStorage.token+'","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
                            contentType: "application/json; charset=utf-8",
                            dataType: "json",
                            type: "POST",
@@ -451,7 +459,8 @@ $(document).on('taphold', '.todo-cancelitemtransferd', function() {
                            search_detaildamage(docno);
                            },
                            error: function (error){
-                           alertify.error("error");
+                           switch_url();
+                           cancel_item_transferd(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,refno,amount);
                            }
                            });
                            }

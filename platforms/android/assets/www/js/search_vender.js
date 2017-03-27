@@ -110,7 +110,7 @@ function searchpo(){
 //alert(localStorage.api_url_server+""+localStorage.api_url_vender);
         //alert(search_po.search.value)
         $.ajax({
-                   url: localStorage.api_url_server+""+localStorage.api_url_vender,
+                   url: localStorage.api_url_server+localStorage.api_url_vender,
                    data: '{"accessToken":"","search":"'+document.getElementById("search").value+'"}',
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
@@ -137,7 +137,8 @@ function searchpo(){
                         document.getElementById("polist").innerHTML = po;
                     },
                     error: function (error){
-                        console.log(error);
+                    switch_url();
+                    searchpo();
                     }
                 });
 
@@ -181,7 +182,8 @@ function select_vender(po_number){
                         $.mobile.changePage("#receive_listpo",{transition: 'slidefade'});
                     },
                     error: function (error){
-                        console.log(error);
+                    switch_url();
+                    select_vender(po_number);
                     }
                 });
 
@@ -254,7 +256,8 @@ function select_op_vender(get_detail){
                                                                                  }else if(po_detail.resp.isSuccess==0){alertify.error("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
-                                                                                 alertify.error(error);
+                                                                                 switch_url();
+                                                                                 select_op_vender(get_detail);
                                                                                 }
 
 
@@ -365,7 +368,8 @@ if(localStorage.receiveNumber){
                                                                                  }else if(rc_detail.resp.isSuccess==0){alertify.error("Barcode ไม่ถูกต้อง !!");}
                                                                                  },
                                                                                  error: function (error){
-                                                                                 alertify.error(error);
+                                                                                 switch_url();
+                                                                                 search_rc_no();
                                                                                 }
 
 
@@ -459,7 +463,8 @@ function show_receive_detail(r,p){
                                                                                  }else if(rc_detail1.resp.isSuccess==0){alertify.error("ไม่มีใบรับสินค้าที่ท่านเลือก");}
                                                                                  },
                                                                                  error: function (error){
-                                                                                 alertify.error(error);
+                                                                                 switch_url();
+                                                                                 show_receive_detail(r,p);
                                                                                 }
 
 
@@ -569,7 +574,8 @@ $.ajax({
                                                                                  }else if(rc_detail_e.resp.isSuccess==0){alertify.error("ไม่มีใบรับสินค้า !!");}
                                                                                  },
                                                                                  error: function (error){
-                                                                                 alertify.error(error);
+                                                                                 switch_url();
+                                                                                 show_receive_detail_edit(r,p);
                                                                                 }
 
 
@@ -627,7 +633,8 @@ var se_search ="";
                //$.mobile.changePage("#receive_search");
                },
                error: function (error){
-               alertify.error(error);
+               switch_url();
+               search_receive();
                }
           });
 
@@ -662,7 +669,8 @@ if (confirm('ต้องการยกเลิกสินค้านี้�
 
                         },
                         error: function (error){
-                        alert(error);
+                        switch_url();
+                        cancel_item(delete_item,rcq);
                         }
                         });
     }
@@ -697,7 +705,8 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
 
                         },
                         error: function (error){
-                        alertify.error(error);
+                        switch_url();
+                        uncancel_item(undelete_item,rcq);
                         }
                         });
     }
@@ -730,7 +739,8 @@ if (confirm('ต้องการยกเลิกสินค้านี้�
 
                         },
                         error: function (error){
-                        alert(error);
+                        switch_url();
+                        cancel_item_edit(delete_item,rcq,po_e,rv_e);
                         }
                         });
     }
@@ -763,6 +773,7 @@ if (confirm('ต้องการคืนค่าสินค้านี้�
 
                         },
                         error: function (error){
+                        switch_url();
                         alertify.error(error);
                         }
                         });
@@ -794,7 +805,8 @@ if (confirm('ต้องการลบใบรับเข้านี้ห�
 
                         },
                         error: function (error){
-                        alertify.error(error);
+                        switch_url();
+                        uncancel_item_edit(undelete_item,rcq,po_e,rv_e);
                         }
                         });
     }

@@ -43,16 +43,58 @@ var app = {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
+       // loading();
+          var selected1 = "";
+        // var selected2 = "";
+            $.ajax({
+                    url: "http://api.nopadol.com:8080/NPDataCenterWs/center/company",
+                    data: '{}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    type: "POST",
+                    cache: false,
+                    success: function(result){
+                        console.log(JSON.stringify(result.listData));
+                             selected1 += `<select name="company1" class="bt-cmp" style="width:100%; height:50px;" data-role="none">`;
+                            // selected2 += `<select name="company2" class="bt-cmp" style="width:100%; height:50px;" data-role="none">`;
+                             $.each(result.listData, function(key, val) {
+                                var n = val['code'].includes("nava");
+                                if(n!=true){
+                                    selected1 += `<option value="`+val['code']+`">`+val['name']+`</option>`;
+                                }
+
+                               // selected2 += `<option value="`+val['code']+`">`+val['name']+`</option>`;
+                             });
+                             selected1 += `</select>`;
+                            // selected2 += `</select>`;
+                             document.getElementById("cmp1").innerHTML = selected1;
+                            // document.getElementById("cmp2").innerHTML = selected2;
+                           //  $load.popup("close");
+                    },
+                    error: function (err){
+                        console.log(JSON.stringify(err));
+                        alertify.alert("การเชื่อมต่อฐานข้อมูลมีปัญหา กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตของท่าน");
+                      //  $load.popup("close");
+                    }
+            });
 
         console.log('Received Event: ' + id);
         style_page();
-
-       /* var cls = document.getElementsByClassName('cmsel');
-                 for(var i = 0; i < cls.length; i++){
-                 cls[i].innerHTML = `<select name="company" style=" width:100%; border:0; padding: 5%; background: #fff center; border-radius: 5px; margin-bottom:5%; margin-top:0%;">
-                                     <option value="1">บริษัท นพดลพานิช จำกัด</option>
-                                     <option value="2">บริษัท นวเวนดิ้ง จำกัด</option>
-                                     </select>`;
-                 }*/
     }
 };
+
+function switch_url(){
+    switch (localStorage.api_url_server){
+        case "http://api.nopadol.com:8080/" :
+            localStorage.api_url_server = "http://npfaham.webhop.info:8080/";
+            break;
+        case "http://npfaham.webhop.info:8080/" :
+            localStorage.api_url_server = "http://api.nopadol.com:8080/";
+            break;
+    }
+    var api =  document.getElementsByClassName('api_server');
+        for(var i = 0; i < api.length; i++){
+            api[i].innerHTML = localStorage.api_url_server;
+        }
+    console.log("Now!! api name "+localStorage.api_url_server);
+}

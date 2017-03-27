@@ -1,13 +1,90 @@
-$(document).on("pageshow","#countitem", function(){
-    //$("#btnpopup").on("click", function(){
-        $("#scitemsh").show();
-        $("#cntitem").hide();
-        //setTimeout(function(){  $("#p").popup("close"); }, 5000);
-   // });
+$(document).ready(function(){
+  var _originalSize = $(window).width() + $(window).height()
+  $(window).resize(function(){
+    if($(window).width() + $(window).height() != _originalSize){
+      console.log("keyboard show up");
+      var footer = document.getElementsByClassName("footer");
+      for(var i = 0; i < footer.length; i++){
+        footer[i].style.display = "none";
+      }
+    }else{
+      console.log("keyboard closed");
+      var footer = document.getElementsByClassName("footer");
+            for(var i = 0; i < footer.length; i++){
+              footer[i].style.display = "block";
+            }
+    }
+  });
+
 });
 
-window.addEventListener('native.onscanbarcode', function (ci) {
+function sec_wh(){
+ var select_wh = "";
+ console.log('{"accessToken":"'+localStorage.token+'","search":"","branch":"'+localStorage.branch+'"}');
+              $.ajax({
+                      url: localStorage.api_url_server+"NPInventoryWs/V2/is/searchWH",
+                      data: '{"accessToken":"'+localStorage.token+'","search":"","branch":"'+localStorage.branch+'"}',
+                      contentType: "application/json; charset=utf-8",
+                      dataType: "json",
+                      type: "POST",
+                      cache: false,
+                      success: function(result){
+                          console.log(JSON.stringify(result.data));
+                               select_wh += `<select name="wh" class="bt-cmp" style="width:100%; height:50px;" data-role="none">`;
+                               $.each(result.data, function(key, val) {
+                                      select_wh += `<option value="`+val['whCode']+`">คลัง `+val['whCode']+`</option>`;
+                               });
+                               select_wh += `</select>`;
+                               document.getElementById("wh_list").innerHTML = select_wh;
+                               $.mobile.changePage('#stock',{transition: 'slidefade'});
+                      },
+                      error: function (err){
+                          console.log(JSON.stringify(err));
+                         // alertify.alert("การเชื่อมต่อฐานข้อมูลมีปัญหา กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตของท่าน");
+                         switch_url();
+                         sec_wh();
+                        //  $load.popup("close");
+                      }
+              });
+}
+function search_wh(){
+    searchWHis($('select[name="wh"] :selected').attr('value'));
+}
 
+function sec_sh(){
+ var stockWH = document.getElementById("whvalue").value;
+ var select_sh = "";
+              $.ajax({
+                      url: localStorage.api_url_server+"NPInventoryWs/V2/is/searchShelf",
+                      data: '{"accessToken":"'+localStorage.token+'","searchWH":"'+stockWH+'","searchShelf":""}',
+                      contentType: "application/json; charset=utf-8",
+                      dataType: "json",
+                      type: "POST",
+                      cache: false,
+                      success: function(result){
+                         // console.log(JSON.stringify(result.data));
+                               select_sh += `<select name="sh" class="bt-cmp" style="width:100%; height:50px;" data-role="none">`;
+                               $.each(result.data, function(key, val) {
+                                      select_sh += `<option value="`+val['shelfCode']+`">ชั้นเก็บ `+val['shelfName']+`</option>`;
+                               });
+                               select_sh += `</select>`;
+                               document.getElementById("shel").innerHTML = select_sh;
+                               $.mobile.changePage('#shelves',{transition: 'slidefade'});
+                      },
+                      error: function (err){
+                          console.log(JSON.stringify(err));
+                          switch_url();
+                          sec_sh();
+                          //alertify.alert("การเชื่อมต่อฐานข้อมูลมีปัญหา กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตของท่าน");
+                        //  $load.popup("close");
+                      }
+              });
+}
+function search_shel(){
+    searchSHis($('select[name="sh"] :selected').attr('value'));
+}
+
+window.addEventListener('native.onscanbarcode', function (ci) {
        var page = "";
        //alert(ci.scanResult);
        console.log("count : "+ci.scanResult);
@@ -31,7 +108,7 @@ switch(page){
                               searchSHis(localStorage.barcode);
                     	    break;
              case "countitem" : loading();
-                                if(len<13){
+                                if(len<=3){
                                     alertify.set({ labels: {
                                         ok     : "yes",
                                         cancel : "no"
@@ -40,16 +117,30 @@ switch(page){
                                         if(e){
                                             searchSHis(localStorage.barcode);
                                         }else{
-                                            ///
+                                            closeload();
                                         }
                                     });
                                 }else{
                                     searchItem(localStorage.barcode);
                                 }
-
-
-
                             break;
+               case "Sscanitem" : loading();
+                                  if(len<=3){
+                                     alertify.set({ labels: {
+                                          ok     : "yes",
+                                          cancel : "no"
+                                     } });
+                                        alertify.confirm("ท่านต้องการเปลี่ยนชั้นเก็บหรือไม่ ?", function (e){
+                                     if(e){
+                                        searchSHis(localStorage.barcode);
+                                     }else{
+                                        closeload();
+                                     }
+                                 });
+                              }else{
+                                 searchItem(localStorage.barcode);
+                              }
+                           break;
            	}
 });
 
@@ -57,36 +148,47 @@ function searchWHis(barcode){
  //$('#load_wh').popup('open');
  setTimeout(function(){
  console.log("cswh");
-    document.activeElement.blur();
+ document.addEventListener("keydown", function(event) {
+    event.returnValue = true;
+ });
+
+
+   // document.activeElement.blur();
         $.ajax({
                url: localStorage.api_url_server+""+localStorage.api_url_searchwh_is,
-               data: '{"accessToken":"","search":"'+barcode+'"}',
+               data: '{"accessToken":"'+localStorage.token+'","search":"'+barcode+'","branch":"'+localStorage.branch+'"}',
                contentType: "application/json; charset=utf-8",
                dataType: "json",
                type: "POST",
                cache: false,
                success: function(result){
-                      console.log(JSON.stringify(result.warehouseList));
-                      if(JSON.stringify(result.warehouseList)==="[]"){
+                      console.log(JSON.stringify(result.data));
+                      console.log(localStorage.api_url_server+""+localStorage.api_url_searchwh_is);
+                      console.log('{"accessToken":"'+localStorage.token+'","search":"'+barcode+'","branch":"'+localStorage.branch+'"}');
+                      if(JSON.stringify(result.data)==="[]"||JSON.stringify(result.data)==="null"){
                            alertify.alert("ไม่มีข้อมูลคลังสินค้าของ "+barcode);
                            closeload();
                       }else{
                            var whName = "";
                            var whLocal = "";
-                           $.each(result.warehouseList, function(key, val) {
+                           var whCode = "";
+                           $.each(result.data, function(key, val) {
                            if(val['whName']!=null&&val['localtion']){
                                 whName = val['whName'].trim();
                                 whLocal = val['location'].trim();
+                                whCode = val['whCode'].trim();
                            }else{
                                 whName = val['whName'];
                                 whLocal = val['location'];
+                                whCode = val['whCode'];
                            }
 
                            });
-
+                          console.log("gendocNo inspect "+localStorage.api_url_server+localStorage.api_url_gendocno);
+                          console.log("payload genDN inspect "+'{"accessToken":"'+localStorage.token+'","type":"3","search":"'+localStorage.username+'","branch":"'+localStorage.branch+'"}')
                           $.ajax({
                                  url: localStorage.api_url_server+""+localStorage.api_url_gendocno,
-                                 data: '{"type":"3","search":"'+localStorage.username+'"}',
+                                 data: '{"accessToken":"'+localStorage.token+'","type":"3","search":"'+localStorage.username+'","branch":"'+localStorage.branch+'"}',
                                  contentType: "application/json; charset=utf-8",
                                  dataType: "json",
                                  type: "POST",
@@ -98,72 +200,89 @@ function searchWHis(barcode){
                                        isList();
                                  },
                                  error: function (error) {
-                                     alertify.error("can't call api");
+                                     //alertify.error("can't call api");
+                                     console.log("api gen docNo" + JSON.stringify(error));
+                                     switch_url();
+                                     searchWHis(barcode);
                                  }
 
                           });
-
+                            if(whName==null){
+                                whName = "ไม่มีข้อมูล";
+                            }
+                            if(whLocal==null){
+                                whLocal = "ไม่มีข้อมูล";
+                            }
                           document.getElementById("wh").innerHTML = "คลัง : "+whName+"  "+whLocal;
-                          document.getElementById("whvalue").value = whName;
+                          document.getElementById("whvalue").value = whCode;
                           isList();
                           $.mobile.changePage("#countstock");
                           closeload();
                       }
                },
                error: function (error) {
-                  alertify.error("can't call api");
+                  console.log("api gen Wh" + JSON.stringify(error));
+                  switch_url();
+                  searchWHis(barcode);
                   closeload();
                }
         });
     }, 1500);
 
 }
+
 function searchSHis(shelfCode){
     var stockWH = document.getElementById("whvalue").value;
     setTimeout(function(){
     $.ajax({
         url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_is,
-        data: '{"accessToken":"38850025531385","searchWH":"'+stockWH+'","searchShelf":"'+shelfCode+'"}',
+        data: '{"accessToken":"'+localStorage.token+'","searchWH":"'+stockWH+'","searchShelf":"'+shelfCode+'"}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         type: "POST",
         cache: false,
         success: function(result){
-            console.log(JSON.stringify(result.shelfList));
-            if(JSON.stringify(result.shelfList)=="[]"){
+            console.log(JSON.stringify(result.data));
+            console.log(localStorage.api_url_server+""+localStorage.api_url_searchshelf_is);
+            console.log('{"accessToken":"'+localStorage.token+'","searchWH":"'+stockWH+'","searchShelf":"'+shelfCode+'"}');
+            if(JSON.stringify(result.data)=="[]"){
                  alertify.alert("ไม่มีข้อมูลชั้นเก็บสินค้าของ "+shelfCode);
                  closeload();
             }else{
                  var shelName = "";
-                 $.each(result.shelfList, function(key, val) {
+                 var shelfCode = "";
+                 $.each(result.data, function(key, val) {
                        shelName = val['shelfName'].trim();
+                       shelfCode = val['shelfCode'].trim();
                  });
                  var main =  document.getElementsByClassName('CTshelves');
                  for(var i = 0; i < main.length; i++){
                      main[i].innerHTML = shelName;
+                     main[0].style.color = localStorage.fontColor;
                  }
-                 document.getElementById("shel").value = shelName;
+                 document.getElementById("shel").value = shelfCode;
                 // document.getElementById("CTshelves").innerHTML = shelName;
-                 document.getElementById("barcodetext").innerHTML = "";
+                /* document.getElementById("barcodetext").innerHTML = "";
                  document.getElementById("CTitemno").innerHTML = "<font color='red'>** SCANBARCODE ITEM **</font>";
                  document.getElementById("CTitemname").innerHTML = "";
                  document.getElementById("CTunit").innerHTML = "";
                  document.getElementById("itemNo").value = "";
                  document.getElementById("itemsName").value = "";
                  document.getElementById("Cunit").value = "";
-                 document.getElementById("counts").value = "";
-                 $("#count1").show();
-                 $("#count2").hide();
-                 $.mobile.changePage("#countitem");
-                 document.getElementById("counts").disabled = true;
-                 document.activeElement.blur();
+                 document.getElementById("counts").value = "";*/
+                 clear_manual();
+                 $.mobile.changePage("#Sscanitem",{transition: 'slidefade',reverse: true});
+                // document.getElementById("counts").disabled = true;
+                // document.activeElement.blur();
 
 
                  closeload();
             }
         },
         error: function (error) {
-            alertify.error("can't call api");
+            console.log("api gen SH" + JSON.stringify(error));
+            switch_url();
+            searchSHis(shelfCode);
             closeload();
         }
 
@@ -171,104 +290,309 @@ function searchSHis(shelfCode){
     }, 1500);
 }
 
+function Select_item(itemCode){
+    loading();
+    searchItem(itemCode);
+}
+
 function searchItem(itemCode){
-    document.activeElement.blur();
+
     var DocNo = document.getElementById("valdocIS").value;
     var shel = document.getElementById("shel").value;
-    console.log('{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'"}');
+    console.log('{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'","branch":"'+localStorage.branch+'"}');
     setTimeout(function(){
     $.ajax({
            url: localStorage.api_url_server+""+localStorage.api_url_search_item_pr,
-           data: '{"barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'"}',
+           data: '{"accessToken":"'+localStorage.token+'","barcode":"'+itemCode+'","docno":"'+DocNo+'","type":"3","shelfcode":"'+shel+'","branch":"'+localStorage.branch+'"}',
            contentType: "application/json; charset=utf-8",
            dataType: "json",
            type: "POST",
            cache: false,
            success: function(result){
-                 console.log(JSON.stringify(result.listBarcode));
-                 if(JSON.stringify(result.listBarcode)==="[]"){
+                 console.log(JSON.stringify(result.itemcode));
+                 console.log(localStorage.api_url_server+""+localStorage.api_url_search_item_pr);
+
+                 if(JSON.stringify(result.itemcode)==="[]"){
                      alertify.alert("บาร์โค้ด "+itemCode+" ไม่มีอยู่ในทะเบียนสินค้า");
-                     closeload();
+                     //closeload();
                  }else{
                      var itemcode = "";
                      var itemName = "";
                      var range = "";
                      var cntitem = "";
                      var units = "";
+                     var old_cnt = "";
+                     var whCode = "";
 
-                     if(result.listBarcode==null){
-                         console.log("data listbarcode : null");
+                     if(result.itemcode==null){
+                         console.log("data itemcode : null");
                          $.each(result.listISBarcode, function(key, val) {
                              itemcode = val['itemcode'];
                              itemName = val['itemname'];
                              range = val['range'];
                              if(val['qty']==0){
                                cntitem = "";
+                               old_cnt = "-";
                              }else{
+                               old_cnt = val['qty'];
                                cntitem = val['qty'];
                              }
                              units = val['unitcode'];
                              apcode = val['apCode'];
                              apname = val['apName'];
                              console.log(cntitem);
+                             console.log(old_cnt);
                          });
                      }else{
-                         $.each(result.listBarcode, function(key, val) {
-                         itemcode = val['itemcode'];
-                         itemName = val['itemname'];
-                         range = val['range'];
-                         if(val['qty']==0){
+                       //  $.each(result.listBarcode, function(key, val) {
+                         itemcode = result.itemcode;
+                         itemName = result.itemname;
+                         range = result.range;
+                         if(result.qty==0){
                             cntitem = "";
+                            old_cnt = "-";
                          }else{
-                            cntitem = val['qty'];
+                            cntitem = result.qty;
+                            old_cnt = result.qty;
                          }
-                            units = val['unitcode'];
-                            apcode = val['apCode'];
-                            apname = val['apName'];
-                         });
+                            units = result.unitcode;
+                            apcode = result.apCode;
+                            apname = result.apName;
+                        // });
                          console.log(cntitem);
+                         console.log(old_cnt);
+                         var ra = 1;
+                         var ch = 0;
+                         $.each(result.listWH,function(k,v){
+                            ch = ra%2;
+                            if(ch!=0){
+                                whCode += v['whcode'];
+                            }else{
+                                whCode += ", "+v['whcode'];
+                            }
+                            ra++;
+                         });
                      }
-                     $("#scitemsh").hide();
-                     $("#cntitem").show();
-                     $("#count1").hide();
-                     $("#count2").show();
+                     $.mobile.changePage("#countitem",{transition: 'slidefade',reverse: true});
 
                      document.getElementById("CTitemno").innerHTML = itemcode;
                      document.getElementById("CTitemname").innerHTML = itemName;
                      document.getElementById("CTunit").innerHTML = units;
+                     document.getElementById("CTwhcode").innerHTML = whCode;
                      document.getElementById("barcodetext").innerHTML = itemCode;
                      document.getElementById("itemNo").value = itemcode;
                      document.getElementById("itemsName").value = itemName;
                      document.getElementById("Cunit").value = units;
-                     document.getElementById("counts").value = cntitem;
-                     document.getElementById("counts").disabled = false;
-                     closeload();
-                     //$(document).on('pageshow', '#countitem', function(){
-                     //$('#counts').focus();
+                     document.getElementById("counts").value = "";
 
-                     //});
-                     //$.mobile.changePage("#countitem");
+                     document.getElementById("Voldcnt").value = cntitem;
+                     document.getElementById("oldcnt").innerHTML = old_cnt;
+
+                     document.getElementById("counts").autofocus = true;
+                     localStorage.enter = null;
+                     counts_focus();
+
                  }
+           closeload();
            },
            error: function (error) {
-                 alertify.error("can't call api");
+                 console.log("api gen ITEM" + JSON.stringify(error));
+                 switch_url();
+                 searchItem(itemCode);
                  closeload();
-                 $("#scitemsh").show();
-                 $("#cntitem").hide();
-                 $.mobile.changePage("#countitem");
+                 $.mobile.changePage("#Sscanitem",{transition: 'slidefade',reverse: true});
            }
 
     });
     }, 1500);
 }
+function counts_focus(){
+    $("#countitem").bind('pageshow', function() {
+        $('#counts').focus();
+    });
+}
+function like_item(){
+    var itemdata = document.getElementById("manual_searchItem").value;
+    var itemlist = "";
+    $.ajax({
+               url: localStorage.api_url_server+"NPInventoryWs/V2/inven/searchItemMaster",
+               data: '{"accessToken":"'+localStorage.token+'","search":"'+itemdata+'"}',
+               contentType: "application/json; charset=utf-8",
+               dataType: "json",
+               type: "POST",
+               cache: false,
+               success: function(result){
+                    console.log(JSON.stringify(result.itemMasterList));
+                    if(JSON.stringify(result.itemMasterList)=="[]"){
+                       itemlist = `<label style='width:100%; color:red;'> ** ไม่มีข้อมูลที่ค้นหา ** </label>`;
+                    }else{
+                       $.each(result.itemMasterList, function(key,val){
+                           itemlist += `<label style='width:100%; font-size:12px; border-bottom:1px dashed gray;'
+                                        onclick="Select_item('`+val['itemCode'].trim()+`')">
+                                           <div class="ui-grid-b">
+                                                 <div class="ui-block-a" style="width:35%;">`+
+                                                   val['itemCode'].trim()+
+                                                 `</div>
+                                                 <div class="ui-block-b" style="width:40%;">`
+                                                    +val['itemName'].trim()+
+                                                 `</div>
+                                                 <div class="ui-block-c" style="width:25%; text-align:center;">`
+                                                    +val['unitCode'].trim()+
+                                                  `</div>
+                                               </div>
+                                             </div>
+                                        </label>`;
+                       });
+                    }
+
+                    document.getElementById("like_itemlist").innerHTML = itemlist;
+               },
+               error: function(err){
+                    console.log("api gen Like_item" + JSON.stringify(error));
+                    switch_url();
+                    like_item();
+               }
+       });
+
+}
 
 function backstock(){
+    loading();
     isList();
     $.mobile.changePage('#countstock',{transition: 'slidefade',reverse: true});
     //window.location="#stock";
 }
 
 function savestock(){
+   var oldc = document.getElementById("Voldcnt").value;
+   console.log(oldc);
+   if(oldc!=""){
+    alertify.set({ labels: {
+        ok     : "แทนที่",
+        cancel : "บวกเพิ่ม"
+    } });
+    alertify.confirm( "ท่านต้องการบวกเพิ่มหรือแทนที่จำนวนที่นับได้ ?", function (e) {
+        if (e) {
+                 loading();
+                 setTimeout(function(){
+                 var DocNo = document.getElementById("valdocIS").value;
+                 var sv = document.getElementById("shel").value;
+                 var noitem = document.getElementById("itemNo").value;
+                 var wh = document.getElementById("whvalue").value;
+                 var citem = document.getElementById("counts").value;
+                 var uitem = document.getElementById("Cunit").value;
+                 var userID = localStorage.username;
+                 if(citem == ""||noitem == ""){
+                 //alert("กรุณากรอกข้อมูลให้ครบด้วย !!");
+                 }else{
+                 console.log('result:[{"docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
+                  document.addEventListener("keydown", function(event) {
+                     event.returnValue = true;
+                  });
+                      $.ajax({
+                              url: localStorage.api_url_server+"NPInventoryWs/V2/is/insertIS",
+                              data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              type: "POST",
+                              cache: false,
+                              success: function(result){
+                                 console.log(JSON.stringify(result));
+
+                                 document.getElementById("CTitemno").innerHTML = "<font color='red'>** SCANBARCODE ITEM **</font>";
+                                 document.getElementById("CTitemname").innerHTML = "";
+                                 document.getElementById("CTunit").innerHTML = "";
+                                 document.getElementById("itemNo").value = "";
+                                 document.getElementById("itemsName").value = "";
+                                 document.getElementById("Cunit").value = "";
+                                 document.getElementById("counts").value = "";
+                                 document.getElementById("barcodetext").innerHTML = "";
+
+                                 $("#scanitemcode").show();
+                                 alertify.success("บันทีกข้อมูลเรียบร้อยแล้ว!");
+                                 //document.getElementById("counts").disabled = true;
+                                 clear_manual();
+                                 localStorage.enter = null;
+
+                                 $.mobile.changePage("#Sscanitem");
+                                 closeload();
+
+                              },
+                              error: function (error) {
+                                 $("#scanPopup").popup("open");
+                                 console.log("api gen savestock" + JSON.stringify(error));
+                                 switch_url();
+                                 savestock();
+                                 closeload();
+                                 localStorage.enter = null;
+                                 //$.mobile.changePage("#countitem");
+                              }
+                         });
+                 }
+                 }, 1500);
+
+        } else {
+                loading();
+                setTimeout(function(){
+                var DocNo = document.getElementById("valdocIS").value;
+                var sv = document.getElementById("shel").value;
+                var noitem = document.getElementById("itemNo").value;
+                var wh = document.getElementById("whvalue").value;
+                var citem = parseInt(document.getElementById("counts").value)+parseInt(oldc);
+                var uitem = document.getElementById("Cunit").value;
+                var userID = localStorage.username;
+                if(citem == ""||noitem == ""){
+                //alert("กรุณากรอกข้อมูลให้ครบด้วย !!");
+                }else{
+                console.log('result:[{"docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
+                 document.addEventListener("keydown", function(event) {
+                    event.returnValue = true;
+                 });
+                     $.ajax({
+                             url: localStorage.api_url_server+"NPInventoryWs/V2/is/insertIS",
+                             data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
+                             contentType: "application/json; charset=utf-8",
+                             dataType: "json",
+                             type: "POST",
+                             cache: false,
+                             success: function(result){
+                                console.log(JSON.stringify(result));
+
+                                document.getElementById("CTitemno").innerHTML = "<font color='red'>** SCANBARCODE ITEM **</font>";
+                                document.getElementById("CTitemname").innerHTML = "";
+                                document.getElementById("CTunit").innerHTML = "";
+                                document.getElementById("itemNo").value = "";
+                                document.getElementById("itemsName").value = "";
+                                document.getElementById("Cunit").value = "";
+                                document.getElementById("counts").value = "";
+                                document.getElementById("barcodetext").innerHTML = "";
+
+                                $("#scanitemcode").show();
+                                alertify.success("บันทีกข้อมูลเรียบร้อยแล้ว!");
+                                //document.getElementById("counts").disabled = true;
+                                clear_manual();
+                                localStorage.enter = null;
+
+                                $.mobile.changePage("#Sscanitem");
+                                closeload();
+
+                             },
+                             error: function (error) {
+                                $("#scanPopup").popup("open");
+                                console.log("api gen savestock" + JSON.stringify(error));
+                                switch_url();
+                                savestock();
+                                closeload();
+                                localStorage.enter = null;
+                                //$.mobile.changePage("#countitem");
+                             }
+                        });
+                }
+                }, 1500);
+
+        }
+    });
+   }else{
     loading();
     setTimeout(function(){
     var DocNo = document.getElementById("valdocIS").value;
@@ -282,10 +606,12 @@ function savestock(){
     //alert("กรุณากรอกข้อมูลให้ครบด้วย !!");
     }else{
     console.log('result:[{"docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}]');
-
+     document.addEventListener("keydown", function(event) {
+        event.returnValue = true;
+     });
          $.ajax({
-                 url: localStorage.api_url_server+"NPInventoryWs/V1/is/insertIS",
-                 data: '{"docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
+                 url: localStorage.api_url_server+"NPInventoryWs/V2/is/insertIS",
+                 data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'","user":"'+userID+'","itemCode":"'+noitem+'","unitcode":"'+uitem+'","whCode":"'+wh+'","shelfCode":"'+sv+'","qty":"'+citem+'"}',
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
                  type: "POST",
@@ -302,67 +628,82 @@ function savestock(){
                     document.getElementById("counts").value = "";
                     document.getElementById("barcodetext").innerHTML = "";
 
-                    $("#scitemsh").show();
-                    $("#cntitem").hide();
-                    $("#count1").show();
-                    $("#count2").hide();
                     $("#scanitemcode").show();
                     alertify.success("บันทีกข้อมูลเรียบร้อยแล้ว!");
-                    document.getElementById("counts").disabled = true;
+                    //document.getElementById("counts").disabled = true;
+                    clear_manual();
+                    localStorage.enter = null;
 
-
-                   // $.mobile.changePage("#countitem");
+                    $.mobile.changePage("#Sscanitem");
                     closeload();
 
                  },
                  error: function (error) {
                     $("#scanPopup").popup("open");
-                    alertify.error("can't call api");
+                    console.log("api gen savestock" + JSON.stringify(error));
+                    switch_url();
+                    savestock();
                     closeload();
-
-                   // $.mobile.changePage("#countitem");
+                    localStorage.enter = null;
+                    //$.mobile.changePage("#countitem");
                  }
             });
     }
     }, 1500);
 
+   }
 }
 
 function savedata(){
+     document.addEventListener("keydown", function(event) {
+        event.returnValue = true;
+     });
+    var update = document.getElementById("stupdate").value
+    if(update==0){
     loading();
     setTimeout(function(){
-    var DocNo = document.getElementById("valdocIS").value;
-    var UserID = localStorage.username;
-    console.log('Update IS :{"DocNo":"'+DocNo+'","userID":"'+UserID+'","isCancel":"0"}');
-    $.ajax({
-        url: localStorage.api_url_server+""+localStorage.api_url_confirm_is,
-        data: '{"docNo":"'+DocNo+'","user":"'+UserID+'","isCancel":"0"}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        type: "POST",
-        cache: false,
-        success: function(result){
-            console.log(JSON.stringify(result));
+         var DocNo = document.getElementById("valdocIS").value;
+            var UserID = localStorage.username;
+            console.log('Update IS :{"DocNo":"'+DocNo+'","userID":"'+UserID+'","isCancel":"0"}');
+            $.ajax({
+                url: localStorage.api_url_server+""+localStorage.api_url_confirm_is,
+                data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'","user":"'+UserID+'","isCancel":"0"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                type: "POST",
+                cache: false,
+                success: function(result){
+                    console.log(JSON.stringify(result));
+                    $.mobile.changePage("#stock",{transition: 'slidefade'});
+                    document.getElementById("valdocIS").value = "";
+                    document.getElementById("shel").value = "";
+                    document.getElementById("itemNo").value = "";
+                    document.getElementById("whvalue").value = "";
+                    document.getElementById("counts").value = "";
+                    document.getElementById("Cunit").value = "";
+                    document.getElementById("barcodetext").innerHTML = "";
+                    alertify.success("บันทึกใบนับที่ "+DocNo+" แล้ว");
+                    closeload();
+                    localStorage.enter = null;
+
+                },
+                error: function(err){
+                    console.log("api gen savedata" + JSON.stringify(error));
+                    switch_url();
+                    savedata();
+                    closeload();
+                    localStorage.enter = null;
+                    $.mobile.changePage("#countitem",{transition: 'slidefade'});
+                }
+            });
+            closeload();
             $.mobile.changePage("#stock",{transition: 'slidefade'});
-            document.getElementById("valdocIS").value = "";
-            document.getElementById("shel").value = "";
-            document.getElementById("itemNo").value = "";
-            document.getElementById("whvalue").value = "";
-            document.getElementById("counts").value = "";
-            document.getElementById("Cunit").value = "";
-            document.getElementById("barcodetext").innerHTML = "";
-            alertify.success("บันทึกใบนับที่ "+DocNo+" แล้ว");
-            closeload();
-        },
-        error: function(err){
-            alertify.alert("Update IS ERROR!!");
-            closeload();
-            $.mobile.changePage("#countitem",{transition: 'slidefade'});
-        }
-    });
-    closeload();
-    $.mobile.changePage("#stock",{transition: 'slidefade'});
-    }, 1500);
+            localStorage.enter = null;
+        }, 1500);
+    }else{
+         alertify.alert("ไม่มีรายการสินค้า ไม่สามารถบันทึกได้ กรุณาเพิ่มรายการสินค้า");
+         localStorage.enter = null;
+    }
 }
 
 function isList(){
@@ -371,8 +712,8 @@ function isList(){
     setTimeout(function(){
     var DocNo = document.getElementById("valdocIS").value;
     $.ajax({
-            url: localStorage.api_url_server+"NPInventoryWs/V1/is/isList",
-            data: '{"accessToken":"","docNo":"'+DocNo+'"}',
+            url: localStorage.api_url_server+"NPInventoryWs/V2/is/isList",
+            data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'"}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             type: "POST",
@@ -384,7 +725,6 @@ function isList(){
                 if(JSON.stringify(result.listData)!="[]"){
                     $.each(result.listData, function(key,val){
                                     itemno = val['itemCode'];
-
                                     if(itemno==null){
                                          sitemno=itemno;
                                     }else{
@@ -402,7 +742,7 @@ function isList(){
                                       str1=sitemno;
                                     }
 
-                                        detail += `<label class="csdelete" csdelete-id="`+DocNo+`/`+wh+`/`+val['shelfCode']+`/`+val['itemCode']+`" csdelete-detail-id="`+val['itemCode']+`" id="`+val['itemCode']+`" style="text-align:center; border-bottom:1px gray dashed;">`;
+                                        detail += `<label class="csdelete" csdelete-id="`+DocNo+`/`+wh+`/`+val['shelfCode']+`/`+val['itemCode']+`/`+val['unitCode']+`" csdelete-detail-id="`+val['itemCode']+`" id="`+val['itemCode']+`" style="text-align:center; border-bottom:1px gray dashed;">`;
                                              detail += '<div class="ui-grid-d">';
                                               detail += '<div class="ui-block-a">';
                                                      detail += str1;
@@ -414,7 +754,7 @@ function isList(){
                                                      detail += val['shelfCode'];
                                               detail += '</div>';
                                               detail += '<div class="ui-block-d">';
-                                                     detail += val['diffQty']+"  "+val['unitCode'];
+                                                     detail += val['inspectQty']+"  "+val['unitCode'];
                                               detail += '</div>';
                                               detail += '<div class="ui-block-e">';
 
@@ -428,20 +768,28 @@ function isList(){
                                              detail += '</div>';
                                         detail += '</label>';
                                     });
+                    document.getElementById("stupdate").value = 0;
+                    localStorage.enter = null;
                 }else{
                     detail = `<label style="border-bottom:1px dashed black; padding:2%; color:red; text-align:center">
                                           <h5>** ยังไม่มีข้อมูลสินค้าที่นับในใบนับนี้ **</h5>
                               </label>`;
+                    document.getElementById("stupdate").value = 1;
+                    localStorage.enter = null;
                 }
 
                 document.getElementById("csdetail").innerHTML = detail;
                 closeload();
                 $.mobile.changePage("#countstock",{transition: 'slidefade'});
+                return false;
             },
             error: function(err){
-                alertify.alert("Update IS ERROR!!");
+                console.log("api isList" + JSON.stringify(error));
+                switch_url();
+                isList();
                 closeload();
                 $.mobile.changePage("#countstock",{transition: 'slidefade'});
+                localStorage.enter = null;
             }
         });
     }, 1500);
@@ -455,7 +803,9 @@ function CSback(){
     } });
     alertify.confirm( "ท่านไม่ต้องการเพิ่มสินค้าแล้วใช่หรือไม่ ?", function (e) {
         if (e) {
-            $.mobile.changePage("#countstock",{transition: 'slidefade'});
+             loading();
+             backstock();
+             return false;
         } else {
             //after clicking Cancel
         }
@@ -483,42 +833,6 @@ function selsh(){
 
 }
 
-var body = document.querySelector('body');
-body.onkeydown = function () {
-    var item = document.getElementById("itemNo").value;
-    var page = "";
- 	if(page == ""){
-             page = $.mobile.activePage.attr('id');
-    }
-    if(page=="countitem"){
-     //document.activeElement.blur();
-        if(item){
-            if (event.keyCode < 48 || event.keyCode > 57){
-            	 if(event.keyCode == 8){
-                     event.returnValue = true;
-                     var str = document.getElementById("counts").value;
-                     if(str!=""){
-                       var newStr = str.substring(0, str.length-1);
-                       document.getElementById("counts").value = newStr;
-                       return false;
-                     }
-
-                 }else{
-                     event.returnValue = false;
-                 }
-            }else{
-               // document.activeElement.blur();
-
-               // $('#counts').focus();
-                event.returnValue = true;
-                document.getElementById("counts").value += String.fromCharCode(event.keyCode);
-                return false;
-            }
-        }
-    }
-
-}
-
 function c_s(){
     alertify.set({ labels: {
         ok     : "บันทึก",
@@ -534,7 +848,7 @@ function c_s(){
                 console.log('Update IS :{"DocNo":"'+DocNo+'","userID":"'+UserID+'","isCancel":"1"}');
                 $.ajax({
                     url: localStorage.api_url_server+""+localStorage.api_url_confirm_is,
-                    data: '{"docNo":"'+DocNo+'","user":"'+UserID+'","isCancel":"1"}',
+                    data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'","user":"'+UserID+'","isCancel":"1"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     type: "POST",
@@ -551,8 +865,10 @@ function c_s(){
                         alertify.error("ยกเลิกใบนับเรียบร้อย");
                     },
                     error: function(err){
-                        alertify.alert("Update IS ERROR!!");
-                        $.mobile.changePage("#countstock",{transition: 'slidefade'});
+                        console.log("api gen savedata" + JSON.stringify(error));
+                        switch_url();
+                        c_s();
+                        $.mobile.changePage("#stock",{transition: 'slidefade'});
                     }
                 });
                 $.mobile.changePage("#stock",{transition: 'slidefade'});
@@ -561,30 +877,6 @@ function c_s(){
     });
 }
 
-var $load;
-function loading(){
-        $load = $("<div>").popup({
-        dismissible: false,
-        theme: "a",
-        positionto: "window",
-        transition: "flip",
-        }).css({
-               'background': '#F8F8FF',
-               '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-               'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-               'width' : 250,
-               'margin-left' : '1%'
-               });
-
-        $("<img>", {
-                    src: "images/loading2.gif"
-                    }).appendTo($load);
-        $load.popup('open');
-}
-
-function closeload(){
-    $load.popup("close");
-}
 
 ////////////////////////////////////////////////////////////
 $(document).on('taphold', '.csdelete', function() {
@@ -613,15 +905,108 @@ $(document).on('taphold', '.csdelete', function() {
     $("<a>", {
     text: "Delete",
     href: "#",
-    onclick: "csDeletitem('"+data[0]+"','"+data[1]+"', '"+data[2]+"','"+data[3]+"');"
+    onclick: "csDeletitem('"+data[0]+"','"+data[1]+"', '"+data[2]+"','"+data[3]+"','"+data[4]+"');"
     }).appendTo($csd);
 
     $csd.popup('open').enhanceWithin();
 
     });
 
-function csDeletitem(DocNo,wh,sh,itemCode){
-    console.log(DocNo+"/"+wh+"/"+sh+"/"+itemCode);
-    alertify.success("ลบรายการเรียบร้อยแล้ว");
-    isList();
+function csDeletitem(DocNo,wh,sh,itemCode,unitCode){
+       var $loadde = $("<div>").popup({
+            dismissible: false,
+            theme: "a",
+            positionto: "window",
+            transition: "flip",
+            }).css({
+                   'background': '#F8F8FF',
+                   '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                   'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+                   'width' : 250,
+                   'margin-left' : '1%'
+                   });
+
+            $("<img>", {
+                        src: "images/loading2.gif"
+                        }).appendTo($load);
+            $loadde.popup('open');
+
+        console.log(DocNo+"/"+wh+"/"+sh+"/"+itemCode+"/"+unitCode);
+        $.ajax({
+                url: localStorage.api_url_server+"NPInventoryWs/V2/is/deleteItem",
+                data: '{"accessToken":"'+localStorage.token+'","docNo":"'+DocNo+'","itemCode":"'+itemCode+'","unitCode":"'+unitCode+'","whCode":"'+wh+'","shelfCode":"'+sh+'"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                type: "POST",
+                cache: false,
+                success: function(result){
+                    console.log(JSON.stringify(result));
+                    alertify.success("ลบรายการเรียบร้อยแล้ว");
+                    isList();
+                     $loadde.popup("close");
+                },
+                error: function(err){
+                    console.log("api gen csDeletitem" + JSON.stringify(error));
+                    witch_url();
+                    csDeletitem(DocNo,wh,sh,itemCode,unitCode);
+                    closeload();
+                }
+            });
+
+}
+
+function clear_manual(){
+     var declear = "";
+     declear += `<label style='width:100%; color:red; text-align:center;'> ** รายการสินค้าที่ค้นหาได้ ** </label>`;
+     document.getElementById("manual_searchItem").value = "";
+     document.getElementById("like_itemlist").innerHTML = declear;
+}
+
+function CMSback(){
+    alertify.set({ labels: {
+            ok     : "yes",
+            cancel : "no"
+        } });
+        alertify.confirm( "ท่านต้องการค้นหาสินค้าใหม่ใช่หรือไม่ ?", function (e) {
+        if(e){
+             clear_manual();
+             $("#scitemsh").show();
+             $("#cntitem").hide();
+             $("#count1").show();
+             $("#count2").hide();
+             $("#scanitemcode").show();
+            // document.getElementById("counts").disabled = true;
+             localStorage.enter = null;
+             $.mobile.changePage("#Sscanitem",{transition: 'slidefade'});
+        }else{
+
+            }
+        });
+
+}
+
+
+var $load;
+function loading(){
+        $load = $("<div>").popup({
+        dismissible: false,
+        theme: "a",
+        positionto: "window",
+        transition: "flip",
+        }).css({
+               'background': '#F8F8FF',
+               '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+               'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
+               'width' : 250,
+               'margin-left' : '1%'
+               });
+
+        $("<img>", {
+                    src: "images/loading2.gif"
+                    }).appendTo($load);
+        $load.popup('open');
+}
+
+function closeload(){
+    $load.popup("close");
 }

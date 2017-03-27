@@ -1,6 +1,6 @@
-var JSper
+var JSper;
 function perdata(){
-    var Permission = localStorage.getItem('permission');
+    var Permission = localStorage.getItem('MenuPermission');
     JSper = JSON.parse(Permission);
        console.log("Permission : "+Permission);
 }

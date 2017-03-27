@@ -17,172 +17,175 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                     }
 });
             function itemProfile(bcitem){
-                                        var valwh = document.getElementById("valwh").value;
+                                       // var valwh = document.getElementById("valwh").value;
+                                       // console.log(valwh);
                                         var tiwh = "";
                                         var itemdetail = "";
-                                        if(valwh==""){
 
-                                         var $popUp = $("<div>").popup({
-                                              dismissible: false,
-                                              theme: "a",
-                                              positionto: "window",
-                                              transition: "flip",
-                                              }).css({
-                                                'background': '#F8F8FF',
-                                                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                                                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                                                'width' : 100
-                                              });
-
-                                          $("<img>", {
-                                          src: "images/loading.gif"
-                                          }).appendTo($popUp);
-                                          $popUp.popup('open');
-
-                                         $.ajax({
-                                                url: localStorage.api_url_server+""+ localStorage.api_url_searchwh_is,
-                                                data: '{"accessToken":"","search":"'+bcitem+'"}',
-                                                contentType: "application/json; charset=utf-8",
-                                                dataType: "json",
-                                                type: "POST",
-                                                cache: false,
-                                                   success: function(result){
-                                                       var whName = "";
-                                                       var whLoca = "";
-                                                       var res = JSON.stringify(result.warehouseList);
-                                                       if(res != "[]"){.3
-
-                                                            $.each(result.warehouseList, function(key, wh) {
-                                                                whName = wh['whName'];
-                                                                whLoca = wh['location'];
-                                                            });
-                                                            document.getElementById("de-wh").innerHTML = "<b>คลัง : </b>&nbsp;&nbsp;"+whName+" <i> "+whLoca+" </i>";
-                                                            document.getElementById("de-wh").style.textAlign = "left";
-                                                            document.getElementById("valwh").value =  bcitem;
-                                                            $("#bt-wh").hide();
-                                                            $("#bt-item").show();
-                                                            $("#de-wh").show();
-                                                            $("#itemdtail").show();
-                                                            $popUp.popup("close");
-                                                           // console.log("whname = "+whName);
-                                                           // console.log("whname = "+whLoca);
-                                                       }else{
-                                                            console.log("ไม่มีข้อมูล");
-                                                            alertify.alert("บาร์โค้ด "+bcitem+" ไม่มีข้อมูลทะเบียน");
-                                                            $popUp.popup("close");
-
-                                                       }
-
-                                                    },
-                                                   error: function (error) {
-                                                        console.log(JSON.stringify(error));
-                                                    }
-
-                                              });
-
-
-                                        }else{
-
-                                          var $popUp = $("<div>").popup({
-                                              dismissible: false,
-                                              theme: "a",
-                                              positionto: "window",
-                                              transition: "flip",
-                                              }).css({
-                                                'background': '#F8F8FF',
-                                                '-webkit-box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                                                'box-shadow':  '0px 0px 0px 9999px rgba(0, 0, 0, 0.5)',
-                                                'width' : 100
-                                              });
-
-                                          $("<img>", {
-                                          src: "images/loading.gif"
-                                          }).appendTo($popUp);
-                                          $popUp.popup('open');
+                                        loading();
+                                        console.log('{"accessToken":"'+localStorage.token+'","whCode":"'+localStorage.branch+'","itemCode":"'+bcitem+'"}');
 
                                         $.ajax({
                                                 url: localStorage.api_url_server+""+localStorage.api_url_profile_it,
-                                                data: '{"accessToken":"","whCode":"'+document.getElementById("valwh").value+'","itemCode":"'+bcitem+'"}',
+                                                data: '{"accessToken":"'+localStorage.token+'","whCode":"'+localStorage.branch+'","itemCode":"'+bcitem+'"}',
                                                 //data: '{"accessToken":"","whCode":"A44","itemCode":"8851123218016"}',
                                                 contentType: "application/json; charset=utf-8",
                                                 dataType: "json",
                                                 type: "POST",
                                                 cache: false,
                                                    success: function(result){
+                                                   console.log(localStorage.api_url_server+""+localStorage.api_url_profile_it);
+                                                   console.log(JSON.stringify(result));
                                                    if(result.itemProfileList.length==0){
                                                        alertify.alert("บาร์โค้ด "+bcitem+" ไม่มีข้อมูลทะเบียน");
-                                                       $popUp.popup("close");
+                                                       closeload();
                                                        $("#bt-item").show();
                                                        $("#de-item").hide();
                                                    }else{
-                                                        var bcCode = "";
-                                                        var itemCode = "";
-                                                        var itemName = "";
-                                                        var unitCode = "";
-                                                        var brandCode = "";
-                                                        var brandName = "";
-                                                        var rang = "";
-                                                        var price = "";
-                                                        var whCode = "";
-                                                        var vendorCode = "";
-                                                        var vendorName = "";
-                                                   // console.log(result.itemProfileList);
+
+                                                    console.log(result.itemProfileList);
                                                     var js = result.itemProfileList;
                                                     //console.log(js);
-                                                    $.each(js, function(key, val) {
+                                                    /*$.each(js, function(key, val) {
                                                         bcCode = bcitem;
-                                                        itemCode = val['itemCode'];
-                                                        itemName = val['itemName'];
-                                                        unitCode = val['unitCode'];
-                                                        brandCode = val['brandCode'];
-                                                        brandName = val['brandName'];
-                                                        rang = val['rang'];
-                                                        price = val['price'];
                                                         whCode = val['whCode'];
-                                                        vendorCode = val['vendorCode'];
-                                                        vendorName = val['vendorName'];
-                                                    });
-                                                        if(bcCode==null){
-                                                            bcCode = "ไม่มีข้อมูล";
+                                                        shCode = val['shelfCode'];
+                                                        unitCode = val['stkunitcode'];
+                                                        qty = val['qty'];
+                                                    });*/
+                                                        if(result.barCode==null||result.barCode==""){
+                                                            var bcCode = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var bcCode = result.barCode;
                                                         }
 
-                                                        if(itemCode==null){
-                                                            itemCode = "ไม่มีข้อมูล";
+                                                        if(result.itemCode==null||result.itemCode==""){
+                                                            var itemCode = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var itemCode = result.itemCode;
                                                         }
 
-                                                        if(itemName==null){
-                                                            itemName = "ไม่มีข้อมูล";
+                                                        if(result.itemName==null||result.itemName==""){
+                                                            var itemName = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var itemName = result.itemName;
                                                         }
 
-                                                        if(unitCode==null){
-                                                            unitCode = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(brandCode==null){
-                                                            brandCode = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(brandName==null){
-                                                            brandName = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(rang==null){
-                                                            rang = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(price==null){
-                                                            price = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(whCode==null){
-                                                            whCode = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(bcCode==null){
-                                                            bcCode = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(vendorCode==null){
-                                                            vendorCode = "ไม่มีข้อมูล";
-                                                        }
-                                                        if(vendorName==null){
-                                                            vendorName = "ไม่มีข้อมูล";
+                                                        if(result.unitCode==null||result.unitCode==""){
+                                                            var unitCode = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var unitCode = result.unitCode;
                                                         }
 
-                                                    console.log(whCode);
+                                                        if(result.brandCode==null||result.brandCode==""){
+                                                            var brandCode = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var brandCode = result.brandCode;
+                                                        }
+
+                                                        if(result.brandName==null||result.brandName==""){
+                                                            var brandName = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var brandName = result.brandName;
+                                                        }
+
+                                                        if(result.rang==null||result.rang==""){
+                                                            var rang = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var rang = result.rang;
+                                                        }
+
+                                                        if(result.price==null||result.price==""){
+                                                            var price = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var price = result.price;
+                                                        }
+
+                                                        if(result.vendorCode==null||result.vendorCode==""){
+                                                            var vendorCode = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var vendorCode = result.vendorCode;
+                                                        }
+
+                                                        if(result.vendorName==null||result.vendorName==""){
+                                                            var vendorName = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var vendorName = result.vendorName;
+                                                        }
+
+                                                        if(result.qtyRV==null||result.qtyRV==""){
+                                                            var qtyRV = 0;
+                                                        }else{
+                                                            var qtyRV = result.qtyRV;
+                                                        }
+
+                                                        if(result.unitCodeRV==null||result.unitCodeRV==""){
+                                                            var unitCodeRV = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var unitCodeRV = result.unitCodeRV;
+                                                        }
+
+                                                        if(result.whCodeRV==null||result.whCodeRV==""){
+                                                            var whCodeRV = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var whCodeRV = result.whCodeRV;
+                                                        }
+
+                                                        if(result.docdateRV==null||result.docdateRV==""){
+                                                            var docdateRV = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var docdateRV = result.docdateRV;
+                                                        }
+
+                                                        if(result.qtyTF==null||result.qtyTF==""){
+                                                            var qtyTF = 0;
+                                                        }else{
+                                                            var qtyTF = result.qtyTF;
+                                                        }
+
+                                                        if(result.whCodeTF==null||result.whCodeTF==""){
+                                                            var whCodeTF = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var whCodeTF = result.whCodeTF;
+                                                        }
+
+                                                        if(result.unitCodeTF==null||result.unitCodeTF==""){
+                                                            var unitCodeTF = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var unitCodeTF = result.unitCodeTF;
+                                                        }
+
+                                                        if(result.docdateTF==null||result.docdateTF==""){
+                                                            var docdateTF = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var docdateTF = result.docdateTF;
+                                                        }
+
+                                                        if(result.qtyIV==null||result.qtyIV==""){
+                                                            var qtyIV = 0;
+                                                        }else{
+                                                            var qtyIV = result.qtyIV;
+                                                        }
+
+                                                        if(result.unitCodeIV==null||result.unitCodeIV==""){
+                                                            var unitCodeIV = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var unitCodeIV = result.unitCodeIV;
+                                                        }
+
+                                                        if(result.whCodeIV==null||result.whCodeIV==""){
+                                                            var whCodeIV = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var whCodeIV = result.whCodeIV;
+                                                        }
+
+                                                        if(result.docdateIV==null||result.docdateIV==""){
+                                                            var docdateIV = "ไม่มีข้อมูล";
+                                                        }else{
+                                                            var docdateIV = result.docdateIV;
+                                                        }
+
+                                                   // console.log(whCode);
                                                         itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
                                                         itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
                                                         itemdetail += 'รหัสบาร์โค้ด :</div>';
@@ -225,13 +228,6 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                         itemdetail += brandCode+' '+brandName+'</div>';
                                                         itemdetail += '</div>';
 
-                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
-                                                        itemdetail += 'คลัง :</div>';
-                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%; width:65%;">';
-                                                        itemdetail += whCode+'</div>';
-                                                        itemdetail += '</div>';
-
                                                         itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
                                                         itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
                                                         itemdetail += 'เกรด :</div>';
@@ -246,44 +242,22 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                         itemdetail += ''+vendorCode+' '+vendorName+'</div>';
                                                         itemdetail += '</div>';
 
-                                                        var x = 1;
-                                                        $.each(js, function(key, val) {
-                                                        console.log(x);
-
-                                                        itemdetail += '<label id="'+x+'">';
-
-                                                        itemdetail += '<a href="#" class="open"><div class="ui-grid-a" style="padding-top:5%; border-top:1px dashed gray;">';
+                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
                                                         itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
-                                                        itemdetail += 'ชั้นเก็บ :</div>';
-                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%; width:65%;">';
-                                                        itemdetail += ' '+val['shelfCode']+'</div></div></a>';
+                                                        itemdetail += 'ขายล่าสุด : </div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                        itemdetail += ''+qtyIV+' '+unitCodeIV+' (คลัง : '+whCodeIV+')</div>';
+                                                        itemdetail += '</div>';
 
-
-                                                        itemdetail += '<div class="box" style="display:none; padding-top:2%;">';
-
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'จำนวน : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['qty']+'</div>';
-                                                                itemdetail += '</div>';
-
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'ขายล่าสุด : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['qtyIV']+' '+val['unitCodeIV']+'</div>';
-                                                                itemdetail += '</div>';
-
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'วันที่ : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                var dateIV = "";
+                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
+                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
+                                                        itemdetail += 'วันที่ : </div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                        var dateIV = "";
                                                                 if(dateIV == null){
                                                                     dateIV = "";
                                                                 }else{
-                                                                    dateIV = val['docdateIV'].split("-");
+                                                                    dateIV = docdateIV.split("-");
                                                                     var day = dateIV[2];
                                                                     var month = dateIV[1];
                                                                     var year = (parseInt(dateIV[0])+543);
@@ -291,26 +265,25 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                                     dateIV = day+"/"+month+"/"+year;
                                                                 }
 
-                                                                itemdetail += ''+dateIV+'</div>';
-                                                                itemdetail += '</div>';
+                                                        itemdetail += ''+dateIV+'</div>';
+                                                        itemdetail += '</div>';
 
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'รับล่าสุด : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['qtyRV']+' '+val['unitCodeRV']+'</div>';
-                                                                itemdetail += '</div>';
+                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
+                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
+                                                        itemdetail += 'รับล่าสุด : </div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                        itemdetail += ''+qtyRV+' '+unitCodeRV+' (คลัง : '+whCodeRV+')</div>';
+                                                        itemdetail += '</div>';
 
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'วันที่ : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-
-                                                                var dateRV = "";
+                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
+                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
+                                                        itemdetail += 'วันที่ : </div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                        var dateRV = "";
                                                                 if(dateRV == null){
                                                                     dateRV = "";
                                                                 }else{
-                                                                    dateRV = val['docdateRV'].split("-");
+                                                                    dateRV = docdateRV.split("-");
                                                                     var day = dateRV[2];
                                                                     var month = dateRV[1];
                                                                     var year = (parseInt(dateRV[0])+543);
@@ -318,26 +291,25 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                                     dateRV = day+"/"+month+"/"+year;
                                                                 }
 
-                                                                itemdetail += ''+dateRV+'</div>';
-                                                                itemdetail += '</div>';
+                                                        itemdetail += ''+dateRV+'</div>';
+                                                        itemdetail += '</div>';
 
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'โอนล่าสุด : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-                                                                itemdetail += ''+val['qtyTF']+' '+val['unitCodeTF']+'</div>';
-                                                                itemdetail += '</div>';
+                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
+                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
+                                                        itemdetail += 'โอนล่าสุด : </div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                        itemdetail += ''+qtyTF+' '+unitCodeTF+' (คลัง : '+whCodeTF+')</div>';
+                                                        itemdetail += '</div>';
 
-                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
-                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
-                                                                itemdetail += 'วันที่ : </div>';
-                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
-
-                                                                var dateTF = "";
+                                                        itemdetail += '<div class="ui-grid-a" style="padding-bottom:2%;">';
+                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
+                                                        itemdetail += 'วันที่ : </div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                        var dateTF = "";
                                                                 if(dateTF == null){
                                                                     dateTF = "";
                                                                 }else{
-                                                                    dateTF = val['docdateTF'].split("-");
+                                                                    dateTF = docdateTF.split("-");
                                                                     var day = dateTF[2];
                                                                     var month = dateTF[1];
                                                                     var year = (parseInt(dateTF[0])+543);
@@ -345,7 +317,55 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                                     dateTF = day+"/"+month+"/"+year;
                                                                 }
 
-                                                                itemdetail += ''+dateTF+'</div>';
+                                                        itemdetail += ''+dateTF+'</div>';
+                                                        itemdetail += '</div>';
+
+                                                        var x = 1;
+                                                        $.each(js, function(key, val) {
+                                                        console.log(x);
+
+                                                        itemdetail += '<label id="'+x+'">'; /***** หา label id จาก a href     */////
+
+                                                        itemdetail += '<a href="#" class="open"><div class="ui-grid-a" style="padding-top:5%; border-top:1px dashed gray;">';
+                                                        itemdetail += '<div class="ui-block-a" style="width:35%; font-weight: bold;">';
+                                                        itemdetail += 'คลัง :</div>';
+                                                        itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%; width:65%;">';
+                                                        itemdetail += ' '+val['whCode']+'</div></div></a>';
+
+
+                                                        itemdetail += '<div class="box" style="display:none; padding-top:2%;">';
+
+                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
+                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
+                                                                itemdetail += 'ชั้นเก็บ : </div>';
+                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                                itemdetail += ''+val['shelfCode']+'</div>';
+                                                                itemdetail += '</div>';
+
+                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
+                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
+                                                                itemdetail += 'ยอดคงเหลือ : </div>';
+                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                                itemdetail += ''+val['qty']+' '+val['stkunitcode']+'</div>';
+                                                                itemdetail += '</div>';
+
+                                                                itemdetail += '<div class="ui-grid-a" style="padding-bottom:5%;">';
+                                                                itemdetail += '<div class="ui-block-a" style="width:35%; text-align:right;">';
+                                                                itemdetail += 'วันที่รับล่าสุด : </div>';
+                                                                itemdetail += '<div class="ui-block-b" style="text-align:left; padding-left:2%;">';
+                                                                var date = "";
+                                                                if(date == null){
+                                                                    date = "";
+                                                                }else{
+                                                                    date = val['docdate'].split("-");
+                                                                    var day = date[2];
+                                                                    var month = date[1];
+                                                                    var year = (parseInt(date[0])+543);
+
+                                                                    date = day+"/"+month+"/"+year;
+                                                                }
+
+                                                                itemdetail += ''+date+'</div>';
                                                                 itemdetail += '</div>';
 
                                                         itemdetail += '</div></label>';
@@ -356,9 +376,15 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
 
                                                     document.getElementById("de-item").innerHTML = itemdetail;
                                                     document.getElementById("itemdtail").style.textAlign = "right";
-                                                    $popUp.popup("close");
+                                                    closeload();
                                                     $("#bt-item").hide();
                                                     $("#de-item").show();
+
+                                                    //nav footer
+                                                    $("#item_pro1").hide();
+                                                    $("#item_pro2").hide();
+                                                    $("#item_pro3").show();
+                                                    /******************///////////////////
                                                     var open = $('.open'),
                                                         a = $('label').find('a');
                                                         console.log(a.hasClass('active'));
@@ -377,15 +403,23 @@ window.addEventListener('native.onscanbarcode', function (schitem) {
                                                             $this.addClass('active').next('.box').delay(speed).slideDown(speed);
                                                         }
                                                     });
+                                                    /****/////////////////////////
+
                                                     }
+                                                    closeload();
+
                                             },
                                             error: function (error) {
-                                                 console.log(JSON.stringify(error));
+                                                 console.log("error call api func itemProfile");
+                                                 switch_url();
+                                                 itemProfile(bcitem);
+                                                 closeload();
                                             }
                                         });
 
-                                        }
+
 }
+
 function ref(){
   alertify.set({ labels: {
          ok     : "yes",
@@ -395,22 +429,124 @@ function ref(){
         if (e) {
                     rewh();
                } else {
-                    // user clicked "cancel"
+                    closeload();
                }
  });
 }
 
-function rewh(){
+function new_Item(){
+    document.getElementById("scan_item_if").value = "";
+    document.getElementById("scan_itemprofile").innerHTML = "SCANBARCODE ITEM";
+    document.getElementById("scan_itemprofile").style.Color = "#f00";
+    document.getElementById("scan_itemprofile").style.Align = "center";
+    $("#bt-item").show();
+    $("#de-item").hide();
+    $("#item_pro1").hide();
+    $("#item_pro2").show();
+    $("#item_pro3").hide();
+}
 
-            document.getElementById("valwh").value = "";
-            document.getElementById("bt-item").style.textAlign = "center";
-            document.getElementById("bt-wh").style.textAlign = "center";
-            $("#itemdtail").hide();
-            $("#de-wh").hide();
-            $("#bt-item").hide();
-            $("#bt-wh").show();
-            $("#de-item").hide();
-            $.mobile.changePage("#searchitem");
+function rewh(){
+        var item_wh = "";
+        // var selected2 = "";
+          /*   $.ajax({
+                                 url: localStorage.api_url_server+"NPInventoryWs/V2/is/searchWH",
+                                 data: '{"accessToken":"'+localStorage.token+'","search":""}',
+                                 contentType: "application/json; charset=utf-8",
+                                 dataType: "json",
+                                 type: "POST",
+                                 cache: false,
+                                 success: function(result){
+                                    // console.log(JSON.stringify(result.data));
+                                          item_wh += `<select name="itemPro_wh" class="bt-cmp" style="width:100%; height:50px;" data-role="none">`;
+                                          $.each(result.data, function(key, val) {
+                                                 item_wh += `<option value="`+val['whCode']+`">คลัง `+val['whCode']+`</option>`;
+                                          });
+                                          item_wh += `</select>`;
+                                          document.getElementById("itemprofile_whCode").innerHTML = item_wh;
+                                          document.getElementById("valwh").value = "";*/
+                                          document.getElementById("bt-item").style.textAlign = "center";
+                                         // document.getElementById("bt-wh").style.textAlign = "center";
+                                          document.getElementById("bt-item").style.color = "red";
+                                        //  document.getElementById("bt-wh").style.color = "red";
+                                          $("#bt-item").show();
+                                          $("#de-item").hide();
+                                          $("#item_pro1").hide();
+                                          $("#item_pro2").show();
+                                          $("#item_pro3").hide();
+
+                                          document.getElementById("scan_item_if").value = "";
+                                          document.getElementById("scan_itemprofile").innerHTML = "SCANBARCODE ITEM";
+                                          document.getElementById("scan_itemprofile").style.Color = "#f00";
+                                          document.getElementById("scan_itemprofile").style.Align = "center";
+                                          $.mobile.changePage("#searchitem");
+/*
+                                 },
+                                 error: function (err){
+                                    console.log("error call api func itemProfile");
+                                    switch_url();
+                                    rewh();
+                                   //  $load.popup("close");
+                                 }
+                         });*/
+
+}
+
+function itemprofile_search_wh(){
+    itemProfile($('select[name="itemPro_wh"] :selected').attr('value'));
+}
+
+function like_itemProfile(){
+    var itemdata = document.getElementById("scan_item_if").value;
+    document.getElementById("scan_itemprofile").innerHTML = '<img src="images/loadingitem.gif">';
+    if(itemdata!=""){
+        var itemlist = "";
+            $.ajax({
+                       url: localStorage.api_url_server+"NPInventoryWs/V2/inven/searchItemMaster",
+                       data: '{"accessToken":"'+localStorage.token+'","search":"'+itemdata+'"}',
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       type: "POST",
+                       cache: false,
+                       success: function(result){
+                            console.log(JSON.stringify(result.itemMasterList));
+                            if(JSON.stringify(result.itemMasterList)=="[]"){
+                               itemlist = `<label style='width:100%; color:red;'> ** ไม่มีข้อมูลที่ค้นหา ** </label>`;
+                            }else{
+                               $.each(result.itemMasterList, function(key,val){
+                                   itemlist += `<label style='width:100%; font-size:12px; border-bottom:1px dashed gray;'
+                                                onclick="itemProfile('`+val['itemCode'].trim()+`')">
+                                                   <div class="ui-grid-b">
+                                                         <div class="ui-block-a" style="width:35%;">`
+                                                           +val['itemCode'].trim()+
+                                                         `</div>
+                                                         <div class="ui-block-b" style="width:40%;">`
+                                                            +val['itemName'].trim()+
+                                                         `</div>
+                                                         <div class="ui-block-c" style="width:25%; text-align:center;">`
+                                                            +val['unitCode'].trim()+
+                                                          `</div>
+                                                       </div>
+                                                     </div>
+                                                </label>`;
+                               });
+                            }
+
+                            document.getElementById("scan_itemprofile").innerHTML = itemlist;
+                       },
+                       error: function(err){
+                          console.log("can't call api func like_itemProfile");
+                          switch_url();
+                          like_itemProfile();
+                       }
+               });
+    }else{
+         document.getElementById("scan_itemprofile").innerHTML = "SCANBARCODE ITEM";
+         document.getElementById("scan_itemprofile").style.Color = "#f00";
+         document.getElementById("scan_itemprofile").style.Align = "center";
+    }
+
+
 }
 
 function backhome(){
@@ -422,7 +558,7 @@ function backhome(){
         if (e) {
             $.mobile.changePage("#pagetwo");
         } else {
-            // user clicked "cancel"
+           closeload();
         }
     });
 

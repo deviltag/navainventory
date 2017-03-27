@@ -45,7 +45,11 @@ window.addEventListener('native.onscanbarcode', function (t) {
             case "transfer_item" :
                           get_item_transferedit(t.scanResult);
                           break;
+            case "transfer_normal_people" :
+                          get_people(t.scanResult);
+                          break;
             case "transfer_normal_item" :
+                          //alert(t.scanResult)
                           get_item_transfer_normal(t.scanResult);
                           break;
             case "transfer_normal_detail" :
@@ -62,6 +66,9 @@ window.addEventListener('native.onscanbarcode', function (t) {
                           document.getElementById("amount_damage").value ="";
                           $.mobile.changePage("#transfer_damage_item",{transition: 'slidefade'});
                           amountdamage_focus();
+                          break;
+            case "transfer_normal_confirm" :
+                          get_salecode(t.scanResult);
                           break;
 
 
@@ -92,7 +99,7 @@ function amountedit_focus(){
 /*function search_wh(type,wh_code){
 $.ajax({
                           url: localStorage.api_url_server+"NPReceiveWs/trn/searchwarehouse",
-                          data: '{"accessToken":"","search":"'+wh_code+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","search":"'+wh_code+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -133,19 +140,23 @@ $.ajax({
                           });
 }*/
 
-var d = new Date();
-var curr_date = d.getDate();
-var curr_month = d.getMonth()+1;
-var curr_year = d.getFullYear();
-var date = curr_date + "-" + curr_month
-+ "-" + curr_year;
-
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10) {
+    dd='0'+dd
+}
+if(mm<10) {
+    mm='0'+mm
+}
+date = mm+'-'+dd+'-'+yyyy;
 
 function wh_type_store(){
 
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
-                          data: '{"accessToken":"","type":"1","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"1","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -171,7 +182,9 @@ $.ajax({
                           //select_shelfstore();
                           },
                           error: function (error){
-                          alertify.error(error);
+                              console.log("can't call api func wh_type_store");
+                              switch_url();
+                              wh_type_store();
                           }
                           });
                           return false;
@@ -180,7 +193,7 @@ $.ajax({
 function wh_type_van(){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
-                          data: '{"accessToken":"","type":"2","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"2","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -205,7 +218,9 @@ $.ajax({
                             select_shelfstore();
                           },
                           error: function (error){
-                          alertify.error(error);
+                              console.log("can't call api wh_type_van");
+                              switch_url();
+                              wh_type_van();
                           }
                           });
                           return false;
@@ -214,7 +229,7 @@ $.ajax({
 function sh_type_van(whcode){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_tf,
-                          data: '{"accessToken":"","refCode":"'+whcode+'","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","refCode":"'+whcode+'","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -238,8 +253,10 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error(error);
-                          }
+                              console.log("can't call api func sh_type_van");
+                              switch_url();
+                              sh_type_van(whcode);
+                              }
                           });
                           return false;
 }
@@ -247,7 +264,7 @@ $.ajax({
 function sh_type_store(whcode){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchshelf_tf,
-                          data: '{"accessToken":"","refCode":"'+whcode+'","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","refCode":"'+whcode+'","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -259,10 +276,8 @@ $.ajax({
                           var storesh_list_up= "<select id='sshelfup' data-role='none' class='whselect'>";
                           var storesh_list_down= "<select id='sshelfdown' data-role='none' class='whselect'>";
                           for(var i = 0;i<countv;i++){
-                          if(storesh.data[i].code!="DMG"){
                           storesh_list_up += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
                           storesh_list_down += "<option value='"+storesh.data[i].code+"'>"+storesh.data[i].code+" "+storesh.data[i].name+"</option>";
-                          }
 
                           }
                           storesh_list_up += "</select>";
@@ -274,8 +289,10 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error(error);
-                          }
+                              console.log("can't call api func sh_type_store");
+                              switch_url();
+                              sh_type_store(whcode);
+                              }
                           });
                           return false;
 }
@@ -284,7 +301,7 @@ $.ajax({
 function wh_type_machine(){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchwh_tf,
-                          data: '{"accessToken":"","type":"3","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"3","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -303,8 +320,10 @@ $.ajax({
                           document.getElementsByClassName("whtypemachine").innerHTML = machine_list;
                           },
                           error: function (error){
-                          alertify.error(error);
-                          }
+                              console.log("can't call api func wh_type_machine()");
+                              switch_url();
+                              wh_type_machine();
+                              }
                           });
                           return false;
 }
@@ -363,7 +382,7 @@ swhcode = localStorage.transfersdown_from;
 //alert(whcode+" , "+swhcode)
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
-                          data: '{"accessToken":"","type":"1","whCode":"'+whcode+'","shelf":"'+swhcode+'","search":"'+bar+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"1","whCode":"'+whcode+'","shelf":"'+swhcode+'","search":"'+bar+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -398,7 +417,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                           console.log("can't call api func get_item_transfer");
+                           switch_url();
+                           get_item_transfer(wh,bar);
                           }
                           });
 }
@@ -409,7 +430,7 @@ function get_item_transferedit(bar){
 
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchitem_tf,
-                          data: '{"accessToken":"","type":"1","whCode":"'+localStorage.fromWHd+'","shelf":"'+localStorage.fromSHd+'","search":"'+bar+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"1","whCode":"'+localStorage.fromWHd+'","shelf":"'+localStorage.fromSHd+'","search":"'+bar+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -440,7 +461,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                          console.log("can't call api func get_item_transferedit");
+                          switch_url();
+                          get_item_transferedit(bar);
                           }
                           });
 }
@@ -487,7 +510,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"1","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"1"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -498,14 +521,14 @@ $.ajax({
 
                           $.ajax({
                                                     url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}',
+                                                    data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
                                                     cache: false,
                                                     success: function(trf_i){
                                                     console.log(trf_i);
-                                                    alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
+                                                    console.log("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
                                                     localStorage.transferstatus="1";
                                                     document.getElementById("amount_up_item").value ="";
                                                     search_detailup(localStorage.transferNo)
@@ -515,31 +538,37 @@ $.ajax({
 
                                                     },
                                                     error: function (error){
-                                                    alertify.error("error");
+                                                        console.log("can't call api func submit_transferup");
+                                                        switch_url();
+                                                        submit_transferup();
                                                     }
                                                     });
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func submit_transferup");
+                              switch_url();
+                              submit_transferup();
                           }
                           });
 }else{
-//console.log('{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}')
+//console.log('{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}')
  $.ajax({
                           url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferup_from+'","fromShelfCode":"'+localStorage.transfersup_from+'","toWHCode":"'+localStorage.transferup_to+'","toShelfCode":"'+localStorage.transfersup_to+'","qty":"'+amountup+'","refNo":"","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
                           cache: false,
                           success: function(trf_i){
                           console.log(trf_i);
-                          alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
+                          console.log("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
                           $.mobile.changePage("#transferup",{transition: 'slidefade'});
                           search_detailup(localStorage.transferNo)
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func submit_transferup");
+                              switch_url();
+                              submit_transferup();
                           }
                           });
 
@@ -551,7 +580,7 @@ function save_up(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -565,7 +594,9 @@ $.ajax({
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func save_up");
+                              switch_url();
+                              save_up();
                           }
                           });
 }else{
@@ -618,7 +649,7 @@ return false;
 if(localStorage.transferstatus=="0"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"2","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"","docDate":"'+date+'","isCompleteSave":"0","creatorCode":"'+localStorage.username+'","refNo":"","docType":"2"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -629,14 +660,14 @@ $.ajax({
 
                           $.ajax({
                                                     url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                                                    data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_from+'","qty":"'+amountdown+'","refNo":"","isCancel":"0"}',
+                                                    data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_from+'","qty":"'+amountdown+'","refNo":"","isCancel":"0"}',
                                                     contentType: "application/json; charset=utf-8",
                                                     dataType: "json",
                                                     type: "POST",
                                                     cache: false,
                                                     success: function(trf_i){
                                                     console.log(trf_i);
-                                                    alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
+                                                    console.log("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
                                                     localStorage.transferstatus="1";
                                                     document.getElementById("amount_down_item").value ="";
                                                     search_detaildown(localStorage.transferNo)
@@ -645,31 +676,37 @@ $.ajax({
 
                                                     },
                                                     error: function (error){
-                                                    alertify.error("error");
+                                                        console.log("can't call api func submit_transferdown");
+                                                        switch_url();
+                                                        submit_transferdown();
                                                     }
                                                     });
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func submit_transferdown");
+                              switch_url();
+                              submit_transferdown();
                           }
                           });
 }else{
  $.ajax({
                           url: localStorage.api_url_server+""+ localStorage.api_url_manageitem_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_to+'","qty":"'+amountdown+'","refNo":"","isCancel":"0"}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.transferdown_from+'","fromShelfCode":"'+localStorage.transfersdown_from+'","toWHCode":"'+localStorage.transferdown_to+'","toShelfCode":"'+localStorage.transfersdown_to+'","qty":"'+amountdown+'","refNo":"","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
                           cache: false,
                           success: function(trf_i){
                           console.log(trf_i);
-                          alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
+                          console.log("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.transferNo);
                           search_detaildown(localStorage.transferNo)
                           //$.mobile.changePage("#transferup",{transition: 'slidefade'});
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func submit_transferdown");
+                              switch_url();
+                              submit_transferdown();
                           }
                           });
 
@@ -681,7 +718,7 @@ function save_down(){
 if( localStorage.transferstatus=="1"){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_insert_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.transferNo+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -695,7 +732,9 @@ $.ajax({
                           alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func save_down");
+                              switch_url();
+                              save_down();
                           }
                           });
 }else{
@@ -736,7 +775,7 @@ $.mobile.changePage("#transferdown",{transition: 'slidefade',reverse: true});
 function search_detailup(tfNo){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
-                          data: '{"accessToken":"","type":"","search":"'+tfNo+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -761,7 +800,7 @@ $.ajax({
                             if(tf_h.data[i].isCancel == "0"){
                                     tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="u'+tf_h.data[i].itemCode+'" id="u'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                             }else{
-                                    tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
+                                    tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px; color:#ccc;">';
                             }
                            //tfd_show += "<p>"+tf_h.data[i].itemCode+"</a>";
                            tfd_show += '<div class="ui-block-a">'+tf_h.data[i].itemName+'</div>';
@@ -778,7 +817,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func search_detailup");
+                              switch_url();
+                              search_detailup(tfNo);
                           }
                           });
 
@@ -788,7 +829,7 @@ $.ajax({
 function search_detaildown(tfNo){
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
-                          data: '{"accessToken":"","type":"0","search":"'+tfNo+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"0","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -812,7 +853,7 @@ $.ajax({
                           if(tf_h.data[i].isCancel == "0"){
                                tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="d'+tf_h.data[i].itemCode+'" id="d'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
                           }else{
-                               tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px;">';
+                               tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfernosave blur" data-uncancelitemnosave-id="'+tf_h.data[i].barCode+'" data-uncancelitemrownosave-id="n'+tf_h.data[i].itemCode+'" id="n'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="0" style="text-align:center; font-size:12px; color:#ccc;">';
                           }
                            //tfd_show += "<p>"+tf_h.data[i].itemCode+"</a>";
                            tfd_show += '<div class="ui-block-a">'+tf_h.data[i].itemName+'</div>';
@@ -829,7 +870,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func search_detaildown");
+                              switch_url();
+                              search_detaildown(tfNo);
                           }
                           });
 
@@ -841,7 +884,7 @@ types = type;
 }else{types ="1";}
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchdetail_tf,
-                          data: '{"accessToken":"","type":"'+types+'","search":"'+tfNo+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"'+types+'","search":"'+tfNo+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -853,6 +896,8 @@ $.ajax({
                           tfh_show += "<p>วันที่ทำเอกสาร : "+tf_h.docDate+"</p>";
                           tfh_show += "<p>มูลค่ารวม : "+tf_h.sumOfAmount+" บาท</p>";
                           tfh_show += "<p style='color:red;text-align:center;'>เอกสารไม่สามารถแก้ไขได้</p>";
+
+
                             localStorage.docnod = tf_h.docNo;
                           var count = tf_h.data.length;
                           var tfd_show = '<hr>';
@@ -893,6 +938,8 @@ $.ajax({
                           var tfh_show = "<p>เลขที่เอกสาร : "+tf_h.docNo+"</p>";
                           tfh_show += "<p>วันที่ทำเอกสาร : "+tf_h.docDate+"</p>";
                           tfh_show += "<p>มูลค่ารวม : "+tf_h.sumOfAmount+" บาท</p>";
+                          tfh_show += "<p>หมายเหตุ : "+tf_h.myDescription+"</p>";
+                          tfh_show += "<p>ผู้ยืนยัน : "+tf_h.confirmCode+"</p>";
                             localStorage.docnod = tf_h.docNo;
                           var count = tf_h.data.length;
                           var tfd_show = '<hr>';
@@ -905,16 +952,22 @@ $.ajax({
 
                           for(var i = 0;i<count;i++){
                             if(tf_h.data[i].isCancel=="1"){
-                          tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfer blur" data-uncancelitem-id="'+tf_h.data[i].barCode+'" data-uncancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                          tfd_show += '<div class="ui-grid-c todo-uncancelitemtransfer blur" data-uncancelitem-id="'+tf_h.data[i].barCode+'" data-uncancelitemrow-id="i'+tf_h.data[i].itemCode+'" id="i'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px; color:#ccc;">';
+                          tfd_show += '<div class="ui-block-a" style="color:#ccc;">'+tf_h.data[i].itemName+'</div>';
+                          tfd_show += '<div class="ui-block-b" style="color:#ccc;"> '+tf_h.data[i].qty+' '+tf_h.data[i].unitCode+' </div>';
+                          tfd_show += '<div class="ui-block-c" style="color:#ccc;"> '+tf_h.data[i].fromWH+'/'+tf_h.data[i].fromShelf+'</div>';
+                          tfd_show += '<div class="ui-block-d" style="color:#ccc;"> '+tf_h.data[i].toWH+'/'+tf_h.data[i].toShelf+'</div></div><hr>';
                             }else{
+
                           tfd_show += '<div class="ui-grid-c todo-cancelitemtransfer" data-cancelitem-id="'+tf_h.data[i].barCode+'" data-cancelitemrow-id="e'+tf_h.data[i].itemCode+'" id="e'+tf_h.data[i].itemCode+'" iceode="'+tf_h.data[i].itemCode+'" bceode="'+tf_h.data[i].barCode+'" whfrom="'+tf_h.data[i].fromWH+'" shfrom="'+tf_h.data[i].fromShelf+'" whto="'+tf_h.data[i].toWH+'" shto="'+tf_h.data[i].toShelf+'" tfno="'+tf_h.docNo+'" rfno="'+tf_h.refDocNo+'" tfamount="'+tf_h.data[i].qty+'" style="text-align:center; font-size:12px;">';
+                          tfd_show += '<div class="ui-block-a">'+tf_h.data[i].itemName+'</div>';
+                          tfd_show += '<div class="ui-block-b"> '+tf_h.data[i].qty+' '+tf_h.data[i].unitCode+' </div>';
+                          tfd_show += '<div class="ui-block-c"> '+tf_h.data[i].fromWH+'/'+tf_h.data[i].fromShelf+'</div>';
+                          tfd_show += '<div class="ui-block-d"> '+tf_h.data[i].toWH+'/'+tf_h.data[i].toShelf+'</div></div><hr>';
                             }
                           //class=" data-delete-id="'+jsl[i].recNo+'" data-deleterow-id="i'+jsl[i].recNo+'" data-delete-poRefNo="'+jsl[i].poRefNo+'" id="i'+jsl[i].recNo+'" onclick="show_receive_detail(';
                            //tfd_show += "<p>"+tf_h.data[i].itemCode+"</a>";
-                           tfd_show += '<div class="ui-block-a">'+tf_h.data[i].itemName+'</div>';
-                           tfd_show += '<div class="ui-block-b"> '+tf_h.data[i].qty+' '+tf_h.data[i].unitCode+' </div>';
-                           tfd_show += '<div class="ui-block-c"> '+tf_h.data[i].fromWH+'/'+tf_h.data[i].fromShelf+'</div>';
-                           tfd_show += '<div class="ui-block-d"> '+tf_h.data[i].toWH+'/'+tf_h.data[i].toShelf+'</div></div><hr>';
+
 
 
                            localStorage.fromWHd = tf_h.data[i].fromWH;
@@ -933,7 +986,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func search_detail");
+                              switch_url();
+                              search_detail(tfNo,type);
                           }
                           });
 
@@ -941,9 +996,10 @@ $.ajax({
 //=================================================================================================search tflist==============================================================================
 
 function search_tf(){
+console.log(date);
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_searchtlist_tf,
-                          data: '{"accessToken":"","type":"1","search":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","type":"1","search":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -983,7 +1039,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func search_tf");
+                              switch_url();
+                              search_tf();
                           }
                           });
 
@@ -993,7 +1051,7 @@ function transfer_edit(){
 
 var amountedit = document.getElementById("amount_edit_item").value;
 var stockedit = document.getElementById("stock_show_edit").value;
-//alert('{"accessToken":"","docNo":"'+localStorage.docnod+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.fromWHd+'","fromShelfCode":"'+localStorage.fromSHd+'","toWHCode":"'+localStorage.toWHd+'","toShelfCode":"'+localStorage.toSHd+'","qty":"'+amountedit+'","refNo":"","isCancel":"0"}')
+//alert('{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.docnod+'","barCode":"'+localStorage.transferBarcode+'","itemCode":"'+localStorage.transferItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.fromWHd+'","fromShelfCode":"'+localStorage.fromSHd+'","toWHCode":"'+localStorage.toWHd+'","toShelfCode":"'+localStorage.toSHd+'","qty":"'+amountedit+'","refNo":"","isCancel":"0"}')
 
 if(amountedit==""||amountedit==null){
 alertify.error("กรุณากรอกจำนวนที่ต้องการ");
@@ -1004,20 +1062,22 @@ return false;
 }else{
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","barCode":"'+localStorage.transfereBarcode+'","itemCode":"'+localStorage.transfereItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.fromWHd+'","fromShelfCode":"'+localStorage.fromSHd+'","toWHCode":"'+localStorage.toWHd+'","toShelfCode":"'+localStorage.toSHd+'","qty":"'+amountedit+'","refNo":"","isCancel":"0"}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.docnod+'","barCode":"'+localStorage.transfereBarcode+'","itemCode":"'+localStorage.transfereItemcode+'","docDate":"'+date+'","fromWHCode":"'+localStorage.fromWHd+'","fromShelfCode":"'+localStorage.fromSHd+'","toWHCode":"'+localStorage.toWHd+'","toShelfCode":"'+localStorage.toSHd+'","qty":"'+amountedit+'","refNo":"","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
                           cache: false,
                           success: function(trf_i){
                           console.log(trf_i);
-                          alertify.success("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.docnod);
+                          console.log("บันทึกข้อมูลเรียบร้อยแล้ว"+localStorage.docnod);
                          // $.mobile.changePage("#transfer_detail",{transition: 'slidefade'});
                           search_detail(localStorage.docnod,"1")
                           document.getElementById("amount_edit_item").value ="";
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func transfer_edit");
+                              switch_url();
+                              transfer_edit();
                           }
                           });
                           }
@@ -1030,7 +1090,7 @@ return false;
 }else{
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_cancel_tf,
-                          data: '{"accessToken":"","docNo":"'+localStorage.docnod+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":"","myDescription":"","confirmCode":""}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+localStorage.docnod+'","docDate":"'+date+'","isCompleteSave":"1","creatorCode":"'+localStorage.username+'","refNo":""}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -1041,10 +1101,12 @@ $.ajax({
                           localStorage.docnod = "";
                           search_tf();
                           $.mobile.changePage("#transferlist",{transition: 'slidefade'});
-                          alertify.success("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
+                          console.log("บันทึกใบโอนสินค้าเรียบร้อยแล้ว");
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func save_edit");
+                              switch_url();
+                              save_edit();
                           }
                           });
           }
@@ -1056,7 +1118,7 @@ if (confirm('ต้องการยกเลิกใบโอนสินค�
 
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_cancel_tf,
-                          data: '{"accessToken":"","docNo":"'+transferNo+'","refNo":"'+refNo+'","userID":"'+localStorage.username+'"}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+transferNo+'","refNo":"'+refNo+'","userID":"'+localStorage.username+'"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -1068,7 +1130,9 @@ $.ajax({
                           search_tf();
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func cancel_transfer");
+                              switch_url();
+                              cancel_transfer(transferNo,refNo);
                           }
                           });
                           }
@@ -1080,7 +1144,7 @@ if (confirm('ต้องการยกเลิกสินค้าหรื�
 
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
-                          data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"1"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -1097,7 +1161,9 @@ $.ajax({
                             }
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func cancel_item_transfer");
+                              switch_url();
+                              cancel_item_transfer(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,refno,amount);
                           }
                           });
                           }
@@ -1109,7 +1175,7 @@ if (confirm('ต้องการ return สินค้าหรือไม�
 
 $.ajax({
                           url: localStorage.api_url_server+""+localStorage.api_url_manageitem_tf,
-                          data: '{"accessToken":"","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"0"}',
+                          data: '{"accessToken":"'+localStorage.token+'","docNo":"'+docno+'","barCode":"'+barcode+'","itemCode":"'+itemCode+'","docDate":"'+date+'","fromWHCode":"'+fromwh+'","fromShelfCode":"'+fromsh+'","toWHCode":"'+towh+'","toShelfCode":"'+tosh+'","qty":"'+amount+'","refNo":"'+refno+'","isCancel":"0"}',
                           contentType: "application/json; charset=utf-8",
                           dataType: "json",
                           type: "POST",
@@ -1129,7 +1195,9 @@ $.ajax({
 
                           },
                           error: function (error){
-                          alertify.error("error");
+                              console.log("can't call api func uncancel_item_transfer");
+                              switch_url();
+                              uncancel_item_transfer(itemCode,barcode,fromwh,fromsh,towh,tosh,docno,refno,amount);
                           }
                           });
                           }
